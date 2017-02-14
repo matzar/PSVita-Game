@@ -77,7 +77,7 @@ bool SceneApp::Update(float frame_time)
 
 	// don't have to update the ground visuals as it is static
 
-	// collision detection
+	// collision detection // class MyContactListener other way of doing collision detection //
 	// get the head of the contact list
 	b2Contact* contact = world_->GetContactList();
 	// get contact count
