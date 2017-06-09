@@ -125,7 +125,6 @@ void free_camera::setRoll(float arg) {
 
 void free_camera::moveForward(float dt) {
 	position += forward * dt;
-	//position.set_z(dt);
 }
 
 void free_camera::moveBackwards(float dt) {

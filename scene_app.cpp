@@ -12,14 +12,14 @@
 
 SceneApp::SceneApp(gef::Platform& platform) :
 	Application(platform),
-	sprite_renderer_(nullptr),
-	renderer_3d_(nullptr),
-	primitive_builder_(nullptr),
-	font_(nullptr),
-	world_(nullptr),
-	player_body_(nullptr),
-	input_manager_(nullptr),
-	camera_(nullptr)
+	sprite_renderer_(NULL),
+	renderer_3d_(NULL),
+	primitive_builder_(NULL),
+	font_(NULL),
+	world_(NULL),
+	player_body_(NULL),
+	input_manager_(NULL),
+	camera_(NULL)
 {
 }
 
@@ -50,21 +50,21 @@ void SceneApp::CleanUp()
 {
 	// destroying the physics world also destroys all the objects within it
 	delete world_;
-	world_ = nullptr;
+	world_ = NULL;
 
 	delete ground_mesh_;
-	ground_mesh_ = nullptr;
+	ground_mesh_ = NULL;
 
 	CleanUpFont();
 
 	delete primitive_builder_;
-	primitive_builder_ = nullptr;
+	primitive_builder_ = NULL;
 
 	delete renderer_3d_;
-	renderer_3d_ = nullptr;
+	renderer_3d_ = NULL;
 
 	delete sprite_renderer_;
-	sprite_renderer_ = nullptr;
+	sprite_renderer_ = NULL;
 
 	// input manager
 	delete input_manager_;
@@ -72,7 +72,7 @@ void SceneApp::CleanUp()
 
 	// clean up camera
 	delete camera_;
-	camera_ = nullptr;
+	camera_ = NULL;
 
 }
 
@@ -108,10 +108,10 @@ bool SceneApp::Update(float frame_time)
 			b2Body* bodyB = contact->GetFixtureB()->GetBody();
 
 			// DO COLLISION RESPONSE HERE
-			Player* player = nullptr;
+			Player* player = NULL;
 
-			GameObject* gameObjectA = nullptr;
-			GameObject* gameObjectB = nullptr;
+			GameObject* gameObjectA = NULL;
+			GameObject* gameObjectB = NULL;
 
 			gameObjectA = (GameObject*)bodyA->GetUserData(); // cast to GameObject* pointer
 			gameObjectB = (GameObject*)bodyB->GetUserData(); // cast to GameObject* pointer
@@ -180,38 +180,36 @@ bool SceneApp::Update(float frame_time)
 		{
 			// read controller data for controler 0
 			const gef::SonyController* controller = controller_input->GetController(0);
-			
-			// handle input
-			if (controller->buttons_pressed() & gef_SONY_CTRL_UP)
+			if (controller)
 			{
-				camera_->moveForward(frame_time);
+				// handle input
+				if (controller->buttons_pressed() & gef_SONY_CTRL_UP)
+				{
+					camera_->moveForward(timeStep);
+				}
+
+				//if (controller->left_stick_y_axis < 0)
+				//{
+
+				//}
 			}
-
-			//if (controller->left_stick_y_axis < 0)
-			//{
-
-			//}
 		}
 
 		// if there is a keyboard, check the arrow keys to control the direction of the character
 		gef::Keyboard* keyboard = input_manager_->keyboard();
-		//float speed = 10;
 		if (keyboard)
 		{
-			if (keyboard->IsKeyDown(gef::Keyboard::KC_UP))
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_W))
 			{
-				//speed += 1.0f;
 				gef::DebugOut("Up arraw press.\n");
-				camera_->moveForward(frame_time);
+				camera_->moveForward(timeStep);
 			}
-
-			camera_->update();
-			//else if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
-			//	forward = -1.0f;
 		}
 
 	}
 	
+	camera_->moveSideLeft(frame_time);
+	//camera_->moveUp(frame_time);
 	camera_->update();
 
 	return true;
@@ -249,7 +247,7 @@ void SceneApp::Render()
 	// draw player
 	renderer_3d_->set_override_material(&primitive_builder_->red_material());
 	renderer_3d_->DrawMesh(player_);
-	renderer_3d_->set_override_material(nullptr);
+	renderer_3d_->set_override_material(NULL);
 
 	renderer_3d_->End();
 
@@ -331,7 +329,7 @@ void SceneApp::InitFont()
 void SceneApp::CleanUpFont()
 {
 	delete font_;
-	font_ = nullptr;
+	font_ = NULL;
 }
 
 void SceneApp::DrawHUD()
