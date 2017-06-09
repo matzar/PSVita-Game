@@ -195,16 +195,23 @@ bool SceneApp::Update(float frame_time)
 
 		// if there is a keyboard, check the arrow keys to control the direction of the character
 		gef::Keyboard* keyboard = input_manager_->keyboard();
-		float speed = 10;
+		//float speed = 10;
 		if (keyboard)
 		{
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_UP))
+			{
+				//speed += 1.0f;
+				gef::DebugOut("Up arraw press.\n");
 				camera_->moveForward(frame_time);
+			}
+
+			camera_->update();
 			//else if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
 			//	forward = -1.0f;
 		}
 
 	}
+	
 	camera_->update();
 
 	return true;

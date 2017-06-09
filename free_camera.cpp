@@ -3,14 +3,14 @@
 
 free_camera::free_camera() {
 	position.set_value(5.0f, 2.0f, 10.0f);
-	lookAt.set_value(0.0f, 0.0f, 0.0f);
-	up.set_value(0.0f, 1.0f, 0.0f);
-	side.set_value(0.0f, 0.0f, 0.0f);
-	forward.set_value(1.0f, 1.0f, 1.0f);
+	//lookAt.set_value(0.0f, 0.0f, 0.0f);
+	//up.set_value(0.0f, 1.0f, 0.0f);
+	//side.set_value(0.0f, 0.0f, 0.0f);
+	//forward.set_value(1.0f, 1.0f, 1.0f);
+	update();
 	setYaw(0);
 	setPitch(0);
 	setRoll(0);
-	update();
 }
 
 free_camera::~free_camera() {}
@@ -125,6 +125,7 @@ void free_camera::setRoll(float arg) {
 
 void free_camera::moveForward(float dt) {
 	position += forward * dt;
+	//position.set_z(dt);
 }
 
 void free_camera::moveBackwards(float dt) {

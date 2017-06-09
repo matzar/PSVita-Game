@@ -36,5 +36,5 @@ Player::Player()
 
 void Player::DecrementHealth()
 {
-	gef::DebugOut("Player has taken damage.\n");
+	//gef::DebugOut("Player has taken damage.\n");
 }
