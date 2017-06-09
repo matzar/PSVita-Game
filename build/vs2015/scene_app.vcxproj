@@ -219,6 +219,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\free_camera.cpp" />
     <ClCompile Include="..\..\game_object.cpp" />
     <ClCompile Include="..\..\main_d3d11.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PSVita'">true</ExcludedFromBuild>
@@ -236,6 +237,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\camera.h" />
+    <ClInclude Include="..\..\free_camera.h" />
     <ClInclude Include="..\..\game_object.h" />
     <ClInclude Include="..\..\primitive_builder.h" />
     <ClInclude Include="..\..\scene_app.h" />
