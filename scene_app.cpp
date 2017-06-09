@@ -7,6 +7,8 @@
 #include <graphics/mesh.h>
 #include <maths/math_utils.h>
 #include <input/sony_controller_input_manager.h>
+#include <input/keyboard.h>
+
 
 SceneApp::SceneApp(gef::Platform& platform) :
 	Application(platform),
@@ -174,13 +176,34 @@ bool SceneApp::Update(float frame_time)
 
 		// get controller input data for all controllers
 		gef::SonyControllerInputManager* controller_input = input_manager_->controller_input();
-
 		if (controller_input)
 		{
 			// read controller data for controler 0
 			const gef::SonyController* controller = controller_input->GetController(0);
-			//Input();
+			
+			// handle input
+			if (controller->buttons_pressed() & gef_SONY_CTRL_UP)
+			{
+				camera_->moveForward(frame_time);
+			}
+
+			//if (controller->left_stick_y_axis < 0)
+			//{
+
+			//}
 		}
+
+		// if there is a keyboard, check the arrow keys to control the direction of the character
+		gef::Keyboard* keyboard = input_manager_->keyboard();
+		float speed = 10;
+		if (keyboard)
+		{
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_UP))
+				camera_->moveForward(frame_time);
+			//else if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
+			//	forward = -1.0f;
+		}
+
 	}
 	camera_->update();
 
@@ -202,9 +225,9 @@ void SceneApp::Render()
 	renderer_3d_->set_projection_matrix(projection_matrix);
 
 	// view
-	gef::Vector4 camera_eye(-2.0f, 2.0f, 10.0f);
-	gef::Vector4 camera_lookat(0.0f, 0.0f, 0.0f);
-	gef::Vector4 camera_up(0.0f, 1.0f, 0.0f);
+	gef::Vector4 camera_eye(camera_->getPositionX(), camera_->getPositionY(), camera_->getPositionZ());
+	gef::Vector4 camera_lookat(camera_->getLookAtX(), camera_->getLookAtY(), camera_->getLookAtZ());
+	gef::Vector4 camera_up(camera_->getUpX(), camera_->getUpY(), camera_->getUpZ());
 	gef::Matrix44 view_matrix;
 	view_matrix.LookAt(camera_eye, camera_lookat, camera_up);
 	renderer_3d_->set_view_matrix(view_matrix);

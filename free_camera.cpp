@@ -2,11 +2,11 @@
 #include <math.h>
 
 free_camera::free_camera() {
-	position.set_value(0.0f, 0.0f, 2.4f);
-	forward.set_value(0.0f, 0.0f, 0.0f);
-	up.set_value(0.0f, 0.0f, 0.0f);
+	position.set_value(5.0f, 2.0f, 10.0f);
+	lookAt.set_value(0.0f, 0.0f, 0.0f);
+	up.set_value(0.0f, 1.0f, 0.0f);
 	side.set_value(0.0f, 0.0f, 0.0f);
-	lookAt.set_value(1.0f, 1.0f, 5.0f);
+	forward.set_value(1.0f, 1.0f, 1.0f);
 	setYaw(0);
 	setPitch(0);
 	setRoll(0);
@@ -126,6 +126,7 @@ void free_camera::setRoll(float arg) {
 void free_camera::moveForward(float dt) {
 	position += forward * dt;
 }
+
 void free_camera::moveBackwards(float dt) {
 	position -= forward * dt;
 }
