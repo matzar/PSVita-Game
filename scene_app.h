@@ -5,8 +5,10 @@
 #include <maths/vector2.h>
 #include "primitive_builder.h"
 #include <graphics/mesh_instance.h>
+#include <input/input_manager.h>
 #include <box2d/Box2D.h>
 #include "game_object.h"
+#include "free_camera.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
@@ -51,6 +53,12 @@ private:
 	gef::Mesh* ground_mesh_;
 	GameObject ground_;
 	b2Body* ground_body_;
+
+	// input manager
+	gef::InputManager* input_manager_;
+
+	// camera variables
+	camera* camera_;
 
 	float fps_;
 };

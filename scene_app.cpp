@@ -6,15 +6,18 @@
 #include <graphics/renderer_3d.h>
 #include <graphics/mesh.h>
 #include <maths/math_utils.h>
+#include <input/sony_controller_input_manager.h>
 
 SceneApp::SceneApp(gef::Platform& platform) :
 	Application(platform),
-	sprite_renderer_(NULL),
-	renderer_3d_(NULL),
-	primitive_builder_(NULL),
-	font_(NULL),
-	world_(NULL),
-	player_body_(NULL)
+	sprite_renderer_(nullptr),
+	renderer_3d_(nullptr),
+	primitive_builder_(nullptr),
+	font_(nullptr),
+	world_(nullptr),
+	player_body_(nullptr),
+	input_manager_(nullptr),
+	camera_(nullptr)
 {
 }
 
@@ -37,27 +40,38 @@ void SceneApp::Init()
 
 	InitPlayer();
 	InitGround();
+
+	camera_ = new free_camera;
 }
 
 void SceneApp::CleanUp()
 {
 	// destroying the physics world also destroys all the objects within it
 	delete world_;
-	world_ = NULL;
+	world_ = nullptr;
 
 	delete ground_mesh_;
-	ground_mesh_ = NULL;
+	ground_mesh_ = nullptr;
 
 	CleanUpFont();
 
 	delete primitive_builder_;
-	primitive_builder_ = NULL;
+	primitive_builder_ = nullptr;
 
 	delete renderer_3d_;
-	renderer_3d_ = NULL;
+	renderer_3d_ = nullptr;
 
 	delete sprite_renderer_;
-	sprite_renderer_ = NULL;
+	sprite_renderer_ = nullptr;
+
+	// input manager
+	delete input_manager_;
+	input_manager_ = NULL;
+
+	// clean up camera
+	delete camera_;
+	camera_ = nullptr;
+
 }
 
 bool SceneApp::Update(float frame_time)
@@ -92,10 +106,10 @@ bool SceneApp::Update(float frame_time)
 			b2Body* bodyB = contact->GetFixtureB()->GetBody();
 
 			// DO COLLISION RESPONSE HERE
-			Player* player = NULL;
+			Player* player = nullptr;
 
-			GameObject* gameObjectA = NULL;
-			GameObject* gameObjectB = NULL;
+			GameObject* gameObjectA = nullptr;
+			GameObject* gameObjectB = nullptr;
 
 			gameObjectA = (GameObject*)bodyA->GetUserData(); // cast to GameObject* pointer
 			gameObjectB = (GameObject*)bodyB->GetUserData(); // cast to GameObject* pointer
@@ -153,6 +167,23 @@ bool SceneApp::Update(float frame_time)
 		contact = contact->GetNext();
 	}
 
+	// get the latest date from the input devices
+	if (input_manager_)
+	{
+		input_manager_->Update();
+
+		// get controller input data for all controllers
+		gef::SonyControllerInputManager* controller_input = input_manager_->controller_input();
+
+		if (controller_input)
+		{
+			// read controller data for controler 0
+			const gef::SonyController* controller = controller_input->GetController(0);
+			//Input();
+		}
+	}
+	camera_->update();
+
 	return true;
 }
 
@@ -188,7 +219,7 @@ void SceneApp::Render()
 	// draw player
 	renderer_3d_->set_override_material(&primitive_builder_->red_material());
 	renderer_3d_->DrawMesh(player_);
-	renderer_3d_->set_override_material(NULL);
+	renderer_3d_->set_override_material(nullptr);
 
 	renderer_3d_->End();
 
@@ -270,7 +301,7 @@ void SceneApp::InitFont()
 void SceneApp::CleanUpFont()
 {
 	delete font_;
-	font_ = NULL;
+	font_ = nullptr;
 }
 
 void SceneApp::DrawHUD()
