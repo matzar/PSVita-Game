@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _CAMERA_H
+#define _CAMERA_H
 
 class camera
 {
@@ -52,3 +53,4 @@ public:
 	//virtual void cameraControll(float dt, int width, int height) = 0;
 };
 
+#endif // _CAMERA_H

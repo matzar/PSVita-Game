@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _FREE_CAMERA_H
+#define _FREE_CAMERA_H
+
 #include "camera.h"
 #include "maths\vector4.h"
 
@@ -66,3 +68,5 @@ private:
 	gef::Vector4 side;
 	float Yaw, Pitch, Roll;
 };
+
+#endif

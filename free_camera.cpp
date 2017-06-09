@@ -124,25 +124,25 @@ void free_camera::setRoll(float arg) {
 }
 
 void free_camera::moveForward(float dt) {
-	position.add(forward, dt);
+	position += forward * dt;
 }
 void free_camera::moveBackwards(float dt) {
-	position.subtract(forward, dt);
+	position -= forward * dt;
 }
 
 void free_camera::moveUp(float dt) {
-	position.add(up, dt);
+	position += up * dt;
 }
 void free_camera::moveDown(float dt) {
-	position.subtract(up, dt);
-}
-
-void free_camera::moveSideLeft(float dt) {
-	position.subtract(side, dt);
+	position -= up * dt;
 }
 
 void free_camera::moveSideRight(float dt) {
-	position.add(side, dt);
+	position += side * dt;
+}
+
+void free_camera::moveSideLeft(float dt) {
+	position -= side * dt;
 }
 
 void free_camera::addYaw(float dt, float value) {
