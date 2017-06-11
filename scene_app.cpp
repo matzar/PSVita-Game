@@ -11,8 +11,9 @@
 
 #ifdef _WIN32
 // only on windows platforms
-#include <platform/d3d11/input/keyboard_d3d11.h>
 #include <platform/d3d11/input/input_manager_d3d11.h>
+#include <platform/d3d11/input/keyboard_d3d11.h>
+#include <platform/d3d11/input/touch_input_manager_d3d11.h>
 #endif 
 
 
@@ -213,12 +214,10 @@ bool SceneApp::Update(float frame_time)
 				camera_->moveSideLeft(frame_time);
 		}
 
-	} // input_manager_
+		const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
 
-	const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
-
-	// initialise the mouse position
-	gef::Vector2 mouse_position(0.0f, 0.0f);
+		// initialise the mouse position
+		gef::Vector2 mouse_position(0.0f, 0.0f);
 
 #ifdef _WIN32 // Only on windows platforms
 
@@ -227,7 +226,12 @@ bool SceneApp::Update(float frame_time)
 
 		// get the mouse position
 		mouse_position = touch_input_d3d11->mouse_position();
+		gef::DebugOut("Mouse position x, y: %f %f\n", mouse_position.x, mouse_position.y);
 #endif
+	} // input_manager_
+
+	
+	
 
 	camera_->moveSideLeft(frame_time);
 	//camera_->moveUp(frame_time);
