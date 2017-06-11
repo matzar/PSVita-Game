@@ -215,9 +215,6 @@ bool SceneApp::Update(float frame_time)
 	return true;
 }
 
-
-
-
 void SceneApp::Render()
 {
 	// setup camera
