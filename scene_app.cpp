@@ -32,6 +32,7 @@ SceneApp::SceneApp(gef::Platform& platform) :
 void SceneApp::Init()
 {
 	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
+	input_manager_ = gef::InputManager::Create(platform_);
 
 	// create the renderer for draw 3D geometry
 	renderer_3d_ = gef::Renderer3D::Create(platform_);
@@ -175,17 +176,18 @@ bool SceneApp::Update(float frame_time)
 		contact = contact->GetNext();
 	}
 
+	
 	// get the latest date from the input devices
 	if (input_manager_)
 	{
 		input_manager_->Update();
 
 		// get controller input data for all controllers
-		gef::SonyControllerInputManager* controller_input = input_manager_->controller_input();
-		if (controller_input)
+		gef::SonyControllerInputManager* controller_manager = input_manager_->controller_input();
+		if (controller_manager)
 		{
 			// read controller data for controler 0
-			const gef::SonyController* controller = controller_input->GetController(0);
+			const gef::SonyController* controller = controller_manager->GetController(0);
 			if (controller)
 			{
 				// handle input
@@ -201,12 +203,20 @@ bool SceneApp::Update(float frame_time)
 			}
 		}
 
-
+		// if there is a keyboard, check the arrow keys to control the direction of the character
+		gef::Keyboard* keyboard = input_manager_->keyboard();
+		if (keyboard)
+		{
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_W))
+				camera_->moveUp(frame_time);
+			else if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
+				camera_->moveSideLeft(frame_time);
+		}
 
 	} // input_manager_
 
-	if (input_manager_)
-	{
+	//if (input_manager_)
+	//{
 		// windows input
 		const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
 
@@ -219,10 +229,9 @@ bool SceneApp::Update(float frame_time)
 
 		// get the mouse position
 		mouse_position = touch_input_d3d11->mouse_position();
-		Debug
+		gef::DebugOut(mouse_position, %f);
 #endif // !_WIN32 // Only on windows platforms
-	}
-
+	//}
 
 	camera_->moveSideLeft(frame_time);
 	//camera_->moveUp(frame_time);
