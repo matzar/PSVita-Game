@@ -13,7 +13,9 @@
 #include <Windows.h>
 #include <platform/d3d11/input/keyboard_d3d11.h>
 #include <platform/d3d11/input/touch_input_manager_d3d11.h>
-#include <freeglut.h>
+//#include <freeglut.h>
+//#include <SFML/Window/Mouse.hpp>
+//#include <SFML/Window.hpp>
 #endif 
 
 
@@ -210,12 +212,30 @@ bool SceneApp::Update(float frame_time)
 		if (keyboard)
 		{
 			//const gef::KeyboardD3D11* keyboard_d3d11 = (const gef::KeyboardD3D11*)keyboard;
-
+			float camera_speed = 10.0f;
+			float camera_add_speed = 20.0f;
+			float camera_subtract_speed = 80.0f;
 			// keyboard input
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_W))
-				camera_->moveUp(frame_time);
-			else if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
-				camera_->moveSideLeft(frame_time);
+				camera_->moveForward(frame_time * camera_speed);
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_UP))
+				camera_->addPitch(frame_time, camera_subtract_speed);
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_S))
+				camera_->moveBackwards(frame_time * camera_speed);
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_DOWN))
+				camera_->subtractPitch(frame_time, camera_subtract_speed);
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_A))
+				camera_->moveSideLeft(frame_time * camera_speed);
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
+				camera_->subtractYaw(frame_time, camera_subtract_speed);
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_D))
+				camera_->moveSideRight(frame_time * camera_speed);
+			if(keyboard->IsKeyDown(gef::Keyboard::KC_RIGHT))
+				camera_->addYaw(frame_time * camera_speed, camera_add_speed);
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_R) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD8))
+				camera_->moveUp(frame_time * camera_speed);
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_F) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD2))
+				camera_->moveDown(frame_time * camera_speed);
 		} // keyboard
 
 		// mouse input
@@ -233,17 +253,18 @@ bool SceneApp::Update(float frame_time)
 			// camera's Yaw mouse controll, last variable controlls speed
 			//camera_->updateYaw(960, mouse_position.x, 2);
 			// camera's Pitch mouse controll, last variable controlls speed
-			camera_->updatePitch(544, mouse_position.y, 2);
+			//camera_->updatePitch(544, mouse_position.y, 2);
 			
-			if(touch_input_d3d11->is_button_down(0))
-				SetCursorPos(480, 272);
-			//glutWarpPointer(960 / 2, 544 / 2);
+			if (touch_input_d3d11->is_button_down(0))
+			{
+				//SetCursorPos(480, 272);	
+			}
 
 			gef::DebugOut("Mouse position x, y: %f %f\n", mouse_position.x, mouse_position.y);
 		} // touch_input (mouse)
 #endif // !_WIN32
 	} // input_manager_
-
+	
 	//camera_->moveSideLeft(frame_time);
 	//camera_->moveUp(frame_time);
 	camera_->update();
