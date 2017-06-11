@@ -7,13 +7,13 @@
 #include <graphics/mesh.h>
 #include <maths/math_utils.h>
 #include <input/sony_controller_input_manager.h>
-#include <input/keyboard.h>
 
 #ifdef _WIN32
 // only on windows platforms
-#include <platform/d3d11/input/input_manager_d3d11.h>
+#include <Windows.h>
 #include <platform/d3d11/input/keyboard_d3d11.h>
 #include <platform/d3d11/input/touch_input_manager_d3d11.h>
+#include <freeglut.h>
 #endif 
 
 
@@ -201,42 +201,53 @@ bool SceneApp::Update(float frame_time)
 				//{
 
 				//}
-			}
-		}
+			} // controller
+		} // controller_manager
 
+#ifdef _WIN32 // Only on windows platforms
 		// if there is a keyboard, check the arrow keys to control the direction of the character
 		gef::Keyboard* keyboard = input_manager_->keyboard();
 		if (keyboard)
 		{
+			//const gef::KeyboardD3D11* keyboard_d3d11 = (const gef::KeyboardD3D11*)keyboard;
+
+			// keyboard input
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_W))
 				camera_->moveUp(frame_time);
 			else if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
 				camera_->moveSideLeft(frame_time);
-		}
+		} // keyboard
 
+		// mouse input
 		const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
+		if (touch_input)
+		{
+			// initialise the mouse position
+			gef::Vector2 mouse_position(0.0f, 0.0f); // left upper corner of the window
 
-		// initialise the mouse position
-		gef::Vector2 mouse_position(0.0f, 0.0f);
+			// get a pointer to the d3d11 implementation of the TouchInputManager
+			const gef::TouchInputManagerD3D11* touch_input_d3d11 = (const gef::TouchInputManagerD3D11*)touch_input;
 
-#ifdef _WIN32 // Only on windows platforms
+			// get the mouse position
+			mouse_position = touch_input_d3d11->mouse_position();
+			// camera's Yaw mouse controll, last variable controlls speed
+			//camera_->updateYaw(960, mouse_position.x, 2);
+			// camera's Pitch mouse controll, last variable controlls speed
+			camera_->updatePitch(544, mouse_position.y, 2);
+			
+			if(touch_input_d3d11->is_button_down(0))
+				SetCursorPos(480, 272);
+			//glutWarpPointer(960 / 2, 544 / 2);
 
-		// get a pointer to the d3d11 implementation of the TouchInputManager
-		const gef::TouchInputManagerD3D11* touch_input_d3d11 = (const gef::TouchInputManagerD3D11*)touch_input;
-
-		// get the mouse position
-		mouse_position = touch_input_d3d11->mouse_position();
-		gef::DebugOut("Mouse position x, y: %f %f\n", mouse_position.x, mouse_position.y);
-#endif
+			gef::DebugOut("Mouse position x, y: %f %f\n", mouse_position.x, mouse_position.y);
+		} // touch_input (mouse)
+#endif // !_WIN32
 	} // input_manager_
 
-	
-	
-
-	camera_->moveSideLeft(frame_time);
+	//camera_->moveSideLeft(frame_time);
 	//camera_->moveUp(frame_time);
 	camera_->update();
-
+	
 	return true;
 }
 
