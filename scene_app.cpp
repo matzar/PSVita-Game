@@ -215,23 +215,19 @@ bool SceneApp::Update(float frame_time)
 
 	} // input_manager_
 
-	//if (input_manager_)
-	//{
-		// windows input
-		const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
+	const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
 
-		// initialise the mouse position
-		gef::Vector2 mouse_position(0.0f, 0.0f);
+	// initialise the mouse position
+	gef::Vector2 mouse_position(0.0f, 0.0f);
 
-#ifndef _WIN32 // Only on windows platforms
-		// get a pointer to the d3d11 implementation to the TouchInputManager
-		const gef::TouchInputManagerD3D11* tocuh_input_d3d11 = (const gef::TouchInputManagerD3D11*)touch_input;
+#ifdef _WIN32 // Only on windows platforms
+
+		// get a pointer to the d3d11 implementation of the TouchInputManager
+		const gef::TouchInputManagerD3D11* touch_input_d3d11 = (const gef::TouchInputManagerD3D11*)touch_input;
 
 		// get the mouse position
 		mouse_position = touch_input_d3d11->mouse_position();
-		gef::DebugOut(mouse_position, %f);
-#endif // !_WIN32 // Only on windows platforms
-	//}
+#endif
 
 	camera_->moveSideLeft(frame_time);
 	//camera_->moveUp(frame_time);
