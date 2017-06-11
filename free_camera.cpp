@@ -2,15 +2,15 @@
 #include <math.h>
 
 free_camera::free_camera() {
-	position.set_value(5.0f, 2.0f, 10.0f);
-	//lookAt.set_value(0.0f, 0.0f, 0.0f);
-	//up.set_value(0.0f, 1.0f, 0.0f);
-	//side.set_value(0.0f, 0.0f, 0.0f);
-	//forward.set_value(1.0f, 1.0f, 1.0f);
 	update();
-	setYaw(0);
-	setPitch(0);
-	setRoll(0);
+	setYaw(60.0f);
+	setPitch(-10.0f);
+	setRoll(0.0f);
+	position.set_value(	-5.0f,  4.0f,  8.0f);
+	forward.set_value(	 0.0f,  0.0f,  0.0f);
+	lookAt.set_value(	 0.0f,  0.0f,  0.0f);
+	side.set_value(		 0.0f,  0.0f,  0.0f);
+	up.set_value(		 0.0f,  0.0f,  0.0f);
 }
 
 free_camera::~free_camera() {}
