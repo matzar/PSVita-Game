@@ -9,6 +9,12 @@
 #include <input/sony_controller_input_manager.h>
 #include <input/keyboard.h>
 
+#ifdef _WIN32
+// only on windows platforms
+#include <platform/d3d11/input/keyboard_d3d11.h>
+#include <platform/d3d11/input/input_manager_d3d11.h>
+#endif 
+
 
 SceneApp::SceneApp(gef::Platform& platform) :
 	Application(platform),
@@ -195,19 +201,29 @@ bool SceneApp::Update(float frame_time)
 			}
 		}
 
-		// if there is a keyboard, check the arrow keys to control the direction of the character
-		gef::Keyboard* keyboard = input_manager_->keyboard();
-		if (keyboard)
-		{
-			if (keyboard->IsKeyDown(gef::Keyboard::KC_W))
-			{
-				gef::DebugOut("Up arraw press.\n");
-				camera_->moveForward(timeStep);
-			}
-		}
 
+
+	} // input_manager_
+
+	if (input_manager_)
+	{
+		// windows input
+		const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
+
+		// initialise the mouse position
+		gef::Vector2 mouse_position(0.0f, 0.0f);
+
+#ifndef _WIN32 // Only on windows platforms
+		// get a pointer to the d3d11 implementation to the TouchInputManager
+		const gef::TouchInputManagerD3D11* tocuh_input_d3d11 = (const gef::TouchInputManagerD3D11*)touch_input;
+
+		// get the mouse position
+		mouse_position = touch_input_d3d11->mouse_position();
+		Debug
+#endif // !_WIN32 // Only on windows platforms
 	}
-	
+
+
 	camera_->moveSideLeft(frame_time);
 	//camera_->moveUp(frame_time);
 	camera_->update();
