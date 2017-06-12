@@ -4,19 +4,18 @@
 #include "camera.h"
 #include "maths\vector4.h"
 
-
 class free_camera : public camera {
 public:
 	free_camera();
-	~free_camera();
+	inline virtual ~free_camera();
 
 	virtual void update();
-	virtual void moveForward(float dt);
-	virtual void moveBackwards(float dt);
-	virtual void moveUp(float dt);
-	virtual void moveDown(float dt);
-	virtual void moveSideLeft(float dt);
-	virtual void moveSideRight(float dt);
+	inline virtual void moveForward(float dt);
+	inline virtual void moveBackwards(float dt);
+	inline virtual void moveUp(float dt);
+	inline virtual void moveDown(float dt);
+	inline virtual void moveSideLeft(float dt);
+	inline virtual void moveSideRight(float dt);
 
 	inline virtual void addYaw(float dt, float value);
 	inline virtual void subtractYaw(float dt, float value);
@@ -25,9 +24,9 @@ public:
 	inline virtual void addRoll(float dt, float value);
 	inline virtual void subtractRoll(float dt, float value);
 
-	inline virtual float getPositionX();
-	inline virtual float getPositionY();
-	inline virtual float getPositionZ();
+	inline const virtual float getPositionX() {	return position.x(); }
+	inline const virtual float getPositionY();
+	inline const virtual float getPositionZ();
 
 	inline virtual float getForwardX();
 	inline virtual float getForwardY();
@@ -57,8 +56,8 @@ public:
 	inline virtual void setPitch(float arg);
 	inline virtual void setRoll(float arg);
 
-	virtual void updateYaw(int width, int mouseX, int speed);
-	virtual void updatePitch(int height, int mouseY, int speed);
+	inline virtual void updateYaw(int width, int mouseX, int speed);
+	inline virtual void updatePitch(int height, int mouseY, int speed);
 	void normalise();
 	//virtual void cameraControll(float dt, int width, int height, Input *input);
 private:
@@ -69,8 +68,5 @@ private:
 	gef::Vector4 side;
 	float Yaw, Pitch, Roll;
 };
-
-
-#include "free_camera.inl"
 
 #endif

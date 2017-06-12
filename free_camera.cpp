@@ -1,7 +1,6 @@
 #include "free_camera.h"
 #include <math.h>
 
-
 free_camera::free_camera() {
 	update();
 	setYaw(60.0f);
@@ -44,9 +43,9 @@ void free_camera::update() {
 	side = forward.CrossProduct(up); // this is a cross product between the forward and up vector
 }
 
-void free_camera::moveForward(float dt) {
-	position += forward * dt;
-}
+//void free_camera::moveForward(float dt) {
+//	position += forward * dt;
+//}
 
 void free_camera::moveBackwards(float dt) {
 	position -= forward * dt;

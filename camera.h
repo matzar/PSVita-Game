@@ -20,9 +20,9 @@ public:
 	inline virtual void addRoll(float dt, float value) = 0;
 	inline virtual void subtractRoll(float dt, float value) = 0;
 
-	inline virtual float getPositionX() = 0;
-	inline virtual float getPositionY() = 0;
-	inline virtual float getPositionZ() = 0;
+	inline const virtual float getPositionX() = 0;
+	inline const virtual float getPositionY() = 0;
+	inline const virtual float getPositionZ() = 0;
 
 	inline virtual float getForwardX() = 0;
 	inline virtual float getForwardY() = 0;

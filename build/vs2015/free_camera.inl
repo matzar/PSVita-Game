@@ -1,4 +1,6 @@
 
+
+
 inline free_camera::free_camera()
 {
 }
@@ -7,7 +9,7 @@ inline free_camera::~free_camera()
 {
 }
 
-inline void moveForward(float dt);
+inline void moveForward(float dt) { position += forward * dt; }
 inline void moveBackwards(float dt);
 inline void moveUp(float dt);
 inline void moveDown(float dt);
