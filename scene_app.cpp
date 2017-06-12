@@ -186,25 +186,36 @@ bool SceneApp::Update(float frame_time)
 		input_manager_->Update();
 
 		// get controller input data for all controllers
-		gef::SonyControllerInputManager* controller_manager = input_manager_->controller_input();
-		if (controller_manager)
-		{
+		//gef::SonyControllerInputManager* controller_manager = input_manager_->controller_input();
+		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
+		//if (controller_manager)
+		//{
 			// read controller data for controler 0
-			const gef::SonyController* controller = controller_manager->GetController(0);
+			//const gef::SonyController* controller = controller_manager->GetController(0);
+			
 			if (controller)
 			{
+				float camera_speed = 10.0f;
+				float camera_speed_multiplier_1 = 8.0f;
+				float camera_speed_multiplier_2 = 1.5f;
+
 				// handle input
-				if (controller->buttons_pressed() & gef_SONY_CTRL_UP)
+				if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
 				{
 					camera_->moveForward(timeStep);
 				}
-
-				//if (controller->left_stick_y_axis < 0)
-				//{
-
-				//}
+				float left_horizontal_input = controller->left_stick_x_axis();
+				gef::DebugOut("left horizontal : %f\n", left_horizontal_input);
+				if (controller->left_stick_x_axis() < 0)
+				{
+					camera_->addYaw(frame_time, -camera_speed);
+				}
+				if (controller->left_stick_x_axis() > 0)
+				{
+					camera_->addYaw(frame_time, camera_speed);
+				}
 			} // controller
-		} // controller_manager
+		//} // controller_manager
 
 #ifdef _WIN32 // Only on windows platforms
 		// if there is a keyboard, check the arrow keys to control the direction of the character
