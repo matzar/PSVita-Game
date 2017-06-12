@@ -56,6 +56,7 @@ void free_camera::DisplayCameraPosition() const
 	gef::DebugOut("SetPitch(%.1ff);\n", pitch_);
 	gef::DebugOut("SetRoll(%.1ff);\n", roll_);
 	gef::DebugOut("position_.set_value(%.1ff, %.1ff, %.1ff);\n", position_.x(), position_.y(), position_.z());
+
 	/*gef::DebugOut("ForwardX %f\n", forward_.x());
 	gef::DebugOut("ForwardY %f\n", forward_.y());
 	gef::DebugOut("ForwardZ %f\n", forward_.z());
