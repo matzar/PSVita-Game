@@ -1,7 +1,8 @@
 #include "free_camera.h"
 #include <system/debug_log.h>
-#define _USE_MATH_DEFINES
 #include <math.h>
+
+const float PI = 3.1415f;
 
 free_camera::free_camera() {
 	Update();
@@ -23,12 +24,12 @@ void free_camera::Update() {
 
 	// roll_, pitch_ and yaw_ are variables stored by the free_camera
 	// rotation handling - these values are calculated only once, when rotation changes, not every frame. 
-	cosY = cosf((yaw_ * M_PI) / 180.0f);
-	cosP = cosf((pitch_ * M_PI) / 180.0f);
-	cosR = cosf((roll_ * M_PI) / 180.0f);
-	sinY = sinf((yaw_  * M_PI) / 180.0f);
-	sinP = sinf((pitch_  * M_PI) / 180.0f);
-	sinR = sinf((roll_  * M_PI) / 180.0f);
+	cosY = cosf((yaw_ * PI) / 180.0f);
+	cosP = cosf((pitch_ * PI) / 180.0f);
+	cosR = cosf((roll_ * PI) / 180.0f);
+	sinY = sinf((yaw_  * PI) / 180.0f);
+	sinP = sinf((pitch_  * PI) / 180.0f);
+	sinR = sinf((roll_  * PI) / 180.0f);
 	// Calculate forward vector
 	forward_.set_x(sinY * cosP);
 	forward_.set_y(sinP);
