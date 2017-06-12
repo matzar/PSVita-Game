@@ -197,11 +197,6 @@ bool SceneApp::Update(float frame_time)
 			{
 				float camera_speed = 10.0f;
 
-				// handle input
-				if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
-				{
-					camera_->moveForward(timeStep);
-				}
 				float left_horizontal_input = controller->left_stick_x_axis();
 				float left_vertical_input = controller->left_stick_y_axis();
 
@@ -240,6 +235,16 @@ bool SceneApp::Update(float frame_time)
 				if (controller->right_stick_y_axis() > 0)
 				{
 					camera_->addPitch(frame_time, -camera_speed * camera_speed);
+				}
+				// buttons
+				// handle input
+				if (controller->buttons_down() & gef_SONY_CTRL_R2)
+				{
+					camera_->moveUp(timeStep * camera_speed);
+				}
+				if (controller->buttons_down() & gef_SONY_CTRL_L2)
+				{
+					camera_->moveDown(timeStep * camera_speed);
 				}
 			} // controller
 		//} // controller_manager

@@ -35,12 +35,32 @@ void free_camera::update() {
 	lookAt.set_x(position.x() + forward.x());
 	lookAt.set_y(position.y() + forward.y());
 	lookAt.set_z(position.z() + forward.z());
-	// Calculate up Vector
+	// Calculate up vector
 	up.set_x(-cosY * sinR - sinY * sinP * cosR);
 	up.set_y(cosP * cosR);
 	up.set_z(-sinY * sinR - sinP * cosR * -cosY);
 	// Calculate side Vector (right)
 	side = forward.CrossProduct(up); // this is a cross product between the forward and up vector
+}
+
+void free_camera::moveForward(float dt) {
+	position += forward * dt;
+}
+
+void free_camera::moveBackwards(float dt) {
+	position -= forward * dt;
+}
+void free_camera::moveUp(float dt) {
+	position += up * dt;
+}
+void free_camera::moveDown(float dt) {
+	position -= up * dt;
+}
+void free_camera::moveSideLeft(float dt) {
+	position -= side * dt;
+}
+void free_camera::moveSideRight(float dt) {
+	position += side * dt;
 }
 
 float free_camera::getPositionX() {
@@ -123,28 +143,8 @@ void free_camera::setRoll(float arg) {
 	Roll = arg;
 }
 
-void free_camera::moveForward(float dt) {
-	position += forward * dt;
-}
 
-void free_camera::moveBackwards(float dt) {
-	position -= forward * dt;
-}
 
-void free_camera::moveUp(float dt) {
-	position += up * dt;
-}
-void free_camera::moveDown(float dt) {
-	position -= up * dt;
-}
-
-void free_camera::moveSideRight(float dt) {
-	position += side * dt;
-}
-
-void free_camera::moveSideLeft(float dt) {
-	position -= side * dt;
-}
 
 void free_camera::addYaw(float dt, float value) {
 	Yaw += value * dt;
@@ -165,6 +165,8 @@ void free_camera::subtractRoll(float dt, float value) {
 	Roll -= value * dt;
 }
 
+
+
 void free_camera::updateYaw(int width, int mouseX, int speed) {
 	Yaw += static_cast<float>((mouseX - (width / 2)) / speed);
 }
@@ -172,6 +174,9 @@ void free_camera::updatePitch(int height, int mouseY, int speed) {
 	Pitch -= static_cast<float>((mouseY - (height / 2)) / speed);
 }
 
+void normalise() {
+
+}
 //void free_camera::cameraControll(float dt, int width, int height, Input *input) {
 //	// move camera left
 //	if (input->isKeyDown('a') || input->isKeyDown('A')) {

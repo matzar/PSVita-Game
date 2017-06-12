@@ -17,48 +17,48 @@ public:
 	virtual void moveSideLeft(float dt);
 	virtual void moveSideRight(float dt);
 
-	virtual void addYaw(float dt, float value);
-	virtual void subtractYaw(float dt, float value);
-	virtual void addPitch(float dt, float value);
-	virtual void subtractPitch(float dt, float value);
-	virtual void addRoll(float dt, float value);
-	virtual void subtractRoll(float dt, float value);
+	inline virtual void addYaw(float dt, float value);
+	inline virtual void subtractYaw(float dt, float value);
+	inline virtual void addPitch(float dt, float value);
+	inline virtual void subtractPitch(float dt, float value);
+	inline virtual void addRoll(float dt, float value);
+	inline virtual void subtractRoll(float dt, float value);
 
-	virtual float getPositionX();
-	virtual float getPositionY();
-	virtual float getPositionZ();
+	inline virtual float getPositionX();
+	inline virtual float getPositionY();
+	inline virtual float getPositionZ();
 
-	virtual float getForwardX();
-	virtual float getForwardY();
-	virtual float getForwardZ();
+	inline virtual float getForwardX();
+	inline virtual float getForwardY();
+	inline virtual float getForwardZ();
 
-	virtual float getLookAtX();
-	virtual float getLookAtY();
-	virtual float getLookAtZ();
+	inline virtual float getLookAtX();
+	inline virtual float getLookAtY();
+	inline virtual float getLookAtZ();
 
-	virtual float getUpX();
-	virtual float getUpY();
-	virtual float getUpZ();
+	inline virtual float getUpX();
+	inline virtual float getUpY();
+	inline virtual float getUpZ();
 
-	virtual float getSideX();
-	virtual float getSideY();
-	virtual float getSideZ();
+	inline virtual float getSideX();
+	inline virtual float getSideY();
+	inline virtual float getSideZ();
 
-	virtual float getYaw();
-	virtual float getPitch();
-	virtual float getRoll();
+	inline virtual float getYaw();
+	inline virtual float getPitch();
+	inline virtual float getRoll();
 
-	virtual void setLookAtX(float x);
-	virtual void setLookAtY(float y);
-	virtual void setLookAtZ(float z);
+	inline virtual void setLookAtX(float x);
+	inline virtual void setLookAtY(float y);
+	inline virtual void setLookAtZ(float z);
 
-	virtual void setYaw(float arg) ;
-	virtual void setPitch(float arg);
-	virtual void setRoll(float arg);
+	inline virtual void setYaw(float arg);
+	inline virtual void setPitch(float arg);
+	inline virtual void setRoll(float arg);
 
 	virtual void updateYaw(int width, int mouseX, int speed);
 	virtual void updatePitch(int height, int mouseY, int speed);
-
+	void normalise();
 	//virtual void cameraControll(float dt, int width, int height, Input *input);
 private:
 	gef::Vector4 position;
