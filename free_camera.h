@@ -10,55 +10,53 @@ public:
 	inline virtual ~free_camera();
 
 	virtual void update();
-	inline virtual void moveForward(float dt);
-	inline virtual void moveBackwards(float dt) { position -= forward * dt; }
+	inline virtual void moveForward(float dt) { position += forward * dt; } const 
+	inline virtual void moveBackwards(float dt) { position -= forward * dt; } const
 	inline virtual void moveUp(float dt) { position += up * dt; }
-	inline virtual void moveDown(float dt) { position -= up * dt; }
+	inline virtual void moveDown(float dt) { position -= up * dt; } 
 	inline virtual void moveSideLeft(float dt) { position -= side * dt; }
 	inline virtual void moveSideRight(float dt) { position += side * dt; }
+		   
+	inline virtual void addYaw(float dt, float value) { Yaw += value * dt; }
+	inline virtual void subtractYaw(float dt, float value) { Yaw -= value * dt; } 
+	inline virtual void addPitch(float dt, float value) { Pitch += value * dt; } 
+	inline virtual void subtractPitch(float dt, float value) { Pitch -= value * dt; } 
+	inline virtual void addRoll(float dt, float value) { Roll += value * dt; } 
+	inline virtual void subtractRoll(float dt, float value) { Roll -= value * dt; } 
 
-	inline virtual void addYaw(float dt, float value);
-	inline virtual void subtractYaw(float dt, float value);
-	inline virtual void addPitch(float dt, float value);
-	inline virtual void subtractPitch(float dt, float value);
-	inline virtual void addRoll(float dt, float value);
-	inline virtual void subtractRoll(float dt, float value);
+	inline virtual float getPositionX() {	return position.x(); } 
+	inline virtual float getPositionY() { return position.y(); } 
+	inline virtual float getPositionZ() { return position.z(); } 
+	
+	inline virtual float getForwardX() { return forward.x(); } 
+	inline virtual float getForwardY() { return forward.y(); } 
+	inline virtual float getForwardZ() { return forward.z(); } 
+	 
+	inline virtual float getLookAtX() { return lookAt.x(); } 
+	inline virtual float getLookAtY() { return lookAt.y(); } 
+	inline virtual float getLookAtZ() { return lookAt.z(); } 
+	
+	inline virtual float getUpX() { return up.x(); } 
+	inline virtual float getUpY() { return up.y(); } 
+	inline virtual float getUpZ() { return up.z(); }  
+	inline virtual float getSideX() { return side.x(); } 
+	inline virtual float getSideY() { return side.y(); } 
+	inline virtual float getSideZ() { return side.z(); } 
 
-	inline const virtual float getPositionX() {	return position.x(); }
-	inline const virtual float getPositionY() { return position.y(); }
-	inline const virtual float getPositionZ() { return position.z(); }
+	inline virtual float getYaw() { return Yaw; } 
+	inline virtual float getPitch() { return Pitch; } 
+	inline virtual float getRoll() { return Roll; }  
 
-	inline const virtual float getForwardX() { return forward.x(); }
-	inline const virtual float getForwardY() { return forward.y(); }
-	inline const virtual float getForwardZ() { return forward.z(); }
+	inline virtual void setLookAtX(float x) { lookAt.set_x(x); } 
+	inline virtual void setLookAtY(float y) { lookAt.set_y(y); } 
+	inline virtual void setLookAtZ(float z) { lookAt.set_z(z); } 
 
-	inline const virtual float getLookAtX() {	return lookAt.x(); }
-	inline const virtual float getLookAtY() { return lookAt.y(); }
-	inline const virtual float getLookAtZ() { return lookAt.z(); }
+	inline virtual void setYaw(float arg) { Yaw = arg; } 
+	inline virtual void setPitch(float arg) { Pitch = arg; } 
+	inline virtual void setRoll(float arg) { Roll = arg; }  
 
-	inline const virtual float getUpX();
-	inline const virtual float getUpY();
-	inline const virtual float getUpZ();
-
-	inline const virtual float getSideX();
-	inline const virtual float getSideY();
-	inline const virtual float getSideZ();
-
-	inline const virtual float getYaw();
-	inline const virtual float getPitch();
-	inline const virtual float getRoll();
-
-	inline virtual void setLookAtX(float x);
-	inline virtual void setLookAtY(float y);
-	inline virtual void setLookAtZ(float z);
-
-	inline virtual void setYaw(float arg);
-	inline virtual void setPitch(float arg);
-	inline virtual void setRoll(float arg);
-
-	inline virtual void updateYaw(int width, int mouseX, int speed);
-	inline virtual void updatePitch(int height, int mouseY, int speed);
-	void normalise();
+	inline virtual void updateYaw(int width, int mouseX, int speed) { Yaw += static_cast<float>((mouseX - (width / 2)) / speed); } 
+	inline virtual void updatePitch(int height, int mouseY, int speed) { Pitch -= static_cast<float>((mouseY - (height / 2)) / speed); } 
 	//virtual void cameraControll(float dt, int width, int height, Input *input);
 private:
 	gef::Vector4 position;
