@@ -54,6 +54,7 @@ void SceneApp::Init()
 	InitGround();
 
 	camera_ = new free_camera;
+	camera_->Update();
 }
 
 void SceneApp::CleanUp()
@@ -205,19 +206,19 @@ bool SceneApp::Update(float frame_time)
 				// left stick - pan controll
 				if (controller->left_stick_x_axis() < 0)
 				{
-					camera_->moveSideLeft(frame_time * camera_speed);
+					camera_->MoveSideLeft(frame_time * camera_speed);
 				}
 				if (controller->left_stick_x_axis() > 0)
 				{
-					camera_->moveSideRight(frame_time * camera_speed);
+					camera_->MoveSideRight(frame_time * camera_speed);
 				}
 				if (controller->left_stick_y_axis() < 0)
 				{
-					camera_->moveForward(frame_time * camera_speed);
+					camera_->MoveForward(frame_time * camera_speed);
 				}
 				if (controller->left_stick_y_axis() > 0)
 				{
-					camera_->moveBackwards(frame_time * camera_speed);
+					camera_->MoveBackwards(frame_time * camera_speed);
 				}
 				// right stick - yaw and pitch controll
 				if (controller->right_stick_x_axis() < 0)
@@ -226,11 +227,11 @@ bool SceneApp::Update(float frame_time)
 				}
 				if (controller->right_stick_x_axis() > 0)
 				{
-					camera_->addYaw(frame_time, camera_speed * camera_speed);
+					camera_->AddYaw(frame_time, camera_speed * camera_speed);
 				}
 				if (controller->right_stick_y_axis() < 0)
 				{
-					camera_->addPitch(frame_time, camera_speed * camera_speed);
+					camera_->AddPitch(frame_time, camera_speed * camera_speed);
 				}
 				if (controller->right_stick_y_axis() > 0)
 				{
@@ -240,11 +241,11 @@ bool SceneApp::Update(float frame_time)
 				// handle input
 				if (controller->buttons_down() & gef_SONY_CTRL_R2)
 				{
-					camera_->moveUp(timeStep * camera_speed);
+					camera_->MoveUp(timeStep * camera_speed);
 				}
 				if (controller->buttons_down() & gef_SONY_CTRL_L2)
 				{
-					camera_->moveDown(timeStep * camera_speed);
+					camera_->MoveDown(timeStep * camera_speed);
 				}
 			} // controller
 		//} // controller_manager
@@ -259,40 +260,40 @@ bool SceneApp::Update(float frame_time)
 
 			// keyboard input
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_W))
-				camera_->moveForward(frame_time * camera_speed);
+				camera_->MoveForward(frame_time * camera_speed);
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_S))
-				camera_->moveBackwards(frame_time * camera_speed);
+				camera_->MoveBackwards(frame_time * camera_speed);
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_A))
-				camera_->moveSideLeft(frame_time * camera_speed);
+				camera_->MoveSideLeft(frame_time * camera_speed);
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_D))
-				camera_->moveSideRight(frame_time * camera_speed);
+				camera_->MoveSideRight(frame_time * camera_speed);
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_UP))
-				camera_->addPitch(frame_time, camera_speed * camera_speed);
+				camera_->AddPitch(frame_time, camera_speed * camera_speed);
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_DOWN))
 				camera_->subtractPitch(frame_time, camera_speed * camera_speed);
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
 				camera_->subtractYaw(frame_time, camera_speed * camera_speed);
 			if(keyboard->IsKeyDown(gef::Keyboard::KC_RIGHT))
-				camera_->addYaw(frame_time, camera_speed * camera_speed);
+				camera_->AddYaw(frame_time, camera_speed * camera_speed);
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_R) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD8))
-				camera_->moveUp(frame_time * camera_speed);
+				camera_->MoveUp(frame_time * camera_speed);
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_F) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD2))
-				camera_->moveDown(frame_time * camera_speed);
+				camera_->MoveDown(frame_time * camera_speed);
 
-			gef::DebugOut("Yaw %f\n", camera_->getYaw());
-			gef::DebugOut("Pitch %f\n", camera_->getPitch());
-			gef::DebugOut("ForwardX %f\n", camera_->getForawrdVector().x());
-			gef::DebugOut("ForwardY %f\n", camera_->getForawrdVector().y());
-			gef::DebugOut("ForwardZ %f\n", camera_->getForawrdVector().z());
-			gef::DebugOut("LookAtX %f\n", camera_->getLookAtVector().x());
-			gef::DebugOut("LookAtY %f\n", camera_->getLookAtVector().y());
-			gef::DebugOut("LookAtZ %f\n", camera_->getLookAtVector().z());
-			gef::DebugOut("SideX %f\n", camera_->getSideVector().x());
-			gef::DebugOut("SideY %f\n", camera_->getSideVector().y());
-			gef::DebugOut("SideZ %f\n", camera_->getSideVector().z());
-			gef::DebugOut("UpX %f\n", camera_->getUpVector().x());
-			gef::DebugOut("UpY %f\n", camera_->getUpVector().y());
-			gef::DebugOut("UpZ %f\n", camera_->getUpVector().z());
+			gef::DebugOut("Yaw %f\n", camera_->GetYaw());
+			gef::DebugOut("Pitch %f\n", camera_->GetPitch());
+			gef::DebugOut("ForwardX %f\n", camera_->GetForawrdVector().x());
+			gef::DebugOut("ForwardY %f\n", camera_->GetForawrdVector().y());
+			gef::DebugOut("ForwardZ %f\n", camera_->GetForawrdVector().z());
+			gef::DebugOut("LookAtX %f\n", camera_->GetLookAtVector().x());
+			gef::DebugOut("LookAtY %f\n", camera_->GetLookAtVector().y());
+			gef::DebugOut("LookAtZ %f\n", camera_->GetLookAtVector().z());
+			gef::DebugOut("SideX %f\n", camera_->GetSideVector().x());
+			gef::DebugOut("SideY %f\n", camera_->GetSideVector().y());
+			gef::DebugOut("SideZ %f\n", camera_->GetSideVector().z());
+			gef::DebugOut("UpX %f\n", camera_->GetUpVector().x());
+			gef::DebugOut("UpY %f\n", camera_->GetUpVector().y());
+			gef::DebugOut("UpZ %f\n", camera_->GetUpVector().z());
 		} // keyboard
 
 		// mouse input
@@ -324,7 +325,7 @@ bool SceneApp::Update(float frame_time)
 	
 	//camera_->moveSideLeft(frame_time);
 	//camera_->moveUp(frame_time);
-	camera_->update();
+	//camera_->update();
 	
 	return true;
 }
@@ -341,9 +342,9 @@ void SceneApp::Render()
 	renderer_3d_->set_projection_matrix(projection_matrix);
 
 	// view
-	gef::Vector4 camera_eye(camera_->getPositionVector().x(), camera_->getPositionVector().y(), camera_->getPositionVector().z());
-	gef::Vector4 camera_lookat(camera_->getLookAtVector().x(), camera_->getLookAtVector().y(), camera_->getLookAtVector().z());
-	gef::Vector4 camera_up(camera_->getUpVector().x(), camera_->getUpVector().y(), camera_->getUpVector().z());
+	gef::Vector4 camera_eye(camera_->GetPositionVector().x(), camera_->GetPositionVector().y(), camera_->GetPositionVector().z());
+	gef::Vector4 camera_lookat(camera_->GetLookAtVector().x(), camera_->GetLookAtVector().y(), camera_->GetLookAtVector().z());
+	gef::Vector4 camera_up(camera_->GetUpVector().x(), camera_->GetUpVector().y(), camera_->GetUpVector().z());
 	gef::Matrix44 view_matrix;
 	view_matrix.LookAt(camera_eye, camera_lookat, camera_up);
 	renderer_3d_->set_view_matrix(view_matrix);

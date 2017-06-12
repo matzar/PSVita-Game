@@ -2,10 +2,10 @@
 #include <math.h>
 
 free_camera::free_camera() {
-	update();
-	setYaw(60.0f);
-	setPitch(-10.0f);
-	setRoll(0.0f);
+	Update();
+	SetYaw(60.0f);
+	SetPitch(-10.0f);
+	SetRoll(0.0f);
 	position_.set_value(-5.0f, 4.0f, 8.0f);
 	forward_.set_value(0.0f, 0.0f, 0.0f);
 	look_at_.set_value(0.0f, 0.0f, 0.0f);
@@ -13,7 +13,7 @@ free_camera::free_camera() {
 	up_.set_value(0.0f, 0.0f, 0.0f);
 }
 
-void free_camera::update() {
+void free_camera::Update() {
 	float cosR, cosP, cosY;	//temp values for sin/cos from 
 	float sinR, sinP, sinY;
 	// Roll, Pitch and Yall are variables stored by the free_camera

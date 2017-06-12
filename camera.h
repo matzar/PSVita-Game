@@ -7,36 +7,36 @@ class camera
 {
 public:
 	inline virtual ~camera() {}
-	virtual void update() = 0;
-	inline virtual void moveForward(float dt) = 0;
-	inline virtual void moveBackwards(float dt) = 0;
+	virtual void Update() = 0;
+	inline virtual void MoveForward(float dt) = 0;
+	inline virtual void MoveBackwards(float dt) = 0;
 
-	inline virtual void moveUp(float dt) = 0;
-	inline virtual void moveDown(float dt) = 0;
+	inline virtual void MoveUp(float dt) = 0;
+	inline virtual void MoveDown(float dt) = 0;
 
-	inline virtual void moveSideLeft(float dt) = 0;
-	inline virtual void moveSideRight(float dt) = 0;
+	inline virtual void MoveSideLeft(float dt) = 0;
+	inline virtual void MoveSideRight(float dt) = 0;
 
-	inline virtual float getYaw() = 0;
-	inline virtual void setYaw(float arg) = 0;
-	inline virtual void addYaw(float dt, float value) = 0;
+	inline virtual float GetYaw() = 0;
+	inline virtual void SetYaw(float arg) = 0;
+	inline virtual void AddYaw(float dt, float value) = 0;
 	inline virtual void subtractYaw(float dt, float value) = 0;
 
-	inline virtual float getPitch() = 0;
-	inline virtual void setPitch(float arg) = 0;
-	inline virtual void addPitch(float dt, float value) = 0;
+	inline virtual float GetPitch() = 0;
+	inline virtual void SetPitch(float arg) = 0;
+	inline virtual void AddPitch(float dt, float value) = 0;
 	inline virtual void subtractPitch(float dt, float value) = 0;
 
-	inline virtual float getRoll() = 0;
-	inline virtual void setRoll(float arg) = 0;
-	inline virtual void addRoll(float dt, float value) = 0;
+	inline virtual float GetRoll() = 0;
+	inline virtual void SetRoll(float arg) = 0;
+	inline virtual void AddRoll(float dt, float value) = 0;
 	inline virtual void subtractRoll(float dt, float value) = 0;
 	
-	inline virtual gef::Vector4 getPositionVector() = 0;
-	inline virtual gef::Vector4 getForawrdVector() = 0;
-	inline virtual gef::Vector4 getLookAtVector() = 0;
-	inline virtual gef::Vector4 getSideVector() = 0;
-	inline virtual gef::Vector4 getUpVector() = 0;
+	inline virtual gef::Vector4 GetPositionVector() = 0;
+	inline virtual gef::Vector4 GetForawrdVector() = 0;
+	inline virtual gef::Vector4 GetLookAtVector() = 0;
+	inline virtual gef::Vector4 GetSideVector() = 0;
+	inline virtual gef::Vector4 GetUpVector() = 0;
 
 	//inline virtual void updateYaw(int width, int mouseX, int speed) = 0;
 	//inline virtual void updatePitch(int height, int mouseY, int speed) = 0;
