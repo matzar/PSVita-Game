@@ -1,5 +1,6 @@
 #ifndef _CAMERA_H
 #define _CAMERA_H
+
 #include "maths\vector4.h"
 
 class camera
@@ -30,26 +31,6 @@ public:
 	inline virtual void setRoll(float arg) = 0;
 	inline virtual void addRoll(float dt, float value) = 0;
 	inline virtual void subtractRoll(float dt, float value) = 0;
-
-	inline virtual float getPositionX() = 0;
-	inline virtual float getPositionY() = 0;
-	inline virtual float getPositionZ() = 0;
-	
-	inline virtual float getForwardX() = 0;
-	inline virtual float getForwardY() = 0;
-	inline virtual float getForwardZ() = 0;
-	
-	inline virtual float getLookAtX() = 0;
-	inline virtual float getLookAtY() = 0;
-	inline virtual float getLookAtZ() = 0;
-	
-	inline virtual float getSideX() = 0;
-	inline virtual float getSideY() = 0;
-	inline virtual float getSideZ() = 0;
-
-	inline virtual float getUpX() = 0;
-	inline virtual float getUpY() = 0;
-	inline virtual float getUpZ() = 0;
 	
 	inline virtual gef::Vector4 getPositionVector() = 0;
 	inline virtual gef::Vector4 getForawrdVector() = 0;
@@ -57,8 +38,8 @@ public:
 	inline virtual gef::Vector4 getSideVector() = 0;
 	inline virtual gef::Vector4 getUpVector() = 0;
 
-	inline virtual void updateYaw(int width, int mouseX, int speed) = 0;
-	inline virtual void updatePitch(int height, int mouseY, int speed) = 0;
+	//inline virtual void updateYaw(int width, int mouseX, int speed) = 0;
+	//inline virtual void updatePitch(int height, int mouseY, int speed) = 0;
 	//virtual void cameraControll(float dt, int width, int height) const = 0;
 };
 

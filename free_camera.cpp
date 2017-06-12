@@ -13,8 +13,6 @@ free_camera::free_camera() {
 	up_.set_value(0.0f, 0.0f, 0.0f);
 }
 
-free_camera::~free_camera() {}
-
 void free_camera::update() {
 	float cosR, cosP, cosY;	//temp values for sin/cos from 
 	float sinR, sinP, sinY;
