@@ -11,11 +11,11 @@ public:
 
 	virtual void update();
 	inline virtual void moveForward(float dt);
-	inline virtual void moveBackwards(float dt);
-	inline virtual void moveUp(float dt);
-	inline virtual void moveDown(float dt);
-	inline virtual void moveSideLeft(float dt);
-	inline virtual void moveSideRight(float dt);
+	inline virtual void moveBackwards(float dt) { position -= forward * dt; }
+	inline virtual void moveUp(float dt) { position += up * dt; }
+	inline virtual void moveDown(float dt) { position -= up * dt; }
+	inline virtual void moveSideLeft(float dt) { position -= side * dt; }
+	inline virtual void moveSideRight(float dt) { position += side * dt; }
 
 	inline virtual void addYaw(float dt, float value);
 	inline virtual void subtractYaw(float dt, float value);
@@ -25,28 +25,28 @@ public:
 	inline virtual void subtractRoll(float dt, float value);
 
 	inline const virtual float getPositionX() {	return position.x(); }
-	inline const virtual float getPositionY();
-	inline const virtual float getPositionZ();
+	inline const virtual float getPositionY() { return position.y(); }
+	inline const virtual float getPositionZ() { return position.z(); }
 
-	inline virtual float getForwardX();
-	inline virtual float getForwardY();
-	inline virtual float getForwardZ();
+	inline const virtual float getForwardX() { return forward.x(); }
+	inline const virtual float getForwardY() { return forward.y(); }
+	inline const virtual float getForwardZ() { return forward.z(); }
 
-	inline virtual float getLookAtX();
-	inline virtual float getLookAtY();
-	inline virtual float getLookAtZ();
+	inline const virtual float getLookAtX() {	return lookAt.x(); }
+	inline const virtual float getLookAtY() { return lookAt.y(); }
+	inline const virtual float getLookAtZ() { return lookAt.z(); }
 
-	inline virtual float getUpX();
-	inline virtual float getUpY();
-	inline virtual float getUpZ();
+	inline const virtual float getUpX();
+	inline const virtual float getUpY();
+	inline const virtual float getUpZ();
 
-	inline virtual float getSideX();
-	inline virtual float getSideY();
-	inline virtual float getSideZ();
+	inline const virtual float getSideX();
+	inline const virtual float getSideY();
+	inline const virtual float getSideZ();
 
-	inline virtual float getYaw();
-	inline virtual float getPitch();
-	inline virtual float getRoll();
+	inline const virtual float getYaw();
+	inline const virtual float getPitch();
+	inline const virtual float getRoll();
 
 	inline virtual void setLookAtX(float x);
 	inline virtual void setLookAtY(float y);

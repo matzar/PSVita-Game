@@ -47,52 +47,6 @@ void free_camera::update() {
 //	position += forward * dt;
 //}
 
-void free_camera::moveBackwards(float dt) {
-	position -= forward * dt;
-}
-void free_camera::moveUp(float dt) {
-	position += up * dt;
-}
-void free_camera::moveDown(float dt) {
-	position -= up * dt;
-}
-void free_camera::moveSideLeft(float dt) {
-	position -= side * dt;
-}
-void free_camera::moveSideRight(float dt) {
-	position += side * dt;
-}
-
-float free_camera::getPositionX() {
-	return position.x();
-}
-float free_camera::getPositionY() {
-	return position.y();
-}
-float free_camera::getPositionZ() {
-	return position.z();
-}
-
-float free_camera::getForwardX() {
-	return forward.x();
-}
-float free_camera::getForwardY() {
-	return forward.y();
-}
-float free_camera::getForwardZ() {
-	return forward.z();
-}
-
-float free_camera::getLookAtX() {
-	return lookAt.x();
-}
-float free_camera::getLookAtY() {
-	return lookAt.y();
-}
-float free_camera::getLookAtZ() {
-	return lookAt.z();
-}
-
 float free_camera::getUpX() {
 	return up.x();
 }
