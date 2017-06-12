@@ -196,8 +196,7 @@ bool SceneApp::Update(float frame_time)
 			if (controller)
 			{
 				float camera_speed = 10.0f;
-				float camera_speed_multiplier_1 = 8.0f;
-				float camera_speed_multiplier_2 = 1.5f;
+				float camera_speed_multiplier = 10.0f;
 
 				// handle input
 				if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
@@ -205,14 +204,43 @@ bool SceneApp::Update(float frame_time)
 					camera_->moveForward(timeStep);
 				}
 				float left_horizontal_input = controller->left_stick_x_axis();
-				gef::DebugOut("left horizontal : %f\n", left_horizontal_input);
+				float left_vertical_input = controller->left_stick_y_axis();
+
+				float right_horizontal_input = controller->right_stick_x_axis();
+				float right_vertical_input = controller->right_stick_y_axis();
+				// left stick - pan controll
 				if (controller->left_stick_x_axis() < 0)
 				{
-					camera_->addYaw(frame_time, -camera_speed);
+					camera_->moveSideLeft(frame_time * camera_speed);
 				}
 				if (controller->left_stick_x_axis() > 0)
 				{
-					camera_->addYaw(frame_time, camera_speed);
+					camera_->moveSideRight(frame_time * camera_speed);
+				}
+				if (controller->left_stick_y_axis() < 0)
+				{
+					camera_->moveForward(frame_time * camera_speed);
+				}
+				if (controller->left_stick_y_axis() > 0)
+				{
+					camera_->moveBackwards(frame_time * camera_speed);
+				}
+				// right stick - yaw and pitch controll
+				if (controller->right_stick_x_axis() < 0)
+				{
+					camera_->addYaw(frame_time, -camera_speed * camera_speed_multiplier);
+				}
+				if (controller->right_stick_x_axis() > 0)
+				{
+					camera_->addYaw(frame_time, camera_speed * camera_speed_multiplier);
+				}
+				if (controller->right_stick_y_axis() < 0)
+				{
+					camera_->addPitch(frame_time, camera_speed * camera_speed_multiplier);
+				}
+				if (controller->right_stick_y_axis() > 0)
+				{
+					camera_->addPitch(frame_time, -camera_speed * camera_speed_multiplier);
 				}
 			} // controller
 		//} // controller_manager
