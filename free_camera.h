@@ -10,8 +10,8 @@ public:
 	inline virtual ~free_camera();
 
 	virtual void update();
-	inline virtual void moveForward(float dt) { position += forward * dt; } const 
-	inline virtual void moveBackwards(float dt) { position -= forward * dt; } const
+	inline virtual void moveForward(float dt) { position += forward * dt; }
+	inline virtual void moveBackwards(float dt) { position -= forward * dt; }
 	inline virtual void moveUp(float dt) { position += up * dt; }
 	inline virtual void moveDown(float dt) { position -= up * dt; } 
 	inline virtual void moveSideLeft(float dt) { position -= side * dt; }

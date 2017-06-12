@@ -222,7 +222,7 @@ bool SceneApp::Update(float frame_time)
 				// right stick - yaw and pitch controll
 				if (controller->right_stick_x_axis() < 0)
 				{
-					camera_->addYaw(frame_time, -camera_speed * camera_speed);
+					camera_->subtractYaw(frame_time, camera_speed * camera_speed);
 				}
 				if (controller->right_stick_x_axis() > 0)
 				{
@@ -234,7 +234,7 @@ bool SceneApp::Update(float frame_time)
 				}
 				if (controller->right_stick_y_axis() > 0)
 				{
-					camera_->addPitch(frame_time, -camera_speed * camera_speed);
+					camera_->subtractPitch(frame_time, camera_speed * camera_speed);
 				}
 				// buttons
 				// handle input
@@ -269,11 +269,11 @@ bool SceneApp::Update(float frame_time)
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_UP))
 				camera_->addPitch(frame_time, camera_speed * camera_speed);
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_DOWN))
-				camera_->addPitch(frame_time, -camera_speed * camera_speed);
+				camera_->subtractPitch(frame_time, camera_speed * camera_speed);
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
-				camera_->addYaw(frame_time, -camera_speed * camera_speed);
+				camera_->subtractYaw(frame_time, camera_speed * camera_speed);
 			if(keyboard->IsKeyDown(gef::Keyboard::KC_RIGHT))
-				camera_->addYaw(frame_time * camera_speed, camera_speed);
+				camera_->addYaw(frame_time, camera_speed * camera_speed);
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_R) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD8))
 				camera_->moveUp(frame_time * camera_speed);
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_F) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD2))
