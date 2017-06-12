@@ -14,11 +14,6 @@ free_camera::free_camera() {
 	SetPitch(-15.0f);
 	SetRoll(0.0f);
 	position_.set_value(-6.4f, 3.8f, 3.9f);
-
-	/*forward_.set_value(0.0f, 0.0f, 0.0f);
-	look_at_.set_value(0.0f, 0.0f, 0.0f);
-	side_.set_value(0.0f, 0.0f, 0.0f);
-	up_.set_value(0.0f, 0.0f, 0.0f);*/
 }
 
 void free_camera::Update() {
@@ -56,36 +51,4 @@ void free_camera::DisplayCameraPosition() const
 	gef::DebugOut("SetPitch(%.1ff);\n", pitch_);
 	gef::DebugOut("SetRoll(%.1ff);\n", roll_);
 	gef::DebugOut("position_.set_value(%.1ff, %.1ff, %.1ff);\n", position_.x(), position_.y(), position_.z());
-
-	/*gef::DebugOut("ForwardX %f\n", forward_.x());
-	gef::DebugOut("ForwardY %f\n", forward_.y());
-	gef::DebugOut("ForwardZ %f\n", forward_.z());
-	gef::DebugOut("LookAtX %f\n", look_at_.x());
-	gef::DebugOut("LookAtY %f\n", look_at_.y());
-	gef::DebugOut("LookAtZ %f\n", look_at_.z());
-	gef::DebugOut("SideX %f\n", side_.x());
-	gef::DebugOut("SideY %f\n", side_.y());
-	gef::DebugOut("SideZ %f\n", side_.z());
-	gef::DebugOut("UpX %f\n", up_.x());
-	gef::DebugOut("UpY %f\n", up_.y());
-	gef::DebugOut("UpZ %f\n", up_.z());*/
 }
-
-//void free_camera::cameraControll(float dt, int width, int height, Input *input) {
-//	// move camera left
-//	if (input->isKeyDown('a') || input->isKeyDown('A')) {
-//		moveSideLeft(dt);
-//	}
-//	// move camera right
-//	if (input->isKeyDown('d') || input->isKeyDown('D')) {
-//		moveSideRight(dt);
-//	}
-//	// move camera up
-//	if (input->isKeyDown('w') || input->isKeyDown('W')) {
-//		moveUp(dt);
-//	}
-//	// move camera down
-//	if (input->isKeyDown('s') || input->isKeyDown('S')) {
-//		moveDown(dt);
-//	}
-//}
