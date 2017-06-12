@@ -10,60 +10,66 @@ public:
 	inline virtual ~free_camera();
 
 	virtual void update();
-	inline virtual void moveForward(float dt) { position += forward * dt; }
-	inline virtual void moveBackwards(float dt) { position -= forward * dt; }
+	inline virtual void moveForward(float dt) { position_ += forward_ * dt; }
+	inline virtual void moveBackwards(float dt) { position_ -= forward_ * dt; }
 
-	inline virtual void moveUp(float dt) { position += up * dt; }
-	inline virtual void moveDown(float dt) { position -= up * dt; } 
+	inline virtual void moveUp(float dt) { position_ += up_ * dt; }
+	inline virtual void moveDown(float dt) { position_ -= up_ * dt; } 
 
-	inline virtual void moveSideLeft(float dt) { position -= side * dt; }
-	inline virtual void moveSideRight(float dt) { position += side * dt; }
+	inline virtual void moveSideLeft(float dt) { position_ -= side_ * dt; }
+	inline virtual void moveSideRight(float dt) { position_ += side_ * dt; }
 		   
-	inline virtual float getYaw() { return Yaw; }
-	inline virtual void setYaw(float arg) { Yaw = arg; }
-	inline virtual void addYaw(float dt, float value) { Yaw += value * dt; }
-	inline virtual void subtractYaw(float dt, float value) { Yaw -= value * dt; } 
+	inline virtual float getYaw() { return yaw_; }
+	inline virtual void setYaw(float arg) { yaw_ = arg; }
+	inline virtual void addYaw(float dt, float value) { yaw_ += value * dt; }
+	inline virtual void subtractYaw(float dt, float value) { yaw_ -= value * dt; } 
 
-	inline virtual float getRoll() { return Roll; }
-	inline virtual void setPitch(float arg) { Pitch = arg; }
-	inline virtual void addPitch(float dt, float value) { Pitch += value * dt; } 
-	inline virtual void subtractPitch(float dt, float value) { Pitch -= value * dt; } 
+	inline virtual float getRoll() { return roll_; }
+	inline virtual void setPitch(float arg) { pitch_ = arg; }
+	inline virtual void addPitch(float dt, float value) { pitch_ += value * dt; } 
+	inline virtual void subtractPitch(float dt, float value) { pitch_ -= value * dt; } 
 
-	inline virtual float getPitch() { return Pitch; }
-	inline virtual void setRoll(float arg) { Roll = arg; }
-	inline virtual void addRoll(float dt, float value) { Roll += value * dt; } 
-	inline virtual void subtractRoll(float dt, float value) { Roll -= value * dt; } 
+	inline virtual float getPitch() { return pitch_; }
+	inline virtual void setRoll(float arg) { roll_ = arg; }
+	inline virtual void addRoll(float dt, float value) { roll_ += value * dt; } 
+	inline virtual void subtractRoll(float dt, float value) { roll_ -= value * dt; } 
 
-	inline virtual float getPositionX() {	return position.x(); } 
-	inline virtual float getPositionY() { return position.y(); } 
-	inline virtual float getPositionZ() { return position.z(); } 
+	inline virtual float getposition_X() {	return position_.x(); } 
+	inline virtual float getposition_Y() { return position_.y(); } 
+	inline virtual float getposition_Z() { return position_.z(); } 
 	
-	inline virtual float getForwardX() { return forward.x(); } 
-	inline virtual float getForwardY() { return forward.y(); } 
-	inline virtual float getForwardZ() { return forward.z(); } 
+	inline virtual float getForwardX() { return forward_.x(); } 
+	inline virtual float getForwardY() { return forward_.y(); } 
+	inline virtual float getForwardZ() { return forward_.z(); } 
 	 
-	inline virtual float getLookAtX() { return lookAt.x(); } 
-	inline virtual float getLookAtY() { return lookAt.y(); } 
-	inline virtual float getLookAtZ() { return lookAt.z(); } 
+	inline virtual float getLookAtX() { return look_at_.x(); } 
+	inline virtual float getLookAtY() { return look_at_.y(); } 
+	inline virtual float getLookAtZ() { return look_at_.z(); } 
 	
-	inline virtual float getSideX() { return side.x(); } 
-	inline virtual float getSideY() { return side.y(); } 
-	inline virtual float getSideZ() { return side.z(); } 
+	inline virtual float getSideX() { return side_.x(); } 
+	inline virtual float getSideY() { return side_.y(); } 
+	inline virtual float getSideZ() { return side_.z(); } 
 
-	inline virtual float getUpX() { return up.x(); } 
-	inline virtual float getUpY() { return up.y(); } 
-	inline virtual float getUpZ() { return up.z(); }  
+	inline virtual float getUpX() { return up_.x(); } 
+	inline virtual float getUpY() { return up_.y(); } 
+	inline virtual float getUpZ() { return up_.z(); }  
 
-	inline virtual void updateYaw(int width, int mouseX, int speed) { Yaw += static_cast<float>((mouseX - (width / 2)) / speed); } 
-	inline virtual void updatePitch(int height, int mouseY, int speed) { Pitch -= static_cast<float>((mouseY - (height / 2)) / speed); } 
+	inline virtual gef::Vector4 getposition_Vector() { return position_; }
+	inline virtual gef::Vector4 getForawrdVector() { return forward_; }
+	inline virtual gef::Vector4 getLookAtVector() { return look_at_; }
+	inline virtual gef::Vector4 getSideVector() { return side_; }
+	inline virtual gef::Vector4 getUpVector() { return up_; }
+
+	inline virtual void up_dateYaw(int width, int mouseX, int speed) { yaw_ += static_cast<float>((mouseX - (width / 2)) / speed); } 
+	inline virtual void up_datePitch(int height, int mouseY, int speed) { pitch_ -= static_cast<float>((mouseY - (height / 2)) / speed); } 
 	//virtual void cameraControll(float dt, int width, int height, Input *input);
 private:
-	gef::Vector4 position;
-	gef::Vector4 lookAt;
-	gef::Vector4 forward;
-	gef::Vector4 up;
-	gef::Vector4 side;
-	float Yaw, Pitch, Roll;
+	gef::Vector4 position_;
+	gef::Vector4 look_at_;
+	gef::Vector4 forward_;
+	gef::Vector4 up_;
+	gef::Vector4 side_;
+	float yaw_, pitch_, roll_;
 };
 
 #endif

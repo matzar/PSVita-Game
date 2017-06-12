@@ -279,7 +279,7 @@ bool SceneApp::Update(float frame_time)
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_F) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD2))
 				camera_->moveDown(frame_time * camera_speed);
 
-			/*gef::DebugOut("Yaw %f\n", camera_->getYaw());
+			gef::DebugOut("Yaw %f\n", camera_->getForawrdVector().x());
 			gef::DebugOut("Pitch %f\n", camera_->getPitch());
 			gef::DebugOut("ForwardX %f\n", camera_->getForwardX());
 			gef::DebugOut("ForwardY %f\n", camera_->getForwardY());
@@ -292,7 +292,7 @@ bool SceneApp::Update(float frame_time)
 			gef::DebugOut("SideZ %f\n", camera_->getSideZ());
 			gef::DebugOut("UpX %f\n", camera_->getUpX());
 			gef::DebugOut("UpY %f\n", camera_->getUpY());
-			gef::DebugOut("UpZ %f\n", camera_->getUpZ());*/
+			gef::DebugOut("UpZ %f\n", camera_->getUpZ());
 		} // keyboard
 
 		// mouse input

@@ -1,5 +1,6 @@
 #ifndef _CAMERA_H
 #define _CAMERA_H
+#include "maths\vector4.h"
 
 class camera
 {
@@ -50,6 +51,12 @@ public:
 	inline virtual float getUpY() = 0;
 	inline virtual float getUpZ() = 0;
 	
+	inline virtual gef::Vector4 getPositionVector() = 0;
+	inline virtual gef::Vector4 getForawrdVector() = 0;
+	inline virtual gef::Vector4 getLookAtVector() = 0;
+	inline virtual gef::Vector4 getSideVector() = 0;
+	inline virtual gef::Vector4 getUpVector() = 0;
+
 	inline virtual void updateYaw(int width, int mouseX, int speed) = 0;
 	inline virtual void updatePitch(int height, int mouseY, int speed) = 0;
 	//virtual void cameraControll(float dt, int width, int height) const = 0;
