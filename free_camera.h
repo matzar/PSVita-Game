@@ -42,6 +42,7 @@ public:
 	inline const virtual gef::Vector4 GetUpVector() const { return up_; }
 
 	virtual void DisplayCameraPosition() const;
+
 	//inline virtual void up_dateYaw(int width, int mouseX, int speed) { yaw_ += static_cast<float>((mouseX - (width / 2)) / speed); } 
 	//inline virtual void up_datePitch(int height, int mouseY, int speed) { pitch_ -= static_cast<float>((mouseY - (height / 2)) / speed); } 
 	//virtual void cameraControll(float dt, int width, int height, Input *input);
