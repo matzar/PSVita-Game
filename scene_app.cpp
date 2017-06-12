@@ -249,7 +249,7 @@ bool SceneApp::Update(float frame_time)
 				{
 					camera_->MoveDown(timeStep * camera_speed);
 				}
-				if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
+				if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
 				{
 					camera_->DisplayCameraPosition();
 				}
