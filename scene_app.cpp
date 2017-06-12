@@ -55,6 +55,7 @@ void SceneApp::Init()
 
 	camera_ = new free_camera;
 	camera_->Update();
+	camera_->DisplayCameraPosition();
 }
 
 void SceneApp::CleanUp()
@@ -228,6 +229,7 @@ bool SceneApp::Update(float frame_time)
 				if (controller->right_stick_x_axis() > 0)
 				{
 					camera_->AddYaw(frame_time, camera_speed * camera_speed);
+					
 				}
 				if (controller->right_stick_y_axis() < 0)
 				{
@@ -246,6 +248,10 @@ bool SceneApp::Update(float frame_time)
 				if (controller->buttons_down() & gef_SONY_CTRL_L2)
 				{
 					camera_->MoveDown(timeStep * camera_speed);
+				}
+				if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
+				{
+					camera_->DisplayCameraPosition();
 				}
 			} // controller
 		//} // controller_manager
@@ -280,7 +286,7 @@ bool SceneApp::Update(float frame_time)
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_F) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD2))
 				camera_->MoveDown(frame_time * camera_speed);
 
-			gef::DebugOut("Yaw %f\n", camera_->GetYaw());
+			/*gef::DebugOut("Yaw %f\n", camera_->GetYaw());
 			gef::DebugOut("Pitch %f\n", camera_->GetPitch());
 			gef::DebugOut("ForwardX %f\n", camera_->GetForawrdVector().x());
 			gef::DebugOut("ForwardY %f\n", camera_->GetForawrdVector().y());
@@ -293,7 +299,7 @@ bool SceneApp::Update(float frame_time)
 			gef::DebugOut("SideZ %f\n", camera_->GetSideVector().z());
 			gef::DebugOut("UpX %f\n", camera_->GetUpVector().x());
 			gef::DebugOut("UpY %f\n", camera_->GetUpVector().y());
-			gef::DebugOut("UpZ %f\n", camera_->GetUpVector().z());
+			gef::DebugOut("UpZ %f\n", camera_->GetUpVector().z());*/
 		} // keyboard
 
 		// mouse input
@@ -318,7 +324,7 @@ bool SceneApp::Update(float frame_time)
 				//SetCursorPos(480, 272);	
 			}
 
-			gef::DebugOut("Mouse position x, y: %f %f\n", mouse_position.x, mouse_position.y);
+			//gef::DebugOut("Mouse position x, y: %f %f\n", mouse_position.x, mouse_position.y);
 		} // touch_input (mouse)
 #endif // !_WIN32
 	} // input_manager_
