@@ -20,26 +20,26 @@ public:
 	inline virtual void MoveSideLeft(float dt) { position_ -= side_ * dt; Update(); }
 	inline virtual void MoveSideRight(float dt) { position_ += side_ * dt; Update(); }
 		   
-	inline virtual float GetYaw() { return yaw_; Update(); }
+	inline const virtual float GetYaw() const { return yaw_; }
 	inline virtual void SetYaw(float arg) { yaw_ = arg; Update(); }
 	inline virtual void AddYaw(float dt, float value) { yaw_ += value * dt; Update(); }
 	inline virtual void subtractYaw(float dt, float value) { yaw_ -= value * dt; Update(); } 
 
-	inline virtual float GetPitch() { return pitch_; Update(); }
+	inline const virtual float GetPitch() const { return pitch_; }
 	inline virtual void SetPitch(float arg) { pitch_ = arg; Update(); }
 	inline virtual void AddPitch(float dt, float value) { pitch_ += value * dt; Update(); } 
 	inline virtual void subtractPitch(float dt, float value) { pitch_ -= value * dt; Update(); } 
 
-	inline virtual float GetRoll() { return roll_; Update(); }
+	inline const virtual float GetRoll() const { return roll_; }
 	inline virtual void SetRoll(float arg) { roll_ = arg; Update(); }
 	inline virtual void AddRoll(float dt, float value) { roll_ += value * dt; Update(); } 
 	inline virtual void subtractRoll(float dt, float value) { roll_ -= value * dt; Update(); } 
 
-	inline const virtual gef::Vector4 GetPositionVector() { return position_; }
-	inline const virtual gef::Vector4 GetForawrdVector() { return forward_; }
-	inline const virtual gef::Vector4 GetLookAtVector() { return look_at_; }
-	inline const virtual gef::Vector4 GetSideVector() { return side_; }
-	inline const virtual gef::Vector4 GetUpVector() { return up_; }
+	inline const virtual gef::Vector4 GetPositionVector() const { return position_; }
+	inline const virtual gef::Vector4 GetForawrdVector() const { return forward_; }
+	inline const virtual gef::Vector4 GetLookAtVector() const { return look_at_; }
+	inline const virtual gef::Vector4 GetSideVector() const { return side_; }
+	inline const virtual gef::Vector4 GetUpVector() const { return up_; }
 
 	virtual void DisplayCameraPosition() const;
 	//inline virtual void up_dateYaw(int width, int mouseX, int speed) { yaw_ += static_cast<float>((mouseX - (width / 2)) / speed); } 
