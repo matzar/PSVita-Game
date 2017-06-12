@@ -4,6 +4,7 @@
 #include "camera.h"
 #include "maths\vector4.h"
 
+
 class free_camera : public camera {
 public:
 	free_camera();
@@ -68,5 +69,8 @@ private:
 	gef::Vector4 side;
 	float Yaw, Pitch, Roll;
 };
+
+
+#include "free_camera.inl"
 
 #endif

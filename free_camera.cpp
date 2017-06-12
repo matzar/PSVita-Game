@@ -1,16 +1,17 @@
 #include "free_camera.h"
 #include <math.h>
 
+
 free_camera::free_camera() {
 	update();
 	setYaw(60.0f);
 	setPitch(-10.0f);
 	setRoll(0.0f);
-	position.set_value(	-5.0f,  4.0f,  8.0f);
-	forward.set_value(	 0.0f,  0.0f,  0.0f);
-	lookAt.set_value(	 0.0f,  0.0f,  0.0f);
-	side.set_value(		 0.0f,  0.0f,  0.0f);
-	up.set_value(		 0.0f,  0.0f,  0.0f);
+	position.set_value(-5.0f, 4.0f, 8.0f);
+	forward.set_value(0.0f, 0.0f, 0.0f);
+	lookAt.set_value(0.0f, 0.0f, 0.0f);
+	side.set_value(0.0f, 0.0f, 0.0f);
+	up.set_value(0.0f, 0.0f, 0.0f);
 }
 
 free_camera::~free_camera() {}
@@ -21,12 +22,12 @@ void free_camera::update() {
 	// Roll, Pitch and Yall are variables stored by the free_camera
 	// handle rotation
 	// Only want to calculate these values once, when rotation changes, not every frame. 
-	cosY = cosf( (Yaw * 3.1415f) / 180.0f);
-	cosP = cosf( (Pitch * 3.1415f) / 180.0f);
-	cosR = cosf( (Roll * 3.1415f) / 180.0f);
-	sinY = sinf( (Yaw  *3.1415f) / 180.0f);
-	sinP = sinf( (Pitch  *3.1415f) / 180.0f);
-	sinR = sinf( (Roll  *3.1415f) / 180.0f);
+	cosY = cosf((Yaw * 3.1415f) / 180.0f);
+	cosP = cosf((Pitch * 3.1415f) / 180.0f);
+	cosR = cosf((Roll * 3.1415f) / 180.0f);
+	sinY = sinf((Yaw  *3.1415f) / 180.0f);
+	sinP = sinf((Pitch  *3.1415f) / 180.0f);
+	sinR = sinf((Roll  *3.1415f) / 180.0f);
 	// Calculate forward vector
 	forward.set_x(sinY * cosP);
 	forward.set_y(sinP);
@@ -177,6 +178,7 @@ void free_camera::updatePitch(int height, int mouseY, int speed) {
 void normalise() {
 
 }
+
 //void free_camera::cameraControll(float dt, int width, int height, Input *input) {
 //	// move camera left
 //	if (input->isKeyDown('a') || input->isKeyDown('A')) {
