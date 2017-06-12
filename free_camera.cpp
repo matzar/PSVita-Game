@@ -10,10 +10,11 @@ free_camera::free_camera() {
 	SetRoll(0.0f);
 	position_.set_value(-5.0f, 4.0f, 8.0f);*/
 	
-	SetYaw(83.363815f);
-	SetPitch(-13.393826f);
-	SetRoll(0.000000f);
-	position_.set_value(-7.855141f, 4.768086f, 4.618602f);
+	SetYaw(80.0f);
+	SetPitch(-15.0f);
+	SetRoll(0.0f);
+	position_.set_value(-6.4f, 3.8f, 3.9f);
+
 	/*forward_.set_value(0.0f, 0.0f, 0.0f);
 	look_at_.set_value(0.0f, 0.0f, 0.0f);
 	side_.set_value(0.0f, 0.0f, 0.0f);
@@ -51,10 +52,10 @@ void free_camera::Update() {
 
 void free_camera::DisplayCameraPosition()
 {
-	gef::DebugOut("\nSetYaw(%ff);\n", yaw_);
-	gef::DebugOut("SetPitch(%ff);\n", pitch_);
-	gef::DebugOut("SetRoll(%ff);\n", roll_);
-	gef::DebugOut("position_.set_value(%ff, %ff, %ff);\n", position_.x(), position_.y(), position_.z());
+	gef::DebugOut("\nSetYaw(%.1ff);\n", yaw_);
+	gef::DebugOut("SetPitch(%.1ff);\n", pitch_);
+	gef::DebugOut("SetRoll(%.1ff);\n", roll_);
+	gef::DebugOut("position_.set_value(%.1ff, %.1ff, %.1ff);\n", position_.x(), position_.y(), position_.z());
 	/*gef::DebugOut("ForwardX %f\n", forward_.x());
 	gef::DebugOut("ForwardY %f\n", forward_.y());
 	gef::DebugOut("ForwardZ %f\n", forward_.z());
