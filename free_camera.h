@@ -35,13 +35,13 @@ public:
 	inline virtual void AddRoll(float dt, float value) { roll_ += value * dt; Update(); } 
 	inline virtual void subtractRoll(float dt, float value) { roll_ -= value * dt; Update(); } 
 
-	inline virtual gef::Vector4 GetPositionVector() { return position_; }
-	inline virtual gef::Vector4 GetForawrdVector() { return forward_; }
-	inline virtual gef::Vector4 GetLookAtVector() { return look_at_; }
-	inline virtual gef::Vector4 GetSideVector() { return side_; }
-	inline virtual gef::Vector4 GetUpVector() { return up_; }
+	inline const virtual gef::Vector4 GetPositionVector() { return position_; }
+	inline const virtual gef::Vector4 GetForawrdVector() { return forward_; }
+	inline const virtual gef::Vector4 GetLookAtVector() { return look_at_; }
+	inline const virtual gef::Vector4 GetSideVector() { return side_; }
+	inline const virtual gef::Vector4 GetUpVector() { return up_; }
 
-	virtual void DisplayCameraPosition();
+	virtual void DisplayCameraPosition() const;
 	//inline virtual void up_dateYaw(int width, int mouseX, int speed) { yaw_ += static_cast<float>((mouseX - (width / 2)) / speed); } 
 	//inline virtual void up_datePitch(int height, int mouseY, int speed) { pitch_ -= static_cast<float>((mouseY - (height / 2)) / speed); } 
 	//virtual void cameraControll(float dt, int width, int height, Input *input);

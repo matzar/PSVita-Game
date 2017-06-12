@@ -50,7 +50,7 @@ void free_camera::Update() {
 	side_ = forward_.CrossProduct(up_); // this is a cross product between the forward and up vector
 }
 
-void free_camera::DisplayCameraPosition()
+void free_camera::DisplayCameraPosition() const
 {
 	gef::DebugOut("\nSetYaw(%.1ff);\n", yaw_);
 	gef::DebugOut("SetPitch(%.1ff);\n", pitch_);

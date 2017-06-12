@@ -32,13 +32,13 @@ public:
 	inline virtual void AddRoll(float dt, float value) = 0;
 	inline virtual void subtractRoll(float dt, float value) = 0;
 	
-	inline virtual gef::Vector4 GetPositionVector() = 0;
-	inline virtual gef::Vector4 GetForawrdVector() = 0;
-	inline virtual gef::Vector4 GetLookAtVector() = 0;
-	inline virtual gef::Vector4 GetSideVector() = 0;
-	inline virtual gef::Vector4 GetUpVector() = 0;
+	inline const virtual gef::Vector4 GetPositionVector() = 0;
+	inline const virtual gef::Vector4 GetForawrdVector() = 0;
+	inline const virtual gef::Vector4 GetLookAtVector() = 0;
+	inline const virtual gef::Vector4 GetSideVector() = 0;
+	inline const virtual gef::Vector4 GetUpVector() = 0;
 
-	virtual void DisplayCameraPosition() = 0;
+	virtual void DisplayCameraPosition() const = 0;
 	//inline virtual void updateYaw(int width, int mouseX, int speed) = 0;
 	//inline virtual void updatePitch(int height, int mouseY, int speed) = 0;
 	//virtual void cameraControll(float dt, int width, int height) const = 0;
