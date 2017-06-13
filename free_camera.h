@@ -13,28 +13,28 @@ public:
 	
 
 	inline virtual void MoveForward(const float dt) { position_ += forward_ * dt; Update(); }
-	inline virtual void MoveBackwards(float dt) { position_ -= forward_ * dt; Update(); }
+	inline virtual void MoveBackwards(const float dt) { position_ -= forward_ * dt; Update(); }
 
-	inline virtual void MoveUp(float dt) { position_ += up_ * dt; Update(); }
-	inline virtual void MoveDown(float dt) { position_ -= up_ * dt; Update(); } 
+	inline virtual void MoveUp(const float dt) { position_ += up_ * dt; Update(); }
+	inline virtual void MoveDown(const float dt) { position_ -= up_ * dt; Update(); } 
 
-	inline virtual void MoveSideLeft(float dt) { position_ -= side_ * dt; Update(); }
-	inline virtual void MoveSideRight(float dt) { position_ += side_ * dt; Update(); }
+	inline virtual void MoveSideLeft(const float dt) { position_ -= side_ * dt; Update(); }
+	inline virtual void MoveSideRight(const float dt) { position_ += side_ * dt; Update(); }
 		   
 	inline virtual float GetYaw() const { return yaw_; }
-	inline virtual void SetYaw(float arg) { yaw_ = arg; Update(); }
-	inline virtual void AddYaw(float dt, float value) { yaw_ += value * dt; Update(); }
-	inline virtual void subtractYaw(float dt, float value) { yaw_ -= value * dt; Update(); } 
+	inline virtual void SetYaw(const float arg) { yaw_ = arg; Update(); }
+	inline virtual void AddYaw(const float dt, float value) { yaw_ += value * dt; Update(); }
+	inline virtual void subtractYaw(const float dt, float value) { yaw_ -= value * dt; Update(); } 
 
 	inline virtual float GetPitch() const { return pitch_; }
-	inline virtual void SetPitch(float arg) { pitch_ = arg; Update(); }
-	inline virtual void AddPitch(float dt, float value) { pitch_ += value * dt; Update(); } 
-	inline virtual void subtractPitch(float dt, float value) { pitch_ -= value * dt; Update(); } 
+	inline virtual void SetPitch(const float arg) { pitch_ = arg; Update(); }
+	inline virtual void AddPitch(const float dt, float value) { pitch_ += value * dt; Update(); } 
+	inline virtual void subtractPitch(const float dt, float value) { pitch_ -= value * dt; Update(); } 
 
 	inline virtual float GetRoll() const { return roll_; }
-	inline virtual void SetRoll(float arg) { roll_ = arg; Update(); }
-	inline virtual void AddRoll(float dt, float value) { roll_ += value * dt; Update(); } 
-	inline virtual void subtractRoll(float dt, float value) { roll_ -= value * dt; Update(); } 
+	inline virtual void SetRoll(const float arg) { roll_ = arg; Update(); }
+	inline virtual void AddRoll(const float dt, float value) { roll_ += value * dt; Update(); } 
+	inline virtual void subtractRoll(const float dt, float value) { roll_ -= value * dt; Update(); } 
 
 	inline virtual gef::Vector4 GetPositionVector() const { return position_; }
 	inline virtual gef::Vector4 GetForawrdVector() const { return forward_; }
