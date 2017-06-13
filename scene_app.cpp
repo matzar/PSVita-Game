@@ -14,8 +14,6 @@
 #include <platform/d3d11/input/keyboard_d3d11.h>
 #include <platform/d3d11/input/touch_input_manager_d3d11.h>
 //#include <freeglut.h>
-//#include <SFML/Window/Mouse.hpp>
-//#include <SFML/Window.hpp>
 #endif 
 
 
@@ -253,6 +251,10 @@ bool SceneApp::Update(float frame_time)
 				{
 					camera_->DisplayCameraPosition();
 				}
+				if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
+				{
+					camera_->SetCameraPosition(90.0f, -12.0f, 0.0f, gef::Vector4(-8.0f, 3.5f, 0.0f));
+				}
 			} // controller
 		//} // controller_manager
 
@@ -285,21 +287,6 @@ bool SceneApp::Update(float frame_time)
 				camera_->MoveUp(frame_time * camera_speed);
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_F) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD2))
 				camera_->MoveDown(frame_time * camera_speed);
-
-			/*gef::DebugOut("Yaw %f\n", camera_->GetYaw());
-			gef::DebugOut("Pitch %f\n", camera_->GetPitch());
-			gef::DebugOut("ForwardX %f\n", camera_->GetForawrdVector().x());
-			gef::DebugOut("ForwardY %f\n", camera_->GetForawrdVector().y());
-			gef::DebugOut("ForwardZ %f\n", camera_->GetForawrdVector().z());
-			gef::DebugOut("LookAtX %f\n", camera_->GetLookAtVector().x());
-			gef::DebugOut("LookAtY %f\n", camera_->GetLookAtVector().y());
-			gef::DebugOut("LookAtZ %f\n", camera_->GetLookAtVector().z());
-			gef::DebugOut("SideX %f\n", camera_->GetSideVector().x());
-			gef::DebugOut("SideY %f\n", camera_->GetSideVector().y());
-			gef::DebugOut("SideZ %f\n", camera_->GetSideVector().z());
-			gef::DebugOut("UpX %f\n", camera_->GetUpVector().x());
-			gef::DebugOut("UpY %f\n", camera_->GetUpVector().y());
-			gef::DebugOut("UpZ %f\n", camera_->GetUpVector().z());*/
 		} // keyboard
 
 		// mouse input
@@ -354,7 +341,6 @@ void SceneApp::Render()
 	gef::Matrix44 view_matrix;
 	view_matrix.LookAt(camera_eye, camera_lookat, camera_up);
 	renderer_3d_->set_view_matrix(view_matrix);
-
 
 	// draw 3d geometry
 	renderer_3d_->Begin();
