@@ -7,8 +7,11 @@ class camera
 {
 public:
 	inline virtual ~camera() {}
+
 	virtual void Update() = 0;
-	inline virtual void MoveForward(float dt) = 0;
+	//virtual void SetCameraPosition(const float& yaw, const float& pitch, const float& roll, const gef::Vector4& position) = 0;
+
+	inline virtual void MoveForward(const float dt) = 0;
 	inline virtual void MoveBackwards(float dt) = 0;
 
 	inline virtual void MoveUp(float dt) = 0;

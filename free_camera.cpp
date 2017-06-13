@@ -6,15 +6,23 @@ const float PI = 3.1415f;
 
 free_camera::free_camera() {
 	Update();
+	// first view I tried
 	/*SetYaw(60.0f);
 	SetPitch(-10.0f);
 	SetRoll(0.0f);
 	position_.set_value(-5.0f, 4.0f, 8.0f);*/
-	
-	SetYaw(80.0f);
+
+	// Right side view
+	/*SetYaw(80.0f);
 	SetPitch(-15.0f);
 	SetRoll(0.0f);
-	position_.set_value(-6.4f, 3.8f, 3.9f);
+	position_.set_value(-6.4f, 3.8f, 3.9f);*/
+
+	// TPP player position
+	SetYaw(90.0f);
+	SetPitch(-12.0f);
+	SetRoll(0.0f);
+	position_.set_value(-8.0f, 3.5f, 0.0f);
 }
 
 void free_camera::Update() {
