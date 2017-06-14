@@ -524,7 +524,7 @@ void SceneApp::UpdateSimulation(float frame_time)
 		contact = contact->GetNext();
 	}
 
-	camera_->CameraControll(frame_time);
+	
 	// get the latest date from the input devices
 	if (input_manager_)
 	{
@@ -535,6 +535,7 @@ void SceneApp::UpdateSimulation(float frame_time)
 
 		if (controller)
 		{
+			camera_->CameraControll(frame_time, controller);
 
 			if (controller->buttons_pressed() & gef_SONY_CTRL_START)
 			{

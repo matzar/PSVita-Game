@@ -3,13 +3,13 @@
 
 #include "camera.h"
 
-class FreeCamera : public Camera : public gef::Application
+class FreeCamera : public Camera
 {
 public:
 	FreeCamera();
 	//inline virtual ~FreeCamera() {}
 
-	void CameraControll(const float frame_time);
+	void CameraControll(const float frame_time, gef::SonyController* controller);
 };
 
 #endif

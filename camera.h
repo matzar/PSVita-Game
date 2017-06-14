@@ -3,9 +3,10 @@
 
 #include <system/application.h>
 #include <input/input_manager.h>
+#include <input/sony_controller_input_manager.h>
 #include "maths/vector4.h"
 
-class Camera : public gef::Application
+class Camera
 {
 public:
 	Camera();
@@ -45,7 +46,7 @@ public:
 	inline gef::Vector4 GetSideVector() const { return side_; }
 	inline gef::Vector4 GetUpVector() const { return up_; }
 
-	virtual void CameraControll(const float dt) = 0;
+	virtual void CameraControll(const float dt, gef::SonyController* controller) = 0;
 protected:
 	gef::Vector4 position_;
 	gef::Vector4 forward_;
@@ -56,9 +57,6 @@ protected:
 	float yaw_;
 	float pitch_;
 	float roll_;
-
-	// input manager
-	gef::InputManager* input_manager_;
 };
 
 #endif // _CAMERA_H
