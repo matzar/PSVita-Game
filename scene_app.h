@@ -6,15 +6,18 @@
 #include "primitive_builder.h"
 #include <graphics/mesh_instance.h>
 #include <input/input_manager.h>
+#include <audio/audio_manager.h>
 #include <box2d/Box2D.h>
 #include "game_object.h"
 #include "free_camera.h"
 
+// GAMESTATE declarations
 enum GAMESTATE
 {
 	FRONTEND,
 	GAME
 }; // GAMESTATE
+
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
 {
@@ -62,10 +65,13 @@ private:
 	// input manager
 	gef::InputManager* input_manager_;
 
+	// audio manager
+	gef::AudioManager* audio_manager_;
+
 	// camera variables
 	camera* camera_;
 
 	float fps_;
-}; // SceneApp
+}; // class SceneApp : public gef::Application
 
 #endif // _SCENE_APP_H

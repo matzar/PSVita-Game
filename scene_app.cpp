@@ -26,6 +26,7 @@ SceneApp::SceneApp(gef::Platform& platform) :
 	world_(NULL),
 	player_body_(NULL),
 	input_manager_(NULL),
+	audio_manager_(NULL),
 	camera_(NULL)
 {
 }
@@ -34,6 +35,7 @@ void SceneApp::Init()
 {
 	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
 	input_manager_ = gef::InputManager::Create(platform_);
+	audio_manager_ = gef::AudioManager::Create();
 
 	// create the renderer for draw 3D geometry
 	renderer_3d_ = gef::Renderer3D::Create(platform_);
@@ -65,8 +67,6 @@ void SceneApp::CleanUp()
 	delete ground_mesh_;
 	ground_mesh_ = NULL;
 
-	CleanUpFont();
-
 	delete primitive_builder_;
 	primitive_builder_ = NULL;
 
@@ -80,10 +80,15 @@ void SceneApp::CleanUp()
 	delete input_manager_;
 	input_manager_ = NULL;
 
+	// audio manager
+	delete audio_manager_;
+	audio_manager_ = nullptr;
+
 	// clean up camera
 	delete camera_;
 	camera_ = NULL;
 
+	CleanUpFont();
 }
 
 bool SceneApp::Update(float frame_time)
