@@ -29,15 +29,28 @@ SceneApp::SceneApp(gef::Platform& platform) :
 	player_body_(NULL),
 	input_manager_(NULL),
 	audio_manager_(NULL),
-	camera_(NULL)
+	button_icon_(NULL),
+	camera_(NULL),
+	sfx_voice_id_(-1),
+	sfx_id_(-1)
 {
 }
 
 void SceneApp::Init()
 {
+	// initlalise sprite renderer
 	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
+	// initialise input manager
 	input_manager_ = gef::InputManager::Create(platform_);
+	// initialise audio manager
 	audio_manager_ = gef::AudioManager::Create();
+
+	// initialise the game state machine
+	game_state_ = FRONTEND;
+
+	InitFont();
+
+	FrontendInit();
 
 	// create the renderer for draw 3D geometry
 	renderer_3d_ = gef::Renderer3D::Create(platform_);
@@ -45,7 +58,6 @@ void SceneApp::Init()
 	// initialise primitive builder to make create some 3D geometry easier
 	primitive_builder_ = new PrimitiveBuilder(platform_);
 
-	InitFont();
 	SetupLights();
 
 	// initialise the physics world
@@ -59,9 +71,6 @@ void SceneApp::Init()
 	camera_->Update();
 	camera_->DisplayCameraPosition();
 
-	// initialise the game state machine
-	game_state_ = FRONTEND;
-	FrontendInit();
 }
 
 void SceneApp::CleanUp()
@@ -95,6 +104,42 @@ void SceneApp::CleanUp()
 	camera_ = NULL;
 
 	CleanUpFont();
+}
+
+bool SceneApp::Update(float frame_time)
+{
+	fps_ = 1.0f / frame_time;
+
+	// get the latest date from the input devices
+	if (input_manager_)
+	{
+		input_manager_->Update();
+
+		// get controller input data and read controller data for controler 0
+		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
+		
+		if (controller)
+		{
+			
+		}
+	}
+
+	switch (game_state_)
+	{
+	case FRONTEND:
+	{
+		FrontendUpdate(frame_time);
+	}
+	break;
+
+	case GAME:
+	{
+		GameUpdate(frame_time);
+	}
+	break;
+	}
+
+	return true;
 }
 
 bool SceneApp::Update(float frame_time)
