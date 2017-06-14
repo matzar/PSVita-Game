@@ -10,8 +10,6 @@
 #include <box2d/Box2D.h>
 #include "game_object.h"
 #include "free_camera.h"
-#include "frontend.h"
-#include "game.h"
 
 // GAMESTATE declarations
 enum GAMESTATE
@@ -41,55 +39,15 @@ public:
 	virtual bool Update(float frame_time);
 	virtual void Render();
 private:
-	void InitPlayer();
-	void InitGround();
-	void InitFont();
-	void CleanUpFont();
-	void DrawHUD();
-	void SetupLights();
-
-	void UpdateSimulation(float frame_time);
-    
-	gef::SpriteRenderer* sprite_renderer_;
-	gef::Font* font_;
-	
-	// input manager
-	gef::InputManager* input_manager_;
-
-	// audio manager
-	gef::AudioManager* audio_manager_;
-
-	//
-	// GAMESTATE VARIABLES
-	//
 	GAMESTATE game_state_;
 
 	float fps_;
 
+	Game* game_;
+	Frontend* frontend_;
+
 	friend class Game;
 	friend class Frontend;
 }; // class SceneApp : public gef::Application
-
-class Frontend
-{
-public:
-	Frontend();
-	~Frontend();
-
-	void FrontendInit();
-	void FrontendRelease();
-	void FrontendUpdate(float frame_time);
-	void FrontendRender();
-private:
-	SceneApp* scene_app_;
-
-	gef::Texture* button_icon_;
-};
-
-
-void Frontend::FrontendInit()
-{
-	button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", scene_app_->platform());
-}
 
 #endif // _SCENE_APP_H

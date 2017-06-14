@@ -25,14 +25,16 @@ namespace gef
 class Frontend
 {
 public:
-	Frontend();
+	Frontend(gef::Platform& platform);
 	~Frontend();
 
+	void InitFont();
 	void FrontendInit();
 	void FrontendRelease();
 	void FrontendUpdate(float frame_time);
 	void FrontendRender();
 private:
+	gef::Platform& platform_;
 	gef::Texture* button_icon_;
 };
 

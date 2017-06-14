@@ -19,7 +19,18 @@
 #endif 
 
 Game::Game(gef::Platform& platform) :
-	platform_(platform)
+	platform_(platform),
+	sprite_renderer_(NULL),
+	renderer_3d_(NULL),
+	primitive_builder_(NULL),
+	font_(NULL),
+	world_(NULL),
+	player_body_(NULL),
+	input_manager_(NULL),
+	audio_manager_(NULL),
+	camera_(NULL),
+	sfx_voice_id_(-1),
+	sfx_id_(-1)
 {
 }
 
@@ -28,6 +39,104 @@ Game::~Game()
 {
 }
 
+void Game::InitPlayer()
+{
+	// setup the mesh for the player
+	player_.set_mesh(primitive_builder_->GetDefaultCubeMesh());
+
+	// create a physics body for the player
+	b2BodyDef player_body_def;
+	player_body_def.type = b2_dynamicBody;
+	player_body_def.position = b2Vec2(0.0f, 4.0f);
+
+	player_body_ = world_->CreateBody(&player_body_def);
+
+	// create the shape for the player
+	b2PolygonShape player_shape;
+	player_shape.SetAsBox(0.5f, 0.5f);
+
+	// create the fixture
+	b2FixtureDef player_fixture_def;
+	player_fixture_def.shape = &player_shape;
+	player_fixture_def.density = 1.0f;
+
+	// create the fixture on the rigid body
+	player_body_->CreateFixture(&player_fixture_def);
+
+	// update visuals from simulation data
+	player_.UpdateFromSimulation(player_body_);
+
+	// create a connection between the rigid body and GameObject
+	player_body_->SetUserData(&player_);
+}
+
+void Game::InitGround()
+{
+	// ground dimensions
+	gef::Vector4 ground_half_dimensions(5.0f, 0.5f, 0.5f);
+
+	// setup the mesh for the ground
+	ground_mesh_ = primitive_builder_->CreateBoxMesh(ground_half_dimensions);
+	ground_.set_mesh(ground_mesh_);
+
+	// create a physics body
+	b2BodyDef body_def;
+	body_def.type = b2_staticBody;
+	body_def.position = b2Vec2(0.0f, 0.0f);
+
+	ground_body_ = world_->CreateBody(&body_def);
+
+	// create the shape
+	b2PolygonShape shape;
+	shape.SetAsBox(ground_half_dimensions.x(), ground_half_dimensions.y());
+
+	// create the fixture
+	b2FixtureDef fixture_def;
+	fixture_def.shape = &shape;
+
+	// create the fixture on the rigid body
+	ground_body_->CreateFixture(&fixture_def);
+
+	// update visuals from simulation data
+	ground_.UpdateFromSimulation(ground_body_);
+}
+
+void Game::InitFont()
+{
+	font_ = new gef::Font(platform_);
+	font_->Load("comic_sans");
+}
+
+void Game::CleanUpFont()
+{
+	delete font_;
+	font_ = NULL;
+}
+
+void Game::DrawHUD()
+{
+	if(font_)
+	{
+		// display frame rate
+		font_->RenderText(sprite_renderer_, gef::Vector4(850.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f", scene_app_->fps_);
+	}
+}
+
+void Game::SetupLights()
+{
+	// grab the data for the default shader used for rendering 3D geometry
+	gef::Default3DShaderData& default_shader_data = renderer_3d_->default_shader_data();
+
+	// set the ambient light
+	default_shader_data.set_ambient_light_colour(gef::Colour(0.25f, 0.25f, 0.25f, 1.0f));
+
+	// add a point light that is almost white, but with a blue tinge
+	// the position of the light is set far away so it acts light a directional light
+	gef::PointLight default_point_light;
+	default_point_light.set_colour(gef::Colour(0.7f, 0.7f, 1.0f, 1.0f));
+	default_point_light.set_position(gef::Vector4(-500.0f, 400.0f, 700.0f));
+	default_shader_data.AddPointLight(default_point_light);
+}
 void Game::GameInit()
 {
 	// create the renderer for draw 3D geometry
@@ -173,8 +282,8 @@ void Game::UpdateSimulation(float frame_time)
 			{
 				GameRelease();
 
-				game_state_ = FRONTEND;
-				FrontendInit();
+				//game_state_ = FRONTEND;
+				//FrontendInit();
 			}
 			// trigger a sound effect
 			if (audio_manager_)

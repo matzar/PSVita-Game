@@ -2,6 +2,7 @@
 #define _GAME_H
 
 #include <system/application.h>
+#include <system/platform.h>
 #include <maths/vector2.h>
 #include "primitive_builder.h"
 #include <graphics/mesh_instance.h>
@@ -37,6 +38,15 @@ public:
 private:
 	SceneApp* scene_app_;
 
+	gef::SpriteRenderer* sprite_renderer_;
+	gef::Font* font_;
+
+	// input manager
+	gef::InputManager* input_manager_;
+
+	// audio manager
+	gef::AudioManager* audio_manager_;
+
 	gef::Platform& platform_;
 
 	gef::Renderer3D* renderer_3d_;
@@ -60,6 +70,13 @@ private:
 	// audio variables
 	int sfx_id_;
 	int sfx_voice_id_;
+
+	void InitPlayer();
+	void InitGround();
+	void InitFont();
+	void CleanUpFont();
+	void DrawHUD();
+	void SetupLights();
 };
 
 #endif // !_GAME_H
