@@ -2,13 +2,13 @@
 #define _FRONTEND_H
 
 #include <system/application.h>
+#include <graphics/font.h>
 #include <maths/vector2.h>
 #include "primitive_builder.h"
 #include <graphics/mesh_instance.h>
 #include <input/input_manager.h>
 #include <audio/audio_manager.h>
 #include <box2d/Box2D.h>
-#include "scene_app.h"
 #include "game_object.h"
 #include "free_camera.h"
 
@@ -35,6 +35,7 @@ public:
 	void FrontendRender();
 private:
 	gef::Platform& platform_;
+	gef::Font* font_;
 	gef::Texture* button_icon_;
 };
 

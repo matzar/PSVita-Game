@@ -10,6 +10,8 @@
 #include <box2d/Box2D.h>
 #include "game_object.h"
 #include "free_camera.h"
+#include "game.h"
+#include "frontend.h"
 
 // GAMESTATE declarations
 enum GAMESTATE
