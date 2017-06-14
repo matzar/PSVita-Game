@@ -8,6 +8,7 @@
 #include <input/input_manager.h>
 #include <audio/audio_manager.h>
 #include <box2d/Box2D.h>
+#include "scene_app.h"
 #include "game_object.h"
 #include "free_camera.h"
 
@@ -21,10 +22,11 @@ namespace gef
 	class Renderer3D;
 } // gef
 
+
 class Game
 {
 public:
-	Game();
+	Game(gef::Platform& platform);
 	~Game();
 
 	void GameInit();
@@ -33,6 +35,10 @@ public:
 	void GameUpdate(float frame_time);
 	void GameRender();
 private:
+	SceneApp* scene_app_;
+
+	gef::Platform& platform_;
+
 	gef::Renderer3D* renderer_3d_;
 	PrimitiveBuilder* primitive_builder_;
 

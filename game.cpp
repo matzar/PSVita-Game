@@ -18,7 +18,8 @@
 //#include <freeglut.h>
 #endif 
 
-Game::Game()
+Game::Game(gef::Platform& platform) :
+	platform_(platform)
 {
 }
 

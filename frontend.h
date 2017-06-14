@@ -8,6 +8,9 @@
 #include <input/input_manager.h>
 #include <audio/audio_manager.h>
 #include <box2d/Box2D.h>
+#include "scene_app.h"
+#include "game_object.h"
+#include "free_camera.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef

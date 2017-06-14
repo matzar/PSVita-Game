@@ -34,6 +34,7 @@ class SceneApp : public gef::Application
 {
 public:
 	SceneApp(gef::Platform& platform);
+
 	// Application virtual template classes - need to be defined
 	virtual void Init();
 	virtual void CleanUp();
@@ -64,6 +65,31 @@ private:
 	GAMESTATE game_state_;
 
 	float fps_;
+
+	friend class Game;
+	friend class Frontend;
 }; // class SceneApp : public gef::Application
+
+class Frontend
+{
+public:
+	Frontend();
+	~Frontend();
+
+	void FrontendInit();
+	void FrontendRelease();
+	void FrontendUpdate(float frame_time);
+	void FrontendRender();
+private:
+	SceneApp* scene_app_;
+
+	gef::Texture* button_icon_;
+};
+
+
+void Frontend::FrontendInit()
+{
+	button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", scene_app_->platform());
+}
 
 #endif // _SCENE_APP_H
