@@ -595,6 +595,13 @@ void SceneApp::UpdateSimulation(float frame_time)
 				camera_->SetCameraPosition(90.0f, -12.0f, 0.0f, gef::Vector4(-8.0f, 3.5f, 0.0f));
 			}
 
+			if (controller->buttons_pressed() & gef_SONY_CTRL_START)
+			{
+				GameRelease();
+
+				game_state_ = FRONTEND;
+				FrontendInit();
+			}
 			// trigger a sound effect
 			if (audio_manager_)
 			{
@@ -708,7 +715,6 @@ void SceneApp::FrontendUpdate(float frame_time)
 	const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
 
 	if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
-		//if (cross)
 	{
 		// release any resources for the frontend
 		FrontendRelease();
@@ -764,7 +770,6 @@ void SceneApp::GameInit()
 
 	// initialise primitive builder to make create some 3D geometry easier
 	primitive_builder_ = new PrimitiveBuilder(platform_);
-
 
 	SetupLights();
 
@@ -827,45 +832,7 @@ void SceneApp::GameUpdate(float frame_time)
 	// get controller input data and read controller data for controler 0
 	const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
 
-	// trigger a sound effect
-	if (audio_manager_)
-	{
-		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
-			//if (cross)
-		{
-			if (sfx_voice_id_ == -1)
-			{
-				sfx_voice_id_ = audio_manager_->PlaySample(sfx_id_, true);
-
-				gef::VolumeInfo volume_info;
-				volume_info.volume = 0.5f;
-				volume_info.pan = -1.0f;
-
-				audio_manager_->SetSampleVoiceVolumeInfo(sfx_voice_id_, volume_info);
-
-				audio_manager_->SetSamplePitch(sfx_voice_id_, 1.5f);
-			}
-		}
-
-		if (controller->buttons_pressed() & gef_SONY_CTRL_TRIANGLE)
-		{
-			if (sfx_voice_id_ != -1)
-			{
-				audio_manager_->StopPlayingSampleVoice(sfx_voice_id_);
-				sfx_voice_id_ = -1;
-			}
-		}
-	}
-
 	UpdateSimulation(frame_time);
-
-	if (controller->buttons_pressed() & gef_SONY_CTRL_START)
-	{
-		GameRelease();
-
-		game_state_ = FRONTEND;
-		FrontendInit();
-	}
 }
 
 void SceneApp::GameRender()
