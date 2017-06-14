@@ -34,10 +34,11 @@ class SceneApp : public gef::Application
 {
 public:
 	SceneApp(gef::Platform& platform);
-	void Init();
-	void CleanUp();
-	bool Update(float frame_time);
-	void Render();
+	// Application virtual template classes - need to be defined
+	virtual void Init();
+	virtual void CleanUp();
+	virtual bool Update(float frame_time);
+	virtual void Render();
 private:
 	void InitPlayer();
 	void InitGround();
