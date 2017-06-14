@@ -43,11 +43,32 @@ private:
 	void CleanUpFont();
 	void DrawHUD();
 	void SetupLights();
+
+	void UpdateSimulation(float frame_time);
     
 	gef::SpriteRenderer* sprite_renderer_;
 	gef::Font* font_;
-	gef::Renderer3D* renderer_3d_;
+	
+	// input manager
+	gef::InputManager* input_manager_;
 
+	// audio manager
+	gef::AudioManager* audio_manager_;
+
+	//
+	// GAMESTATE VARIABLES
+	//
+	GAMESTATE game_state_;
+
+	//
+	// FRONTEND DECLARATIONS
+	//
+	gef::Texture* button_icon_;
+
+	//
+	// GAME DECLARATIONS
+	//
+	gef::Renderer3D* renderer_3d_;
 	PrimitiveBuilder* primitive_builder_;
 
 	// create the physics world
@@ -62,16 +83,30 @@ private:
 	GameObject ground_;
 	b2Body* ground_body_;
 
-	// input manager
-	gef::InputManager* input_manager_;
-
-	// audio manager
-	gef::AudioManager* audio_manager_;
-
 	// camera variables
 	camera* camera_;
 
+	// audio variables
+	int sfx_id_;
+	int sfx_voice_id_;
+
 	float fps_;
+
+	//
+	// FRONTEND FUNCTIONS
+	//
+	void FrontendInit();
+	void FrontendRelease();
+	void FrontendUpdate(float frame_time);
+	void FrontendRender();
+
+	//
+	// GAMESTATE FUNCITONS
+	//
+	void GameInit();
+	void GameRelease();
+	void GameUpdate(float frame_time);
+	void GameRender();
 }; // class SceneApp : public gef::Application
 
 #endif // _SCENE_APP_H
