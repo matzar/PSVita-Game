@@ -84,7 +84,7 @@ private:
 	b2Body* ground_body_;
 
 	// camera variables
-	camera* camera_;
+	Camera* camera_;
 
 	// audio variables
 	int sfx_id_;

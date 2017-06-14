@@ -4,11 +4,11 @@
 #include "camera.h"
 #include "maths\vector4.h"
 
-class free_camera : public camera
+class FreeCamera : public Camera
 {
 public:
-	free_camera();
-	inline virtual ~free_camera() {}
+	FreeCamera();
+	inline virtual ~FreeCamera() {}
 
 	virtual void Update();
 	virtual void SetCameraPosition(const float& yaw, const float& pitch, const float& roll, const gef::Vector4& position);

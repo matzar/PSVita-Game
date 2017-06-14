@@ -4,7 +4,7 @@
 
 const float PI = 3.1415f;
 
-free_camera::free_camera() 
+FreeCamera::FreeCamera() 
 {
 	Update();
 
@@ -18,13 +18,13 @@ free_camera::free_camera()
 	SetCameraPosition(90.0f, -12.0f, 0.0f, gef::Vector4(-8.0f, 3.5f, 0.0f));
 }
 
-void free_camera::Update()
+void FreeCamera::Update()
 {
 	//temp values for sin/cos
 	float cosR, cosP, cosY;	
 	float sinR, sinP, sinY;
 
-	// roll_, pitch_ and yaw_ are variables stored by the free_camera
+	// roll_, pitch_ and yaw_ are variables stored by the FreeCamera
 	// rotation handling - these values are calculated only once, when rotation changes, not every frame. 
 	cosY = cosf((yaw_ * PI) / 180.0f);
 	cosP = cosf((pitch_ * PI) / 180.0f);
@@ -48,7 +48,7 @@ void free_camera::Update()
 	side_ = forward_.CrossProduct(up_); // this is a cross product between the forward and up vector
 }
 
-void free_camera::SetCameraPosition(const float& yaw, const float& pitch, const float& roll, const gef::Vector4& position)
+void FreeCamera::SetCameraPosition(const float& yaw, const float& pitch, const float& roll, const gef::Vector4& position)
 {
 	yaw_ = yaw;
 	pitch_ = pitch;
@@ -57,7 +57,7 @@ void free_camera::SetCameraPosition(const float& yaw, const float& pitch, const 
 	Update();
 }
 
-void free_camera::DisplayCameraPosition() const
+void FreeCamera::DisplayCameraPosition() const
 {
 	gef::DebugOut("SetCameraPosition(%.1ff, %.1ff, %.1ff, %.1ff, %.1ff, %.1ff);\n", yaw_, pitch_, roll_, position_.x(), position_.y(), position_.z());
 }

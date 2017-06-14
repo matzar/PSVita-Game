@@ -3,10 +3,10 @@
 
 #include "maths\vector4.h"
 
-class camera
+class Camera
 {
 public:
-	inline virtual ~camera() {}
+	inline virtual ~Camera() {}
 
 	virtual void Update() = 0;
 	virtual void SetCameraPosition(const float& yaw, const float& pitch, const float& roll, const gef::Vector4& position) = 0;

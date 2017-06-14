@@ -780,7 +780,7 @@ void SceneApp::GameInit()
 	InitPlayer();
 	InitGround();
 
-	camera_ = new free_camera;
+	camera_ = new FreeCamera;
 	camera_->Update();
 	camera_->DisplayCameraPosition();
 
