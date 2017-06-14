@@ -5,7 +5,8 @@
 
 const float PI = 3.1415f;
 
-Camera::Camera()
+Camera::Camera() :
+	input_manager_(nullptr)
 {
 	//Update();
 

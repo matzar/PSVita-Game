@@ -1,13 +1,15 @@
 #ifndef _CAMERA_H
 #define _CAMERA_H
 
+#include <system/application.h>
+#include <input/input_manager.h>
 #include "maths/vector4.h"
 
-class Camera
+class Camera : public gef::Application
 {
 public:
 	Camera();
-	~Camera();
+	virtual ~Camera();
 
 	void Update();
 	void SetCameraPosition(const float& yaw, const float& pitch, const float& roll, const gef::Vector4& position);
@@ -42,6 +44,8 @@ public:
 	inline gef::Vector4 GetLookAtVector() const { return look_at_; }
 	inline gef::Vector4 GetSideVector() const { return side_; }
 	inline gef::Vector4 GetUpVector() const { return up_; }
+
+	virtual void CameraControll(const float dt) = 0;
 protected:
 	gef::Vector4 position_;
 	gef::Vector4 forward_;
@@ -52,6 +56,9 @@ protected:
 	float yaw_;
 	float pitch_;
 	float roll_;
+
+	// input manager
+	gef::InputManager* input_manager_;
 };
 
 #endif // _CAMERA_H

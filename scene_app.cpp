@@ -524,6 +524,7 @@ void SceneApp::UpdateSimulation(float frame_time)
 		contact = contact->GetNext();
 	}
 
+	camera_->CameraControll(frame_time);
 	// get the latest date from the input devices
 	if (input_manager_)
 	{
@@ -534,66 +535,6 @@ void SceneApp::UpdateSimulation(float frame_time)
 
 		if (controller)
 		{
-			float camera_speed = 10.0f;
-
-			float left_horizontal_input = controller->left_stick_x_axis();
-			float left_vertical_input = controller->left_stick_y_axis();
-
-			float right_horizontal_input = controller->right_stick_x_axis();
-			float right_vertical_input = controller->right_stick_y_axis();
-			// left stick - pan controll
-			if (controller->left_stick_x_axis() < 0)
-			{
-				camera_->MoveSideLeft(frame_time * camera_speed);
-			}
-			if (controller->left_stick_x_axis() > 0)
-			{
-				camera_->MoveSideRight(frame_time * camera_speed);
-			}
-			if (controller->left_stick_y_axis() < 0)
-			{
-				camera_->MoveForward(frame_time * camera_speed);
-			}
-			if (controller->left_stick_y_axis() > 0)
-			{
-				camera_->MoveBackwards(frame_time * camera_speed);
-			}
-			// right stick - yaw and pitch controll
-			if (controller->right_stick_x_axis() < 0)
-			{
-				camera_->subtractYaw(frame_time, camera_speed * camera_speed);
-			}
-			if (controller->right_stick_x_axis() > 0)
-			{
-				camera_->AddYaw(frame_time, camera_speed * camera_speed);
-
-			}
-			if (controller->right_stick_y_axis() < 0)
-			{
-				camera_->AddPitch(frame_time, camera_speed * camera_speed);
-			}
-			if (controller->right_stick_y_axis() > 0)
-			{
-				camera_->subtractPitch(frame_time, camera_speed * camera_speed);
-			}
-			// buttons
-			// handle input
-			if (controller->buttons_down() & gef_SONY_CTRL_R2)
-			{
-				camera_->MoveUp(timeStep * camera_speed);
-			}
-			if (controller->buttons_down() & gef_SONY_CTRL_L2)
-			{
-				camera_->MoveDown(timeStep * camera_speed);
-			}
-			if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
-			{
-				camera_->DisplayCameraPosition();
-			}
-			if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
-			{
-				camera_->SetCameraPosition(90.0f, -12.0f, 0.0f, gef::Vector4(-8.0f, 3.5f, 0.0f));
-			}
 
 			if (controller->buttons_pressed() & gef_SONY_CTRL_START)
 			{
