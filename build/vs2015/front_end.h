@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _FRONT_END_H
+#define _FRONT_END_H
+
 class FrontEnd
 {
 public:
@@ -6,3 +8,4 @@ public:
 	~FrontEnd();
 };
 
+#endif // !_FRONT_END_H
