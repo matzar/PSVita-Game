@@ -220,6 +220,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\free_camera.cpp" />
+    <ClCompile Include="..\..\front_end.cpp" />
+    <ClCompile Include="..\..\game.cpp" />
     <ClCompile Include="..\..\game_object.cpp" />
     <ClCompile Include="..\..\load_texture.cpp" />
     <ClCompile Include="..\..\main_d3d11.cpp">
@@ -236,18 +238,16 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="front_end.cpp" />
-    <ClCompile Include="game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\camera.h" />
     <ClInclude Include="..\..\free_camera.h" />
+    <ClInclude Include="..\..\front_end.h" />
+    <ClInclude Include="..\..\game.h" />
     <ClInclude Include="..\..\game_object.h" />
     <ClInclude Include="..\..\load_texture.h" />
     <ClInclude Include="..\..\primitive_builder.h" />
     <ClInclude Include="..\..\scene_app.h" />
-    <ClInclude Include="front_end.h" />
-    <ClInclude Include="game.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
