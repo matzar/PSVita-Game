@@ -220,7 +220,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\free_camera.cpp" />
-    <ClCompile Include="..\..\front_end.cpp" />
+    <ClCompile Include="..\..\frontend.cpp" />
     <ClCompile Include="..\..\game.cpp" />
     <ClCompile Include="..\..\game_object.cpp" />
     <ClCompile Include="..\..\load_texture.cpp" />
@@ -243,7 +243,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\camera.h" />
     <ClInclude Include="..\..\free_camera.h" />
-    <ClInclude Include="..\..\front_end.h" />
+    <ClInclude Include="..\..\frontend.h" />
     <ClInclude Include="..\..\game.h" />
     <ClInclude Include="..\..\game_object.h" />
     <ClInclude Include="..\..\load_texture.h" />
