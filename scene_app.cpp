@@ -52,58 +52,58 @@ void SceneApp::Init()
 
 	FrontendInit();
 
-	// create the renderer for draw 3D geometry
-	renderer_3d_ = gef::Renderer3D::Create(platform_);
+	//// create the renderer for draw 3D geometry
+	//renderer_3d_ = gef::Renderer3D::Create(platform_);
 
-	// initialise primitive builder to make create some 3D geometry easier
-	primitive_builder_ = new PrimitiveBuilder(platform_);
+	//// initialise primitive builder to make create some 3D geometry easier
+	//primitive_builder_ = new PrimitiveBuilder(platform_);
 
-	SetupLights();
+	//SetupLights();
 
-	// initialise the physics world
-	b2Vec2 gravity(0.0f, -9.81f);
-	world_ = new b2World(gravity);
-	//////////
-	InitPlayer();
-	InitGround();
-	//////////
-	camera_ = new free_camera;
-	camera_->Update();
-	camera_->DisplayCameraPosition();
+	//// initialise the physics world
+	//b2Vec2 gravity(0.0f, -9.81f);
+	//world_ = new b2World(gravity);
+	////////////
+	//InitPlayer();
+	//InitGround();
+	////////////
+	//camera_ = new free_camera;
+	//camera_->Update();
+	//camera_->DisplayCameraPosition();
 
 }
 
 void SceneApp::CleanUp()
 {
-	// destroying the physics world also destroys all the objects within it
-	delete world_;
-	world_ = NULL;
-
-	delete ground_mesh_;
-	ground_mesh_ = NULL;
-
-	delete primitive_builder_;
-	primitive_builder_ = NULL;
-
-	delete renderer_3d_;
-	renderer_3d_ = NULL;
-
-	delete sprite_renderer_;
-	sprite_renderer_ = NULL;
+	// audio manager
+	delete audio_manager_;
+	audio_manager_ = NULL;
 
 	// input manager
 	delete input_manager_;
 	input_manager_ = NULL;
 
-	// audio manager
-	delete audio_manager_;
-	audio_manager_ = nullptr;
-
-	// clean up camera
-	delete camera_;
-	camera_ = NULL;
+	delete sprite_renderer_;
+	sprite_renderer_ = NULL;
 
 	CleanUpFont();
+
+	//// destroying the physics world also destroys all the objects within it
+	//delete world_;
+	//world_ = NULL;
+
+	//delete ground_mesh_;
+	//ground_mesh_ = NULL;
+
+	//delete primitive_builder_;
+	//primitive_builder_ = NULL;
+
+	//delete renderer_3d_;
+	//renderer_3d_ = NULL;
+
+	//// clean up camera
+	//delete camera_;
+	//camera_ = NULL;
 }
 
 bool SceneApp::Update(float frame_time)
@@ -142,279 +142,295 @@ bool SceneApp::Update(float frame_time)
 	return true;
 }
 
-bool SceneApp::Update(float frame_time)
-{
-	fps_ = 1.0f / frame_time;
-
-	// update physics world
-	float32 timeStep = 1.0f / 60.0f;
-
-	int32 velocityIterations = 6;
-	int32 positionIterations = 2;
-
-	world_->Step(timeStep, velocityIterations, positionIterations);
-
-	// update object visuals from simulation data
-	player_.UpdateFromSimulation(player_body_);
-
-	// don't have to update the ground visuals as it is static
-
-	// collision detection // class MyContactListener other way of doing collision detection //
-	// get the head of the contact list
-	b2Contact* contact = world_->GetContactList();
-	// get contact count
-	int contact_count = world_->GetContactCount();
-
-	for (int contact_num = 0; contact_num < contact_count; ++contact_num)
-	{
-		if (contact->IsTouching())
-		{
-			// get the colliding bodies
-			b2Body* bodyA = contact->GetFixtureA()->GetBody();
-			b2Body* bodyB = contact->GetFixtureB()->GetBody();
-
-			// DO COLLISION RESPONSE HERE
-			Player* player = NULL;
-
-			GameObject* gameObjectA = NULL;
-			GameObject* gameObjectB = NULL;
-
-			gameObjectA = (GameObject*)bodyA->GetUserData(); // cast to GameObject* pointer
-			gameObjectB = (GameObject*)bodyB->GetUserData(); // cast to GameObject* pointer
-
-			if (gameObjectA)
-			{
-				if (gameObjectA->type() == PLAYER)
-				{
-					player = (Player*)bodyA->GetUserData(); // cast to GameObject* pointer
-				}
-			}
-
-			if (gameObjectB)
-			{
-				if (gameObjectB->type() == PLAYER)
-				{
-					player = (Player*)bodyB->GetUserData(); // cast to GameObject* pointer
-				}
-			}
-
-			if (player)
-			{
-				player->DecrementHealth();
-			}
-
-			//if (bodyA->GetUserData())
-			//{
-			//	player = (GameObject*)bodyA->GetUserData(); // cast to GameObject* pointer
-			//}
-			//if (bodyB->GetUserData())
-			//{
-			//	player = (GameObject*)bodyB->GetUserData(); // cast to GameObject* pointer
-			//}
-
-			//if (player)
-			//{
-			//	player->MyCollisionResponse();
-			//}
-
-			// bouncing body
-			//b2Body* player_body = NULL;
-
-			////if (bodyA->GetType() == b2_dynamicBody) {
-			//if (bodyA == player_body_) {
-			//	player_body = bodyA;
-			//} else {
-			//	player_body = bodyB;
-			//}
-
-			//bodyA->ApplyForceToCenter(b2Vec2(0.0f, 200.0f), true);
-			//bodyB->ApplyForceToCenter(b2Vec2(0.0f, 200.0f), true);
-		}
-
-		// Get next contact point
-		contact = contact->GetNext();
-	}
-
-	
-	// get the latest date from the input devices
-	if (input_manager_)
-	{
-		input_manager_->Update();
-
-		// get controller input data for all controllers
-		//gef::SonyControllerInputManager* controller_manager = input_manager_->controller_input();
-		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
-		//if (controller_manager)
-		//{
-			// read controller data for controler 0
-			//const gef::SonyController* controller = controller_manager->GetController(0);
-			
-			if (controller)
-			{
-				float camera_speed = 10.0f;
-
-				float left_horizontal_input = controller->left_stick_x_axis();
-				float left_vertical_input = controller->left_stick_y_axis();
-
-				float right_horizontal_input = controller->right_stick_x_axis();
-				float right_vertical_input = controller->right_stick_y_axis();
-				// left stick - pan controll
-				if (controller->left_stick_x_axis() < 0)
-				{
-					camera_->MoveSideLeft(frame_time * camera_speed);
-				}
-				if (controller->left_stick_x_axis() > 0)
-				{
-					camera_->MoveSideRight(frame_time * camera_speed);
-				}
-				if (controller->left_stick_y_axis() < 0)
-				{
-					camera_->MoveForward(frame_time * camera_speed);
-				}
-				if (controller->left_stick_y_axis() > 0)
-				{
-					camera_->MoveBackwards(frame_time * camera_speed);
-				}
-				// right stick - yaw and pitch controll
-				if (controller->right_stick_x_axis() < 0)
-				{
-					camera_->subtractYaw(frame_time, camera_speed * camera_speed);
-				}
-				if (controller->right_stick_x_axis() > 0)
-				{
-					camera_->AddYaw(frame_time, camera_speed * camera_speed);
-					
-				}
-				if (controller->right_stick_y_axis() < 0)
-				{
-					camera_->AddPitch(frame_time, camera_speed * camera_speed);
-				}
-				if (controller->right_stick_y_axis() > 0)
-				{
-					camera_->subtractPitch(frame_time, camera_speed * camera_speed);
-				}
-				// buttons
-				// handle input
-				if (controller->buttons_down() & gef_SONY_CTRL_R2)
-				{
-					camera_->MoveUp(timeStep * camera_speed);
-				}
-				if (controller->buttons_down() & gef_SONY_CTRL_L2)
-				{
-					camera_->MoveDown(timeStep * camera_speed);
-				}
-				if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
-				{
-					camera_->DisplayCameraPosition();
-				}
-				if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
-				{
-					camera_->SetCameraPosition(90.0f, -12.0f, 0.0f, gef::Vector4(-8.0f, 3.5f, 0.0f));
-				}
-			} // controller
-		//} // controller_manager
-
-#ifdef _WIN32 // Only on windows platforms
-		// if there is a keyboard, check the arrow keys to control the direction of the character
-		gef::Keyboard* keyboard = input_manager_->keyboard();
-		if (keyboard)
-		{
-			//const gef::KeyboardD3D11* keyboard_d3d11 = (const gef::KeyboardD3D11*)keyboard;
-			float camera_speed = 10.0f;
-
-			// keyboard input
-			if (keyboard->IsKeyDown(gef::Keyboard::KC_W))
-				camera_->MoveForward(frame_time * camera_speed);
-			if (keyboard->IsKeyDown(gef::Keyboard::KC_S))
-				camera_->MoveBackwards(frame_time * camera_speed);
-			if (keyboard->IsKeyDown(gef::Keyboard::KC_A))
-				camera_->MoveSideLeft(frame_time * camera_speed);
-			if (keyboard->IsKeyDown(gef::Keyboard::KC_D))
-				camera_->MoveSideRight(frame_time * camera_speed);
-			if (keyboard->IsKeyDown(gef::Keyboard::KC_UP))
-				camera_->AddPitch(frame_time, camera_speed * camera_speed);
-			if (keyboard->IsKeyDown(gef::Keyboard::KC_DOWN))
-				camera_->subtractPitch(frame_time, camera_speed * camera_speed);
-			if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
-				camera_->subtractYaw(frame_time, camera_speed * camera_speed);
-			if(keyboard->IsKeyDown(gef::Keyboard::KC_RIGHT))
-				camera_->AddYaw(frame_time, camera_speed * camera_speed);
-			if (keyboard->IsKeyDown(gef::Keyboard::KC_R) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD8))
-				camera_->MoveUp(frame_time * camera_speed);
-			if (keyboard->IsKeyDown(gef::Keyboard::KC_F) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD2))
-				camera_->MoveDown(frame_time * camera_speed);
-		} // keyboard
-
-		// mouse input
-		const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
-		if (touch_input)
-		{
-			// initialise the mouse position
-			gef::Vector2 mouse_position(0.0f, 0.0f); // left upper corner of the window
-
-			// get a pointer to the d3d11 implementation of the TouchInputManager
-			const gef::TouchInputManagerD3D11* touch_input_d3d11 = (const gef::TouchInputManagerD3D11*)touch_input;
-
-			// get the mouse position
-			mouse_position = touch_input_d3d11->mouse_position();
-			// camera's Yaw mouse controll, last variable controlls speed
-			//camera_->updateYaw(960, mouse_position.x, 2);
-			// camera's Pitch mouse controll, last variable controlls speed
-			//camera_->updatePitch(544, mouse_position.y, 2);
-			
-			if (touch_input_d3d11->is_button_down(0))
-			{
-				//SetCursorPos(480, 272);	
-			}
-
-			//gef::DebugOut("Mouse position x, y: %f %f\n", mouse_position.x, mouse_position.y);
-		} // touch_input (mouse)
-#endif // !_WIN32
-	} // input_manager_
-	
-	//camera_->moveSideLeft(frame_time);
-	//camera_->moveUp(frame_time);
-	//camera_->update();
-	
-	return true;
-}
+//bool SceneApp::Update(float frame_time)
+//{
+//	fps_ = 1.0f / frame_time;
+//	/////////////////////////////////////////////////////////////
+//	// update physics world
+//	float32 timeStep = 1.0f / 60.0f;
+//
+//	int32 velocityIterations = 6;
+//	int32 positionIterations = 2;
+//
+//	world_->Step(timeStep, velocityIterations, positionIterations);
+//
+//	// update object visuals from simulation data
+//	player_.UpdateFromSimulation(player_body_);
+//
+//	// don't have to update the ground visuals as it is static
+//
+//	// collision detection // class MyContactListener other way of doing collision detection //
+//	// get the head of the contact list
+//	b2Contact* contact = world_->GetContactList();
+//	// get contact count
+//	int contact_count = world_->GetContactCount();
+//
+//	for (int contact_num = 0; contact_num < contact_count; ++contact_num)
+//	{
+//		if (contact->IsTouching())
+//		{
+//			// get the colliding bodies
+//			b2Body* bodyA = contact->GetFixtureA()->GetBody();
+//			b2Body* bodyB = contact->GetFixtureB()->GetBody();
+//
+//			// DO COLLISION RESPONSE HERE
+//			Player* player = NULL;
+//
+//			GameObject* gameObjectA = NULL;
+//			GameObject* gameObjectB = NULL;
+//
+//			gameObjectA = (GameObject*)bodyA->GetUserData(); // cast to GameObject* pointer
+//			gameObjectB = (GameObject*)bodyB->GetUserData(); // cast to GameObject* pointer
+//
+//			if (gameObjectA)
+//			{
+//				if (gameObjectA->type() == PLAYER)
+//				{
+//					player = (Player*)bodyA->GetUserData(); // cast to GameObject* pointer
+//				}
+//			}
+//
+//			if (gameObjectB)
+//			{
+//				if (gameObjectB->type() == PLAYER)
+//				{
+//					player = (Player*)bodyB->GetUserData(); // cast to GameObject* pointer
+//				}
+//			}
+//
+//			if (player)
+//			{
+//				player->DecrementHealth();
+//			}
+//
+//			//if (bodyA->GetUserData())
+//			//{
+//			//	player = (GameObject*)bodyA->GetUserData(); // cast to GameObject* pointer
+//			//}
+//			//if (bodyB->GetUserData())
+//			//{
+//			//	player = (GameObject*)bodyB->GetUserData(); // cast to GameObject* pointer
+//			//}
+//
+//			//if (player)
+//			//{
+//			//	player->MyCollisionResponse();
+//			//}
+//
+//			// bouncing body
+//			//b2Body* player_body = NULL;
+//
+//			////if (bodyA->GetType() == b2_dynamicBody) {
+//			//if (bodyA == player_body_) {
+//			//	player_body = bodyA;
+//			//} else {
+//			//	player_body = bodyB;
+//			//}
+//
+//			//bodyA->ApplyForceToCenter(b2Vec2(0.0f, 200.0f), true);
+//			//bodyB->ApplyForceToCenter(b2Vec2(0.0f, 200.0f), true);
+//		}
+//
+//		// Get next contact point
+//		contact = contact->GetNext();
+//	}
+//
+//	
+//	// get the latest date from the input devices
+//	if (input_manager_)
+//	{
+//		input_manager_->Update();
+//
+//		// get controller input data for all controllers
+//		//gef::SonyControllerInputManager* controller_manager = input_manager_->controller_input();
+//		//get controller input data and read controller data for controler 0
+//		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
+//		//if (controller_manager)
+//		//{
+//			// read controller data for controler 0
+//			//const gef::SonyController* controller = controller_manager->GetController(0);
+//			
+//			if (controller)
+//			{
+//				float camera_speed = 10.0f;
+//
+//				float left_horizontal_input = controller->left_stick_x_axis();
+//				float left_vertical_input = controller->left_stick_y_axis();
+//
+//				float right_horizontal_input = controller->right_stick_x_axis();
+//				float right_vertical_input = controller->right_stick_y_axis();
+//				// left stick - pan controll
+//				if (controller->left_stick_x_axis() < 0)
+//				{
+//					camera_->MoveSideLeft(frame_time * camera_speed);
+//				}
+//				if (controller->left_stick_x_axis() > 0)
+//				{
+//					camera_->MoveSideRight(frame_time * camera_speed);
+//				}
+//				if (controller->left_stick_y_axis() < 0)
+//				{
+//					camera_->MoveForward(frame_time * camera_speed);
+//				}
+//				if (controller->left_stick_y_axis() > 0)
+//				{
+//					camera_->MoveBackwards(frame_time * camera_speed);
+//				}
+//				// right stick - yaw and pitch controll
+//				if (controller->right_stick_x_axis() < 0)
+//				{
+//					camera_->subtractYaw(frame_time, camera_speed * camera_speed);
+//				}
+//				if (controller->right_stick_x_axis() > 0)
+//				{
+//					camera_->AddYaw(frame_time, camera_speed * camera_speed);
+//					
+//				}
+//				if (controller->right_stick_y_axis() < 0)
+//				{
+//					camera_->AddPitch(frame_time, camera_speed * camera_speed);
+//				}
+//				if (controller->right_stick_y_axis() > 0)
+//				{
+//					camera_->subtractPitch(frame_time, camera_speed * camera_speed);
+//				}
+//				// buttons
+//				// handle input
+//				if (controller->buttons_down() & gef_SONY_CTRL_R2)
+//				{
+//					camera_->MoveUp(timeStep * camera_speed);
+//				}
+//				if (controller->buttons_down() & gef_SONY_CTRL_L2)
+//				{
+//					camera_->MoveDown(timeStep * camera_speed);
+//				}
+//				if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
+//				{
+//					camera_->DisplayCameraPosition();
+//				}
+//				if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
+//				{
+//					camera_->SetCameraPosition(90.0f, -12.0f, 0.0f, gef::Vector4(-8.0f, 3.5f, 0.0f));
+//				}
+//			} // controller
+//		//} // controller_manager
+//
+//#ifdef _WIN32 // Only on windows platforms
+//		// if there is a keyboard, check the arrow keys to control the direction of the character
+//		gef::Keyboard* keyboard = input_manager_->keyboard();
+//		if (keyboard)
+//		{
+//			//const gef::KeyboardD3D11* keyboard_d3d11 = (const gef::KeyboardD3D11*)keyboard;
+//			float camera_speed = 10.0f;
+//
+//			// keyboard input
+//			if (keyboard->IsKeyDown(gef::Keyboard::KC_W))
+//				camera_->MoveForward(frame_time * camera_speed);
+//			if (keyboard->IsKeyDown(gef::Keyboard::KC_S))
+//				camera_->MoveBackwards(frame_time * camera_speed);
+//			if (keyboard->IsKeyDown(gef::Keyboard::KC_A))
+//				camera_->MoveSideLeft(frame_time * camera_speed);
+//			if (keyboard->IsKeyDown(gef::Keyboard::KC_D))
+//				camera_->MoveSideRight(frame_time * camera_speed);
+//			if (keyboard->IsKeyDown(gef::Keyboard::KC_UP))
+//				camera_->AddPitch(frame_time, camera_speed * camera_speed);
+//			if (keyboard->IsKeyDown(gef::Keyboard::KC_DOWN))
+//				camera_->subtractPitch(frame_time, camera_speed * camera_speed);
+//			if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
+//				camera_->subtractYaw(frame_time, camera_speed * camera_speed);
+//			if(keyboard->IsKeyDown(gef::Keyboard::KC_RIGHT))
+//				camera_->AddYaw(frame_time, camera_speed * camera_speed);
+//			if (keyboard->IsKeyDown(gef::Keyboard::KC_R) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD8))
+//				camera_->MoveUp(frame_time * camera_speed);
+//			if (keyboard->IsKeyDown(gef::Keyboard::KC_F) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD2))
+//				camera_->MoveDown(frame_time * camera_speed);
+//		} // keyboard
+//
+//		// mouse input
+//		const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
+//		if (touch_input)
+//		{
+//			// initialise the mouse position
+//			gef::Vector2 mouse_position(0.0f, 0.0f); // left upper corner of the window
+//
+//			// get a pointer to the d3d11 implementation of the TouchInputManager
+//			const gef::TouchInputManagerD3D11* touch_input_d3d11 = (const gef::TouchInputManagerD3D11*)touch_input;
+//
+//			// get the mouse position
+//			mouse_position = touch_input_d3d11->mouse_position();
+//			// camera's Yaw mouse controll, last variable controlls speed
+//			//camera_->updateYaw(960, mouse_position.x, 2);
+//			// camera's Pitch mouse controll, last variable controlls speed
+//			//camera_->updatePitch(544, mouse_position.y, 2);
+//			
+//			if (touch_input_d3d11->is_button_down(0))
+//			{
+//				//SetCursorPos(480, 272);	
+//			}
+//
+//			//gef::DebugOut("Mouse position x, y: %f %f\n", mouse_position.x, mouse_position.y);
+//		} // touch_input (mouse)
+//#endif // !_WIN32
+//	} // input_manager_
+//	
+//	//camera_->moveSideLeft(frame_time);
+//	//camera_->moveUp(frame_time);
+//	//camera_->update();
+//	
+//	return true;
+//}
 
 void SceneApp::Render()
 {
-	// setup camera
+	switch (game_state_)
+	{
+	case FRONTEND:
+	{
+		FrontendRender();
+	}
+	break;
 
-	// projection
-	float fov = gef::DegToRad(45.0f);
-	float aspect_ratio = (float)platform_.width() / (float)platform_.height();
-	gef::Matrix44 projection_matrix;
-	projection_matrix = platform_.PerspectiveProjectionFov(fov, aspect_ratio, 0.1f, 100.0f);
-	renderer_3d_->set_projection_matrix(projection_matrix);
+	case GAME:
+	{
+		GameRender();
+	}
+	break;
+	}
+	////////////////////////////////////////////////////////
+	//// setup camera
 
-	// view
-	gef::Vector4 camera_eye(camera_->GetPositionVector().x(), camera_->GetPositionVector().y(), camera_->GetPositionVector().z());
-	gef::Vector4 camera_lookat(camera_->GetLookAtVector().x(), camera_->GetLookAtVector().y(), camera_->GetLookAtVector().z());
-	gef::Vector4 camera_up(camera_->GetUpVector().x(), camera_->GetUpVector().y(), camera_->GetUpVector().z());
-	gef::Matrix44 view_matrix;
-	view_matrix.LookAt(camera_eye, camera_lookat, camera_up);
-	renderer_3d_->set_view_matrix(view_matrix);
+	//// projection
+	//float fov = gef::DegToRad(45.0f);
+	//float aspect_ratio = (float)platform_.width() / (float)platform_.height();
+	//gef::Matrix44 projection_matrix;
+	//projection_matrix = platform_.PerspectiveProjectionFov(fov, aspect_ratio, 0.1f, 100.0f);
+	//renderer_3d_->set_projection_matrix(projection_matrix);
 
-	// draw 3d geometry
-	renderer_3d_->Begin();
+	//// view
+	//gef::Vector4 camera_eye(camera_->GetPositionVector().x(), camera_->GetPositionVector().y(), camera_->GetPositionVector().z());
+	//gef::Vector4 camera_lookat(camera_->GetLookAtVector().x(), camera_->GetLookAtVector().y(), camera_->GetLookAtVector().z());
+	//gef::Vector4 camera_up(camera_->GetUpVector().x(), camera_->GetUpVector().y(), camera_->GetUpVector().z());
+	//gef::Matrix44 view_matrix;
+	//view_matrix.LookAt(camera_eye, camera_lookat, camera_up);
+	//renderer_3d_->set_view_matrix(view_matrix);
 
-	// draw ground
-	renderer_3d_->DrawMesh(ground_);
+	//// draw 3d geometry
+	//renderer_3d_->Begin();
 
-	// draw player
-	renderer_3d_->set_override_material(&primitive_builder_->red_material());
-	renderer_3d_->DrawMesh(player_);
-	renderer_3d_->set_override_material(NULL);
+	//// draw ground
+	//renderer_3d_->DrawMesh(ground_);
 
-	renderer_3d_->End();
+	//// draw player
+	//renderer_3d_->set_override_material(&primitive_builder_->red_material());
+	//renderer_3d_->DrawMesh(player_);
+	//renderer_3d_->set_override_material(NULL);
 
-	// start drawing sprites, but don't clear the frame buffer
-	sprite_renderer_->Begin(false);
-	DrawHUD();
-	sprite_renderer_->End();
+	//renderer_3d_->End();
+
+	//// start drawing sprites, but don't clear the frame buffer
+	//sprite_renderer_->Begin(false);
+	//DrawHUD();
+	//sprite_renderer_->End();
 }
 
 void SceneApp::InitPlayer()
@@ -579,6 +595,147 @@ void SceneApp::UpdateSimulation(float frame_time)
 		// Get next contact point
 		contact = contact->GetNext();
 	}
+
+	// get the latest date from the input devices
+	if (input_manager_)
+	{
+		input_manager_->Update();
+
+		// get controller input data for all controllers
+		//gef::SonyControllerInputManager* controller_manager = input_manager_->controller_input();
+		// get controller input data and read controller data for controler 0
+		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
+		//if (controller_manager)
+		//{
+		// read controller data for controler 0
+		//const gef::SonyController* controller = controller_manager->GetController(0);
+
+		if (controller)
+		{
+			float camera_speed = 10.0f;
+
+			float left_horizontal_input = controller->left_stick_x_axis();
+			float left_vertical_input = controller->left_stick_y_axis();
+
+			float right_horizontal_input = controller->right_stick_x_axis();
+			float right_vertical_input = controller->right_stick_y_axis();
+			// left stick - pan controll
+			if (controller->left_stick_x_axis() < 0)
+			{
+				camera_->MoveSideLeft(frame_time * camera_speed);
+			}
+			if (controller->left_stick_x_axis() > 0)
+			{
+				camera_->MoveSideRight(frame_time * camera_speed);
+			}
+			if (controller->left_stick_y_axis() < 0)
+			{
+				camera_->MoveForward(frame_time * camera_speed);
+			}
+			if (controller->left_stick_y_axis() > 0)
+			{
+				camera_->MoveBackwards(frame_time * camera_speed);
+			}
+			// right stick - yaw and pitch controll
+			if (controller->right_stick_x_axis() < 0)
+			{
+				camera_->subtractYaw(frame_time, camera_speed * camera_speed);
+			}
+			if (controller->right_stick_x_axis() > 0)
+			{
+				camera_->AddYaw(frame_time, camera_speed * camera_speed);
+
+			}
+			if (controller->right_stick_y_axis() < 0)
+			{
+				camera_->AddPitch(frame_time, camera_speed * camera_speed);
+			}
+			if (controller->right_stick_y_axis() > 0)
+			{
+				camera_->subtractPitch(frame_time, camera_speed * camera_speed);
+			}
+			// buttons
+			// handle input
+			if (controller->buttons_down() & gef_SONY_CTRL_R2)
+			{
+				camera_->MoveUp(timeStep * camera_speed);
+			}
+			if (controller->buttons_down() & gef_SONY_CTRL_L2)
+			{
+				camera_->MoveDown(timeStep * camera_speed);
+			}
+			if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
+			{
+				camera_->DisplayCameraPosition();
+			}
+			if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
+			{
+				camera_->SetCameraPosition(90.0f, -12.0f, 0.0f, gef::Vector4(-8.0f, 3.5f, 0.0f));
+			}
+		} // controller
+		  //} // controller_manager
+
+#ifdef _WIN32 // Only on windows platforms
+		  // if there is a keyboard, check the arrow keys to control the direction of the character
+		gef::Keyboard* keyboard = input_manager_->keyboard();
+		if (keyboard)
+		{
+			//const gef::KeyboardD3D11* keyboard_d3d11 = (const gef::KeyboardD3D11*)keyboard;
+			float camera_speed = 10.0f;
+
+			// keyboard input
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_W))
+				camera_->MoveForward(frame_time * camera_speed);
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_S))
+				camera_->MoveBackwards(frame_time * camera_speed);
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_A))
+				camera_->MoveSideLeft(frame_time * camera_speed);
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_D))
+				camera_->MoveSideRight(frame_time * camera_speed);
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_UP))
+				camera_->AddPitch(frame_time, camera_speed * camera_speed);
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_DOWN))
+				camera_->subtractPitch(frame_time, camera_speed * camera_speed);
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
+				camera_->subtractYaw(frame_time, camera_speed * camera_speed);
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_RIGHT))
+				camera_->AddYaw(frame_time, camera_speed * camera_speed);
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_R) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD8))
+				camera_->MoveUp(frame_time * camera_speed);
+			if (keyboard->IsKeyDown(gef::Keyboard::KC_F) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD2))
+				camera_->MoveDown(frame_time * camera_speed);
+		} // keyboard
+
+		  // mouse input
+		const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
+		if (touch_input)
+		{
+			// initialise the mouse position
+			gef::Vector2 mouse_position(0.0f, 0.0f); // left upper corner of the window
+
+													 // get a pointer to the d3d11 implementation of the TouchInputManager
+			const gef::TouchInputManagerD3D11* touch_input_d3d11 = (const gef::TouchInputManagerD3D11*)touch_input;
+
+			// get the mouse position
+			mouse_position = touch_input_d3d11->mouse_position();
+			// camera's Yaw mouse controll, last variable controlls speed
+			//camera_->updateYaw(960, mouse_position.x, 2);
+			// camera's Pitch mouse controll, last variable controlls speed
+			//camera_->updatePitch(544, mouse_position.y, 2);
+
+			if (touch_input_d3d11->is_button_down(0))
+			{
+				//SetCursorPos(480, 272);	
+			}
+
+			//gef::DebugOut("Mouse position x, y: %f %f\n", mouse_position.x, mouse_position.y);
+		} // touch_input (mouse)
+#endif // !_WIN32
+	} // input_manager_
+
+	  //camera_->moveSideLeft(frame_time);
+	  //camera_->moveUp(frame_time);
+	  //camera_->update();
 }
 
 void SceneApp::FrontendInit()
@@ -594,6 +751,7 @@ void SceneApp::FrontendRelease()
 
 void SceneApp::FrontendUpdate(float frame_time)
 {
+	// get controller input data and read controller data for controler 0
 	const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
 
 	if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
@@ -664,6 +822,10 @@ void SceneApp::GameInit()
 	InitPlayer();
 	InitGround();
 
+	camera_ = new free_camera;
+	camera_->Update();
+	camera_->DisplayCameraPosition();
+
 	// load audio assets
 	if (audio_manager_)
 	{
@@ -702,10 +864,14 @@ void SceneApp::GameRelease()
 	delete renderer_3d_;
 	renderer_3d_ = NULL;
 
+	// clean up camera
+	delete camera_;
+	camera_ = NULL;
 }
 
 void SceneApp::GameUpdate(float frame_time)
 {
+	// get controller input data and read controller data for controler 0
 	const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
 	// input function
 	//Input();
@@ -763,13 +929,12 @@ void SceneApp::GameRender()
 	renderer_3d_->set_projection_matrix(projection_matrix);
 
 	// view
-	gef::Vector4 camera_eye(-2.0f, 2.0f, 10.0f);
-	gef::Vector4 camera_lookat(0.0f, 0.0f, 0.0f);
-	gef::Vector4 camera_up(0.0f, 1.0f, 0.0f);
+	gef::Vector4 camera_eye(camera_->GetPositionVector().x(), camera_->GetPositionVector().y(), camera_->GetPositionVector().z());
+	gef::Vector4 camera_lookat(camera_->GetLookAtVector().x(), camera_->GetLookAtVector().y(), camera_->GetLookAtVector().z());
+	gef::Vector4 camera_up(camera_->GetUpVector().x(), camera_->GetUpVector().y(), camera_->GetUpVector().z());
 	gef::Matrix44 view_matrix;
 	view_matrix.LookAt(camera_eye, camera_lookat, camera_up);
 	renderer_3d_->set_view_matrix(view_matrix);
-
 
 	// draw 3d geometry
 	renderer_3d_->Begin();
