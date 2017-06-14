@@ -38,6 +38,9 @@ SceneApp::SceneApp(gef::Platform& platform) :
 
 void SceneApp::Init()
 {
+	// initialise the game state machine
+	game_state_ = FRONTEND;
+
 	// initlalise sprite renderer
 	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
 	// initialise input manager
@@ -45,32 +48,9 @@ void SceneApp::Init()
 	// initialise audio manager
 	audio_manager_ = gef::AudioManager::Create();
 
-	// initialise the game state machine
-	game_state_ = FRONTEND;
-
 	InitFont();
 
 	FrontendInit();
-
-	//// create the renderer for draw 3D geometry
-	//renderer_3d_ = gef::Renderer3D::Create(platform_);
-
-	//// initialise primitive builder to make create some 3D geometry easier
-	//primitive_builder_ = new PrimitiveBuilder(platform_);
-
-	//SetupLights();
-
-	//// initialise the physics world
-	//b2Vec2 gravity(0.0f, -9.81f);
-	//world_ = new b2World(gravity);
-	////////////
-	//InitPlayer();
-	//InitGround();
-	////////////
-	//camera_ = new free_camera;
-	//camera_->Update();
-	//camera_->DisplayCameraPosition();
-
 }
 
 void SceneApp::CleanUp()
@@ -87,23 +67,6 @@ void SceneApp::CleanUp()
 	sprite_renderer_ = NULL;
 
 	CleanUpFont();
-
-	//// destroying the physics world also destroys all the objects within it
-	//delete world_;
-	//world_ = NULL;
-
-	//delete ground_mesh_;
-	//ground_mesh_ = NULL;
-
-	//delete primitive_builder_;
-	//primitive_builder_ = NULL;
-
-	//delete renderer_3d_;
-	//renderer_3d_ = NULL;
-
-	//// clean up camera
-	//delete camera_;
-	//camera_ = NULL;
 }
 
 bool SceneApp::Update(float frame_time)
@@ -396,41 +359,6 @@ void SceneApp::Render()
 	}
 	break;
 	}
-	////////////////////////////////////////////////////////
-	//// setup camera
-
-	//// projection
-	//float fov = gef::DegToRad(45.0f);
-	//float aspect_ratio = (float)platform_.width() / (float)platform_.height();
-	//gef::Matrix44 projection_matrix;
-	//projection_matrix = platform_.PerspectiveProjectionFov(fov, aspect_ratio, 0.1f, 100.0f);
-	//renderer_3d_->set_projection_matrix(projection_matrix);
-
-	//// view
-	//gef::Vector4 camera_eye(camera_->GetPositionVector().x(), camera_->GetPositionVector().y(), camera_->GetPositionVector().z());
-	//gef::Vector4 camera_lookat(camera_->GetLookAtVector().x(), camera_->GetLookAtVector().y(), camera_->GetLookAtVector().z());
-	//gef::Vector4 camera_up(camera_->GetUpVector().x(), camera_->GetUpVector().y(), camera_->GetUpVector().z());
-	//gef::Matrix44 view_matrix;
-	//view_matrix.LookAt(camera_eye, camera_lookat, camera_up);
-	//renderer_3d_->set_view_matrix(view_matrix);
-
-	//// draw 3d geometry
-	//renderer_3d_->Begin();
-
-	//// draw ground
-	//renderer_3d_->DrawMesh(ground_);
-
-	//// draw player
-	//renderer_3d_->set_override_material(&primitive_builder_->red_material());
-	//renderer_3d_->DrawMesh(player_);
-	//renderer_3d_->set_override_material(NULL);
-
-	//renderer_3d_->End();
-
-	//// start drawing sprites, but don't clear the frame buffer
-	//sprite_renderer_->Begin(false);
-	//DrawHUD();
-	//sprite_renderer_->End();
 }
 
 void SceneApp::InitPlayer()
@@ -871,11 +799,6 @@ void SceneApp::GameRelease()
 
 void SceneApp::GameUpdate(float frame_time)
 {
-	// get controller input data and read controller data for controler 0
-	const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
-	// input function
-	//Input();
-
 	// trigger a sound effect
 	if (audio_manager_)
 	{
@@ -908,13 +831,16 @@ void SceneApp::GameUpdate(float frame_time)
 
 	UpdateSimulation(frame_time);
 
-	if (controller->buttons_pressed() & gef_SONY_CTRL_START)
-	{
-		GameRelease();
+	//// get controller input data and read controller data for controler 0
+	//const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
 
-		game_state_ = FRONTEND;
-		FrontendInit();
-	}
+	//if (controller->buttons_pressed() & gef_SONY_CTRL_START)
+	//{
+	//	GameRelease();
+
+	//	game_state_ = FRONTEND;
+	//	FrontendInit();
+	//}
 }
 
 void SceneApp::GameRender()
