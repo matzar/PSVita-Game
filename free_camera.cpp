@@ -137,5 +137,4 @@ void FreeCamera::CameraControll(const float frame_time, const gef::SonyControlle
 	
 	//moveSideLeft(frame_time);
 	//moveUp(frame_time);
-	//update();
 }

@@ -1,8 +1,6 @@
 #ifndef _CAMERA_H
 #define _CAMERA_H
 
-#include <system/application.h>
-#include <input/input_manager.h>
 #include <input/sony_controller_input_manager.h>
 #include "maths/vector4.h"
 
