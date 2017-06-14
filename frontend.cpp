@@ -18,28 +18,28 @@
 //#include <freeglut.h>
 #endif 
 
-FrontEnd::Frontend()
+Frontend::Frontend()
 {
 }
 
 
-FrontEnd::~Frontend()
+Frontend::~Frontend()
 {
 }
 
 
-void SceneApp::FrontendInit()
+void Frontend::FrontendInit()
 {
 	button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
 }
 
-void SceneApp::FrontendRelease()
+void Frontend::FrontendRelease()
 {
 	delete button_icon_;
 	button_icon_ = NULL;
 }
 
-void SceneApp::FrontendUpdate(float frame_time)
+void Frontend::FrontendUpdate(float frame_time)
 {
 	// get controller input data and read controller data for controler 0
 	const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
@@ -57,7 +57,7 @@ void SceneApp::FrontendUpdate(float frame_time)
 	}
 }
 
-void SceneApp::FrontendRender()
+void Frontend::FrontendRender()
 {
 	sprite_renderer_->Begin();
 
