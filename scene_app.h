@@ -10,6 +10,11 @@
 #include "game_object.h"
 #include "free_camera.h"
 
+enum GAMESTATE
+{
+	FRONTEND,
+	GAME
+}; // GAMESTATE
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
 {
@@ -18,7 +23,7 @@ namespace gef
 	class Font;
 	class InputManager;
 	class Renderer3D;
-}
+} // gef
 
 class SceneApp : public gef::Application
 {
@@ -61,6 +66,6 @@ private:
 	camera* camera_;
 
 	float fps_;
-};
+}; // SceneApp
 
 #endif // _SCENE_APP_H
