@@ -1,8 +1,9 @@
 #include "load_texture.h"
-
+// gef headers
 #include <assets/png_loader.h>
 #include <graphics/image_data.h>
 #include <graphics/texture.h>
+// std headers
 #include <cstdlib>
 
 gef::Texture* CreateTextureFromPNG(const char* png_filename, gef::Platform& platform)

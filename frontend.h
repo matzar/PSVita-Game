@@ -1,20 +1,17 @@
 #ifndef _FRONTEND_H
 #define _FRONTEND_H
 
+// mu headers
 #include "game_state_enum.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
 {
 	class Platform;
-	class SpriteRenderer;
 	class Font;
-	class InputManager;
-	class Renderer3D;
-	class Mesh;
+	class SpriteRenderer;
 	class InputManager;
 	class AudioManager;
-	class Font;
 	class Texture;
 } // gef
 

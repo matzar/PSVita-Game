@@ -1,8 +1,10 @@
 #ifndef _PRIMITIVE_BUILDER_H
 #define _PRIMITIVE_BUILDER_H
 
+// gef headers
 #include <maths/vector4.h>
 #include <graphics/material.h>
+// std headers
 #include <cstddef>
 
 namespace gef

@@ -1,4 +1,5 @@
 #include "game.h"
+// gef headers
 #include <system/platform.h>
 #include <system/debug_log.h>
 
@@ -14,8 +15,13 @@
 #include <input/input_manager.h>
 #include <input/sony_controller_input_manager.h>
 #include <audio/audio_manager.h>
+// extra headers
 #include "load_texture.h"
-
+#include "primitive_builder.h"
+// my headers
+#include "free_camera.h"
+#include "game_state_enum.h"
+// box2D headers
 #include <box2d/Box2D.h>
 
 
@@ -166,6 +172,9 @@ void Game::GameRelease()
 		sfx_id_ = -1;
 		sfx_voice_id_ = -1;
 	}
+
+	delete audio_manager_;
+	audio_manager_ = nullptr;
 
 	// destroying the physics world also destroys all the objects within it
 	delete world_;

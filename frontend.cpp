@@ -1,4 +1,5 @@
 #include "frontend.h"
+// gef headers
 #include <system/platform.h>
 #include <system/debug_log.h>
 
@@ -12,6 +13,7 @@
 #include <audio/audio_manager.h>
 
 #include <maths/vector4.h>
+// extra headers
 #include "load_texture.h"
 
 #ifdef _WIN32

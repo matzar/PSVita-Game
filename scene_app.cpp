@@ -29,9 +29,13 @@ void SceneApp::Init()
 
 void SceneApp::CleanUp()
 {
+	// frontend_
+	frontend_->FrontendRelease();
 	delete frontend_;
 	frontend_ = nullptr;
 
+	// game_
+	game_->GameRelease();
 	delete game_;
 	game_ = nullptr;
 } // !CleanUp

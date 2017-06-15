@@ -1,6 +1,8 @@
 #include "camera.h"
+// gef headers
 #include "maths/vector4.h"
 #include <system/debug_log.h>
+// std headers
 #include <math.h>
 
 const float PI = 3.1415f;

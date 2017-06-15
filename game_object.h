@@ -1,7 +1,9 @@
 #ifndef _GAME_OBJECT_H
 #define _GAME_OBJECT_H
 
+// gef headers
 #include <graphics/mesh_instance.h>
+// box2D headers
 #include <box2d/Box2D.h>
 
 enum OBJECT_TYPE

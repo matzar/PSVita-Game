@@ -1,8 +1,10 @@
 #include "primitive_builder.h"
+// gef headers
 #include <graphics/mesh.h>
 #include <system/platform.h>
 #include <graphics/primitive.h>
 #include <maths/math_utils.h>
+// std headers
 #include <vector>
 #include <math.h>
 

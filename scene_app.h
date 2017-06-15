@@ -1,7 +1,9 @@
 #ifndef _SCENE_APP_H
 #define _SCENE_APP_H
 
+// gef headers
 #include <system/application.h>
+// my headers
 #include "free_camera.h"
 #include "game.h"
 #include "frontend.h"
