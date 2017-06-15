@@ -22,15 +22,15 @@
 Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	platform_(platform),
 	gamestate_(gamestate),
-	sprite_renderer_(NULL),
-	renderer_3d_(NULL),
-	primitive_builder_(NULL),
-	font_(NULL),
-	world_(NULL),
-	player_body_(NULL),
-	input_manager_(NULL),
-	audio_manager_(NULL),
-	camera_(NULL),
+	sprite_renderer_(nullptr),
+	renderer_3d_(nullptr),
+	primitive_builder_(nullptr),
+	font_(nullptr),
+	world_(nullptr),
+	player_body_(nullptr),
+	input_manager_(nullptr),
+	audio_manager_(nullptr),
+	camera_(nullptr),
 	sfx_voice_id_(-1),
 	sfx_id_(-1)
 {
@@ -161,20 +161,20 @@ void Game::GameRelease()
 
 	// destroying the physics world also destroys all the objects within it
 	delete world_;
-	world_ = NULL;
+	world_ = nullptr;
 
 	delete ground_mesh_;
-	ground_mesh_ = NULL;
+	ground_mesh_ = nullptr;
 
 	delete primitive_builder_;
-	primitive_builder_ = NULL;
+	primitive_builder_ = nullptr;
 
 	delete renderer_3d_;
-	renderer_3d_ = NULL;
+	renderer_3d_ = nullptr;
 
 	// clean up camera
 	delete camera_;
-	camera_ = NULL;
+	camera_ = nullptr;
 }
 
 void Game::UpdateSimulation(float frame_time)
@@ -207,10 +207,10 @@ void Game::UpdateSimulation(float frame_time)
 			b2Body* bodyB = contact->GetFixtureB()->GetBody();
 
 			// DO COLLISION RESPONSE HERE
-			Player* player = NULL;
+			Player* player = nullptr;
 
-			GameObject* gameObjectA = NULL;
-			GameObject* gameObjectB = NULL;
+			GameObject* gameObjectA = nullptr;
+			GameObject* gameObjectB = nullptr;
 
 			gameObjectA = (GameObject*)bodyA->GetUserData();
 			gameObjectB = (GameObject*)bodyB->GetUserData();
@@ -395,7 +395,7 @@ void Game::GameRender()
 	// draw player
 	renderer_3d_->set_override_material(&primitive_builder_->red_material());
 	renderer_3d_->DrawMesh(player_);
-	renderer_3d_->set_override_material(NULL);
+	renderer_3d_->set_override_material(nullptr);
 
 	renderer_3d_->End();
 
@@ -430,7 +430,7 @@ void Game::InitFont()
 void Game::CleanUpFont()
 {
 	delete font_;
-	font_ = NULL;
+	font_ = nullptr;
 }
 
 void Game::DrawHUD()

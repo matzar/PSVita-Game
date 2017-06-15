@@ -41,7 +41,7 @@ void Frontend::InitFont()
 void Frontend::CleanUpFont()
 {
 	delete font_;
-	font_ = NULL;
+	font_ = nullptr;
 }
 
 void Frontend::FrontendInit()
@@ -91,19 +91,12 @@ void Frontend::FrontendUpdate(float frame_time)
 
 
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
-			//if (cross)
 		{
 			// release any resources for the frontend
 			FrontendRelease();
 
 			// update the current state for the game state machine
-
 			(*gamestate_) = GAME; // get the object that gamestate points to
-
-			//globals::gamestate = GAME;
-
-			gef::DebugOut("Press X\n");
-			// initialise game state
 			//GameInit();
 		}
 	} // input_manager_
@@ -143,6 +136,7 @@ void Frontend::FrontendRender()
 
 
 	DrawHUD();
+
 	sprite_renderer_->End();
 }
 
