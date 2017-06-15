@@ -35,6 +35,8 @@ public:
 	void FrontendUpdate(float frame_time);
 	void FrontendRender();
 private:
+	GAMESTATE* gamestate_;
+
 	gef::SpriteRenderer* sprite_renderer_;
 
 	gef::InputManager* input_manager_;
@@ -46,7 +48,6 @@ private:
 	void DrawHUD();
 
 	float fps_;
-	GAMESTATE* gamestate_;
 };
 
 #endif // !_FRONT_END_H

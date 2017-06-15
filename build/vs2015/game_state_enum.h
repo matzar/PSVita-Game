@@ -7,7 +7,5 @@ enum GAMESTATE
 }; // GAMESTATE
 
 //__declspec(selectany) GAMESTATE gamestate_;
-namespace globals
-{
-	static GAMESTATE gamestate_;
-}
+
+//static GAMESTATE gamestate_;
