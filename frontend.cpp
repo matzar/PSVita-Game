@@ -93,12 +93,11 @@ void Frontend::FrontendUpdate(float frame_time)
 
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
 		{
-			// release any resources for the frontend
-			FrontendRelease();
+			// TODO release any resources for the frontend
+
 
 			// update the current state for the game state machine
 			(*gamestate_) = GAME; // get the object that gamestate points to
-			//GameInit();
 		}
 	} // !input_manager_
 }
