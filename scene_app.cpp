@@ -9,6 +9,7 @@
 #include <maths/math_utils.h>
 #include <input/sony_controller_input_manager.h>
 #include "load_texture.h"
+#include "game_state_enum.h"
 
 #ifdef _WIN32
 // only on windows platforms
@@ -31,7 +32,7 @@ void SceneApp::Init()
 
 
 	// initialise the game state machine
-	gamestate_ = FRONTEND;
+	globals::gamestate = FRONTEND;
 
 	//// initlalise sprite renderer
 	//sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
@@ -96,7 +97,7 @@ bool SceneApp::Update(float frame_time)
 	//	}
 	//}
 
-	switch (gamestate_)
+	switch (globals::gamestate)
 	{
 	case FRONTEND:
 	{
@@ -118,7 +119,7 @@ bool SceneApp::Update(float frame_time)
 
 void SceneApp::Render()
 {
-	switch (gamestate_)
+	switch (globals::gamestate)
 	{
 	case FRONTEND:
 	{

@@ -9,6 +9,7 @@
 #include <maths/math_utils.h>
 #include <input/sony_controller_input_manager.h>
 #include "load_texture.h"
+#include "game_state_enum.h"
 
 #ifdef _WIN32
 // only on windows platforms
@@ -107,8 +108,12 @@ void Frontend::FrontendUpdate(float frame_time)
 			(*gamestate_) = GAME; // get the object that gamestate points to
 =======
 			//(*gamestate_) = GAME; // get the object that gamestate points to
+<<<<<<< HEAD
 			gamestate_ = GAME;
 >>>>>>> selecany gamestate working
+=======
+			globals::gamestate = GAME;
+>>>>>>> gamestate enum kept as global
 
 			gef::DebugOut("Press X\n");
 			// initialise game state

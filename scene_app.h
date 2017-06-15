@@ -12,7 +12,6 @@
 #include "free_camera.h"
 #include "game.h"
 #include "frontend.h"
-#include "game_state_enum.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
