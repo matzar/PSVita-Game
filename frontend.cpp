@@ -9,7 +9,7 @@
 #include <maths/math_utils.h>
 #include <input/sony_controller_input_manager.h>
 #include "load_texture.h"
-#include "game_state_enum.h"
+
 
 #ifdef _WIN32
 // only on windows platforms
@@ -19,8 +19,9 @@
 //#include <freeglut.h>
 #endif 
 
-Frontend::Frontend(gef::Platform& platform) :
+Frontend::Frontend(gef::Platform& platform, GAMESTATE gamestate) :
 	platform_(platform),
+	gamestate_(gamestate),
 	input_manager_(nullptr),
 	button_icon_(nullptr)
 {
@@ -85,9 +86,9 @@ void Frontend::FrontendUpdate(float frame_time)
 
 			// update the current state for the game state machine
 
-			//(*gamestate_) = GAME; // get the object that gamestate points to
+			(*gamestate_) = GAME; // get the object that gamestate points to
 
-			globals::gamestate = GAME;
+			//globals::gamestate = GAME;
 
 			gef::DebugOut("Press X\n");
 			// initialise game state

@@ -9,7 +9,7 @@
 #include <maths/math_utils.h>
 #include <input/sony_controller_input_manager.h>
 #include "load_texture.h"
-#include "game_state_enum.h"
+
 
 #ifdef _WIN32
 // only on windows platforms

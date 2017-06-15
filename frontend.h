@@ -11,6 +11,7 @@
 #include <box2d/Box2D.h>
 #include "game_object.h"
 #include "free_camera.h"
+#include "game_state_enum.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
@@ -25,7 +26,7 @@ namespace gef
 class Frontend
 {
 public:
-	Frontend(gef::Platform& platform);
+	Frontend(gef::Platform& platform, GAMESTATE& gamestate);
 	~Frontend();
 
 	void InitFont();

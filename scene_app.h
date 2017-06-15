@@ -12,6 +12,7 @@
 #include "free_camera.h"
 #include "game.h"
 #include "frontend.h"
+#include "game_state_enum.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
@@ -34,7 +35,7 @@ public:
 	virtual bool Update(float frame_time);
 	virtual void Render();
 private:
-	//GAMESTATE gamestate_;
+	GAMESTATE* gamestate_;
 
 	float fps_;
 
