@@ -101,43 +101,42 @@ void Frontend::FrontendUpdate(float frame_time)
 			//GameInit();
 		}
 	} // !input_manager_
-
 }
 
 void Frontend::FrontendRender()
 {
 	sprite_renderer_->Begin();
+	{
+		// render "PRESS" text
+		font_->RenderText(
+			sprite_renderer_,
+			gef::Vector4(platform_.width()*0.5f, platform_.height()*0.5f - 56.0f, -0.99f),
+			1.0f,
+			0xffffffff,
+			gef::TJ_CENTRE,
+			"PRESS");
 
-	// render "PRESS" text
-	font_->RenderText(
-		sprite_renderer_,
-		gef::Vector4(platform_.width()*0.5f, platform_.height()*0.5f - 56.0f, -0.99f),
-		1.0f,
-		0xffffffff,
-		gef::TJ_CENTRE,
-		"PRESS");
-
-	// Render button icon
-	gef::Sprite button;
-	button.set_texture(button_icon_);
-	button.set_position(gef::Vector4(platform_.width()*0.5f, platform_.height()*0.5f, -0.99f));
-	button.set_height(32.0f);
-	button.set_width(32.0f);
-	sprite_renderer_->DrawSprite(button);
-
-
-	// render "TO START" text
-	font_->RenderText(
-		sprite_renderer_,
-		gef::Vector4(platform_.width()*0.5f, platform_.height()*0.5f + 32.0f, -0.99f),
-		1.0f,
-		0xffffffff,
-		gef::TJ_CENTRE,
-		"TO START");
+		// Render button icon
+		gef::Sprite button;
+		button.set_texture(button_icon_);
+		button.set_position(gef::Vector4(platform_.width()*0.5f, platform_.height()*0.5f, -0.99f));
+		button.set_height(32.0f);
+		button.set_width(32.0f);
+		sprite_renderer_->DrawSprite(button);
 
 
-	DrawHUD();
+		// render "TO START" text
+		font_->RenderText(
+			sprite_renderer_,
+			gef::Vector4(platform_.width()*0.5f, platform_.height()*0.5f + 32.0f, -0.99f),
+			1.0f,
+			0xffffffff,
+			gef::TJ_CENTRE,
+			"TO START");
 
+
+		DrawHUD();
+	}
 	sprite_renderer_->End();
 }
 

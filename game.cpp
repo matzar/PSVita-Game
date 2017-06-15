@@ -273,16 +273,26 @@ void Game::UpdateSimulation(float frame_time)
 
 			if (controller->buttons_pressed() & gef_SONY_CTRL_START)
 			{
-				GameRelease();
+				//GameRelease();
 
 				//game_state_ = FRONTEND;
 				//FrontendInit();
 			}
+
+			if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
+			{
+				// release any resources for the frontend
+				//GameRelease();
+
+				// update the current state for the game state machine
+				(*gamestate_) = FRONTEND; // get the object that gamestate points to
+				//GameInit();
+			}
+
 			// trigger a sound effect
 			if (audio_manager_)
 			{
 				if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
-					//if (cross)
 				{
 					if (sfx_voice_id_ == -1)
 					{
@@ -305,7 +315,7 @@ void Game::UpdateSimulation(float frame_time)
 						sfx_voice_id_ = -1;
 					}
 				}
-			} // audio_manager_
+			} // !audio_manager_
 
 #ifdef _WIN32 // Only on windows platforms
 			  // if there is a keyboard, check the arrow keys to control the direction of the character
@@ -363,14 +373,12 @@ void Game::UpdateSimulation(float frame_time)
 				//gef::DebugOut("Mouse position x, y: %f %f\n", mouse_position.x, mouse_position.y);
 			} // touch_input (mouse)
 #endif // !_WIN32
-		}
-		// controller
+		} // !controller
 
 		//camera_->moveSideLeft(frame_time);
 		//camera_->moveUp(frame_time);
 		//camera_->update();
-	}
-	// input_manager_
+	} // !input_manager_
 }
 // UpdateSimulation
 
@@ -378,16 +386,12 @@ void Game::GameUpdate(float frame_time)
 {
 	fps_ = 1.0f / frame_time;
 
-	// get controller input data and read controller data for controler 0
-	const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
-
 	UpdateSimulation(frame_time);
 }
 
 void Game::GameRender()
 {
 	// setup camera
-
 	// projection
 	float fov = gef::DegToRad(45.0f);
 	float aspect_ratio = (float)platform_.width() / (float)platform_.height();
@@ -405,20 +409,22 @@ void Game::GameRender()
 
 	// draw 3d geometry
 	renderer_3d_->Begin();
+	{
+		// draw ground
+		renderer_3d_->DrawMesh(ground_);
 
-	// draw ground
-	renderer_3d_->DrawMesh(ground_);
-
-	// draw player
-	renderer_3d_->set_override_material(&primitive_builder_->red_material());
-	renderer_3d_->DrawMesh(player_);
-	renderer_3d_->set_override_material(nullptr);
-
+		// draw player
+		renderer_3d_->set_override_material(&primitive_builder_->red_material());
+		renderer_3d_->DrawMesh(player_);
+		renderer_3d_->set_override_material(nullptr);
+	}
 	renderer_3d_->End();
 
 	// start drawing sprites, but don't clear the frame buffer
 	sprite_renderer_->Begin(false);
-	DrawHUD();
+	{
+		DrawHUD();
+	}
 	sprite_renderer_->End();
 }
 
