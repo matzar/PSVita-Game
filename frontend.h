@@ -26,7 +26,7 @@ namespace gef
 class Frontend
 {
 public:
-	Frontend(gef::Platform& platform, GAMESTATE* gamestate);
+	Frontend(gef::Platform& platform);
 	~Frontend();
 
 	void InitFont();

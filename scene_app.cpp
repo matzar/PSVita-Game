@@ -22,8 +22,8 @@
 SceneApp::SceneApp(gef::Platform& platform) :
 	Application(platform)
 {
-	frontend_ = new Frontend(platform, &gamestate_);
-	game_ = new Game(platform, &gamestate_);
+	frontend_ = new Frontend(platform);
+	game_ = new Game(platform);
 }
 
 void SceneApp::Init()
@@ -31,7 +31,7 @@ void SceneApp::Init()
 
 
 	// initialise the game state machine
-	gamestate_ = FRONTEND;
+	gamestate_ = GAME;
 
 	//// initlalise sprite renderer
 	//sprite_renderer_ = gef::SpriteRenderer::Create(platform_);

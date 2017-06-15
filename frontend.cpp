@@ -18,9 +18,8 @@
 //#include <freeglut.h>
 #endif 
 
-Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate) :
+Frontend::Frontend(gef::Platform& platform) :
 	platform_(platform),
-	gamestate_(gamestate),
 	input_manager_(nullptr),
 	button_icon_(nullptr)
 {
@@ -68,12 +67,24 @@ void Frontend::FrontendUpdate(float frame_time)
 {
 	fps_ = 1.0f / frame_time;
 
+<<<<<<< HEAD
 	// get the latest date from the input devices
 	if (input_manager_)
+=======
+	const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
+
+	if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
+>>>>>>> __declspec(selectany) GAMESTATE gamestate_
 	{
 		input_manager_->Update();
 
+<<<<<<< HEAD
 		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
+=======
+		// update the current state for the game state machine
+		//(*gamestate_) = GAME; // get the object that gamestate points to
+		gamestate_ = GAME;
+>>>>>>> __declspec(selectany) GAMESTATE gamestate_
 
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
 			//if (cross)
