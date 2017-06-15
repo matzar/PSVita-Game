@@ -66,6 +66,7 @@ private:
 	// camera variables
 	Camera* camera_;
 
+	float fps_;
 	// audio variables
 	int sfx_id_;
 	int sfx_voice_id_;

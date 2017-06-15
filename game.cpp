@@ -119,7 +119,7 @@ void Game::DrawHUD()
 	if(font_)
 	{
 		// display frame rate
-		//font_->RenderText(sprite_renderer_, gef::Vector4(850.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f", fps_);
+		font_->RenderText(sprite_renderer_, gef::Vector4(850.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f", fps_);
 	}
 }
 
@@ -140,11 +140,22 @@ void Game::SetupLights()
 }
 void Game::GameInit()
 {
+	// initialise input manager
+	input_manager_ = gef::InputManager::Create(platform_);
+
+	// audio manager
+	audio_manager_ = gef::AudioManager::Create();
+
+	// initlalise sprite renderer
+	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
+
 	// create the renderer for draw 3D geometry
 	renderer_3d_ = gef::Renderer3D::Create(platform_);
 
 	// initialise primitive builder to make create some 3D geometry easier
 	primitive_builder_ = new PrimitiveBuilder(platform_);
+
+	InitFont();
 
 	SetupLights();
 
@@ -384,6 +395,8 @@ void Game::UpdateSimulation(float frame_time)
 
 void Game::GameUpdate(float frame_time)
 {
+	fps_ = 1.0f / frame_time;
+
 	// get controller input data and read controller data for controler 0
 	const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
 

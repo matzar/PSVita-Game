@@ -79,6 +79,7 @@ void Frontend::FrontendUpdate(float frame_time)
 		// update the current state for the game state machine
 		(*gamestate_) = GAME; // get the object that gamestate points to
 
+		gef::DebugOut("Press X\n");
 		// initialise game state
 		//GameInit();
 	}
