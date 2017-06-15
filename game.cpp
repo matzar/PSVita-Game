@@ -286,6 +286,8 @@ void Game::UpdateSimulation(float frame_time)
 
 				// update the current state for the game state machine
 				(*gamestate_) = FRONTEND; // get the object that gamestate points to
+
+				//game_ = nullptr;
 				//GameInit();
 			}
 

@@ -7,7 +7,7 @@ SceneApp::SceneApp(gef::Platform& platform) :
 	// reference to the platform object is passed
 	// Frontend class has 'GAMESTATE* gamestate' pointer
 	// adress of gamestate_ is passed to the class and assigned to the GAMESTATE pointer
-	frontend_ = new Frontend(platform, &gamestate_);
+	frontend_ = new Frontend(platform, &gamestate_, frontend_);
 	// game scene
 	// reference to the platform object is passed
 	// Game class has 'GAMESTATE* gamestate' pointer
@@ -46,12 +46,22 @@ bool SceneApp::Update(float frame_time)
 	{
 		case FRONTEND:
 		{
+			if (frontend_ == nullptr)
+			{
+				frontend_ = new Frontend(platform_, &gamestate_, frontend_);
+				frontend_->FrontendInit();
+			}
 			frontend_->FrontendUpdate(frame_time);
 		} // !FRONTEND
 		break;
 
 		case GAME:
 		{
+			if (frontend_ == nullptr)
+			{
+				frontend_ = new Frontend(platform_, &gamestate_, frontend_);
+				frontend_->FrontendInit();
+			}
 			game_->GameUpdate(frame_time);
 		} // !GAME
 		break;

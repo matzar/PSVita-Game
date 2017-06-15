@@ -18,7 +18,7 @@ namespace gef
 class Frontend
 {
 public:
-	Frontend(gef::Platform& platform, GAMESTATE* gamestate);
+	Frontend(gef::Platform& platform, GAMESTATE* gamestate, Frontend* frontend);
 	~Frontend();
 
 	void FrontendInit();
@@ -31,6 +31,9 @@ private:
 
 	// gamestate
 	GAMESTATE* gamestate_;
+
+	// frontend
+	Frontend* frontend_;
 
 	// input manager
 	gef::InputManager* input_manager_;

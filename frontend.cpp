@@ -23,9 +23,10 @@
 #include <platform/d3d11/input/touch_input_manager_d3d11.h>
 #endif 
 
-Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate) :
+Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate, Frontend* frontend) :
 	platform_(platform),
 	gamestate_(gamestate),
+	frontend_(frontend),
 	input_manager_(nullptr),
 	button_icon_(nullptr)
 {
@@ -78,6 +79,9 @@ void Frontend::FrontendRelease()
 	delete button_icon_;
 	button_icon_ = nullptr;
 
+	//delete frontend_;
+	
+
 	CleanUpFont();
 }
 
@@ -94,8 +98,8 @@ void Frontend::FrontendUpdate(float frame_time)
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
 		{
 			// TODO release any resources for the frontend
-
-
+			FrontendRelease();
+			frontend_ = nullptr;
 			// update the current state for the game state machine
 			(*gamestate_) = GAME; // get the object that gamestate points to
 		}
