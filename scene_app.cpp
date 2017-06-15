@@ -22,10 +22,14 @@
 SceneApp::SceneApp(gef::Platform& platform) :
 	Application(platform)
 {
+	frontend_ = new Frontend(platform, &game_state_);
+	game_ = new Game(platform);
 }
 
 void SceneApp::Init()
 {
+
+
 	// initialise the game state machine
 	game_state_ = FRONTEND;
 
@@ -37,8 +41,20 @@ void SceneApp::Init()
 	//audio_manager_ = gef::AudioManager::Create();
 
 	//InitFont();
+	switch (game_state_)
+	{
+	case FRONTEND:
+	{
+		frontend_->FrontendInit();;
+	}
+	break;
 
-	frontend_->FrontendInit();
+	case GAME:
+	{
+		game_->GameInit();
+	}
+	break;
+	}
 }
 
 void SceneApp::CleanUp()
@@ -80,6 +96,7 @@ bool SceneApp::Update(float frame_time)
 	case FRONTEND:
 	{
 		frontend_->FrontendUpdate(frame_time);
+		// frontend_->GetNextGameState();
 	}
 	break;
 

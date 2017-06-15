@@ -12,13 +12,7 @@
 #include "free_camera.h"
 #include "game.h"
 #include "frontend.h"
-
-// GAMESTATE declarations
-enum GAMESTATE
-{
-	FRONTEND,
-	GAME
-}; // GAMESTATE
+#include "GameStateEnum.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef

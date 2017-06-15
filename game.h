@@ -11,6 +11,7 @@
 #include <box2d/Box2D.h>
 #include "game_object.h"
 #include "free_camera.h"
+#include "GameStateEnum.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef

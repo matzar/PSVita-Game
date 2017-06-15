@@ -11,6 +11,7 @@
 #include <box2d/Box2D.h>
 #include "game_object.h"
 #include "free_camera.h"
+#include "GameStateEnum.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
@@ -25,7 +26,7 @@ namespace gef
 class Frontend
 {
 public:
-	Frontend(gef::Platform& platform);
+	Frontend(gef::Platform& platform, GAMESTATE* gamestate);
 	~Frontend();
 
 	void InitFont();
@@ -34,9 +35,18 @@ public:
 	void FrontendUpdate(float frame_time);
 	void FrontendRender();
 private:
+	gef::SpriteRenderer* sprite_renderer_;
+
+	gef::InputManager* input_manager_;
+
 	gef::Platform& platform_;
 	gef::Font* font_;
 	gef::Texture* button_icon_;
+
+	void DrawHUD();
+
+	float fps_;
+	GAMESTATE* gamestate;
 };
 
 #endif // !_FRONT_END_H
