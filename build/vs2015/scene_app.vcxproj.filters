@@ -71,7 +71,7 @@
     <ClInclude Include="..\..\frontend.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameStateEnum.h">
+    <ClInclude Include="game_state_enum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

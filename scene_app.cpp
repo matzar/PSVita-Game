@@ -71,6 +71,11 @@ void SceneApp::CleanUp()
 	//sprite_renderer_ = NULL;
 
 	//CleanUpFont();
+	delete frontend_;
+	frontend_ = nullptr;
+
+	delete game_;
+	game_ = nullptr;
 }
 
 bool SceneApp::Update(float frame_time)

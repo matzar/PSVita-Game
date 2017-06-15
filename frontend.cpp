@@ -77,7 +77,7 @@ void Frontend::FrontendUpdate(float frame_time)
 		FrontendRelease();
 
 		// update the current state for the game state machine
-		(*gamestate) = GAME; //====================
+		(*gamestate) = GAME; // get the object that gamestate points to
 
 		// initialise game state
 		//GameInit();
