@@ -31,7 +31,7 @@ void SceneApp::Init()
 
 
 	// initialise the game state machine
-	NastyGlobals::gamestate_ = FRONTEND;
+	gamestate_ = FRONTEND;
 
 	//// initlalise sprite renderer
 	//sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
