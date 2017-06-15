@@ -6,4 +6,4 @@ enum GAMESTATE
 	GAME
 }; // GAMESTATE
 
-__declspec(selectany) GAMESTATE gamestate_;
+//__declspec(selectany) GAMESTATE gamestate_;

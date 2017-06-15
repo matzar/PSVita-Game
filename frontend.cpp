@@ -68,21 +68,27 @@ void Frontend::FrontendUpdate(float frame_time)
 {
 	fps_ = 1.0f / frame_time;
 
-	const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
-
-	if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
-		//if (cross)
+	// get the latest date from the input devices
+	if (input_manager_)
 	{
-		// release any resources for the frontend
-		FrontendRelease();
+		input_manager_->Update();
 
-		// update the current state for the game state machine
-		(*gamestate_) = GAME; // get the object that gamestate points to
+		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
 
-		gef::DebugOut("Press X\n");
-		// initialise game state
-		//GameInit();
-	}
+		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
+			//if (cross)
+		{
+			// release any resources for the frontend
+			FrontendRelease();
+
+			// update the current state for the game state machine
+			(*gamestate_) = GAME; // get the object that gamestate points to
+
+			gef::DebugOut("Press X\n");
+			// initialise game state
+			//GameInit();
+		}
+	} // input_manager_
 }
 
 void Frontend::FrontendRender()

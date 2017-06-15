@@ -73,10 +73,10 @@ private:
 
 	void InitPlayer();
 	void InitGround();
+	void SetupLights();
 	void InitFont();
 	void CleanUpFont();
 	void DrawHUD();
-	void SetupLights();
 };
 
 #endif // !_GAME_H

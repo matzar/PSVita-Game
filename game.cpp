@@ -102,42 +102,6 @@ void Game::InitGround()
 	ground_.UpdateFromSimulation(ground_body_);
 }
 
-void Game::InitFont()
-{
-	font_ = new gef::Font(platform_);
-	font_->Load("comic_sans");
-}
-
-void Game::CleanUpFont()
-{
-	delete font_;
-	font_ = NULL;
-}
-
-void Game::DrawHUD()
-{
-	if(font_)
-	{
-		// display frame rate
-		font_->RenderText(sprite_renderer_, gef::Vector4(850.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f", fps_);
-	}
-}
-
-void Game::SetupLights()
-{
-	// grab the data for the default shader used for rendering 3D geometry
-	gef::Default3DShaderData& default_shader_data = renderer_3d_->default_shader_data();
-
-	// set the ambient light
-	default_shader_data.set_ambient_light_colour(gef::Colour(0.25f, 0.25f, 0.25f, 1.0f));
-
-	// add a point light that is almost white, but with a blue tinge
-	// the position of the light is set far away so it acts light a directional light
-	gef::PointLight default_point_light;
-	default_point_light.set_colour(gef::Colour(0.7f, 0.7f, 1.0f, 1.0f));
-	default_point_light.set_position(gef::Vector4(-500.0f, 400.0f, 700.0f));
-	default_shader_data.AddPointLight(default_point_light);
-}
 void Game::GameInit()
 {
 	// initialise input manager
@@ -156,7 +120,6 @@ void Game::GameInit()
 	primitive_builder_ = new PrimitiveBuilder(platform_);
 
 	InitFont();
-
 	SetupLights();
 
 	// initialise the physics world
@@ -440,4 +403,42 @@ void Game::GameRender()
 	DrawHUD();
 	sprite_renderer_->End();
 }
+
+void Game::SetupLights()
+{
+	// grab the data for the default shader used for rendering 3D geometry
+	gef::Default3DShaderData& default_shader_data = renderer_3d_->default_shader_data();
+
+	// set the ambient light
+	default_shader_data.set_ambient_light_colour(gef::Colour(0.25f, 0.25f, 0.25f, 1.0f));
+
+	// add a point light that is almost white, but with a blue tinge
+	// the position of the light is set far away so it acts light a directional light
+	gef::PointLight default_point_light;
+	default_point_light.set_colour(gef::Colour(0.7f, 0.7f, 1.0f, 1.0f));
+	default_point_light.set_position(gef::Vector4(-500.0f, 400.0f, 700.0f));
+	default_shader_data.AddPointLight(default_point_light);
+}
+
+void Game::InitFont()
+{
+	font_ = new gef::Font(platform_);
+	font_->Load("comic_sans");
+}
+
+void Game::CleanUpFont()
+{
+	delete font_;
+	font_ = NULL;
+}
+
+void Game::DrawHUD()
+{
+	if (font_)
+	{
+		// display frame rate
+		font_->RenderText(sprite_renderer_, gef::Vector4(850.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f", fps_);
+	}
+}
+
 
