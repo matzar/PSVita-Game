@@ -38,22 +38,26 @@ void Frontend::InitFont()
 	font_->Load("comic_sans");
 }
 
+void Frontend::CleanUpFont()
+{
+	delete font_;
+	font_ = NULL;
+}
+
 void Frontend::FrontendInit()
 {
 	// initialise input manager
 	input_manager_ = gef::InputManager::Create(platform_);
-
-	button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
 	// initlalise sprite renderer
 	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
-	// initialise input manager
-	//input_manager_ = gef::InputManager::Create(platform_);
+
 	// initialise audio manager
 	//audio_manager_ = gef::AudioManager::Create();
 
-	InitFont();
+	// initialise button icon
+	button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
 
-//	button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
+	InitFont();
 }
 
 void Frontend::FrontendRelease()
@@ -61,8 +65,16 @@ void Frontend::FrontendRelease()
 	delete input_manager_;
 	input_manager_ = nullptr;
 
+	delete sprite_renderer_;
+	sprite_renderer_ = nullptr;
+
+	/*delete audio_manager_;
+	audio_manager_ = nullptr;*/
+
 	delete button_icon_;
 	button_icon_ = nullptr;
+
+	CleanUpFont();
 }
 
 void Frontend::FrontendUpdate(float frame_time)

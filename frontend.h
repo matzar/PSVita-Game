@@ -29,25 +29,34 @@ public:
 	Frontend(gef::Platform& platform, GAMESTATE* gamestate);
 	~Frontend();
 
-	void InitFont();
 	void FrontendInit();
 	void FrontendRelease();
 	void FrontendUpdate(float frame_time);
 	void FrontendRender();
 private:
+	// platform 
+	gef::Platform& platform_;
+
+	// gamestate
 	GAMESTATE* gamestate_;
 
-	gef::SpriteRenderer* sprite_renderer_;
-
+	// input manager
 	gef::InputManager* input_manager_;
 
-	gef::Platform& platform_;
-	gef::Font* font_;
+	// sprite renderer
+	gef::SpriteRenderer* sprite_renderer_;
+
+	// texture
 	gef::Texture* button_icon_;
 
-	void DrawHUD();
+	// font
+	gef::Font* font_;
 
 	float fps_;
+
+	void InitFont();
+	void CleanUpFont();
+	void DrawHUD();
 };
 
 #endif // !_FRONT_END_H
