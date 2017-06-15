@@ -23,25 +23,23 @@
 SceneApp::SceneApp(gef::Platform& platform) :
 	Application(platform)
 {
+	// frontend scene
+	// reference to the platform object is passed
+	// Frontend class has 'GAMESTATE* gamestate' pointer
+	// adress of gamestate_ is passed to the class and assigned to the GAMESTATE pointer
 	frontend_ = new Frontend(platform, &gamestate_);
+	// game scene
+	// reference to the platform object is passed
+	// Game class has 'GAMESTATE* gamestate' pointer
+	// adress of gamestate_ is passed to the class and assigned to the GAMESTATE pointer
 	game_ = new Game(platform, &gamestate_);
 }
 
 void SceneApp::Init()
 {
-
-
 	// initialise gamestate_
 	gamestate_ = FRONTEND;
 
-	//// initlalise sprite renderer
-	//sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
-	//// initialise input manager
-	//input_manager_ = gef::InputManager::Create(platform_);
-	//// initialise audio manager
-	//audio_manager_ = gef::AudioManager::Create();
-
-	//InitFont();
 	//switch (gamestate_)
 	//{
 	//case FRONTEND:
@@ -82,20 +80,6 @@ void SceneApp::CleanUp()
 bool SceneApp::Update(float frame_time)
 {
 	fps_ = 1.0f / frame_time;
-
-	// get the latest date from the input devices
-	//if (input_manager_)
-	//{
-	//	input_manager_->Update();
-
-	//	// get controller input data and read controller data for controler 0
-	//	const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
-	//	
-	//	if (controller)
-	//	{
-	//		
-	//	}
-	//}
 
 	switch (gamestate_)
 	{

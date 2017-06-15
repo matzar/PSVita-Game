@@ -42,8 +42,8 @@ private:
 	Game* game_;
 	Frontend* frontend_;
 
-	friend class Game;
-	friend class Frontend;
+	/*friend class Game;
+	friend class Frontend;*/
 }; // class SceneApp : public gef::Application
 
 #endif // _SCENE_APP_H

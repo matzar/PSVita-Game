@@ -39,7 +39,10 @@ private:
 	// gamestate_ pointer
 	GAMESTATE* gamestate_;
 
+	// sprite renderer
 	gef::SpriteRenderer* sprite_renderer_;
+
+	// font
 	gef::Font* font_;
 
 	// input manager
@@ -48,9 +51,13 @@ private:
 	// audio manager
 	gef::AudioManager* audio_manager_;
 
+	// platform
 	gef::Platform& platform_;
 
+	// render 3D
 	gef::Renderer3D* renderer_3d_;
+
+	// primitive builder
 	PrimitiveBuilder* primitive_builder_;
 
 	// create the physics world

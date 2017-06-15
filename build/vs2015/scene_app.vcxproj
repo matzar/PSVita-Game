@@ -251,6 +251,9 @@
     <ClInclude Include="..\..\scene_app.h" />
     <ClInclude Include="game_state_enum.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
