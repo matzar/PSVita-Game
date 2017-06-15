@@ -46,7 +46,7 @@ private:
 	void DrawHUD();
 
 	float fps_;
-	GAMESTATE* gamestate;
+	GAMESTATE* gamestate_;
 };
 
 #endif // !_FRONT_END_H

@@ -18,8 +18,9 @@
 //#include <freeglut.h>
 #endif 
 
-Game::Game(gef::Platform& platform) :
+Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	platform_(platform),
+	gamestate_(gamestate),
 	sprite_renderer_(NULL),
 	renderer_3d_(NULL),
 	primitive_builder_(NULL),

@@ -35,7 +35,7 @@ public:
 	virtual bool Update(float frame_time);
 	virtual void Render();
 private:
-	GAMESTATE game_state_;
+	GAMESTATE gamestate_;
 
 	float fps_;
 

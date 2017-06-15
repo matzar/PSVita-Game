@@ -18,11 +18,11 @@
 //#include <freeglut.h>
 #endif 
 
-Frontend::Frontend(gef::Platform& platform, GAMESTATE* statePointer) :
+Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate) :
 	platform_(platform),
-	input_manager_(NULL),
-	button_icon_(NULL),
-	gamestate(statePointer)
+	gamestate_(gamestate),
+	input_manager_(nullptr),
+	button_icon_(nullptr)
 {
 }
 
@@ -58,10 +58,10 @@ void Frontend::FrontendInit()
 void Frontend::FrontendRelease()
 {
 	delete input_manager_;
-	input_manager_ = NULL;
+	input_manager_ = nullptr;
 
 	delete button_icon_;
-	button_icon_ = NULL;
+	button_icon_ = nullptr;
 }
 
 void Frontend::FrontendUpdate(float frame_time)
@@ -77,7 +77,7 @@ void Frontend::FrontendUpdate(float frame_time)
 		FrontendRelease();
 
 		// update the current state for the game state machine
-		(*gamestate) = GAME; // get the object that gamestate points to
+		(*gamestate_) = GAME; // get the object that gamestate points to
 
 		// initialise game state
 		//GameInit();
