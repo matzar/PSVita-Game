@@ -19,8 +19,17 @@ namespace globals
 
 namespace globals
 {
+<<<<<<< HEAD
 	__declspec(selectany) GAMESTATE gamestate;
 	//static GAMESTATE gamestate;
 >>>>>>> gamestate enum kept as global
-}
->>>>>>> gamestate enum kept as global
+=======
+
+	//__attribute__((weak)) GAMESTATE gamestate;
+	GAMESTATE gamestate;
+	//__declspec(selectany) GAMESTATE gamestate;
+
+
+
+>>>>>>> __declspec(selectany) GAMESTATE gamestate = __attribute__(weak)) GAMESTATE gamestate
+}>>>>>>> gamestate enum kept as global
