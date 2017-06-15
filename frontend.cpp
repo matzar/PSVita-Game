@@ -19,7 +19,7 @@
 //#include <freeglut.h>
 #endif 
 
-Frontend::Frontend(gef::Platform& platform, GAMESTATE gamestate) :
+Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate) :
 	platform_(platform),
 	gamestate_(gamestate),
 	input_manager_(nullptr),

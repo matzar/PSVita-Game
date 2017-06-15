@@ -27,7 +27,7 @@ namespace gef
 class Game
 {
 public:
-	Game(gef::Platform& platform);
+	Game(gef::Platform& platform, GAMESTATE* gamestate);
 	~Game();
 
 	void GameInit();
@@ -36,6 +36,9 @@ public:
 	void GameUpdate(float frame_time);
 	void GameRender();
 private:
+	// gamestate_ pointer
+	GAMESTATE* gamestate_;
+
 	gef::SpriteRenderer* sprite_renderer_;
 	gef::Font* font_;
 

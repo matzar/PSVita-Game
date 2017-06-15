@@ -23,15 +23,15 @@
 SceneApp::SceneApp(gef::Platform& platform) :
 	Application(platform)
 {
-	frontend_ = new Frontend(platform);
-	game_ = new Game(platform);
+	frontend_ = new Frontend(platform, &gamestate_);
+	game_ = new Game(platform, &gamestate_);
 }
 
 void SceneApp::Init()
 {
 
 
-	// initialise the game state machine
+	// initialise gamestate_
 	gamestate_ = FRONTEND;
 
 	//// initlalise sprite renderer
@@ -97,7 +97,7 @@ bool SceneApp::Update(float frame_time)
 	//	}
 	//}
 
-	switch (globals::gamestate)
+	switch (gamestate_)
 	{
 	case FRONTEND:
 	{
@@ -119,7 +119,7 @@ bool SceneApp::Update(float frame_time)
 
 void SceneApp::Render()
 {
-	switch (globals::gamestate)
+	switch (gamestate_)
 	{
 	case FRONTEND:
 	{

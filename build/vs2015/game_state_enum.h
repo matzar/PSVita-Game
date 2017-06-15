@@ -6,10 +6,10 @@ enum GAMESTATE
 	GAME
 }; // GAMESTATE
 
-//__declspec(selectany) GAMESTATE gamestate_;
-
-
-//static GAMESTATE gamestate_;
-
+// Windows global variable
 //__declspec(selectany) GAMESTATE gamestate;
+
+// PSVita global variable
+//__attribute__((weak)) GAMESTATE gamestate;
+
 
