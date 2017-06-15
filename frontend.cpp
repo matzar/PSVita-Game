@@ -1,22 +1,24 @@
 #include "frontend.h"
 #include <system/platform.h>
-#include <graphics/sprite_renderer.h>
-#include <graphics/font.h>
 #include <system/debug_log.h>
-#include <graphics/renderer_3d.h>
-#include <graphics/mesh.h>
-#include <graphics/sprite.h>
-#include <maths/math_utils.h>
-#include <input/sony_controller_input_manager.h>
-#include "load_texture.h"
 
+#include <graphics/font.h>
+
+#include <graphics/sprite_renderer.h>
+#include <graphics/sprite.h>
+
+#include <input/input_manager.h>
+#include <input/sony_controller_input_manager.h>
+#include <audio/audio_manager.h>
+
+#include <maths/vector4.h>
+#include "load_texture.h"
 
 #ifdef _WIN32
 // only on windows platforms
 #include <Windows.h>
 #include <platform/d3d11/input/keyboard_d3d11.h>
 #include <platform/d3d11/input/touch_input_manager_d3d11.h>
-//#include <freeglut.h>
 #endif 
 
 Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate) :
@@ -79,11 +81,8 @@ void Frontend::FrontendRelease()
 
 void Frontend::FrontendUpdate(float frame_time)
 {
-	fps_ = 1.0f / frame_time;
-
 	// get the latest date from the input devices
 	if (input_manager_)
-
 	{
 		input_manager_->Update();
 
@@ -99,7 +98,7 @@ void Frontend::FrontendUpdate(float frame_time)
 			(*gamestate_) = GAME; // get the object that gamestate points to
 			//GameInit();
 		}
-	} // input_manager_
+	} // !input_manager_
 
 }
 
@@ -146,5 +145,5 @@ void Frontend::DrawHUD()
 	{
 		// display frame rate
 		font_->RenderText(sprite_renderer_, gef::Vector4(850.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f", fps_);
-	}
+	} // !font_
 }

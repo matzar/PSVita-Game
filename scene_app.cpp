@@ -13,7 +13,7 @@ SceneApp::SceneApp(gef::Platform& platform) :
 	// Game class has 'GAMESTATE* gamestate' pointer
 	// adress of gamestate_ is passed to the class and assigned to the GAMESTATE pointer
 	game_ = new Game(platform, &gamestate_);
-}
+} // !SceneApp
 
 void SceneApp::Init()
 {
@@ -25,7 +25,7 @@ void SceneApp::Init()
 
 	// initialise game_
 	game_->GameInit();
-}
+} // !Init
 
 void SceneApp::CleanUp()
 {
@@ -34,12 +34,10 @@ void SceneApp::CleanUp()
 
 	delete game_;
 	game_ = nullptr;
-}
+} // !CleanUp
 
 bool SceneApp::Update(float frame_time)
 {
-	fps_ = 1.0f / frame_time;
-
 	switch (gamestate_)
 	{
 		case FRONTEND:
@@ -56,7 +54,7 @@ bool SceneApp::Update(float frame_time)
 	} // !gamestate_
 
 	return true;
-}
+} // !Update
 
 void SceneApp::Render()
 {
@@ -74,4 +72,4 @@ void SceneApp::Render()
 		} // !GAME
 		break;
 	} // !gamestate_
-}
+} // !Render

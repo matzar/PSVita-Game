@@ -57,4 +57,4 @@ protected:
 	float roll_;
 };
 
-#endif // _CAMERA_H
+#endif // !_CAMERA_H

@@ -1,16 +1,6 @@
 #ifndef _FRONTEND_H
 #define _FRONTEND_H
 
-#include <system/application.h>
-#include <graphics/font.h>
-#include <maths/vector2.h>
-#include "primitive_builder.h"
-#include <graphics/mesh_instance.h>
-#include <input/input_manager.h>
-#include <audio/audio_manager.h>
-#include <box2d/Box2D.h>
-#include "game_object.h"
-#include "free_camera.h"
 #include "game_state_enum.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
@@ -21,6 +11,11 @@ namespace gef
 	class Font;
 	class InputManager;
 	class Renderer3D;
+	class Mesh;
+	class InputManager;
+	class AudioManager;
+	class Font;
+	class Texture;
 } // gef
 
 class Frontend

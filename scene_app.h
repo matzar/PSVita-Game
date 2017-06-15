@@ -2,13 +2,6 @@
 #define _SCENE_APP_H
 
 #include <system/application.h>
-#include <maths/vector2.h>
-#include "primitive_builder.h"
-#include <graphics/mesh_instance.h>
-#include <input/input_manager.h>
-#include <audio/audio_manager.h>
-#include <box2d/Box2D.h>
-#include "game_object.h"
 #include "free_camera.h"
 #include "game.h"
 #include "frontend.h"
@@ -22,7 +15,7 @@ namespace gef
 	class Font;
 	class InputManager;
 	class Renderer3D;
-} // gef
+} // !gef
 
 class SceneApp : public gef::Application
 {
@@ -37,13 +30,8 @@ public:
 private:
 	GAMESTATE gamestate_;
 
-	float fps_;
-
 	Game* game_;
 	Frontend* frontend_;
+}; // !SceneApp
 
-	/*friend class Game;
-	friend class Frontend;*/
-}; // class SceneApp : public gef::Application
-
-#endif // _SCENE_APP_H
+#endif // !_SCENE_APP_H

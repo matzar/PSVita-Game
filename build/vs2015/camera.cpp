@@ -1,6 +1,6 @@
 #include "camera.h"
-#include <system/debug_log.h>
 #include "maths/vector4.h"
+#include <system/debug_log.h>
 #include <math.h>
 
 const float PI = 3.1415f;
@@ -17,7 +17,7 @@ Camera::Camera()
 
 	// TPP player position
 	//SetCameraPosition(90.0f, -12.0f, 0.0f, gef::Vector4(-8.0f, 3.5f, 0.0f));
-}
+} // !Camera
 
 Camera::~Camera()
 {
@@ -51,7 +51,7 @@ void Camera::Update()
 	up_.set_z(-sinY * sinR - sinP * cosR * -cosY);
 	// Calculate side Vector (right)
 	side_ = forward_.CrossProduct(up_); // this is a cross product between the forward and up vector
-}
+} // !Update
 
 void Camera::SetCameraPosition(const float& yaw, const float& pitch, const float& roll, const gef::Vector4& position)
 {
@@ -60,9 +60,9 @@ void Camera::SetCameraPosition(const float& yaw, const float& pitch, const float
 	roll_ = roll;
 	position_ = position;
 	Update();
-}
+} // !SetCameraPosition
 
 void Camera::DisplayCameraPosition() const
 {
 	gef::DebugOut("SetCameraPosition(%.1ff, %.1ff, %.1ff, %.1ff, %.1ff, %.1ff);\n", yaw_, pitch_, roll_, position_.x(), position_.y(), position_.z());
-}
+} // !DisplayCameraPosition
