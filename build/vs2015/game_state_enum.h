@@ -7,3 +7,7 @@ enum GAMESTATE
 }; // GAMESTATE
 
 //__declspec(selectany) GAMESTATE gamestate_;
+namespace NastyGlobals
+{
+	static GAMESTATE gamestate_;
+}
