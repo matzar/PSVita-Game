@@ -88,7 +88,7 @@ private:
 	int sfx_voice_id_;
 
 	void SonyController(const gef::SonyController* controller);
-	void KeyboardController(gef::Keyboard* keyboard, Camera* camera, float fps);
+	void KeyboardController(Camera* camera, float fps);
 	void UpdateSimulation(float frame_time);
 	void InitPlayer();
 	void InitGround();
