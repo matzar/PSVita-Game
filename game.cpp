@@ -18,9 +18,11 @@
 // extra headers
 #include "load_texture.h"
 #include "primitive_builder.h"
+#include "game_object.h"
 // my headers
 #include "free_camera.h"
 #include "game_state_enum.h"
+//#include "player.h"
 // box2D headers
 #include <box2d/Box2D.h>
 

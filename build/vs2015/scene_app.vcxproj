@@ -252,6 +252,7 @@
     <ClInclude Include="..\..\primitive_builder.h" />
     <ClInclude Include="..\..\scene_app.h" />
     <ClInclude Include="game_state_enum.h" />
+    <ClInclude Include="object_type_enum.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

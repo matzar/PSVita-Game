@@ -3,15 +3,17 @@
 
 // gef headers
 #include <graphics/mesh_instance.h>
+// my headers
+#include "object_type_enum.h"
 // box2D headers
 #include <box2d/Box2D.h>
 
-enum OBJECT_TYPE
-{
-	PLAYER,
-	ENEMY,
-	BULLET
-};
+//enum OBJECT_TYPE
+//{
+//	PLAYER,
+//	ENEMY,
+//	BULLET
+//};
 
 class GameObject : public gef::MeshInstance
 {
@@ -33,4 +35,4 @@ private:
 //};
 
 
-#endif // _GAME_OBJECT_H
+#endif // !_GAME_OBJECT_H
