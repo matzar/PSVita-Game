@@ -18,11 +18,12 @@
 // extra headers
 #include "load_texture.h"
 #include "primitive_builder.h"
-#include "game_object.h"
+//#include "game_object.h"
+#include "player.h"
+#include "ground.h"
 // my headers
 #include "free_camera.h"
 #include "game_state_enum.h"
-#include "player.h"
 // box2D headers
 #include <box2d/Box2D.h>
 
@@ -97,7 +98,7 @@ void Game::InitPlayer()
 void Game::InitGround()
 {
 	// create GameObject ground_ class
-	ground_ = new GameObject();
+	ground_ = new Ground();
 	// ground dimensions
 	gef::Vector4 ground_half_dimensions(5.0f, 0.5f, 0.5f);
 
@@ -174,6 +175,15 @@ void Game::GameInit()
 
 void Game::GameRelease()
 {
+	delete font_;
+	font_ = nullptr;
+
+	delete sprite_renderer_;
+	sprite_renderer_ = nullptr;
+
+	delete  input_manager_;
+	input_manager_ = nullptr;
+
 	// unload audio resources
 	if (audio_manager_)
 	{
@@ -181,27 +191,84 @@ void Game::GameRelease()
 		audio_manager_->UnloadAllSamples();
 		sfx_id_ = -1;
 		sfx_voice_id_ = -1;
+
+		delete audio_manager_;
+		audio_manager_ = nullptr;
 	}
-
-	delete audio_manager_;
-	audio_manager_ = nullptr;
-
-	// destroying the physics world also destroys all the objects within it
-	delete world_;
-	world_ = nullptr;
-
-	delete ground_mesh_;
-	ground_mesh_ = nullptr;
-
-	delete primitive_builder_;
-	primitive_builder_ = nullptr;
 
 	delete renderer_3d_;
 	renderer_3d_ = nullptr;
 
+	delete primitive_builder_;
+	primitive_builder_ = nullptr;
+
+	// destroying the physics world also destroys all the objects within it
+	// shapes and joints are destroyed in b2World::Destroy 
+	// not need to explicitly delete player_body_ and ground_body_
+	delete world_;
+	world_ = nullptr;
+
+	delete player_;
+	player_ = nullptr;
+
+	delete ground_mesh_;
+	ground_mesh_ = nullptr;
+
+	delete ground_;
+	ground_ = nullptr;
+
 	// clean up camera
 	delete camera_;
 	camera_ = nullptr;
+}
+
+void Game::SonyController(const gef::SonyController * controller)
+{
+	if (controller->buttons_pressed() & gef_SONY_CTRL_START)
+	{
+		//GameRelease();
+
+		//game_state_ = FRONTEND;
+		//FrontendInit();
+	}
+
+	if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
+	{
+		// release any resources for the frontend
+		//GameRelease();
+
+		// update the current state for the game state machine
+		(*gamestate_) = FRONTEND; // get the object that gamestate points to
+								  //GameInit();
+	}
+
+	// trigger a sound effect
+	if (audio_manager_)
+	{
+		if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
+		{
+			if (sfx_voice_id_ == -1)
+			{
+				sfx_voice_id_ = audio_manager_->PlaySample(sfx_id_, true);
+
+				gef::VolumeInfo volume_info;
+				volume_info.volume = 0.5f;
+				volume_info.pan = -1.0f;
+
+				audio_manager_->SetSampleVoiceVolumeInfo(sfx_voice_id_, volume_info);
+
+				audio_manager_->SetSamplePitch(sfx_voice_id_, 1.5f);
+			}
+		}
+		if (controller->buttons_pressed() & gef_SONY_CTRL_TRIANGLE)
+		{
+			if (sfx_voice_id_ != -1)
+			{
+				audio_manager_->StopPlayingSampleVoice(sfx_voice_id_);
+				sfx_voice_id_ = -1;
+			}
+		}
+	} // !audio_manager_
 }
 
 void Game::UpdateSimulation(float frame_time)
@@ -268,7 +335,6 @@ void Game::UpdateSimulation(float frame_time)
 		contact = contact->GetNext();
 	}
 
-
 	// get the latest date from the input devices
 	if (input_manager_)
 	{
@@ -280,52 +346,52 @@ void Game::UpdateSimulation(float frame_time)
 		if (controller)
 		{
 			camera_->CameraControll(frame_time, controller);
+			SonyController(controller);
+			//if (controller->buttons_pressed() & gef_SONY_CTRL_START)
+			//{
+			//	//GameRelease();
 
-			if (controller->buttons_pressed() & gef_SONY_CTRL_START)
-			{
-				//GameRelease();
+			//	//game_state_ = FRONTEND;
+			//	//FrontendInit();
+			//}
 
-				//game_state_ = FRONTEND;
-				//FrontendInit();
-			}
+			//if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
+			//{
+			//	// release any resources for the frontend
+			//	//GameRelease();
 
-			if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
-			{
-				// release any resources for the frontend
-				//GameRelease();
+			//	// update the current state for the game state machine
+			//	(*gamestate_) = FRONTEND; // get the object that gamestate points to
+			//	//GameInit();
+			//}
 
-				// update the current state for the game state machine
-				(*gamestate_) = FRONTEND; // get the object that gamestate points to
-				//GameInit();
-			}
+			//// trigger a sound effect
+			//if (audio_manager_)
+			//{
+			//	if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
+			//	{
+			//		if (sfx_voice_id_ == -1)
+			//		{
+			//			sfx_voice_id_ = audio_manager_->PlaySample(sfx_id_, true);
 
-			// trigger a sound effect
-			if (audio_manager_)
-			{
-				if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
-				{
-					if (sfx_voice_id_ == -1)
-					{
-						sfx_voice_id_ = audio_manager_->PlaySample(sfx_id_, true);
+			//			gef::VolumeInfo volume_info;
+			//			volume_info.volume = 0.5f;
+			//			volume_info.pan = -1.0f;
 
-						gef::VolumeInfo volume_info;
-						volume_info.volume = 0.5f;
-						volume_info.pan = -1.0f;
+			//			audio_manager_->SetSampleVoiceVolumeInfo(sfx_voice_id_, volume_info);
 
-						audio_manager_->SetSampleVoiceVolumeInfo(sfx_voice_id_, volume_info);
-
-						audio_manager_->SetSamplePitch(sfx_voice_id_, 1.5f);
-					}
-				}
-				if (controller->buttons_pressed() & gef_SONY_CTRL_TRIANGLE)
-				{
-					if (sfx_voice_id_ != -1)
-					{
-						audio_manager_->StopPlayingSampleVoice(sfx_voice_id_);
-						sfx_voice_id_ = -1;
-					}
-				}
-			} // !audio_manager_
+			//			audio_manager_->SetSamplePitch(sfx_voice_id_, 1.5f);
+			//		}
+			//	}
+			//	if (controller->buttons_pressed() & gef_SONY_CTRL_TRIANGLE)
+			//	{
+			//		if (sfx_voice_id_ != -1)
+			//		{
+			//			audio_manager_->StopPlayingSampleVoice(sfx_voice_id_);
+			//			sfx_voice_id_ = -1;
+			//		}
+			//	}
+			//} // !audio_manager_
 
 #ifdef _WIN32 // Only on windows platforms
 			  // if there is a keyboard, check the arrow keys to control the direction of the character

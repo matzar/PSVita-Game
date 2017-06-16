@@ -11,6 +11,7 @@
 class GameObject : public gef::MeshInstance
 {
 public:
+	virtual ~GameObject() {}
 	void UpdateFromSimulation(const b2Body* body);
 	void MyCollisionResponse();
 

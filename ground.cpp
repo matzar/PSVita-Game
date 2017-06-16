@@ -2,8 +2,8 @@
 
 Ground::Ground()
 {
+	
 }
-
 
 Ground::~Ground()
 {

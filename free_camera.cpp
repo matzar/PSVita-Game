@@ -2,6 +2,15 @@
 // gef headers
 #include "maths/vector4.h"
 
+// TODO need to pass input manager
+//#ifdef _WIN32
+//// only on windows platforms
+//#include <Windows.h>
+//#include <platform/d3d11/input/keyboard_d3d11.h>
+//#include <platform/d3d11/input/touch_input_manager_d3d11.h>
+////#include <freeglut.h>
+//#endif 
+
 FreeCamera::FreeCamera()
 {
 	Update();
@@ -80,7 +89,7 @@ void FreeCamera::CameraControll(const float frame_time, const gef::SonyControlle
 	}
 
 #ifdef _WIN32 // Only on windows platforms
-		// if there is a keyboard, check the arrow keys to control the direction of the character
+		//// if there is a keyboard, check the arrow keys to control the direction of the character
 		//gef::Keyboard* keyboard = input_manager_->keyboard();
 		//if (keyboard)
 		//{

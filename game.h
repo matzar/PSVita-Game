@@ -15,12 +15,14 @@ namespace gef
 	class AudioManager;
 	class Renderer3D;
 	class Mesh;
+	class SonyController;
 } // gef
 
 // Class forward declarations
 class PrimitiveBuilder;
 class Player;
-class GameObject;
+class Ground;
+//class GameObject;
 // Mine classes forward declarations
 class Camera;
 enum GAMESTATE;
@@ -36,7 +38,6 @@ public:
 
 	void GameInit();
 	void GameRelease();
-	void UpdateSimulation(float frame_time);
 	void GameUpdate(float frame_time);
 	void GameRender();
 private:
@@ -73,7 +74,8 @@ private:
 
 	// ground variables
 	gef::Mesh* ground_mesh_;
-	GameObject* ground_;
+	//GameObject* ground_;
+	Ground* ground_;
 	b2Body* ground_body_;
 
 	// camera variables
@@ -84,6 +86,8 @@ private:
 	int sfx_id_;
 	int sfx_voice_id_;
 
+	void SonyController(const gef::SonyController* controller);
+	void UpdateSimulation(float frame_time);
 	void InitPlayer();
 	void InitGround();
 	void SetupLights();

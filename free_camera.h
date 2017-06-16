@@ -4,13 +4,18 @@
 // my headers
 #include "camera.h"
 
+namespace gef
+{
+	class InputManager;
+}
+
 class FreeCamera : public Camera
 {
 public:
 	FreeCamera();
 	//inline virtual ~FreeCamera() {}
 
-	virtual void CameraControll(const float frame_time, const gef::SonyController* controller);
+	virtual void CameraControll(const float frame_time, const gef::InputManager* input_manager);
 };
 
 #endif
