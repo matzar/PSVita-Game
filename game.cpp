@@ -315,7 +315,7 @@ void Game::KeyboardController(Camera * camera, float frame_time)
 } // !KeyboardController
 
 #ifdef _WIN32 // Only on windows platforms
-void Game::KeyboardController(gef::InputManager* input_manager, Camera* camera, float frame_time)
+void Game::KeyboardController(Camera* camera, float frame_time)
 {
 	// if there is a keyboard, check the arrow keys to control the direction of the character
 	gef::Keyboard* keyboard = input_manager->keyboard();
@@ -442,19 +442,11 @@ void Game::UpdateSimulation(float frame_time)
 		// get controller input data and read controller data for controler 0
 		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
 
-<<<<<<< HEAD
 		if (controller)
 		{
 			camera_->CameraControll(frame_time, controller);
 			SonyController(controller);
 		} // !controller
-=======
-		camera_->CameraControll(frame_time, controller);
-		SonyController(controller);
-#ifdef _WIN32
-		KeyboardController(input_manager_, camera_, frame_time);
-#endif // _WIN32
->>>>>>> keyboard
 
 #ifdef _WIN32 // Only on windows platforms
 			// if there is a keyboard, check the arrow keys to control the direction of the character

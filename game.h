@@ -16,7 +16,6 @@ namespace gef
 	class Renderer3D;
 	class Mesh;
 	class SonyController;
-	class Keyboard;
 } // gef
 
 // Class forward declarations
