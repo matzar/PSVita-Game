@@ -25,12 +25,12 @@ private:
 	OBJECT_TYPE type_;
 };
 
-class Player : public GameObject 
-{
-public:
-	Player();
-	void DecrementHealth();
-};
+//class Player : public GameObject 
+//{
+//public:
+//	Player();
+//	void DecrementHealth();
+//};
 
 
 #endif // _GAME_OBJECT_H
