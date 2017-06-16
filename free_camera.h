@@ -16,7 +16,11 @@ public:
 	FreeCamera();
 	//inline virtual ~FreeCamera() {}
 
+<<<<<<< HEAD
 	virtual void CameraControll(const float frame_time, const gef::SonyController* input_manager);
+=======
+	virtual void CameraControll(const float frame_time, const gef::SonyController* controller);
+>>>>>>> framerate back
 };
 
 #endif

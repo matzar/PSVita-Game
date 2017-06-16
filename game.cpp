@@ -222,38 +222,32 @@ void Game::GameRelease()
 	camera_ = nullptr;
 }
 
-void Game::SonyController(gef::InputManager* input_manager)
+void Game::SonyController(const gef::SonyController* controller)
 {
-	// get the latest date from the input devices
-	if (input_manager)
+	if (controller)
 	{
-		input_manager->Update();
-
-		// get controller input data and read controller data for controler 0
-		const gef::SonyController* controller = input_manager->controller_input()->GetController(0);
-
-		if (controller)
+		if (controller->buttons_pressed() & gef_SONY_CTRL_START)
 		{
-			if (controller->buttons_pressed() & gef_SONY_CTRL_START)
-			{
-				//GameRelease();
+			//GameRelease();
 
-				//game_state_ = FRONTEND;
-				//FrontendInit();
-			}
+			//game_state_ = FRONTEND;
+			//FrontendInit();
+		}
 
-			if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
-			{
-				// release any resources for the frontend
-				//GameRelease();
+		if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
+		{
+			// release any resources for the frontend
+			//GameRelease();
 
-				// update the current state for the game state machine
-				(*gamestate_) = FRONTEND; // get the object that gamestate points to
-										  //GameInit();
-			}
+			// update the current state for the game state machine
+			(*gamestate_) = FRONTEND; // get the object that gamestate points to
+										//GameInit();
+		}
 
-			// trigger a sound effect
-			if (audio_manager_)
+		// trigger a sound effect
+		if (audio_manager_)
+		{
+			if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
 			{
 				audio_manager_->StopPlayingSampleVoice(sfx_voice_id_);
 				sfx_voice_id_ = -1;
@@ -320,6 +314,62 @@ void Game::KeyboardController(Camera * camera, float frame_time)
 	} // !touch_input (mouse)
 } // !KeyboardController
 
+#ifdef _WIN32 // Only on windows platforms
+void Game::KeyboardController(gef::InputManager* input_manager, Camera* camera, float frame_time)
+{
+	// if there is a keyboard, check the arrow keys to control the direction of the character
+	gef::Keyboard* keyboard = input_manager->keyboard();
+	if (keyboard)
+	{
+		//const gef::KeyboardD3D11* keyboard_d3d11 = (const gef::KeyboardD3D11*)keyboard;
+		float camera_speed = 10.0f;
+
+		// keyboard input
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_W))
+			camera->MoveForward(frame_time * camera_speed);
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_S))
+			camera->MoveBackwards(frame_time * camera_speed);
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_A))
+			camera->MoveSideLeft(frame_time * camera_speed);
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_D))
+			camera->MoveSideRight(frame_time * camera_speed);
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_UP))
+			camera->AddPitch(frame_time, camera_speed);
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_DOWN))
+			camera->subtractPitch(frame_time, camera_speed);
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
+			camera->subtractYaw(frame_time, camera_speed);
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_RIGHT))
+			camera->AddYaw(frame_time, camera_speed);
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_R) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD8))
+			camera->MoveUp(frame_time * camera_speed);
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_F) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD2))
+			camera->MoveDown(frame_time * camera_speed);
+	} // keyboard
+
+	  // mouse input
+	const gef::TouchInputManager* touch_input = input_manager->touch_manager();
+	if (touch_input)
+	{
+		// initialise the mouse position
+		gef::Vector2 mouse_position(0.0f, 0.0f); // left upper corner of the window
+
+												 // get a pointer to the d3d11 implementation of the TouchInputManager
+		const gef::TouchInputManagerD3D11* touch_input_d3d11 = (const gef::TouchInputManagerD3D11*)touch_input;
+
+		// get the mouse position
+		mouse_position = touch_input_d3d11->mouse_position();
+
+		if (touch_input_d3d11->is_button_down(0))
+		{
+			//SetCursorPos(480, 272);	
+		}
+
+		//gef::DebugOut("Mouse position x, y: %f %f\n", mouse_position.x, mouse_position.y);
+	} // touch_input (mouse)
+}
+#endif // !_WIN32
+
 void Game::UpdateSimulation(float frame_time)
 {
 	// update physics world
@@ -341,7 +391,7 @@ void Game::UpdateSimulation(float frame_time)
 	// get contact count
 	int contact_count = world_->GetContactCount();
 
-	for (int contact_num = 0; contact_num<contact_count; ++contact_num)
+	for (int contact_num = 0; contact_num < contact_count; ++contact_num)
 	{
 		if (contact->IsTouching())
 		{

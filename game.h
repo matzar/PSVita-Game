@@ -15,11 +15,8 @@ namespace gef
 	class AudioManager;
 	class Renderer3D;
 	class Mesh;
-<<<<<<< HEAD
 	class SonyController;
 	class Keyboard;
-=======
->>>>>>> camera working, framerate drop
 } // gef
 
 // Class forward declarations
