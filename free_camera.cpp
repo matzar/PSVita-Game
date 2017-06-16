@@ -1,6 +1,7 @@
 #include "free_camera.h"
 // gef headers
 #include "maths/vector4.h"
+#include "input/sony_controller_input_manager.h"
 
 // TODO need to pass input manager
 //#ifdef _WIN32

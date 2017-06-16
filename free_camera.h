@@ -6,7 +6,7 @@
 
 namespace gef
 {
-	class InputManager;
+	class SonyController;
 }
 
 class FreeCamera : public Camera
@@ -15,7 +15,7 @@ public:
 	FreeCamera();
 	//inline virtual ~FreeCamera() {}
 
-	virtual void CameraControll(const float frame_time, const gef::InputManager* input_manager);
+	virtual void CameraControll(const float frame_time, const gef::SonyController* input_manager);
 };
 
 #endif

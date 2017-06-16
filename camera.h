@@ -3,8 +3,7 @@
 
 namespace gef
 {
-	class Vector4;
-	class InputManager;
+	class SonyController;
 }
 
 #include "maths/vector4.h"
