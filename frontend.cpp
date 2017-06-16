@@ -83,6 +83,8 @@ void Frontend::FrontendRelease()
 
 void Frontend::FrontendUpdate(float frame_time)
 {
+	fps_ = 1.0f / frame_time;
+
 	// get the latest date from the input devices
 	if (input_manager_)
 	{

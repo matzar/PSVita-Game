@@ -39,10 +39,10 @@
     <ClCompile Include="..\..\game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="camera.cpp">
+    <ClCompile Include="..\..\frontend.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\frontend.cpp">
+    <ClCompile Include="..\..\camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

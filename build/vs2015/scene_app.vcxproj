@@ -219,6 +219,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\camera.cpp" />
     <ClCompile Include="..\..\free_camera.cpp" />
     <ClCompile Include="..\..\frontend.cpp" />
     <ClCompile Include="..\..\game.cpp" />
@@ -238,7 +239,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\camera.h" />
