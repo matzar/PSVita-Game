@@ -1,6 +1,7 @@
 #ifndef _CAMERA_H
 #define _CAMERA_H
 
+// forward gef declarations
 namespace gef
 {
 	class SonyController;
@@ -48,7 +49,7 @@ public:
 	inline gef::Vector4 GetSideVector() const { return side_; }
 	inline gef::Vector4 GetUpVector() const { return up_; }
 
-	virtual void CameraControll(const float dt, const gef::SonyController* controller) = 0;
+	virtual void CameraControll(const float dt, gef::InputManager* input_manager) = 0;
 protected:
 	gef::Vector4 position_;
 	gef::Vector4 forward_;

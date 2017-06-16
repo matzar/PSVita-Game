@@ -222,47 +222,38 @@ void Game::GameRelease()
 	camera_ = nullptr;
 }
 
-void Game::SonyController(const gef::SonyController * controller)
+void Game::SonyController(gef::InputManager* input_manager)
 {
-	if (controller->buttons_pressed() & gef_SONY_CTRL_START)
+	// get the latest date from the input devices
+	if (input_manager)
 	{
-		//GameRelease();
+		input_manager->Update();
 
-		//game_state_ = FRONTEND;
-		//FrontendInit();
-	}
+		// get controller input data and read controller data for controler 0
+		const gef::SonyController* controller = input_manager->controller_input()->GetController(0);
 
-	if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
-	{
-		// release any resources for the frontend
-		//GameRelease();
-
-		// update the current state for the game state machine
-		(*gamestate_) = FRONTEND; // get the object that gamestate points to
-								  //GameInit();
-	}
-
-	// trigger a sound effect
-	if (audio_manager_)
-	{
-		if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
+		if (controller)
 		{
-			if (sfx_voice_id_ == -1)
+			if (controller->buttons_pressed() & gef_SONY_CTRL_START)
 			{
-				sfx_voice_id_ = audio_manager_->PlaySample(sfx_id_, true);
+				//GameRelease();
 
-				gef::VolumeInfo volume_info;
-				volume_info.volume = 0.5f;
-				volume_info.pan = -1.0f;
-
-				audio_manager_->SetSampleVoiceVolumeInfo(sfx_voice_id_, volume_info);
-
-				audio_manager_->SetSamplePitch(sfx_voice_id_, 1.5f);
+				//game_state_ = FRONTEND;
+				//FrontendInit();
 			}
-		}
-		if (controller->buttons_pressed() & gef_SONY_CTRL_TRIANGLE)
-		{
-			if (sfx_voice_id_ != -1)
+
+			if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
+			{
+				// release any resources for the frontend
+				//GameRelease();
+
+				// update the current state for the game state machine
+				(*gamestate_) = FRONTEND; // get the object that gamestate points to
+										  //GameInit();
+			}
+
+			// trigger a sound effect
+			if (audio_manager_)
 			{
 				audio_manager_->StopPlayingSampleVoice(sfx_voice_id_);
 				sfx_voice_id_ = -1;

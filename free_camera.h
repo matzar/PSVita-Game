@@ -4,6 +4,7 @@
 // my headers
 #include "camera.h"
 
+// forward gef declarations
 namespace gef
 {
 	class SonyController;
