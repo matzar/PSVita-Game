@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _OBJECT_TYPE_ENUM_H
+#define _OBJECT_TYPE_ENUM_H
 
 enum OBJECT_TYPE
 {
@@ -6,3 +7,5 @@ enum OBJECT_TYPE
 	ENEMY,
 	BULLET
 };
+
+#endif // !_OBJECT_TYPE_ENUM_H

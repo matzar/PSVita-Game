@@ -3,8 +3,6 @@
 
 // extra headers
 #include "game_object.h"
-// my headers
-#include "object_type_enum.h"
 
 class Player : 
 	public GameObject 

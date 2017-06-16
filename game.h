@@ -4,7 +4,9 @@
 // gef headers
 #include <system/application.h>
 #include <maths/vector2.h>
-//#include "game_object.h"
+// extra headers
+#include "game_object.h"
+// my headers
 #include "player.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
@@ -21,9 +23,7 @@ namespace gef
 
 // Class forward declarations
 class PrimitiveBuilder;
-class GameObject;
 // Mine classes forward declarations
-class Player;
 class Camera;
 enum GAMESTATE;
 // box2D forward declarations
