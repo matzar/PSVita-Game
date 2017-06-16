@@ -4,10 +4,6 @@
 // gef headers
 #include <system/application.h>
 #include <maths/vector2.h>
-// extra headers
-#include "game_object.h"
-// my headers
-#include "player.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
@@ -23,6 +19,8 @@ namespace gef
 
 // Class forward declarations
 class PrimitiveBuilder;
+class Player;
+class GameObject;
 // Mine classes forward declarations
 class Camera;
 enum GAMESTATE;
@@ -42,11 +40,11 @@ public:
 	void GameUpdate(float frame_time);
 	void GameRender();
 private:
-	// gamestate_ pointer
-	GAMESTATE* gamestate_;
-
 	// platform
 	gef::Platform& platform_;
+
+	// gamestate_ pointer
+	GAMESTATE* gamestate_;
 
 	// font
 	gef::Font* font_;
@@ -70,12 +68,12 @@ private:
 	b2World* world_;
 
 	// player variables
-	Player player_;
+	Player* player_;
 	b2Body* player_body_;
 
 	// ground variables
 	gef::Mesh* ground_mesh_;
-	GameObject ground_;
+	GameObject* ground_;
 	b2Body* ground_body_;
 
 	// camera variables

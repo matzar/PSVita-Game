@@ -18,9 +18,11 @@
 // extra headers
 #include "load_texture.h"
 #include "primitive_builder.h"
+#include "game_object.h"
 // my headers
 #include "free_camera.h"
 #include "game_state_enum.h"
+#include "player.h"
 // box2D headers
 #include <box2d/Box2D.h>
 
@@ -35,17 +37,22 @@
 Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	platform_(platform),
 	gamestate_(gamestate),
-	sprite_renderer_(nullptr),
-	renderer_3d_(nullptr),
-	primitive_builder_(nullptr),
 	font_(nullptr),
-	world_(nullptr),
-	player_body_(nullptr),
+	sprite_renderer_(nullptr),
 	input_manager_(nullptr),
 	audio_manager_(nullptr),
+	renderer_3d_(nullptr),
+	primitive_builder_(nullptr),
+	world_(nullptr),
+	player_(nullptr),
+	player_body_(nullptr),
+	ground_mesh_(nullptr),
+	ground_(nullptr),
+	ground_body_(nullptr),
 	camera_(nullptr),
-	sfx_voice_id_(-1),
-	sfx_id_(-1)
+	fps_(0),
+	sfx_id_(-1),
+	sfx_voice_id_(-1)
 {
 }
 
@@ -56,8 +63,10 @@ Game::~Game()
 
 void Game::InitPlayer()
 {
+	// create Player player_ class
+	player_ = new Player();
 	// setup the mesh for the player
-	player_.set_mesh(primitive_builder_->GetDefaultCubeMesh());
+	player_->set_mesh(primitive_builder_->GetDefaultCubeMesh());
 
 	// create a physics body for the player
 	b2BodyDef player_body_def;
@@ -79,7 +88,7 @@ void Game::InitPlayer()
 	player_body_->CreateFixture(&player_fixture_def);
 
 	// update visuals from simulation data
-	player_.UpdateFromSimulation(player_body_);
+	player_->UpdateFromSimulation(player_body_);
 
 	// create a connection between the rigid body and GameObject
 	player_body_->SetUserData(&player_);
@@ -87,12 +96,14 @@ void Game::InitPlayer()
 
 void Game::InitGround()
 {
+	// create GameObject ground_ class
+	ground_ = new GameObject();
 	// ground dimensions
 	gef::Vector4 ground_half_dimensions(5.0f, 0.5f, 0.5f);
 
 	// setup the mesh for the ground
 	ground_mesh_ = primitive_builder_->CreateBoxMesh(ground_half_dimensions);
-	ground_.set_mesh(ground_mesh_);
+	ground_->set_mesh(ground_mesh_);
 
 	// create a physics body
 	b2BodyDef body_def;
@@ -113,7 +124,7 @@ void Game::InitGround()
 	ground_body_->CreateFixture(&fixture_def);
 
 	// update visuals from simulation data
-	ground_.UpdateFromSimulation(ground_body_);
+	ground_->UpdateFromSimulation(ground_body_);
 }
 
 void Game::GameInit()
@@ -204,7 +215,7 @@ void Game::UpdateSimulation(float frame_time)
 	world_->Step(timeStep, velocityIterations, positionIterations);
 
 	// update object visuals from simulation data
-	player_.UpdateFromSimulation(player_body_);
+	player_->UpdateFromSimulation(player_body_);
 
 	// don't have to update the ground visuals as it is static
 
@@ -410,11 +421,11 @@ void Game::GameRender()
 	renderer_3d_->Begin();
 	{
 		// draw ground
-		renderer_3d_->DrawMesh(ground_);
+		renderer_3d_->DrawMesh(*ground_);
 
 		// draw player
 		renderer_3d_->set_override_material(&primitive_builder_->red_material());
-		renderer_3d_->DrawMesh(player_);
+		renderer_3d_->DrawMesh(*player_);
 		renderer_3d_->set_override_material(nullptr);
 	}
 	renderer_3d_->End();

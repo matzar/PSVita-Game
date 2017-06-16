@@ -48,6 +48,9 @@
     <ClCompile Include="..\..\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ground.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\scene_app.h">
@@ -74,13 +77,16 @@
     <ClInclude Include="..\..\frontend.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game_state_enum.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="object_type_enum.h">
+    <ClInclude Include="..\..\object_type_enum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\game_state_enum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ground.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

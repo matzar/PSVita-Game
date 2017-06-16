@@ -224,6 +224,7 @@
     <ClCompile Include="..\..\frontend.cpp" />
     <ClCompile Include="..\..\game.cpp" />
     <ClCompile Include="..\..\game_object.cpp" />
+    <ClCompile Include="..\..\ground.cpp" />
     <ClCompile Include="..\..\load_texture.cpp" />
     <ClCompile Include="..\..\main_d3d11.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PSVita'">true</ExcludedFromBuild>
@@ -247,12 +248,13 @@
     <ClInclude Include="..\..\frontend.h" />
     <ClInclude Include="..\..\game.h" />
     <ClInclude Include="..\..\game_object.h" />
+    <ClInclude Include="..\..\game_state_enum.h" />
+    <ClInclude Include="..\..\ground.h" />
     <ClInclude Include="..\..\load_texture.h" />
+    <ClInclude Include="..\..\object_type_enum.h" />
     <ClInclude Include="..\..\player.h" />
     <ClInclude Include="..\..\primitive_builder.h" />
     <ClInclude Include="..\..\scene_app.h" />
-    <ClInclude Include="game_state_enum.h" />
-    <ClInclude Include="object_type_enum.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
