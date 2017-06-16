@@ -16,6 +16,7 @@ namespace gef
 	class Renderer3D;
 	class Mesh;
 	class SonyController;
+	class Keyboard;
 } // gef
 
 // Class forward declarations
@@ -87,6 +88,7 @@ private:
 	int sfx_voice_id_;
 
 	void SonyController(const gef::SonyController* controller);
+	void KeyboardController(gef::Keyboard* keyboard, Camera* camera, float fps);
 	void UpdateSimulation(float frame_time);
 	void InitPlayer();
 	void InitGround();
