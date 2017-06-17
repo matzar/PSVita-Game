@@ -45,8 +45,8 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	renderer_3d_(nullptr),
 	primitive_builder_(nullptr),
 	world_(nullptr),
-	player_(nullptr),
 	player_body_(nullptr),
+	player_(nullptr),
 	ground_mesh_(nullptr),
 	ground_(nullptr),
 	ground_body_(nullptr),
@@ -62,38 +62,49 @@ Game::~Game()
 {
 }
 
-void Game::InitPlayer()
+void Game::InitFont()
 {
-	// create Player player_ class
-	player_ = new Player();
-	// setup the mesh for the player
-	player_->set_mesh(primitive_builder_->GetDefaultCubeMesh());
-
-	// create a physics body for the player
-	b2BodyDef player_body_def;
-	player_body_def.type = b2_dynamicBody;
-	player_body_def.position = b2Vec2(0.0f, 4.0f);
-
-	player_body_ = world_->CreateBody(&player_body_def);
-
-	// create the shape for the player
-	b2PolygonShape player_shape;
-	player_shape.SetAsBox(0.5f, 0.5f);
-
-	// create the fixture
-	b2FixtureDef player_fixture_def;
-	player_fixture_def.shape = &player_shape;
-	player_fixture_def.density = 1.0f;
-
-	// create the fixture on the rigid body
-	player_body_->CreateFixture(&player_fixture_def);
-
-	// update visuals from simulation data
-	player_->UpdateFromSimulation(player_body_);
-
-	// create a connection between the rigid body and GameObject
-	player_body_->SetUserData(&player_);
+	font_ = new gef::Font(platform_);
+	font_->Load("comic_sans");
 }
+
+void Game::CleanUpFont()
+{
+	delete font_;
+	font_ = nullptr;
+}
+
+void Game::DrawHUD()
+{
+	if (font_)
+	{
+		// display frame rate
+		font_->RenderText(sprite_renderer_, gef::Vector4(850.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f", fps_);
+	}
+}
+
+void Game::SetupLights()
+{
+	// grab the data for the default shader used for rendering 3D geometry
+	gef::Default3DShaderData& default_shader_data = renderer_3d_->default_shader_data();
+
+	// set the ambient light
+	default_shader_data.set_ambient_light_colour(gef::Colour(0.25f, 0.25f, 0.25f, 1.0f));
+
+	// add a point light that is almost white, but with a blue tinge
+	// the position of the light is set far away so it acts light a directional light
+	gef::PointLight default_point_light;
+	default_point_light.set_colour(gef::Colour(0.7f, 0.7f, 1.0f, 1.0f));
+	default_point_light.set_position(gef::Vector4(-500.0f, 400.0f, 700.0f));
+	default_shader_data.AddPointLight(default_point_light);
+}
+
+void Game::InitWorld()
+{
+	// initialise the physics world
+	b2Vec2 gravity(0.0f, -9.81f);
+	world_ = new b2World(gravity);
+} // !InitWorld
 
 void Game::InitGround()
 {
@@ -128,6 +139,63 @@ void Game::InitGround()
 	ground_->UpdateFromSimulation(ground_body_);
 }
 
+void Game::InitPlayer()
+{
+	// create Player player_ class
+	player_ = new Player();
+	// setup the mesh for the player
+	player_->set_mesh(primitive_builder_->GetDefaultCubeMesh());
+
+	// create a physics body for the player
+	b2BodyDef player_body_def;
+	player_body_def.type = b2_dynamicBody;
+	player_body_def.position = b2Vec2(0.0f, 4.0f);
+
+	player_body_ = world_->CreateBody(&player_body_def);
+
+	// create the shape for the player
+	b2PolygonShape player_shape;
+	// if cube 1x1, need to pass half of both dimensions
+	player_shape.SetAsBox(0.5f, 0.5f);
+
+	// create the fixture
+	b2FixtureDef player_fixture_def;
+	player_fixture_def.shape = &player_shape;
+	player_fixture_def.density = 1.0f;
+
+	// create the fixture on the rigid body
+	player_body_->CreateFixture(&player_fixture_def);
+
+	// update visuals from simulation data
+	player_->UpdateFromSimulation(player_body_);
+
+	// create a connection between the rigid body and GameObject
+	player_body_->SetUserData(&player_);
+}
+
+void Game::InitAudio()
+{
+	// load audio assets
+	if (audio_manager_)
+	{
+		// load a sound effect
+		sfx_id_ = audio_manager_->LoadSample("box_collected.wav", platform_);
+
+		// load in music
+		audio_manager_->LoadMusic("music.wav", platform_);
+
+		// play music
+		audio_manager_->PlayMusic();
+	}
+}
+
+void Game::InitCamera()
+{
+	camera_ = new FreeCamera;
+	camera_->Update();
+	camera_->DisplayCameraPosition();
+}
+
 void Game::GameInit()
 {
 	// initialise input manager
@@ -148,29 +216,13 @@ void Game::GameInit()
 	InitFont();
 	SetupLights();
 
-	// initialise the physics world
-	b2Vec2 gravity(0.0f, -9.81f);
-	world_ = new b2World(gravity);
-
-	InitPlayer();
+	InitWorld();
 	InitGround();
+	InitPlayer();
 
-	camera_ = new FreeCamera;
-	camera_->Update();
-	camera_->DisplayCameraPosition();
+	InitAudio();
 
-	// load audio assets
-	if (audio_manager_)
-	{
-		// load a sound effect
-		sfx_id_ = audio_manager_->LoadSample("box_collected.wav", platform_);
-
-		// load in music
-		audio_manager_->LoadMusic("music.wav", platform_);
-
-		// play music
-		audio_manager_->PlayMusic();
-	}
+	InitCamera();
 }
 
 void Game::GameRelease()
@@ -282,15 +334,15 @@ void Game::SonyController(const gef::SonyController* controller)
 {
 	if (controller)
 	{
-		if (controller->buttons_pressed() & gef_SONY_CTRL_START)
-		{
+		//if (controller->buttons_pressed() & gef_SONY_CTRL_START)
+		//{
 			//GameRelease();
 
 			//game_state_ = FRONTEND;
 			//FrontendInit();
-		}
+		//}
 
-		if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
+		if (controller->buttons_pressed() & gef_SONY_CTRL_START)
 		{
 			// release any resources for the frontend
 			//GameRelease();
@@ -378,8 +430,7 @@ void Game::UpdateSimulation(float frame_time)
 		// Get next contact point
 		contact = contact->GetNext();
 	}
-}
-// UpdateSimulation
+} // !UpdateSimulation
 
 void Game::GameUpdate(float frame_time)
 {
@@ -441,42 +492,4 @@ void Game::GameRender()
 	}
 	sprite_renderer_->End();
 }
-
-void Game::SetupLights()
-{
-	// grab the data for the default shader used for rendering 3D geometry
-	gef::Default3DShaderData& default_shader_data = renderer_3d_->default_shader_data();
-
-	// set the ambient light
-	default_shader_data.set_ambient_light_colour(gef::Colour(0.25f, 0.25f, 0.25f, 1.0f));
-
-	// add a point light that is almost white, but with a blue tinge
-	// the position of the light is set far away so it acts light a directional light
-	gef::PointLight default_point_light;
-	default_point_light.set_colour(gef::Colour(0.7f, 0.7f, 1.0f, 1.0f));
-	default_point_light.set_position(gef::Vector4(-500.0f, 400.0f, 700.0f));
-	default_shader_data.AddPointLight(default_point_light);
-}
-
-void Game::InitFont()
-{
-	font_ = new gef::Font(platform_);
-	font_->Load("comic_sans");
-}
-
-void Game::CleanUpFont()
-{
-	delete font_;
-	font_ = nullptr;
-}
-
-void Game::DrawHUD()
-{
-	if (font_)
-	{
-		// display frame rate
-		font_->RenderText(sprite_renderer_, gef::Vector4(850.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f", fps_);
-	}
-}
-
 

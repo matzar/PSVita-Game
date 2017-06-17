@@ -68,15 +68,19 @@ private:
 	// create the physics world
 	b2World* world_;
 
-	// player variables
-	Player* player_;
-	b2Body* player_body_;
-
 	// ground variables
+	// ground mesh
 	gef::Mesh* ground_mesh_;
-	//GameObject* ground_;
-	Ground* ground_;
+	// box2d ground variables
 	b2Body* ground_body_;
+	// box2d ground class
+	Ground* ground_;
+
+	// player variables
+	// player box 2d variables
+	b2Body* player_body_;
+	// player class
+	Player* player_;
 
 	// camera variables
 	Camera* camera_;
@@ -91,12 +95,15 @@ private:
 #endif // _WIN32
 	void SonyController(const gef::SonyController* controller);
 	void UpdateSimulation(float frame_time);
-	void InitPlayer();
-	void InitGround();
-	void SetupLights();
 	void InitFont();
 	void CleanUpFont();
 	void DrawHUD();
+	void SetupLights();
+	void InitWorld();
+	void InitPlayer();
+	void InitGround();
+	void InitAudio();
+	void InitCamera();
 };
 
 #endif // !_GAME_H
