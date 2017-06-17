@@ -57,7 +57,6 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 {
 }
 
-
 Game::~Game()
 {
 }
