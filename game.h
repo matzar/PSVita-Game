@@ -95,15 +95,15 @@ private:
 #endif // _WIN32
 	void SonyController(const gef::SonyController* controller);
 	void UpdateSimulation(float frame_time);
+	void InitAudio();
 	void InitFont();
 	void CleanUpFont();
 	void DrawHUD();
 	void SetupLights();
+	void InitCamera();
 	void InitWorld();
 	void InitPlayer();
 	void InitGround();
-	void InitAudio();
-	void InitCamera();
 };
 
 #endif // !_GAME_H

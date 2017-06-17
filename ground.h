@@ -3,8 +3,6 @@
 
 #include "game_object.h"
 
-// forward class declarations
-
 class Ground : public GameObject
 {
 public:

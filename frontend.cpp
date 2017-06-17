@@ -74,8 +74,8 @@ void Frontend::FrontendRelease()
 	delete sprite_renderer_;
 	sprite_renderer_ = nullptr;
 
-	/*delete audio_manager_;
-	audio_manager_ = nullptr;*/
+	delete audio_manager_;
+	audio_manager_ = nullptr;
 
 	delete button_icon_;
 	button_icon_ = nullptr;

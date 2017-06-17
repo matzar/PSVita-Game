@@ -37,4 +37,7 @@ void Ground::InitGround(PrimitiveBuilder* primitive_builder, b2World* world)
 
 	// update visuals from simulation data
 	UpdateFromSimulation(ground_body_);
+
+	// create a connection between the rigid body and GameObject
+	ground_body_->SetUserData(this);
 }

@@ -1,5 +1,5 @@
 #include "player.h"
-#include "primitive_builder.h"
+#include <system/debug_log.h>
 
 Player::Player() :
 	player_body_(nullptr)
@@ -45,5 +45,5 @@ void Player::InitPlayer(PrimitiveBuilder* primitve_builder, b2World* world)
 
 void Player::DecrementHealth()
 {
-	//gef::DebugOut("Player has taken damage.\n");
+	gef::DebugOut("Player has taken damage.\n");
 }

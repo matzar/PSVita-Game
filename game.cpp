@@ -44,12 +44,10 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	audio_manager_(nullptr),
 	renderer_3d_(nullptr),
 	primitive_builder_(nullptr),
+	camera_(nullptr),
 	world_(nullptr),
 	player_(nullptr),
-	//ground_mesh_(nullptr),
 	ground_(nullptr),
-	//ground_body_(nullptr),
-	camera_(nullptr),
 	fps_(0),
 	sfx_id_(-1),
 	sfx_voice_id_(-1)
@@ -97,82 +95,11 @@ void Game::SetupLights()
 	default_shader_data.AddPointLight(default_point_light);
 }
 
-void Game::InitWorld()
-{
-	// initialise the physics world
-	b2Vec2 gravity(0.0f, -9.81f);
-	world_ = new b2World(gravity);
-} // !InitWorld
-
-//void Game::InitGround()
-//{
-//	// create GameObject ground_ class
-//	ground_ = new Ground();
-//	// ground dimensions
-//	gef::Vector4 ground_half_dimensions(5.0f, 0.5f, 0.5f);
-//
-//	// setup the mesh for the ground
-//	ground_mesh_ = primitive_builder_->CreateBoxMesh(ground_half_dimensions);
-//	ground_->set_mesh(ground_mesh_);
-//
-//	// create a physics body
-//	b2BodyDef body_def;
-//	body_def.type = b2_staticBody;
-//	body_def.position = b2Vec2(0.0f, 0.0f);
-//
-//	ground_body_ = world_->CreateBody(&body_def);
-//
-//	// create the shape
-//	b2PolygonShape shape;
-//	shape.SetAsBox(ground_half_dimensions.x(), ground_half_dimensions.y());
-//
-//	// create the fixture
-//	b2FixtureDef fixture_def;
-//	fixture_def.shape = &shape;
-//
-//	// create the fixture on the rigid body
-//	ground_body_->CreateFixture(&fixture_def);
-//
-//	// update visuals from simulation data
-//	ground_->UpdateFromSimulation(ground_body_);
-//}
-
-//void Game::InitPlayer()
-//{
-//	// create Player player_ class
-//	//player_ = new Player();
-//	// setup the mesh for the player
-//	player_->set_mesh(primitive_builder_->GetDefaultCubeMesh());
-//
-//	// create a physics body for the player
-//	b2BodyDef player_body_def;
-//	player_body_def.type = b2_dynamicBody;
-//	player_body_def.position = b2Vec2(0.0f, 4.0f);
-//
-//	player_body_ = world_->CreateBody(&player_body_def);
-//
-//	// create the shape for the player
-//	b2PolygonShape player_shape;
-//	// if cube 1x1, need to pass half of both dimensions
-//	player_shape.SetAsBox(0.5f, 0.5f);
-//
-//	// create the fixture
-//	b2FixtureDef player_fixture_def;
-//	player_fixture_def.shape = &player_shape;
-//	player_fixture_def.density = 1.0f;
-//
-//	// create the fixture on the rigid body
-//	player_body_->CreateFixture(&player_fixture_def);
-//
-//	// update visuals from simulation data
-//	player_->UpdateFromSimulation(player_body_);
-//
-//	// create a connection between the rigid body and GameObject
-//	player_body_->SetUserData(&player_);
-//}
-
 void Game::InitAudio()
 {
+	// audio manager
+	audio_manager_ = gef::AudioManager::Create();
+
 	// load audio assets
 	if (audio_manager_)
 	{
@@ -185,22 +112,40 @@ void Game::InitAudio()
 		// play music
 		audio_manager_->PlayMusic();
 	}
-}
+} // !InitAudio
 
 void Game::InitCamera()
 {
 	camera_ = new FreeCamera;
 	camera_->Update();
 	camera_->DisplayCameraPosition();
-}
+} // !InitCamera
+
+void Game::InitWorld()
+{
+	// initialise the physics world
+	b2Vec2 gravity(0.0f, -9.81f);
+	world_ = new b2World(gravity);
+} // !InitWorld
+
+void Game::InitPlayer()
+{
+	// create Ground ground_ class
+	ground_ = new Ground();
+	ground_->InitGround(primitive_builder_, world_);
+} // !InitPlayer
+
+void Game::InitGround()
+{
+	// create Player player_ class
+	player_ = new Player();
+	player_->InitPlayer(primitive_builder_, world_);
+} // !InitGround
 
 void Game::GameInit()
 {
 	// initialise input manager
 	input_manager_ = gef::InputManager::Create(platform_);
-
-	// audio manager
-	audio_manager_ = gef::AudioManager::Create();
 
 	// initlalise sprite renderer
 	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
@@ -211,23 +156,20 @@ void Game::GameInit()
 	// initialise primitive builder to make 3D geometry creation easier
 	primitive_builder_ = new PrimitiveBuilder(platform_);
 
+	InitAudio();
+
 	InitFont();
+
 	SetupLights();
+
+	InitCamera();
 
 	InitWorld();
 
-	// create Ground ground_ class
-	ground_ = new Ground();
-	ground_->InitGround(primitive_builder_, world_);
+	InitPlayer();
 
-	// create Player player_ class
-	player_ = new Player();
-	player_->InitPlayer(primitive_builder_, world_);
-
-	InitAudio();
-
-	InitCamera();
-}
+	InitGround();
+} // !GameInit
 
 void Game::GameRelease()
 {
