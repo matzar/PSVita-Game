@@ -45,5 +45,8 @@ void Player::InitPlayer(PrimitiveBuilder* primitve_builder, b2World* world)
 
 void Player::DecrementHealth()
 {
+	// impuls working here
+	//player_body_->ApplyAngularImpulse(100.0f, true);
+	player_body_->ApplyLinearImpulseToCenter(b2Vec2(0.1f, 0.0f), true);
 	gef::DebugOut("Player has taken damage.\n");
 }

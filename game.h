@@ -65,25 +65,17 @@ private:
 	// primitive builder
 	PrimitiveBuilder* primitive_builder_;
 
+	// camera variables
+	Camera* camera_;
+
 	// create the physics world
 	b2World* world_;
 
-	// ground variables
-	// ground mesh
-	//gef::Mesh* ground_mesh_;
-	// box2d ground variables
-	//b2Body* ground_body_;
-	// box2d ground class
+	// ground
 	Ground* ground_;
 
-	// player variables
-	// player box 2d variables
-	//b2Body* player_body_;
-	// player class
+	// player
 	Player* player_;
-
-	// camera variables
-	Camera* camera_;
 
 	float fps_;
 	// audio variables

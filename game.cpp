@@ -298,6 +298,12 @@ void Game::SonyController(const gef::SonyController* controller)
 										//GameInit();
 		}
 
+		if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE)
+		{
+			player_->GetPlayerBody()->ApplyForceToCenter(b2Vec2(0.0f, 0.5f), true);
+			player_->UpdateFromSimulation(player_->GetPlayerBody());
+		}
+
 		// trigger a sound effect
 		if (audio_manager_)
 		{
@@ -325,6 +331,8 @@ void Game::UpdateSimulation(float frame_time)
 
 	// update object visuals from simulation data
 	player_->UpdateFromSimulation(player_->GetPlayerBody());
+	// impuls working here
+	//player_->GetPlayerBody()->ApplyAngularImpulse(100.0f, true);
 
 	// don't have to update the ground visuals as it is static
 
