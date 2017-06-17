@@ -45,7 +45,6 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	renderer_3d_(nullptr),
 	primitive_builder_(nullptr),
 	world_(nullptr),
-	player_body_(nullptr),
 	player_(nullptr),
 	ground_mesh_(nullptr),
 	ground_(nullptr),
@@ -138,39 +137,39 @@ void Game::InitGround()
 	ground_->UpdateFromSimulation(ground_body_);
 }
 
-void Game::InitPlayer()
-{
-	// create Player player_ class
-	player_ = new Player();
-	// setup the mesh for the player
-	player_->set_mesh(primitive_builder_->GetDefaultCubeMesh());
-
-	// create a physics body for the player
-	b2BodyDef player_body_def;
-	player_body_def.type = b2_dynamicBody;
-	player_body_def.position = b2Vec2(0.0f, 4.0f);
-
-	player_body_ = world_->CreateBody(&player_body_def);
-
-	// create the shape for the player
-	b2PolygonShape player_shape;
-	// if cube 1x1, need to pass half of both dimensions
-	player_shape.SetAsBox(0.5f, 0.5f);
-
-	// create the fixture
-	b2FixtureDef player_fixture_def;
-	player_fixture_def.shape = &player_shape;
-	player_fixture_def.density = 1.0f;
-
-	// create the fixture on the rigid body
-	player_body_->CreateFixture(&player_fixture_def);
-
-	// update visuals from simulation data
-	player_->UpdateFromSimulation(player_body_);
-
-	// create a connection between the rigid body and GameObject
-	player_body_->SetUserData(&player_);
-}
+//void Game::InitPlayer()
+//{
+//	// create Player player_ class
+//	//player_ = new Player();
+//	// setup the mesh for the player
+//	player_->set_mesh(primitive_builder_->GetDefaultCubeMesh());
+//
+//	// create a physics body for the player
+//	b2BodyDef player_body_def;
+//	player_body_def.type = b2_dynamicBody;
+//	player_body_def.position = b2Vec2(0.0f, 4.0f);
+//
+//	player_body_ = world_->CreateBody(&player_body_def);
+//
+//	// create the shape for the player
+//	b2PolygonShape player_shape;
+//	// if cube 1x1, need to pass half of both dimensions
+//	player_shape.SetAsBox(0.5f, 0.5f);
+//
+//	// create the fixture
+//	b2FixtureDef player_fixture_def;
+//	player_fixture_def.shape = &player_shape;
+//	player_fixture_def.density = 1.0f;
+//
+//	// create the fixture on the rigid body
+//	player_body_->CreateFixture(&player_fixture_def);
+//
+//	// update visuals from simulation data
+//	player_->UpdateFromSimulation(player_body_);
+//
+//	// create a connection between the rigid body and GameObject
+//	player_body_->SetUserData(&player_);
+//}
 
 void Game::InitAudio()
 {
@@ -217,7 +216,10 @@ void Game::GameInit()
 
 	InitWorld();
 	InitGround();
-	InitPlayer();
+
+	// create Player player_ class
+	player_ = new Player();
+	player_->InitPlayer(primitive_builder_, world_);
 
 	InitAudio();
 
@@ -377,7 +379,7 @@ void Game::UpdateSimulation(float frame_time)
 	world_->Step(timeStep, velocityIterations, positionIterations);
 
 	// update object visuals from simulation data
-	player_->UpdateFromSimulation(player_body_);
+	player_->UpdateFromSimulation(player_->player_body_);
 
 	// don't have to update the ground visuals as it is static
 
