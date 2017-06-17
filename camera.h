@@ -30,8 +30,8 @@ public:
 
 	inline float GetYaw() const { return yaw_; }
 	inline void SetYaw(const float arg) { yaw_ = arg; Update(); }
-	inline void AddYaw(const float dt, const float value) { yaw_ += value * dt; Update(); }
-	inline void subtractYaw(const float dt, const float value) { yaw_ -= value * dt; Update(); }
+	inline void AddYaw(const float value, const float dt) { yaw_ += value * dt; Update(); }
+	inline void subtractYaw(const float value, const float dt) { yaw_ -= value * dt; Update(); }
 
 	inline float GetPitch() const { return pitch_; }
 	inline void SetPitch(const float arg) { pitch_ = arg; Update(); }

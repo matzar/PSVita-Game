@@ -256,69 +256,11 @@ void Game::SonyController(const gef::SonyController* controller)
 	} // !audio_manager_
 } // !SonyController
 
-void Game::KeyboardController(Camera * camera, float frame_time)
-{
-	gef::Keyboard* keyboard = input_manager_->keyboard();
-
-	if (keyboard)
-	{
-		//const gef::KeyboardD3D11* keyboard_d3d11 = (const gef::KeyboardD3D11*)keyboard;
-		float camera_speed = 10.0f;
-
-		// keyboard input
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_W))
-			camera_->MoveForward(frame_time * camera_speed);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_S))
-			camera_->MoveBackwards(frame_time * camera_speed);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_A))
-			camera_->MoveSideLeft(frame_time * camera_speed);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_D))
-			camera_->MoveSideRight(frame_time * camera_speed);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_UP))
-			camera_->AddPitch(frame_time, camera_speed * camera_speed);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_DOWN))
-			camera_->subtractPitch(frame_time, camera_speed * camera_speed);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
-			camera_->subtractYaw(frame_time, camera_speed * camera_speed);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_RIGHT))
-			camera_->AddYaw(frame_time, camera_speed * camera_speed);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_R) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD8))
-			camera_->MoveUp(frame_time * camera_speed);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_F) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD2))
-			camera_->MoveDown(frame_time * camera_speed);
-	} // !keyboard
-
-	  // mouse input
-	const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
-	if (touch_input)
-	{
-		// initialise the mouse position
-		gef::Vector2 mouse_position(0.0f, 0.0f); // left upper corner of the window
-
-												 // get a pointer to the d3d11 implementation of the TouchInputManager
-		const gef::TouchInputManagerD3D11* touch_input_d3d11 = (const gef::TouchInputManagerD3D11*)touch_input;
-
-		// get the mouse position
-		mouse_position = touch_input_d3d11->mouse_position();
-		// camera's Yaw mouse controll, last variable controlls speed
-		//camera_->updateYaw(960, mouse_position.x, 2);
-		// camera's Pitch mouse controll, last variable controlls speed
-		//camera_->updatePitch(544, mouse_position.y, 2);
-
-		if (touch_input_d3d11->is_button_down(0))
-		{
-			//SetCursorPos(480, 272);	
-		}
-
-		//gef::DebugOut("Mouse position x, y: %f %f\n", mouse_position.x, mouse_position.y);
-	} // !touch_input (mouse)
-} // !KeyboardController
-
 #ifdef _WIN32 // Only on windows platforms
 void Game::KeyboardController(Camera* camera, float frame_time)
 {
 	// if there is a keyboard, check the arrow keys to control the direction of the character
-	gef::Keyboard* keyboard = input_manager->keyboard();
+	gef::Keyboard* keyboard = input_manager_->keyboard();
 	if (keyboard)
 	{
 		//const gef::KeyboardD3D11* keyboard_d3d11 = (const gef::KeyboardD3D11*)keyboard;
@@ -334,13 +276,13 @@ void Game::KeyboardController(Camera* camera, float frame_time)
 		if (keyboard->IsKeyDown(gef::Keyboard::KC_D))
 			camera->MoveSideRight(frame_time * camera_speed);
 		if (keyboard->IsKeyDown(gef::Keyboard::KC_UP))
-			camera->AddPitch(frame_time, camera_speed);
+			camera->AddPitch(frame_time, camera_speed * camera_speed);
 		if (keyboard->IsKeyDown(gef::Keyboard::KC_DOWN))
 			camera->subtractPitch(frame_time, camera_speed * camera_speed);
 		if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
 			camera->subtractYaw(frame_time, camera_speed * camera_speed);
 		if (keyboard->IsKeyDown(gef::Keyboard::KC_RIGHT))
-			camera->AddYaw(frame_time, camera_speed);
+			camera->AddYaw(frame_time, camera_speed * camera_speed);
 		if (keyboard->IsKeyDown(gef::Keyboard::KC_R) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD8))
 			camera->MoveUp(frame_time * camera_speed);
 		if (keyboard->IsKeyDown(gef::Keyboard::KC_F) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD2))
@@ -348,7 +290,7 @@ void Game::KeyboardController(Camera* camera, float frame_time)
 	} // keyboard
 
 	  // mouse input
-	const gef::TouchInputManager* touch_input = input_manager->touch_manager();
+	const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
 	if (touch_input)
 	{
 		// initialise the mouse position
@@ -442,15 +384,12 @@ void Game::UpdateSimulation(float frame_time)
 		// get controller input data and read controller data for controler 0
 		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
 
-		if (controller)
-		{
-			camera_->CameraControll(frame_time, controller);
-			SonyController(controller);
-		} // !controller
+		camera_->CameraControll(frame_time, controller);
+		SonyController(controller);
 
 #ifdef _WIN32 // Only on windows platforms
-			// if there is a keyboard, check the arrow keys to control the direction of the character
-			KeyboardController(camera_, frame_time);
+		// if there is a keyboard, check the arrow keys to control the direction of the character
+		KeyboardController(camera_, frame_time);
 #endif // !_WIN32
 	} // !input_manager_
 }

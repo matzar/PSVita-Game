@@ -13,6 +13,7 @@ namespace gef
 	class InputManager;
 	class AudioManager;
 	class Texture;
+	class SonyController;
 } // gef
 
 class Frontend
@@ -35,6 +36,9 @@ private:
 	// input manager
 	gef::InputManager* input_manager_;
 
+	// audio manager
+	gef::AudioManager* audio_manager_;
+
 	// sprite renderer
 	gef::SpriteRenderer* sprite_renderer_;
 
@@ -46,6 +50,12 @@ private:
 
 	float fps_;
 
+	int sfx_voice_id_;
+
+	void SonyController(const gef::SonyController* controller);
+#ifdef _WIN32
+	void KeyboardController(float fps);
+#endif // _WIN32
 	void InitFont();
 	void CleanUpFont();
 	void DrawHUD();

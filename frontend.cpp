@@ -18,7 +18,6 @@
 
 #ifdef _WIN32
 // only on windows platforms
-#include <Windows.h>
 #include <platform/d3d11/input/keyboard_d3d11.h>
 #include <platform/d3d11/input/touch_input_manager_d3d11.h>
 #endif 
@@ -27,7 +26,10 @@ Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate) :
 	platform_(platform),
 	gamestate_(gamestate),
 	input_manager_(nullptr),
-	button_icon_(nullptr)
+	audio_manager_(nullptr),
+	button_icon_(nullptr),
+	sfx_voice_id_(-1),
+	fps_(0)
 {
 }
 
@@ -56,7 +58,7 @@ void Frontend::FrontendInit()
 	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
 
 	// initialise audio manager
-	//audio_manager_ = gef::AudioManager::Create();
+	audio_manager_ = gef::AudioManager::Create();
 
 	// initialise button icon
 	button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
@@ -81,6 +83,73 @@ void Frontend::FrontendRelease()
 	CleanUpFont();
 }
 
+void Frontend::SonyController(const gef::SonyController* controller)
+{
+	if (controller)
+	{
+		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
+		{
+			// TODO release any resources for the frontend
+
+
+			// update the current state for the game state machine
+			(*gamestate_) = GAME; // get the object that gamestate points to
+		}
+
+		// trigger a sound effect
+		if (audio_manager_)
+		{
+			if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
+			{
+				audio_manager_->StopPlayingSampleVoice(sfx_voice_id_);
+				sfx_voice_id_ = -1;
+			}
+		}
+	} // !audio_manager_
+} // !SonyController
+
+#ifdef _WIN32 // Only on windows platforms
+void Frontend::KeyboardController(float frame_time)
+{
+	// if there is a keyboard, check the arrow keys to control the direction of the character
+	gef::Keyboard* keyboard = input_manager_->keyboard();
+	if (keyboard)
+	{
+		//const gef::KeyboardD3D11* keyboard_d3d11 = (const gef::KeyboardD3D11*)keyboard;
+		float camera_speed = 10.0f;
+
+		// keyboard input
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_X))
+		{
+			// update the current state for the game state machine
+			(*gamestate_) = GAME; // get the object that gamestate points to
+		}
+			
+	} // keyboard
+
+	  // mouse input
+	const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
+	if (touch_input)
+	{
+		// initialise the mouse position
+		gef::Vector2 mouse_position(0.0f, 0.0f); // left upper corner of the window
+
+												 // get a pointer to the d3d11 implementation of the TouchInputManager
+		const gef::TouchInputManagerD3D11* touch_input_d3d11 = (const gef::TouchInputManagerD3D11*)touch_input;
+
+		// get the mouse position
+		mouse_position = touch_input_d3d11->mouse_position();
+
+		if (touch_input_d3d11->is_button_down(0))
+		{
+			//SetCursorPos(480, 272);	
+		}
+
+		//gef::DebugOut("Mouse position x, y: %f %f\n", mouse_position.x, mouse_position.y);
+	} // touch_input (mouse)
+}
+#endif // !_WIN32
+
 void Frontend::FrontendUpdate(float frame_time)
 {
 	fps_ = 1.0f / frame_time;
@@ -92,15 +161,8 @@ void Frontend::FrontendUpdate(float frame_time)
 
 		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
 
-
-		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
-		{
-			// TODO release any resources for the frontend
-
-
-			// update the current state for the game state machine
-			(*gamestate_) = GAME; // get the object that gamestate points to
-		}
+		SonyController(controller);
+		KeyboardController(frame_time);
 	} // !input_manager_
 }
 
