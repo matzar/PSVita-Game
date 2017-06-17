@@ -216,7 +216,10 @@ void Game::GameInit()
 	SetupLights();
 
 	InitWorld();
+
+	ground_ = new Ground();
 	ground_->InitGround(primitive_builder_, world_);
+
 	InitPlayer();
 
 	InitAudio();
