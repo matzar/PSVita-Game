@@ -13,8 +13,6 @@ Player::~Player()
 
 void Player::InitPlayer(PrimitiveBuilder* primitve_builder, b2World* world)
 {
-	// create Player player_ class
-	//player_ = new Player();
 	// setup the mesh for the player
 	set_mesh(primitve_builder->GetDefaultCubeMesh());
 
@@ -42,7 +40,7 @@ void Player::InitPlayer(PrimitiveBuilder* primitve_builder, b2World* world)
 	UpdateFromSimulation(player_body_);
 
 	// create a connection between the rigid body and GameObject
-	//player_body_->SetUserData(&player_body_);
+	player_body_->SetUserData(this);
 }
 
 void Player::DecrementHealth()

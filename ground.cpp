@@ -10,8 +10,6 @@ Ground::~Ground()
 
 void Ground::InitGround(PrimitiveBuilder* primitive_builder, b2World* world)
 {
-	// create GameObject ground_ class
-	//ground_ = new Ground();
 	// ground dimensions
 	gef::Vector4 ground_half_dimensions(5.0f, 0.5f, 0.5f);
 

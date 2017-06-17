@@ -12,9 +12,9 @@ public:
 	~Ground();
 
 	void InitGround(PrimitiveBuilder* primitive_builder, b2World* world);
-
+	b2Body* GetGroundBody() { return ground_body_; }
+	gef::Mesh* GetGroundMesh() { return ground_mesh_; }
 private:
-	// ground variables
 	// ground mesh
 	gef::Mesh* ground_mesh_;
 	// box2d ground variables

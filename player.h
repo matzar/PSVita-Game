@@ -17,9 +17,7 @@ public:
 	void DecrementHealth();
 	
 	b2Body* GetPlayerBody() { return player_body_; }
-
 private:
-	// player variables
 	// player box 2d variables
 	b2Body* player_body_;
 };
