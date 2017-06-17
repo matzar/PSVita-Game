@@ -70,9 +70,9 @@ private:
 
 	// ground variables
 	// ground mesh
-	gef::Mesh* ground_mesh_;
+	//gef::Mesh* ground_mesh_;
 	// box2d ground variables
-	b2Body* ground_body_;
+	//b2Body* ground_body_;
 	// box2d ground class
 	Ground* ground_;
 

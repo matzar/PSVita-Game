@@ -47,16 +47,15 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	world_(nullptr),
 	player_body_(nullptr),
 	player_(nullptr),
-	ground_mesh_(nullptr),
+	//ground_mesh_(nullptr),
 	ground_(nullptr),
-	ground_body_(nullptr),
+	//ground_body_(nullptr),
 	camera_(nullptr),
 	fps_(0),
 	sfx_id_(-1),
 	sfx_voice_id_(-1)
 {
 }
-
 
 Game::~Game()
 {
@@ -106,38 +105,38 @@ void Game::InitWorld()
 	world_ = new b2World(gravity);
 } // !InitWorld
 
-void Game::InitGround()
-{
-	// create GameObject ground_ class
-	ground_ = new Ground();
-	// ground dimensions
-	gef::Vector4 ground_half_dimensions(5.0f, 0.5f, 0.5f);
-
-	// setup the mesh for the ground
-	ground_mesh_ = primitive_builder_->CreateBoxMesh(ground_half_dimensions);
-	ground_->set_mesh(ground_mesh_);
-
-	// create a physics body
-	b2BodyDef body_def;
-	body_def.type = b2_staticBody;
-	body_def.position = b2Vec2(0.0f, 0.0f);
-
-	ground_body_ = world_->CreateBody(&body_def);
-
-	// create the shape
-	b2PolygonShape shape;
-	shape.SetAsBox(ground_half_dimensions.x(), ground_half_dimensions.y());
-
-	// create the fixture
-	b2FixtureDef fixture_def;
-	fixture_def.shape = &shape;
-
-	// create the fixture on the rigid body
-	ground_body_->CreateFixture(&fixture_def);
-
-	// update visuals from simulation data
-	ground_->UpdateFromSimulation(ground_body_);
-}
+//void Game::InitGround()
+//{
+//	// create GameObject ground_ class
+//	ground_ = new Ground();
+//	// ground dimensions
+//	gef::Vector4 ground_half_dimensions(5.0f, 0.5f, 0.5f);
+//
+//	// setup the mesh for the ground
+//	ground_mesh_ = primitive_builder_->CreateBoxMesh(ground_half_dimensions);
+//	ground_->set_mesh(ground_mesh_);
+//
+//	// create a physics body
+//	b2BodyDef body_def;
+//	body_def.type = b2_staticBody;
+//	body_def.position = b2Vec2(0.0f, 0.0f);
+//
+//	ground_body_ = world_->CreateBody(&body_def);
+//
+//	// create the shape
+//	b2PolygonShape shape;
+//	shape.SetAsBox(ground_half_dimensions.x(), ground_half_dimensions.y());
+//
+//	// create the fixture
+//	b2FixtureDef fixture_def;
+//	fixture_def.shape = &shape;
+//
+//	// create the fixture on the rigid body
+//	ground_body_->CreateFixture(&fixture_def);
+//
+//	// update visuals from simulation data
+//	ground_->UpdateFromSimulation(ground_body_);
+//}
 
 void Game::InitPlayer()
 {
@@ -210,14 +209,14 @@ void Game::GameInit()
 	// create the renderer for draw 3D geometry
 	renderer_3d_ = gef::Renderer3D::Create(platform_);
 
-	// initialise primitive builder to make create some 3D geometry easier
+	// initialise primitive builder to make 3D geometry creation easier
 	primitive_builder_ = new PrimitiveBuilder(platform_);
 
 	InitFont();
 	SetupLights();
 
 	InitWorld();
-	InitGround();
+	ground_->InitGround(primitive_builder_, world_);
 	InitPlayer();
 
 	InitAudio();
@@ -263,8 +262,8 @@ void Game::GameRelease()
 	delete player_;
 	player_ = nullptr;
 
-	delete ground_mesh_;
-	ground_mesh_ = nullptr;
+	//delete ground_mesh_;
+	//ground_mesh_ = nullptr;
 
 	delete ground_;
 	ground_ = nullptr;

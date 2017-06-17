@@ -5,6 +5,8 @@
 #include <graphics/mesh_instance.h>
 // my headers
 #include "object_type_enum.h"
+// extra headers
+#include "primitive_builder.h"
 // box2D header
 #include <box2d/Box2D.h>
 
