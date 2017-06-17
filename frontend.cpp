@@ -162,7 +162,9 @@ void Frontend::FrontendUpdate(float frame_time)
 		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
 
 		SonyController(controller);
+#ifdef _WIN32
 		KeyboardController(frame_time);
+#endif // _WIN32
 	} // !input_manager_
 }
 

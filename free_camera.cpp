@@ -56,20 +56,20 @@ void FreeCamera::CameraControll(const float frame_time, const gef::SonyControlle
 		// right stick - yaw and pitch controll
 		if (controller->right_stick_x_axis() < 0)
 		{
-			subtractYaw(frame_time, camera_speed * camera_speed);
+			subtractYaw(camera_speed * camera_speed, frame_time);
 		}
 		if (controller->right_stick_x_axis() > 0)
 		{
-			AddYaw(frame_time, camera_speed * camera_speed);
+			AddYaw(camera_speed * camera_speed, frame_time);
 
 		}
 		if (controller->right_stick_y_axis() < 0)
 		{
-			AddPitch(frame_time, camera_speed * camera_speed);
+			AddPitch(camera_speed * camera_speed, frame_time);
 		}
 		if (controller->right_stick_y_axis() > 0)
 		{
-			subtractPitch(frame_time, camera_speed * camera_speed);
+			subtractPitch(camera_speed * camera_speed, frame_time);
 		}
 		// buttons
 		// handle input
