@@ -35,13 +35,13 @@ public:
 
 	inline float GetPitch() const { return pitch_; }
 	inline void SetPitch(const float arg) { pitch_ = arg; Update(); }
-	inline void AddPitch(const float dt, const float value) { pitch_ += value * dt; Update(); }
-	inline void subtractPitch(const float dt, const float value) { pitch_ -= value * dt; Update(); }
+	inline void AddPitch(const float value, const float dt) { pitch_ += value * dt; Update(); }
+	inline void subtractPitch(const float value, const float dt) { pitch_ -= value * dt; Update(); }
 
 	inline float GetRoll() const { return roll_; }
 	inline void SetRoll(const float arg) { roll_ = arg; Update(); }
-	inline void AddRoll(const float dt, const float value) { roll_ += value * dt; Update(); }
-	inline void subtractRoll(const float dt, const float value) { roll_ -= value * dt; Update(); }
+	inline void AddRoll(const float value, const float dt) { roll_ += value * dt; Update(); }
+	inline void subtractRoll(const float value, const float dt) { roll_ -= value * dt; Update(); }
 
 	inline gef::Vector4 GetPositionVector() const { return position_; }
 	inline gef::Vector4 GetForawrdVector() const { return forward_; }

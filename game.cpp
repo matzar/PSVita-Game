@@ -276,13 +276,13 @@ void Game::KeyboardController(Camera* camera, float frame_time)
 		if (keyboard->IsKeyDown(gef::Keyboard::KC_D))
 			camera->MoveSideRight(frame_time * camera_speed);
 		if (keyboard->IsKeyDown(gef::Keyboard::KC_UP))
-			camera->AddPitch(frame_time, camera_speed * camera_speed);
+			camera->AddPitch(camera_speed * camera_speed, frame_time);
 		if (keyboard->IsKeyDown(gef::Keyboard::KC_DOWN))
-			camera->subtractPitch(frame_time, camera_speed * camera_speed);
+			camera->subtractPitch(camera_speed * camera_speed, frame_time);
 		if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
-			camera->subtractYaw(frame_time, camera_speed * camera_speed);
+			camera->subtractYaw(camera_speed * camera_speed, frame_time);
 		if (keyboard->IsKeyDown(gef::Keyboard::KC_RIGHT))
-			camera->AddYaw(frame_time, camera_speed * camera_speed);
+			camera->AddYaw(camera_speed * camera_speed, frame_time);
 		if (keyboard->IsKeyDown(gef::Keyboard::KC_R) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD8))
 			camera->MoveUp(frame_time * camera_speed);
 		if (keyboard->IsKeyDown(gef::Keyboard::KC_F) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD2))
