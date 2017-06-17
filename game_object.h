@@ -5,7 +5,7 @@
 #include <graphics/mesh_instance.h>
 // my headers
 #include "object_type_enum.h"
-// box2D headers
+// box2D header
 #include <box2d/Box2D.h>
 
 class GameObject : public gef::MeshInstance

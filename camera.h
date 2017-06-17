@@ -14,6 +14,7 @@ class Camera
 public:
 	Camera();
 	virtual ~Camera();
+	virtual void CameraControll(const float dt, const gef::SonyController* controller) = 0;
 
 	void Update();
 	void SetCameraPosition(const float& yaw, const float& pitch, const float& roll, const gef::Vector4& position);
@@ -48,8 +49,6 @@ public:
 	inline gef::Vector4 GetLookAtVector() const { return look_at_; }
 	inline gef::Vector4 GetSideVector() const { return side_; }
 	inline gef::Vector4 GetUpVector() const { return up_; }
-
-	virtual void CameraControll(const float dt, const gef::SonyController* controller) = 0;
 protected:
 	gef::Vector4 position_;
 	gef::Vector4 forward_;

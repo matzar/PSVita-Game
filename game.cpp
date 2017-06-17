@@ -222,40 +222,6 @@ void Game::GameRelease()
 	camera_ = nullptr;
 }
 
-void Game::SonyController(const gef::SonyController* controller)
-{
-	if (controller)
-	{
-		if (controller->buttons_pressed() & gef_SONY_CTRL_START)
-		{
-			//GameRelease();
-
-			//game_state_ = FRONTEND;
-			//FrontendInit();
-		}
-
-		if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
-		{
-			// release any resources for the frontend
-			//GameRelease();
-
-			// update the current state for the game state machine
-			(*gamestate_) = FRONTEND; // get the object that gamestate points to
-										//GameInit();
-		}
-
-		// trigger a sound effect
-		if (audio_manager_)
-		{
-			if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
-			{
-				audio_manager_->StopPlayingSampleVoice(sfx_voice_id_);
-				sfx_voice_id_ = -1;
-			}
-		}
-	} // !audio_manager_
-} // !SonyController
-
 #ifdef _WIN32 // Only on windows platforms
 void Game::KeyboardController(Camera* camera, float frame_time)
 {
@@ -312,11 +278,48 @@ void Game::KeyboardController(Camera* camera, float frame_time)
 }
 #endif // !_WIN32
 
+void Game::SonyController(const gef::SonyController* controller)
+{
+	if (controller)
+	{
+		if (controller->buttons_pressed() & gef_SONY_CTRL_START)
+		{
+			//GameRelease();
+
+			//game_state_ = FRONTEND;
+			//FrontendInit();
+		}
+
+		if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
+		{
+			// release any resources for the frontend
+			//GameRelease();
+
+			// update the current state for the game state machine
+			(*gamestate_) = FRONTEND; // get the object that gamestate points to
+										//GameInit();
+		}
+
+		// trigger a sound effect
+		if (audio_manager_)
+		{
+			if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
+			{
+				audio_manager_->StopPlayingSampleVoice(sfx_voice_id_);
+				sfx_voice_id_ = -1;
+			}
+		}
+	} // !audio_manager_
+} // !SonyController
+
 void Game::UpdateSimulation(float frame_time)
 {
+	fps_ = 1.0f / frame_time;
+
 	// update physics world
 	float32 timeStep = 1.0f / 60.0f;
 
+	// detail of the simulation
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
 
@@ -375,6 +378,12 @@ void Game::UpdateSimulation(float frame_time)
 		// Get next contact point
 		contact = contact->GetNext();
 	}
+}
+// UpdateSimulation
+
+void Game::GameUpdate(float frame_time)
+{
+	UpdateSimulation(frame_time);
 
 	// get the latest date from the input devices
 	if (input_manager_)
@@ -392,14 +401,6 @@ void Game::UpdateSimulation(float frame_time)
 		KeyboardController(camera_, frame_time);
 #endif // !_WIN32
 	} // !input_manager_
-}
-// UpdateSimulation
-
-void Game::GameUpdate(float frame_time)
-{
-	fps_ = 1.0f / frame_time;
-
-	UpdateSimulation(frame_time);
 }
 
 void Game::GameRender()

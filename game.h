@@ -86,10 +86,10 @@ private:
 	int sfx_id_;
 	int sfx_voice_id_;
 
-	void SonyController(const gef::SonyController* controller);
 #ifdef _WIN32
 	void KeyboardController(Camera* camera, float fps);
 #endif // _WIN32
+	void SonyController(const gef::SonyController* controller);
 	void UpdateSimulation(float frame_time);
 	void InitPlayer();
 	void InitGround();
