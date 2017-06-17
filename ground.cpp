@@ -17,7 +17,7 @@ void Ground::InitGround(PrimitiveBuilder* primitive_builder, b2World* world)
 
 	// setup the mesh for the ground
 	ground_mesh_ = primitive_builder->CreateBoxMesh(ground_half_dimensions);
-	ground_->set_mesh(ground_mesh_);
+	set_mesh(ground_mesh_);
 
 	// create a physics body
 	b2BodyDef body_def;
@@ -38,5 +38,5 @@ void Ground::InitGround(PrimitiveBuilder* primitive_builder, b2World* world)
 	ground_body_->CreateFixture(&fixture_def);
 
 	// update visuals from simulation data
-	ground_->UpdateFromSimulation(ground_body_);
+	UpdateFromSimulation(ground_body_);
 }
