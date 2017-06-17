@@ -78,7 +78,7 @@ private:
 
 	// player variables
 	// player box 2d variables
-	b2Body* player_body_;
+	//b2Body* player_body_;
 	// player class
 	Player* player_;
 
