@@ -13,6 +13,7 @@ public:
 
 	void InitGround(PrimitiveBuilder* primitive_builder, b2World* world);
 
+private:
 	// ground variables
 	// ground mesh
 	gef::Mesh* ground_mesh_;

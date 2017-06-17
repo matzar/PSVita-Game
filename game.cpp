@@ -216,6 +216,7 @@ void Game::GameInit()
 
 	InitWorld();
 
+	// create Ground ground_ class
 	ground_ = new Ground();
 	ground_->InitGround(primitive_builder_, world_);
 
@@ -381,7 +382,7 @@ void Game::UpdateSimulation(float frame_time)
 	world_->Step(timeStep, velocityIterations, positionIterations);
 
 	// update object visuals from simulation data
-	player_->UpdateFromSimulation(player_->player_body_);
+	player_->UpdateFromSimulation(player_->GetPlayerBody());
 
 	// don't have to update the ground visuals as it is static
 
