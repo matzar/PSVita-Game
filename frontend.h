@@ -50,6 +50,7 @@ private:
 
 	float fps_;
 
+	int sfx_id_;
 	int sfx_voice_id_;
 
 	void SonyController(const gef::SonyController* controller);
@@ -59,6 +60,7 @@ private:
 	void InitFont();
 	void CleanUpFont();
 	void DrawHUD();
+	void InitAudio();
 };
 
 #endif // !_FRONT_END_H

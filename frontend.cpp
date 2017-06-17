@@ -29,6 +29,7 @@ Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate) :
 	audio_manager_(nullptr),
 	button_icon_(nullptr),
 	sfx_voice_id_(-1),
+	sfx_id_(-1),
 	fps_(0)
 {
 }
@@ -42,13 +43,41 @@ void Frontend::InitFont()
 {
 	font_ = new gef::Font(platform_);
 	font_->Load("comic_sans");
-}
+} // !InitFont
 
 void Frontend::CleanUpFont()
 {
 	delete font_;
 	font_ = nullptr;
-}
+} // CleanUpFont
+
+void Frontend::DrawHUD()
+{
+	if (font_)
+	{
+		// display frame rate
+		font_->RenderText(sprite_renderer_, gef::Vector4(850.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f", fps_);
+	} // !font_
+} // !DrawHUD
+
+void Frontend::InitAudio()
+{
+	// audio manager
+	audio_manager_ = gef::AudioManager::Create();
+
+	// load audio assets
+	if (audio_manager_)
+	{
+		// load a sound effect
+		sfx_voice_id_ = audio_manager_->LoadSample("box_collected.wav", platform_);
+
+		// load in music
+		audio_manager_->LoadMusic("music.wav", platform_);
+
+		// play music
+		audio_manager_->PlayMusic();
+	}
+} // !InitAudio
 
 void Frontend::FrontendInit()
 {
@@ -57,14 +86,13 @@ void Frontend::FrontendInit()
 	// initlalise sprite renderer
 	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
 
-	// initialise audio manager
-	audio_manager_ = gef::AudioManager::Create();
+	InitAudio();
 
 	// initialise button icon
 	button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
 
 	InitFont();
-}
+} // !FrontendInit
 
 void Frontend::FrontendRelease()
 {
@@ -81,7 +109,7 @@ void Frontend::FrontendRelease()
 	button_icon_ = nullptr;
 
 	CleanUpFont();
-}
+} // !FrontendRelease
 
 void Frontend::SonyController(const gef::SonyController* controller)
 {
@@ -101,8 +129,9 @@ void Frontend::SonyController(const gef::SonyController* controller)
 		{
 			if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
 			{
-				audio_manager_->StopPlayingSampleVoice(sfx_voice_id_);
-				sfx_voice_id_ = -1;
+				audio_manager_->PlaySample(sfx_voice_id_);
+				/*audio_manager_->StopPlayingSampleVoice(sfx_voice_id_);
+				sfx_voice_id_ = -1;*/
 			}
 		}
 	} // !audio_manager_
@@ -203,13 +232,4 @@ void Frontend::FrontendRender()
 		DrawHUD();
 	}
 	sprite_renderer_->End();
-}
-
-void Frontend::DrawHUD()
-{
-	if (font_)
-	{
-		// display frame rate
-		font_->RenderText(sprite_renderer_, gef::Vector4(850.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f", fps_);
-	} // !font_
 }
