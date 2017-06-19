@@ -16,7 +16,7 @@ public:
 	FreeCamera();
 	//inline virtual ~FreeCamera() {}
 
-	virtual void CameraControll(const float frame_time, const gef::SonyController* controller);
+	virtual void CameraController(const float frame_time, const gef::SonyController* controller);
 };
 
 #endif

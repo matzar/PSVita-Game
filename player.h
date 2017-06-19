@@ -4,6 +4,12 @@
 // extra headers
 #include "game_object.h"
 
+// forward gef declarations
+namespace gef
+{
+	class SonyController;
+}
+
 class PrimitiveBuilder;
 
 class Player : 
@@ -16,6 +22,7 @@ public:
 	void InitPlayer(PrimitiveBuilder* primitve_builder, b2World* world);
 	void DecrementHealth();
 	
+	void PlayerController(const gef::SonyController* controller);
 	b2Body* GetPlayerBody() { return player_body_; }
 private:
 	// player box 2d variables

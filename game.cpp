@@ -298,11 +298,6 @@ void Game::SonyController(const gef::SonyController* controller)
 										//GameInit();
 		}
 
-		if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE)
-		{
-			player_->GetPlayerBody()->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 10.0f), true);
-		}
-
 		// trigger a sound effect
 		if (audio_manager_)
 		{
@@ -395,7 +390,8 @@ void Game::GameUpdate(float frame_time)
 		// get controller input data and read controller data for controler 0
 		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
 
-		camera_->CameraControll(frame_time, controller);
+		camera_->CameraController(frame_time, controller);
+		player_->PlayerController(controller);
 		SonyController(controller);
 
 #ifdef _WIN32 // Only on windows platforms

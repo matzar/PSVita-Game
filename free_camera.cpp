@@ -25,7 +25,7 @@ FreeCamera::FreeCamera()
 	SetCameraPosition(90.0f, -12.0f, 0.0f, gef::Vector4(-8.0f, 3.5f, 0.0f));
 }
 
-void FreeCamera::CameraControll(const float frame_time, const gef::SonyController* controller)
+void FreeCamera::CameraController(const float frame_time, const gef::SonyController* controller)
 {
 	if (controller)
 	{
