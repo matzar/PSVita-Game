@@ -300,8 +300,7 @@ void Game::SonyController(const gef::SonyController* controller)
 
 		if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE)
 		{
-			player_->GetPlayerBody()->ApplyForceToCenter(b2Vec2(0.0f, 0.5f), true);
-			player_->UpdateFromSimulation(player_->GetPlayerBody());
+			player_->GetPlayerBody()->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 10.0f), true);
 		}
 
 		// trigger a sound effect
@@ -332,7 +331,7 @@ void Game::UpdateSimulation(float frame_time)
 	// update object visuals from simulation data
 	player_->UpdateFromSimulation(player_->GetPlayerBody());
 	// impuls working here
-	//player_->GetPlayerBody()->ApplyAngularImpulse(100.0f, true);
+	/*player_->GetPlayerBody()->ApplyLinearImpulseToCenter(b2Vec2(0.1f, 0.0f), true);*/
 
 	// don't have to update the ground visuals as it is static
 
@@ -388,8 +387,6 @@ void Game::UpdateSimulation(float frame_time)
 
 void Game::GameUpdate(float frame_time)
 {
-	UpdateSimulation(frame_time);
-
 	// get the latest date from the input devices
 	if (input_manager_)
 	{
@@ -406,6 +403,8 @@ void Game::GameUpdate(float frame_time)
 		KeyboardController(camera_, frame_time);
 #endif // !_WIN32
 	} // !input_manager_
+
+	UpdateSimulation(frame_time);
 }
 
 void Game::GameRender()
