@@ -27,6 +27,9 @@ public:
 private:
 	// player box 2d variables
 	b2Body* player_body_;
+
+	// jumping
+	bool jump_;
 };
 
 #endif // !_PLAYER_H

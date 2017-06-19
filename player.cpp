@@ -4,7 +4,8 @@
 #include "input/sony_controller_input_manager.h"
 
 Player::Player() :
-	player_body_(nullptr)
+	player_body_(nullptr),
+	jump_(false)
 {
 	set_type(PLAYER);
 }
@@ -51,12 +52,17 @@ void Player::DecrementHealth()
 	//player_body_->ApplyAngularImpulse(100.0f, true);
 	/*player_body_->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 0.1f), true);*/
 	gef::DebugOut("Player has taken damage.\n");
+	jump_ = true;
 }
 
 void Player::PlayerController(const gef::SonyController * controller)
 {
-	if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE)
+	if (jump_)
 	{
-		player_body_->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 10.0f), true);
+		if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE)
+		{
+			player_body_->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 10.0f), true);
+			jump_ = false;
+		}
 	}
 }
