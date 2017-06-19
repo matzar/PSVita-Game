@@ -1,7 +1,9 @@
 #include "ground.h"
+#include <system/debug_log.h>
 
 Ground::Ground()
 {
+	set_type(GROUND);
 }
 
 Ground::~Ground()
@@ -40,4 +42,9 @@ void Ground::InitGround(PrimitiveBuilder* primitive_builder, b2World* world)
 
 	// create a connection between the rigid body and GameObject
 	ground_body_->SetUserData(this);
+}
+
+void Ground::CollisionResponse()
+{
+	
 }

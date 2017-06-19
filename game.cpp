@@ -126,8 +126,6 @@ void Game::InitWorld()
 	// initialise the physics world
 	b2Vec2 gravity(0.0f, -9.81f);
 	world_ = new b2World(gravity);
-
-
 } // !InitWorld
 
 void Game::InitPlayer()
@@ -327,8 +325,6 @@ void Game::UpdateSimulation(float frame_time)
 
 	// update object visuals from simulation data
 	player_->UpdateFromSimulation(player_->GetPlayerBody());
-	// impuls working here
-	/*player_->GetPlayerBody()->ApplyLinearImpulseToCenter(b2Vec2(0.1f, 0.0f), true);*/
 
 	// don't have to update the ground visuals as it is static
 
@@ -348,6 +344,7 @@ void Game::UpdateSimulation(float frame_time)
 
 			// DO COLLISION RESPONSE HERE
 			Player* player = nullptr;
+			Ground* ground = nullptr;
 
 			GameObject* gameObjectA = nullptr;
 			GameObject* gameObjectB = nullptr;

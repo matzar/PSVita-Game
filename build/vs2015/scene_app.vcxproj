@@ -220,6 +220,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\camera.cpp" />
+    <ClCompile Include="..\..\contact_listener.cpp" />
     <ClCompile Include="..\..\free_camera.cpp" />
     <ClCompile Include="..\..\frontend.cpp" />
     <ClCompile Include="..\..\game.cpp" />
@@ -244,6 +245,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\camera.h" />
+    <ClInclude Include="..\..\contact_listener.h" />
     <ClInclude Include="..\..\free_camera.h" />
     <ClInclude Include="..\..\frontend.h" />
     <ClInclude Include="..\..\game.h" />
