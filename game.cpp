@@ -126,6 +126,8 @@ void Game::InitWorld()
 	// initialise the physics world
 	b2Vec2 gravity(0.0f, -9.81f);
 	world_ = new b2World(gravity);
+
+
 } // !InitWorld
 
 void Game::InitPlayer()
