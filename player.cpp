@@ -59,9 +59,11 @@ void Player::PlayerController(const gef::SonyController * controller)
 {
 	if (jump_)
 	{
-		if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE)
+		if (controller->buttons_down() & gef_SONY_CTRL_SQUARE)
 		{
-			player_body_->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 10.0f), true);
+			player_body_->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 5.0f), true);
+			//player_body_->ApplyLinearImpulse(b2Vec2(0, 10), player_body_->GetWorldCenter(), true);
+			//player_body_->ApplyForce(b2Vec2(0.0f, 10.0f), player_body_->GetWorldCenter(), true);
 			jump_ = false;
 		}
 	}
