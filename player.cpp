@@ -5,8 +5,8 @@
 
 Player::Player() :
 	player_body_(nullptr),
-	contacting_(nullptr),
-	jump_(false)
+	jump_(false),
+	num_contacts_(0)
 {
 	set_type(PLAYER);
 }
@@ -49,9 +49,6 @@ void Player::InitPlayer(PrimitiveBuilder* primitve_builder, b2World* world)
 
 void Player::DecrementHealth()
 {
-	// impuls working here
-	//player_body_->ApplyAngularImpulse(100.0f, true);
-	/*player_body_->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 0.1f), true);*/
 	gef::DebugOut("Player has taken damage.\n");
 	jump_ = true;
 }
@@ -70,12 +67,12 @@ void Player::PlayerController(const gef::SonyController * controller)
 	}
 }
 
-void Player::startContact()
+void Player::StartContact()
 {
-	contacting_ = true;
+	num_contacts_++;
 }
 
-void Player::endContact()
+void Player::EndContact()
 {
-	contacting_ = false;
+	num_contacts_--;
 }

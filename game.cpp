@@ -319,6 +319,75 @@ void Game::SonyController(const gef::SonyController* controller)
 	} // !audio_manager_
 } // !SonyController
 
+//void Game::UpdateSimulation(float frame_time)
+//{
+//	fps_ = 1.0f / frame_time;
+//
+//	// update physics world
+//	float32 timeStep = 1.0f / 60.0f;
+//
+//	// detail of the simulation
+//	int32 velocityIterations = 6;
+//	int32 positionIterations = 2;
+//
+//	world_->Step(timeStep, velocityIterations, positionIterations);
+//
+//	// update object visuals from simulation data
+//	player_->UpdateFromSimulation(player_->GetPlayerBody());
+//
+//	// don't have to update the ground visuals as it is static
+//
+//	// collision detection
+//	// get the head of the contact list
+//	b2Contact* contact = world_->GetContactList();
+//	// get contact count
+//	int contact_count = world_->GetContactCount();
+//
+//	for (int contact_num = 0; contact_num < contact_count; ++contact_num)
+//	{
+//		if (contact->IsTouching())
+//		{
+//			// get the colliding bodies
+//			b2Body* bodyA = contact->GetFixtureA()->GetBody();
+//			b2Body* bodyB = contact->GetFixtureB()->GetBody();
+//
+//			// DO COLLISION RESPONSE HERE
+//			Player* player = nullptr;
+//			Ground* ground = nullptr;
+//
+//			GameObject* gameObjectA = nullptr;
+//			GameObject* gameObjectB = nullptr;
+//
+//			gameObjectA = (GameObject*)bodyA->GetUserData();
+//			gameObjectB = (GameObject*)bodyB->GetUserData();
+//
+//			if (gameObjectA)
+//			{
+//				if (gameObjectA->type() == PLAYER)
+//				{
+//					player = (Player*)bodyA->GetUserData();
+//				}
+//			}
+//
+//			if (gameObjectB)
+//			{
+//				if (gameObjectB->type() == PLAYER)
+//				{
+//					player = (Player*)bodyB->GetUserData();
+//				}
+//			}
+//
+//			if (player)
+//			{
+//				player->DecrementHealth();
+//			}
+//		}
+//
+//		// Get next contact point
+//		contact = contact->GetNext();
+//	}
+//} // !UpdateSimulation
+
 void Game::UpdateSimulation(float frame_time)
 {
 	fps_ = 1.0f / frame_time;
@@ -338,54 +407,15 @@ void Game::UpdateSimulation(float frame_time)
 	// don't have to update the ground visuals as it is static
 
 	// collision detection
-	// get the head of the contact list
-	b2Contact* contact = world_->GetContactList();
-	// get contact count
-	int contact_count = world_->GetContactCount();
-
-	for (int contact_num = 0; contact_num < contact_count; ++contact_num)
+	if (player_->IsContacting() > 0)
 	{
-		if (contact->IsTouching())
-		{
-			// get the colliding bodies
-			b2Body* bodyA = contact->GetFixtureA()->GetBody();
-			b2Body* bodyB = contact->GetFixtureB()->GetBody();
-
-			// DO COLLISION RESPONSE HERE
-			Player* player = nullptr;
-			Ground* ground = nullptr;
-
-			GameObject* gameObjectA = nullptr;
-			GameObject* gameObjectB = nullptr;
-
-			gameObjectA = (GameObject*)bodyA->GetUserData();
-			gameObjectB = (GameObject*)bodyB->GetUserData();
-
-			if (gameObjectA)
-			{
-				if (gameObjectA->type() == PLAYER)
-				{
-					player = (Player*)bodyA->GetUserData();
-				}
-			}
-
-			if (gameObjectB)
-			{
-				if (gameObjectB->type() == PLAYER)
-				{
-					player = (Player*)bodyB->GetUserData();
-				}
-			}
-
-			if (player)
-			{
-				player->DecrementHealth();
-			}
-		}
-
-		// Get next contact point
-		contact = contact->GetNext();
+		player_->DecrementHealth();
 	}
+	else
+	{
+		gef::DebugOut("End Contact\n");
+	}
+	
 } // !UpdateSimulation
 
 void Game::GameUpdate(float frame_time)

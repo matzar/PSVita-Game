@@ -15,14 +15,14 @@ void ContactListener::BeginContact(b2Contact * contact)
 	void* bodyUserData = contact->GetFixtureA()->GetBody()->GetUserData();
 	if (bodyUserData)
 	{
-		static_cast<Player*>(bodyUserData)->startContact();
+		static_cast<Player*>(bodyUserData)->StartContact();
 	}
 
 	//check if fixture B was a ball
 	bodyUserData = contact->GetFixtureB()->GetBody()->GetUserData();
 	if (bodyUserData)
 	{
-		static_cast<Player*>(bodyUserData)->startContact();
+		static_cast<Player*>(bodyUserData)->StartContact();
 	}
 }
 
@@ -32,13 +32,13 @@ void ContactListener::EndContact(b2Contact * contact)
 	void* bodyUserData = contact->GetFixtureA()->GetBody()->GetUserData();
 	if (bodyUserData)
 	{
-		static_cast<Player*>(bodyUserData)->endContact();
+		static_cast<Player*>(bodyUserData)->EndContact();
 	}
 
 	//check if fixture B was a ball
 	bodyUserData = contact->GetFixtureB()->GetBody()->GetUserData();
 	if (bodyUserData)
 	{
-		static_cast<Player*>(bodyUserData)->endContact();
+		static_cast<Player*>(bodyUserData)->EndContact();
 	}
 }
