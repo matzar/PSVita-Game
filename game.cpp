@@ -136,6 +136,7 @@ void Game::InitWorld()
 	contact_listener_ = new ContactListener;
 	// possible to pass custom ContactListener class becuase it has inherited from b2ContactListener class
 	world_->SetContactListener(contact_listener_);
+	//world_->SetContactFilter(contact_listener_);
 } // !InitWorld
 
 void Game::InitGround()
