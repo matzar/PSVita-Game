@@ -142,13 +142,14 @@ void Game::InitGround()
 {
 	/*ground_.reserve(2);*/
 	// create Ground ground_ class
-	//int i = 0;
+	float j = 0.0f;
 
 	//for (auto ground : ground_)
 	for (int i = 0; i < 5; ++i)
 	{
 		ground_.push_back( new Ground());
-		ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + static_cast<int>(i), 0.0f));
+		ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + j, 0.0f));
+		j += 15.0f;
 	}
 	//ground_ = new Ground();
 	//ground_->InitGround(primitive_builder_, world_, b2Vec2(0.0f, 0.0f));
@@ -412,6 +413,10 @@ void Game::UpdateSimulation(float frame_time)
 
 	world_->Step(timeStep, velocityIterations, positionIterations);
 
+	// move the player
+	player_->GetPlayerBody()->ApplyForce(b2Vec2(4.f, 0.0f), player_->GetPlayerBody()->GetWorldCenter(), true);
+	//player_->GetPlayerBody()->GetTransform().Set(position_, 0.0f);
+
 	// update object visuals from simulation data
 	player_->UpdateFromSimulation(player_->GetPlayerBody());
 	/*
@@ -475,9 +480,9 @@ void Game::GameRender()
 	renderer_3d_->Begin();
 	{
 		// draw ground
-		for (int i = 0; i < 5; ++i)
+		for (auto ground : ground_)
 		{
-			renderer_3d_->DrawMesh(*ground_.at(i));
+			renderer_3d_->DrawMesh(*ground);
 		}
 
 		// draw player

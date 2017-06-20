@@ -32,8 +32,8 @@ private:
 	// player box 2d variables
 	// player body
 	b2Body* player_body_;
-	//// player colour
-	//b2Color colour_;
+	// player colour
+	b2Color colour_;
 
 	// jumping
 	bool jump_;
