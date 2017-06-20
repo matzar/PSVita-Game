@@ -137,6 +137,19 @@ void Game::InitWorld()
 	world_->SetContactListener(contact_listener_);
 } // !InitWorld
 
+void Game::InitGround()
+{
+	//ground_.reserve(1);
+	//// create Ground ground_ class
+	//for (int i = 0; i < ground_.size(); ++i)
+	//{
+	//	ground_.push_back( new Ground());
+	//	ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + (float)i, 0.0f));
+	//}
+	ground_ = new Ground();
+	ground_->InitGround(primitive_builder_, world_, b2Vec2(0.0f, 0.0f));
+} // !InitGround
+
 void Game::InitPlayer()
 {
 	// create Player player_ class
@@ -144,16 +157,6 @@ void Game::InitPlayer()
 	player_->InitPlayer(primitive_builder_, world_, PLAYER, GROUND | PICKUP);
 } // !InitPlayer
 
-void Game::InitGround()
-{
-	ground_.reserve(10);
-	// create Ground ground_ class
-	for (int i = 0; i < ground_.size(); ++i)
-	{
-		ground_.push_back( new Ground());
-		ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + (float)i, 0.0f));
-	}
-} // !InitGround
 
 void Game::GameInit()
 {
@@ -179,9 +182,9 @@ void Game::GameInit()
 
 	InitWorld();
 
-	InitPlayer();
-
 	InitGround();
+
+	InitPlayer();
 } // !GameInit
 
 void Game::GameRelease()
@@ -228,8 +231,11 @@ void Game::GameRelease()
 	//delete ground_mesh_;
 	//ground_mesh_ = nullptr;
 
-	delete ground_;
-	ground_ = nullptr;
+	//for (auto ground : ground_)
+	{
+		//delete ground;
+		//ground = nullptr;
+	}
 
 	// clean up camera
 	delete camera_;
@@ -463,7 +469,10 @@ void Game::GameRender()
 	renderer_3d_->Begin();
 	{
 		// draw ground
-		renderer_3d_->DrawMesh(*ground_);
+		//for (auto ground : ground_)
+		{
+			renderer_3d_->DrawMesh(*ground_);
+		}
 
 		// draw player
 		renderer_3d_->set_override_material(&primitive_builder_->red_material());
