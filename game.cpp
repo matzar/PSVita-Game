@@ -57,6 +57,7 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	sfx_id_(-1),
 	sfx_voice_id_(-1)
 {
+	ground_.reserve(5);
 }
 
 Game::~Game()
@@ -139,15 +140,18 @@ void Game::InitWorld()
 
 void Game::InitGround()
 {
-	//ground_.reserve(1);
-	//// create Ground ground_ class
-	//for (int i = 0; i < ground_.size(); ++i)
-	//{
-	//	ground_.push_back( new Ground());
-	//	ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + (float)i, 0.0f));
-	//}
-	ground_ = new Ground();
-	ground_->InitGround(primitive_builder_, world_, b2Vec2(0.0f, 0.0f));
+	/*ground_.reserve(2);*/
+	// create Ground ground_ class
+	//int i = 0;
+
+	//for (auto ground : ground_)
+	for (int i = 0; i < 5; ++i)
+	{
+		ground_.push_back( new Ground());
+		ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + static_cast<int>(i), 0.0f));
+	}
+	//ground_ = new Ground();
+	//ground_->InitGround(primitive_builder_, world_, b2Vec2(0.0f, 0.0f));
 } // !InitGround
 
 void Game::InitPlayer()
@@ -231,10 +235,12 @@ void Game::GameRelease()
 	//delete ground_mesh_;
 	//ground_mesh_ = nullptr;
 
-	//for (auto ground : ground_)
+	for (auto ground : ground_)
 	{
-		//delete ground;
-		//ground = nullptr;
+		delete ground;
+		ground = nullptr;
+		/*delete ground_;
+		ground_ = nullptr;*/
 	}
 
 	// clean up camera
@@ -469,9 +475,9 @@ void Game::GameRender()
 	renderer_3d_->Begin();
 	{
 		// draw ground
-		//for (auto ground : ground_)
+		for (int i = 0; i < 5; ++i)
 		{
-			renderer_3d_->DrawMesh(*ground_);
+			renderer_3d_->DrawMesh(*ground_.at(i));
 		}
 
 		// draw player

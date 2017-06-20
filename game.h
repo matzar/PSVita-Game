@@ -79,8 +79,8 @@ private:
 	b2World* world_;
 
 	// ground
-	//std::vector<Ground*> ground_;
-	Ground* ground_;
+	std::vector<Ground*> ground_;
+	//Ground* ground_;
 
 	// player
 	Player* player_;
