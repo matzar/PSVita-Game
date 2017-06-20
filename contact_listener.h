@@ -13,7 +13,7 @@ public:
 	virtual void BeginContact(b2Contact* contact);
 	virtual void EndContact(b2Contact* contact);
 private:
-
+	
 };
 
 #endif // !_CONTACT_LISTENER_H

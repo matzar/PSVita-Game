@@ -1,5 +1,6 @@
 #include "contact_listener.h"
 #include "player.h"
+#include <typeinfo>	 // for 'typeid'
 
 ContactListener::ContactListener()
 {
@@ -11,6 +12,7 @@ ContactListener::~ContactListener()
 
 void ContactListener::BeginContact(b2Contact * contact)
 {
+
 	//check if fixture A was a ball
 	void* bodyUserData = contact->GetFixtureA()->GetBody()->GetUserData();
 	if (bodyUserData)

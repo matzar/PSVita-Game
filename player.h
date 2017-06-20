@@ -36,6 +36,7 @@ private:
 
 	// contacting
 	int num_contacts_;
+
 };
 
 #endif // !_PLAYER_H
