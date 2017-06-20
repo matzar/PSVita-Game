@@ -10,7 +10,7 @@ Ground::~Ground()
 {
 }
 
-void Ground::InitGround(PrimitiveBuilder* primitive_builder, b2World* world)
+void Ground::InitGround(PrimitiveBuilder* primitive_builder, b2World* world, b2Vec2 position)
 {
 	// ground dimensions
 	gef::Vector4 ground_half_dimensions(5.0f, 0.5f, 0.5f);
@@ -22,7 +22,7 @@ void Ground::InitGround(PrimitiveBuilder* primitive_builder, b2World* world)
 	// create a physics body
 	b2BodyDef body_def;
 	body_def.type = b2_staticBody;
-	body_def.position = b2Vec2(0.0f, 0.0f);
+	body_def.position = position;
 
 	ground_body_ = world->CreateBody(&body_def);
 
@@ -33,6 +33,9 @@ void Ground::InitGround(PrimitiveBuilder* primitive_builder, b2World* world)
 	// create the fixture
 	b2FixtureDef fixture_def;
 	fixture_def.shape = &shape;
+	/*
+	Since the default category for a fixture is 1, this arrangement means we don't need to do anything special for the boundary fixture 
+	*/
 
 	// create the fixture on the rigid body
 	ground_body_->CreateFixture(&fixture_def);
@@ -44,7 +47,7 @@ void Ground::InitGround(PrimitiveBuilder* primitive_builder, b2World* world)
 	//ground_body_->SetUserData(this);
 }
 
-void Ground::CollisionResponse()
-{
-	
-}
+//void Ground::CollisionResponse()
+//{
+//	
+//}

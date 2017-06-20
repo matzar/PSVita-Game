@@ -15,6 +15,9 @@
 #include <input/input_manager.h>
 #include <input/sony_controller_input_manager.h>
 #include <audio/audio_manager.h>
+// std headers
+#include <typeinfo>	 // for 'typeid'
+//#include <vector>
 // extra headers
 #include "load_texture.h"
 #include "primitive_builder.h"
@@ -49,7 +52,7 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	camera_(nullptr),
 	world_(nullptr),
 	player_(nullptr),
-	ground_(nullptr),
+	//ground_,
 	fps_(0),
 	sfx_id_(-1),
 	sfx_voice_id_(-1)
@@ -136,16 +139,20 @@ void Game::InitWorld()
 
 void Game::InitPlayer()
 {
-	// create Ground ground_ class
-	ground_ = new Ground();
-	ground_->InitGround(primitive_builder_, world_);
+	// create Player player_ class
+	player_ = new Player();
+	player_->InitPlayer(primitive_builder_, world_, PLAYER, GROUND | PICKUP);
 } // !InitPlayer
 
 void Game::InitGround()
 {
-	// create Player player_ class
-	player_ = new Player();
-	player_->InitPlayer(primitive_builder_, world_);
+	ground_.reserve(10);
+	// create Ground ground_ class
+	for (int i = 0; i < ground_.size(); ++i)
+	{
+		ground_.push_back( new Ground());
+		ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + (float)i, 0.0f));
+	}
 } // !InitGround
 
 void Game::GameInit()
@@ -289,14 +296,6 @@ void Game::SonyController(const gef::SonyController* controller)
 {
 	if (controller)
 	{
-		//if (controller->buttons_pressed() & gef_SONY_CTRL_START)
-		//{
-			//GameRelease();
-
-			//game_state_ = FRONTEND;
-			//FrontendInit();
-		//}
-
 		if (controller->buttons_pressed() & gef_SONY_CTRL_START)
 		{
 			// release any resources for the frontend
@@ -304,7 +303,7 @@ void Game::SonyController(const gef::SonyController* controller)
 
 			// update the current state for the game state machine
 			(*gamestate_) = FRONTEND; // get the object that gamestate points to
-										//GameInit();
+			//GameInit();
 		}
 
 		// trigger a sound effect
@@ -403,8 +402,9 @@ void Game::UpdateSimulation(float frame_time)
 
 	// update object visuals from simulation data
 	player_->UpdateFromSimulation(player_->GetPlayerBody());
-
-	// don't have to update the ground visuals as it is static
+	/*
+	don't have to update the ground visuals as it is static
+	*/
 
 	// collision detection
 	if (player_->IsContacting() > 0)

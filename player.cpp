@@ -15,8 +15,15 @@ Player::~Player()
 {
 }
 
-void Player::InitPlayer(PrimitiveBuilder* primitve_builder, b2World* world)
+void Player::InitPlayer(
+	PrimitiveBuilder* primitve_builder, 
+	b2World* world, 
+	uint16 category_bits, 
+	uint16 mask_bits)
 {
+	//// set colour
+	//colour_ = colour;
+
 	// setup the mesh for the player
 	set_mesh(primitve_builder->GetDefaultCubeMesh());
 
@@ -36,6 +43,11 @@ void Player::InitPlayer(PrimitiveBuilder* primitve_builder, b2World* world)
 	b2FixtureDef player_fixture_def;
 	player_fixture_def.shape = &player_shape;
 	player_fixture_def.density = 1.0f;
+	// filter mask fixture definition
+	// I am a ... (category_bits)
+	player_fixture_def.filter.categoryBits = category_bits;
+	// I collide with ... (mask_bits)
+	player_fixture_def.filter.maskBits = mask_bits;
 
 	// create the fixture on the rigid body
 	player_body_->CreateFixture(&player_fixture_def);

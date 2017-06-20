@@ -19,24 +19,27 @@ public:
 	Player();
 	~Player();
 
-	void InitPlayer(PrimitiveBuilder* primitve_builder, b2World* world);
+	void InitPlayer(PrimitiveBuilder* primitve_builder, b2World* world, uint16 categoryBits, uint16 maskBits);
 	void DecrementHealth();
 	
 	void PlayerController(const gef::SonyController* controller);
 	void StartContact();
 	void EndContact();
-	b2Body* GetPlayerBody() { return player_body_; }
+
 	int IsContacting() { return num_contacts_; }
+	b2Body* GetPlayerBody() { return player_body_; }
 private:
 	// player box 2d variables
+	// player body
 	b2Body* player_body_;
+	//// player colour
+	//b2Color colour_;
 
 	// jumping
 	bool jump_;
 
 	// contacting
 	int num_contacts_;
-
 };
 
 #endif // !_PLAYER_H

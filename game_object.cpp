@@ -25,7 +25,7 @@ void GameObject::UpdateFromSimulation(const b2Body* body)
 	}
 }
 
-void GameObject::MyCollisionResponse() 
-{
-	gef::DebugOut("A collision has happened.\n");
-}
+//void GameObject::MyCollisionResponse() 
+//{
+//	gef::DebugOut("A collision has happened.\n");
+//}

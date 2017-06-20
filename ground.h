@@ -9,8 +9,8 @@ public:
 	Ground();
 	~Ground();
 
-	void InitGround(PrimitiveBuilder* primitive_builder, b2World* world);
-	void CollisionResponse();
+	void InitGround(PrimitiveBuilder* primitive_builder, b2World* world, b2Vec2 position);
+	//void CollisionResponse();
 
 	b2Body* GetGroundBody() { return ground_body_; }
 	gef::Mesh* GetGroundMesh() { return ground_mesh_; }

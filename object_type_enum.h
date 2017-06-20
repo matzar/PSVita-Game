@@ -3,10 +3,9 @@
 
 enum OBJECT_TYPE
 {
-	PLAYER,
-	GROUND,
-	ENEMY,
-	BULLET
+	GROUND = 0x0001,
+	PLAYER = 0x0002,
+	PICKUP = 0x0003
 };
 
 #endif // !_OBJECT_TYPE_ENUM_H

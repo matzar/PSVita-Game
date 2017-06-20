@@ -4,6 +4,8 @@
 // gef headers
 #include <system/application.h>
 #include <maths/vector2.h>
+// std headers
+#include <vector>
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
@@ -77,7 +79,7 @@ private:
 	b2World* world_;
 
 	// ground
-	Ground* ground_;
+	std::vector<Ground*> ground_;
 
 	// player
 	Player* player_;
