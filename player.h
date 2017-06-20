@@ -23,7 +23,11 @@ public:
 	void DecrementHealth();
 	
 	void PlayerController(const gef::SonyController* controller);
+	void startContact();
+	void endContact();
 	b2Body* GetPlayerBody() { return player_body_; }
+
+	bool contacting_;
 private:
 	// player box 2d variables
 	b2Body* player_body_;

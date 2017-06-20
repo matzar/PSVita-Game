@@ -24,11 +24,13 @@ class Player;
 class Ground;
 //class GameObject;
 // Mine classes forward declarations
-class Camera;
 enum GAMESTATE;
+class Camera;
+class ContactListener;
 // box2D forward declarations
 class b2World;
 class b2Body;
+class b2ContactListener;
 
 class Game
 {
@@ -46,7 +48,7 @@ private:
 
 	// gamestate_ pointer
 	GAMESTATE* gamestate_;
-
+	
 	// font
 	gef::Font* font_;
 
@@ -67,6 +69,9 @@ private:
 
 	// camera variables
 	Camera* camera_;
+
+	// contact listener
+	ContactListener* contact_listener_;
 
 	// create the physics world
 	b2World* world_;

@@ -9,8 +9,9 @@ public:
 	ContactListener();
 	~ContactListener();
 
-	void BeginContact(b2Contact* contact);
-	void EndContact(b2Contact* contact);
+	// virtual functions from b2ContactListener to be overwritten 
+	virtual void BeginContact(b2Contact* contact);
+	virtual void EndContact(b2Contact* contact);
 private:
 
 };

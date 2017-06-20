@@ -5,6 +5,7 @@
 
 Player::Player() :
 	player_body_(nullptr),
+	contacting_(nullptr),
 	jump_(false)
 {
 	set_type(PLAYER);
@@ -67,4 +68,14 @@ void Player::PlayerController(const gef::SonyController * controller)
 			jump_ = false;
 		}
 	}
+}
+
+void Player::startContact()
+{
+	contacting_ = true;
+}
+
+void Player::endContact()
+{
+	contacting_ = false;
 }

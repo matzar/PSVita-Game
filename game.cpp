@@ -24,6 +24,7 @@
 // my headers
 #include "free_camera.h"
 #include "game_state_enum.h"
+#include "contact_listener.h"
 // box2D headers
 #include <box2d/Box2D.h>
 
@@ -38,6 +39,7 @@
 Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	platform_(platform),
 	gamestate_(gamestate),
+	contact_listener_(nullptr),
 	font_(nullptr),
 	sprite_renderer_(nullptr),
 	input_manager_(nullptr),
@@ -126,6 +128,10 @@ void Game::InitWorld()
 	// initialise the physics world
 	b2Vec2 gravity(0.0f, -9.81f);
 	world_ = new b2World(gravity);
+
+	contact_listener_ = new ContactListener;
+	// possible to pass custom ContactListener class becuase it has inherited from b2ContactListener class
+	world_->SetContactListener(contact_listener_);
 } // !InitWorld
 
 void Game::InitPlayer()
@@ -199,6 +205,9 @@ void Game::GameRelease()
 
 	delete primitive_builder_;
 	primitive_builder_ = nullptr;
+
+	delete contact_listener_;
+	contact_listener_ = nullptr;
 
 	// destroying the physics world also destroys all the objects within it
 	// shapes and joints are destroyed in b2World::Destroy 

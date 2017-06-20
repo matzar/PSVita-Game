@@ -11,14 +11,20 @@ ContactListener::~ContactListener()
 
 void ContactListener::BeginContact(b2Contact * contact)
 {
-	void* bodyData = contact->GetFixtureA()->GetBody()->GetUserData();
+	void* bodyUserData = contact->GetFixtureA()->GetBody()->GetUserData();
 
-	if (bodyData)
+	if (bodyUserData)
 	{
-		static_cast<Player*>(bodyData)->startContact();
+		static_cast<Player*>(bodyUserData)->startContact();
 	}
 }
 
 void ContactListener::EndContact(b2Contact * contact)
 {
+	void* bodyUserData = contact->GetFixtureA()->GetBody()->GetUserData();
+
+	if (bodyUserData)
+	{
+		static_cast<Player*>(bodyUserData)->endContact();
+	}
 }
