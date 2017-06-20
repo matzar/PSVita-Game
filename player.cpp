@@ -57,7 +57,7 @@ void Player::PlayerController(const gef::SonyController * controller)
 {
 	if (jump_)
 	{
-		if (controller->buttons_down() & gef_SONY_CTRL_SQUARE)
+		if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE)
 		{
 			player_body_->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 5.0f), true);
 			//player_body_->ApplyLinearImpulse(b2Vec2(0, 10), player_body_->GetWorldCenter(), true);
@@ -70,9 +70,12 @@ void Player::PlayerController(const gef::SonyController * controller)
 void Player::StartContact()
 {
 	num_contacts_++;
+	//jump_ = true;
+	//gef::DebugOut("Start Contact\n");
 }
 
 void Player::EndContact()
 {
 	num_contacts_--;
+	//gef::DebugOut("End Contact\n");
 }
