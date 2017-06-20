@@ -6,6 +6,7 @@
 #include <maths/vector2.h>
 // std headers
 #include <vector>
+#include <box2d/Box2D.h>
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
@@ -29,10 +30,12 @@ class Ground;
 enum GAMESTATE;
 class Camera;
 class ContactListener;
+class ContactFilter;
 // box2D forward declarations
 class b2World;
 class b2Body;
 class b2ContactListener;
+class b2ContactFilter;
 
 class Game
 {
@@ -85,10 +88,17 @@ private:
 	// player
 	Player* player_;
 
+	b2ContactFilter* contact_filter_;
+
 	float fps_;
 	// audio variables
 	int sfx_id_;
 	int sfx_voice_id_;
+
+	uint16 catA;
+	uint16 maskA;
+	uint16 catB;
+	uint16 maskB;
 
 #ifdef _WIN32
 	void KeyboardController(Camera* camera, float fps);

@@ -24,6 +24,7 @@
 //#include "game_object.h"
 #include "player.h"
 #include "ground.h"
+#include "contact_filter.h"
 // my headers
 #include "free_camera.h"
 #include "game_state_enum.h"
@@ -58,6 +59,10 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	sfx_voice_id_(-1)
 {
 	ground_.reserve(5);
+	catA = PLAYER;
+	maskA = GROUND;
+	catB = GROUND;
+	maskB = PLAYER;
 }
 
 Game::~Game()
@@ -133,10 +138,13 @@ void Game::InitWorld()
 	b2Vec2 gravity(0.0f, -9.81f);
 	world_ = new b2World(gravity);
 
-	contact_listener_ = new ContactListener;
+	//contact_listener_ = new ContactListener;
 	// possible to pass custom ContactListener class becuase it has inherited from b2ContactListener class
-	world_->SetContactListener(contact_listener_);
-	//world_->SetContactFilter(contact_listener_);
+	//world_->SetContactListener(contact_listener_);
+
+	// contact filter
+	contact_filter_ = new ContactFilter();
+	world_->SetContactFilter(contact_filter_);
 } // !InitWorld
 
 void Game::InitGround()
@@ -250,7 +258,8 @@ void Game::GameRelease()
 	camera_ = nullptr;
 }
 
-#ifdef _WIN32 // Only on windows platforms
+#ifdef _WIN32 
+// Only on windows platforms
 void Game::KeyboardController(Camera* camera, float frame_time)
 {
 	// if there is a keyboard, check the arrow keys to control the direction of the character
@@ -426,7 +435,7 @@ void Game::UpdateSimulation(float frame_time)
 	*/
 
 	// collision detection
-	if (player_->IsContacting() > 0)
+	/*if (player_->IsContacting() > 0)
 	{
 		player_->DecrementHealth();
 	}
@@ -434,7 +443,15 @@ void Game::UpdateSimulation(float frame_time)
 	{
 		gef::DebugOut("End Contact\n");
 	}
-	
+*/
+	if (contact_filter_->ShouldCollide(player_->GetPlayerBody()->GetFixtureList(), ground_.at(0)->GetGroundBody()->GetFixtureList()))
+	{
+		player_->DecrementHealth();
+	}
+	else
+	{
+		gef::DebugOut("End Contact\n");
+	}
 } // !UpdateSimulation
 
 void Game::GameUpdate(float frame_time)
