@@ -415,6 +415,7 @@ void Game::UpdateSimulation(float frame_time)
 
 	// move the player
 	player_->GetPlayerBody()->ApplyForce(b2Vec2(4.f, 0.0f), player_->GetPlayerBody()->GetWorldCenter(), true);
+	//player_->GetPlayerBody()->SetLinearVelocity(b2Vec2(4.0f, 0.0f));
 	//player_->GetPlayerBody()->GetTransform().Set(position_, 0.0f);
 
 	// update object visuals from simulation data
