@@ -10,7 +10,7 @@ Pickup::~Pickup()
 {
 }
 
-void Pickup::InitPickUp(
+void Pickup::InitPickup(
 	PrimitiveBuilder* primitive_builder, 
 	b2World* world, 
 	b2Vec2 position, 
@@ -18,15 +18,16 @@ void Pickup::InitPickUp(
 	uint16 mask_bits, 
 	uint16 group_index)
 {
+	float radius = 0.2;
 	// setup the mesh for the pickup
-	set_mesh(primitive_builder->GetDefaultSphereMesh());
+	set_mesh(primitive_builder->CreateSphereMesh(radius, 10, 10, gef::Vector4(0.0f, 0.0f, 0.0f), (gef::Material*)(&primitive_builder->blue_material())));
+	//set_mesh(primitive_builder->GetDefaultSphereMesh());
 
 	// create a physics body for the pickup
 	b2BodyDef pickup_body_def;
 	pickup_body_def.type = b2_staticBody;
-	pickup_body_def.position = b2Vec2(1.0f, 1.0f);
+	pickup_body_def.position = position;
 	pickup_body_def.angle = 0.0f;
-	pickup_body_def.fixedRotation;
 
 	body_ = world->CreateBody(&pickup_body_def);
 

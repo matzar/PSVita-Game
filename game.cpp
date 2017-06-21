@@ -61,7 +61,7 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	sfx_voice_id_(-1)
 {
 	ground_.reserve(5);
-	pickups_.reserve(2);
+	pickups_.reserve(3);
 }
 
 Game::~Game()
@@ -177,9 +177,9 @@ void Game::InitPickups()
 	//for (auto ground : ground_)
 	for (int i = 0; i < 3; ++i)
 	{
-		ground_.push_back(new Ground());
-		ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + j, 0.0f), GROUND, PLAYER | PICKUP, 1);
-		j += 2.0f;
+		pickups_.push_back(new Pickup());
+		pickups_.at(i)->InitPickup(primitive_builder_, world_, b2Vec2(0.0f + j, 1.0f), PICKUP, PLAYER | GROUND, 1);
+		j += 3.0f;
 	}
 } // !InitPickups()
 
@@ -374,9 +374,9 @@ void Game::UpdateSimulation(float frame_time)
 	world_->Step(timeStep, velocityIterations, positionIterations);
 
 	// move the player
-	b2Vec2 vel = player_->body_->GetLinearVelocity();
+	/*b2Vec2 vel = player_->body_->GetLinearVelocity();
 	vel.x = 5; 
-	player_->body_->SetLinearVelocity(vel);
+	player_->body_->SetLinearVelocity(vel);*/
 
 	/*case MS_LEFT:  vel.x = b2Max(vel.x - 0.1f, -5.0f); break;
 	case MS_STOP:  vel.x *= 0.98; break;
@@ -443,16 +443,23 @@ void Game::GameRender()
 	// draw 3d geometry
 	renderer_3d_->Begin();
 	{
+
+		// draw player
+		renderer_3d_->set_override_material(&primitive_builder_->red_material());
+		renderer_3d_->DrawMesh(*player_);
+		renderer_3d_->set_override_material(nullptr);
+
 		// draw ground
 		for (auto ground : ground_)
 		{
 			renderer_3d_->DrawMesh(*ground);
 		}
 
-		// draw player
-		renderer_3d_->set_override_material(&primitive_builder_->red_material());
-		renderer_3d_->DrawMesh(*player_);
-		renderer_3d_->set_override_material(nullptr);
+		// draw pickups
+		for (auto pickup : pickups_)
+		{
+			renderer_3d_->DrawMesh(*pickup);
+		}
 	}
 	renderer_3d_->End();
 

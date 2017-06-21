@@ -78,9 +78,9 @@ void Player::DecrementHealth()
 void Player::PlayerController(const gef::SonyController * controller)
 {
 	// move the player
-	/*b2Vec2 vel = body_->GetLinearVelocity();
+	b2Vec2 vel = body_->GetLinearVelocity();
 	vel.x = 5;
-	body_->SetLinearVelocity(vel);*/
+	body_->SetLinearVelocity(vel);
 
 	if (jump_)
 	{
