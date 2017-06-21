@@ -220,6 +220,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\camera.cpp" />
+    <ClCompile Include="..\..\contact_filter.cpp" />
     <ClCompile Include="..\..\contact_listener.cpp" />
     <ClCompile Include="..\..\free_camera.cpp" />
     <ClCompile Include="..\..\frontend.cpp" />
@@ -242,10 +243,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="contact_filter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\camera.h" />
+    <ClInclude Include="..\..\contact_filter.h" />
     <ClInclude Include="..\..\contact_listener.h" />
     <ClInclude Include="..\..\free_camera.h" />
     <ClInclude Include="..\..\frontend.h" />
@@ -258,7 +259,6 @@
     <ClInclude Include="..\..\player.h" />
     <ClInclude Include="..\..\primitive_builder.h" />
     <ClInclude Include="..\..\scene_app.h" />
-    <ClInclude Include="contact_filter.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
