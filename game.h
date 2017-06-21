@@ -78,6 +78,9 @@ private:
 	// contact listener
 	ContactListener* contact_listener_;
 
+	// contact filter
+	b2ContactFilter* contact_filter_;
+
 	// create the physics world
 	b2World* world_;
 
@@ -87,8 +90,6 @@ private:
 
 	// player
 	Player* player_;
-
-	b2ContactFilter* contact_filter_;
 
 	float fps_;
 	// audio variables

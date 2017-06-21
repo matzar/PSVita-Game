@@ -43,7 +43,6 @@
 Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	platform_(platform),
 	gamestate_(gamestate),
-	contact_listener_(nullptr),
 	font_(nullptr),
 	sprite_renderer_(nullptr),
 	input_manager_(nullptr),
@@ -51,6 +50,8 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	renderer_3d_(nullptr),
 	primitive_builder_(nullptr),
 	camera_(nullptr),
+	contact_listener_(nullptr),
+	contact_filter_(nullptr),
 	world_(nullptr),
 	player_(nullptr),
 	//ground_,
@@ -59,10 +60,6 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	sfx_voice_id_(-1)
 {
 	ground_.reserve(5);
-	catA = PLAYER;
-	maskA = GROUND;
-	catB = GROUND;
-	maskB = PLAYER;
 }
 
 Game::~Game()
@@ -138,9 +135,9 @@ void Game::InitWorld()
 	b2Vec2 gravity(0.0f, -9.81f);
 	world_ = new b2World(gravity);
 
-	//contact_listener_ = new ContactListener;
+	contact_listener_ = new ContactListener();
 	// possible to pass custom ContactListener class becuase it has inherited from b2ContactListener class
-	//world_->SetContactListener(contact_listener_);
+	world_->SetContactListener(contact_listener_);
 
 	// contact filter
 	contact_filter_ = new ContactFilter();
@@ -157,7 +154,7 @@ void Game::InitGround()
 	for (int i = 0; i < 5; ++i)
 	{
 		ground_.push_back( new Ground());
-		ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + j, 0.0f));
+		ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + j, 0.0f), GROUND, PICKUP);
 		j += 15.0f;
 	}
 	//ground_ = new Ground();
@@ -168,7 +165,7 @@ void Game::InitPlayer()
 {
 	// create Player player_ class
 	player_ = new Player();
-	player_->InitPlayer(primitive_builder_, world_, PLAYER, GROUND | PICKUP);
+	player_->InitPlayer(primitive_builder_, world_, PLAYER, PICKUP);
 } // !InitPlayer
 
 
@@ -424,7 +421,12 @@ void Game::UpdateSimulation(float frame_time)
 	world_->Step(timeStep, velocityIterations, positionIterations);
 
 	// move the player
-	player_->GetPlayerBody()->ApplyForce(b2Vec2(4.f, 0.0f), player_->GetPlayerBody()->GetWorldCenter(), true);
+	// set player forward
+	b2Vec2 new_pos = player_->GetPlayerBody()->GetPosition();
+	new_pos += b2Vec2((2.0f * frame_time), 0); // multiply speed by frame time to create consistent movement
+	player_->GetPlayerBody()->SetTransform(new_pos, 0.0f);
+
+	/*player_->GetPlayerBody()->ApplyForce(b2Vec2(4.f, 0.0f), player_->GetPlayerBody()->GetWorldCenter(), true);*/
 	//player_->GetPlayerBody()->SetLinearVelocity(b2Vec2(4.0f, 0.0f));
 	//player_->GetPlayerBody()->GetTransform().Set(position_, 0.0f);
 
@@ -435,7 +437,7 @@ void Game::UpdateSimulation(float frame_time)
 	*/
 
 	// collision detection
-	/*if (player_->IsContacting() > 0)
+	if (player_->IsContacting() > 0)
 	{
 		player_->DecrementHealth();
 	}
@@ -443,15 +445,15 @@ void Game::UpdateSimulation(float frame_time)
 	{
 		gef::DebugOut("End Contact\n");
 	}
-*/
-	if (contact_filter_->ShouldCollide(player_->GetPlayerBody()->GetFixtureList(), ground_.at(0)->GetGroundBody()->GetFixtureList()))
+
+	/*if (contact_filter_->ShouldCollide(player_->GetPlayerBody()->GetFixtureList(), ground_.at(0)->GetGroundBody()->GetFixtureList()))
 	{
 		player_->DecrementHealth();
 	}
 	else
 	{
 		gef::DebugOut("End Contact\n");
-	}
+	}*/
 } // !UpdateSimulation
 
 void Game::GameUpdate(float frame_time)

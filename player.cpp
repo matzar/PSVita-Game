@@ -31,6 +31,7 @@ void Player::InitPlayer(
 	b2BodyDef player_body_def;
 	player_body_def.type = b2_dynamicBody;
 	player_body_def.position = b2Vec2(0.0f, 4.0f);
+	player_body_def.angle = 0.0f;
 	player_body_def.fixedRotation;
 
 	player_body_ = world->CreateBody(&player_body_def);
@@ -49,6 +50,10 @@ void Player::InitPlayer(
 	player_fixture_def.filter.categoryBits = category_bits;
 	// I collide with ... (mask_bits)
 	player_fixture_def.filter.maskBits = mask_bits;
+	// group index 
+	// if both groupIndex values are the same and positive, collide 
+	// if both groupIndex values are the same and negative, don't collide
+	player_fixture_def.filter.groupIndex = -8;
 
 	// create the fixture on the rigid body
 	player_body_->CreateFixture(&player_fixture_def);

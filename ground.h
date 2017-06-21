@@ -9,7 +9,7 @@ public:
 	Ground();
 	~Ground();
 
-	void InitGround(PrimitiveBuilder* primitive_builder, b2World* world, b2Vec2 position);
+	void InitGround(PrimitiveBuilder* primitive_builder, b2World* world, b2Vec2 position, uint16 category_bits, uint16 mask_bits);
 	//void CollisionResponse();
 
 	b2Body* GetGroundBody() { return ground_body_; }

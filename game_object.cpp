@@ -23,7 +23,7 @@ void GameObject::UpdateFromSimulation(const b2Body* body)
 		object_transform.SetTranslation(object_translation);
 		set_transform(object_transform);
 	}
-}
+} // !UpdateFromSimulation
 
 //void GameObject::MyCollisionResponse() 
 //{
