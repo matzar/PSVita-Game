@@ -146,7 +146,6 @@ void Game::InitWorld()
 
 void Game::InitGround()
 {
-	/*ground_.reserve(2);*/
 	// create Ground ground_ class
 	float j = 0.0f;
 
@@ -154,7 +153,7 @@ void Game::InitGround()
 	for (int i = 0; i < 5; ++i)
 	{
 		ground_.push_back( new Ground());
-		ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + j, 0.0f), GROUND, PICKUP, 1);
+		ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + j, 0.0f), GROUND, PLAYER | PICKUP, 1);
 		j += 15.0f;
 	}
 	//ground_ = new Ground();
@@ -165,7 +164,7 @@ void Game::InitPlayer()
 {
 	// create Player player_ class
 	player_ = new Player();
-	player_->InitPlayer(primitive_builder_, world_, PLAYER, PICKUP, 1);
+	player_->InitPlayer(primitive_builder_, world_, PLAYER, GROUND | PICKUP, 1);
 } // !InitPlayer
 
 
@@ -338,75 +337,6 @@ void Game::SonyController(const gef::SonyController* controller)
 	} // !audio_manager_
 } // !SonyController
 
-//void Game::UpdateSimulation(float frame_time)
-//{
-//	fps_ = 1.0f / frame_time;
-//
-//	// update physics world
-//	float32 timeStep = 1.0f / 60.0f;
-//
-//	// detail of the simulation
-//	int32 velocityIterations = 6;
-//	int32 positionIterations = 2;
-//
-//	world_->Step(timeStep, velocityIterations, positionIterations);
-//
-//	// update object visuals from simulation data
-//	player_->UpdateFromSimulation(player_->GetPlayerBody());
-//
-//	// don't have to update the ground visuals as it is static
-//
-//	// collision detection
-//	// get the head of the contact list
-//	b2Contact* contact = world_->GetContactList();
-//	// get contact count
-//	int contact_count = world_->GetContactCount();
-//
-//	for (int contact_num = 0; contact_num < contact_count; ++contact_num)
-//	{
-//		if (contact->IsTouching())
-//		{
-//			// get the colliding bodies
-//			b2Body* bodyA = contact->GetFixtureA()->GetBody();
-//			b2Body* bodyB = contact->GetFixtureB()->GetBody();
-//
-//			// DO COLLISION RESPONSE HERE
-//			Player* player = nullptr;
-//			Ground* ground = nullptr;
-//
-//			GameObject* gameObjectA = nullptr;
-//			GameObject* gameObjectB = nullptr;
-//
-//			gameObjectA = (GameObject*)bodyA->GetUserData();
-//			gameObjectB = (GameObject*)bodyB->GetUserData();
-//
-//			if (gameObjectA)
-//			{
-//				if (gameObjectA->type() == PLAYER)
-//				{
-//					player = (Player*)bodyA->GetUserData();
-//				}
-//			}
-//
-//			if (gameObjectB)
-//			{
-//				if (gameObjectB->type() == PLAYER)
-//				{
-//					player = (Player*)bodyB->GetUserData();
-//				}
-//			}
-//
-//			if (player)
-//			{
-//				player->DecrementHealth();
-//			}
-//		}
-//
-//		// Get next contact point
-//		contact = contact->GetNext();
-//	}
-//} // !UpdateSimulation
-
 void Game::UpdateSimulation(float frame_time)
 {
 	fps_ = 1.0f / frame_time;
@@ -421,11 +351,6 @@ void Game::UpdateSimulation(float frame_time)
 	world_->Step(timeStep, velocityIterations, positionIterations);
 
 	// move the player
-	// set player forward
-	//b2Vec2 new_pos = player_->GetPlayerBody()->GetPosition();
-	//new_pos += b2Vec2((2.0f * frame_time), 0); // multiply speed by frame time to create consistent movement
-	//player_->GetPlayerBody()->SetTransform(new_pos, 0.0f);
-	
 	b2Vec2 vel = player_->GetPlayerBody()->GetLinearVelocity();
 	vel.x = 5; 
 	player_->GetPlayerBody()->SetLinearVelocity(vel);
@@ -434,10 +359,6 @@ void Game::UpdateSimulation(float frame_time)
 	case MS_STOP:  vel.x *= 0.98; break;
 	case MS_RIGHT: vel.x = b2Min(vel.x + 0.1f, 5.0f); break;*/
 	
-	/*player_->GetPlayerBody()->ApplyForce(b2Vec2(4.f, 0.0f), player_->GetPlayerBody()->GetWorldCenter(), true);*/
-	//player_->GetPlayerBody()->SetLinearVelocity(b2Vec2(4.0f, 0.0f));
-	//player_->GetPlayerBody()->GetTransform().Set(position_, 0.0f);
-
 	// update object visuals from simulation data
 	player_->UpdateFromSimulation(player_->GetPlayerBody());
 	/*
@@ -446,15 +367,6 @@ void Game::UpdateSimulation(float frame_time)
 
 	// collision detection
 	/*if (player_->IsContacting() > 0)
-	{
-		player_->DecrementHealth();
-	}
-	else
-	{
-		gef::DebugOut("End Contact\n");
-	}*/
-
-	/*if (contact_filter_->ShouldCollide(player_->GetPlayerBody()->GetFixtureList(), ground_.at(0)->GetGroundBody()->GetFixtureList()))
 	{
 		player_->DecrementHealth();
 	}
@@ -528,4 +440,3 @@ void Game::GameRender()
 	}
 	sprite_renderer_->End();
 }
-

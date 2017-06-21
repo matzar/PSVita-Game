@@ -19,6 +19,9 @@ public:
 	void UpdateFromSimulation(const b2Body* body);
 	//void MyCollisionResponse();
 
+	b2Body* GetGroundBody() { return ground_body_; }
+	gef::Mesh* GetGroundMesh() { return ground_mesh_; }
+
 	inline void SetGameObjectType(OBJECT_TYPE type) { type_ = type; }
 	inline OBJECT_TYPE GetGameObjectType() { return type_; }
 
