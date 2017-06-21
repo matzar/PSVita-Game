@@ -48,19 +48,27 @@ void ContactListener::BeginContact(b2Contact * contact)
 			player->StartContact();
 			gef::DebugOut("Same colour\n");
 		}
-		else
+		if (game_object->GetGameObjectType() == GROUND && player->GetGameObjectColour() != game_object->GetGameObjectColour())
 		{
 			gef::DebugOut("Different colours\n");
 		}
+
+		if (game_object)
+		{
+			if (game_object->GetGameObjectType() == PICKUP)
+			{
+				gef::DebugOut("Pick this shit up!\n");
+			}
+		}
 	}
 
-	if (game_object)
+	/*if (game_object)
 	{
 		if (game_object->GetGameObjectType() == GROUND)
 		{
 
 		}
-	}
+	}*/
 }
 
 void ContactListener::EndContact(b2Contact * contact)
