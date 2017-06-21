@@ -18,8 +18,8 @@ public:
 	void UpdateFromSimulation(const b2Body* body);
 	//void MyCollisionResponse();
 
-	inline void set_type(OBJECT_TYPE type) { type_ = type; }
-	inline OBJECT_TYPE type() { return type_; }
+	inline void SetGameObjectType(OBJECT_TYPE type) { type_ = type; }
+	inline OBJECT_TYPE GetGameObjectType() { return type_; }
 private:
 	OBJECT_TYPE type_;
 };

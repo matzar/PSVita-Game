@@ -3,7 +3,7 @@
 
 Ground::Ground()
 {
-	set_type(GROUND);
+	SetGameObjectType(GROUND);
 }
 
 Ground::~Ground()
@@ -15,7 +15,8 @@ void Ground::InitGround(
 	b2World* world, 
 	b2Vec2 position,
 	uint16 category_bits,
-	uint16 mask_bits)
+	uint16 mask_bits,
+	uint16 group_index)
 {
 	// ground dimensions
 	gef::Vector4 ground_half_dimensions(5.0f, 0.5f, 0.5f);
@@ -47,7 +48,7 @@ void Ground::InitGround(
 	// group index 
 	// if both groupIndex values are the same and positive, collide 
 	// if both groupIndex values are the same and negative, don't collide
-	ground_fixture_def.filter.groupIndex = -8;
+	ground_fixture_def.filter.groupIndex = group_index;
 
 	/*
 	Since the default category for a fixture is 1, this arrangement means we don't need to do anything special for the boundary fixture 

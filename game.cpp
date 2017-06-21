@@ -140,8 +140,8 @@ void Game::InitWorld()
 	world_->SetContactListener(contact_listener_);
 
 	// contact filter
-	contact_filter_ = new ContactFilter();
-	world_->SetContactFilter(contact_filter_);
+	//contact_filter_ = new ContactFilter();
+	//world_->SetContactFilter(contact_filter_);
 } // !InitWorld
 
 void Game::InitGround()
@@ -154,7 +154,7 @@ void Game::InitGround()
 	for (int i = 0; i < 5; ++i)
 	{
 		ground_.push_back( new Ground());
-		ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + j, 0.0f), GROUND, PICKUP);
+		ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + j, 0.0f), GROUND, PICKUP, 1);
 		j += 15.0f;
 	}
 	//ground_ = new Ground();
@@ -165,7 +165,7 @@ void Game::InitPlayer()
 {
 	// create Player player_ class
 	player_ = new Player();
-	player_->InitPlayer(primitive_builder_, world_, PLAYER, PICKUP);
+	player_->InitPlayer(primitive_builder_, world_, PLAYER, PICKUP, 1);
 } // !InitPlayer
 
 

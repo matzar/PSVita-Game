@@ -19,7 +19,7 @@ public:
 	Player();
 	~Player();
 
-	void InitPlayer(PrimitiveBuilder* primitve_builder, b2World* world, uint16 categoryBits, uint16 maskBits);
+	void InitPlayer(PrimitiveBuilder* primitve_builder, b2World* world, uint16 categoryBits, uint16 maskBits, uint16 group_index);
 	void DecrementHealth();
 	
 	void PlayerController(const gef::SonyController* controller);

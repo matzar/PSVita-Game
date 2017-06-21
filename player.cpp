@@ -8,7 +8,7 @@ Player::Player() :
 	jump_(false),
 	num_contacts_(0)
 {
-	set_type(PLAYER);
+	SetGameObjectType(PLAYER);
 }
 
 Player::~Player()
@@ -19,7 +19,8 @@ void Player::InitPlayer(
 	PrimitiveBuilder* primitve_builder, 
 	b2World* world, 
 	uint16 category_bits, 
-	uint16 mask_bits)
+	uint16 mask_bits,
+	uint16 group_index)
 {
 	//// set colour
 	//colour_ = colour;
@@ -53,7 +54,7 @@ void Player::InitPlayer(
 	// group index 
 	// if both groupIndex values are the same and positive, collide 
 	// if both groupIndex values are the same and negative, don't collide
-	player_fixture_def.filter.groupIndex = -8;
+	player_fixture_def.filter.groupIndex = group_index;
 
 	// create the fixture on the rigid body
 	player_body_->CreateFixture(&player_fixture_def);
@@ -67,8 +68,8 @@ void Player::InitPlayer(
 
 void Player::DecrementHealth()
 {
-	//gef::DebugOut("Player has taken damage.\n");
-	//jump_ = true;
+	gef::DebugOut("Player has taken damage.\n");
+	jump_ = true;
 }
 
 void Player::PlayerController(const gef::SonyController * controller)
@@ -91,12 +92,12 @@ void Player::PlayerController(const gef::SonyController * controller)
 void Player::StartContact()
 {
 	num_contacts_++;
-	jump_ = true;
-	gef::DebugOut("Start Contact\n");
+	//jump_ = true;
+	//gef::DebugOut("Start Contact\n");
 }
 
 void Player::EndContact()
 {
 	num_contacts_--;
-	gef::DebugOut("End Contact\n");
+	//gef::DebugOut("End Contact\n");
 }
