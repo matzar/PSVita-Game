@@ -24,7 +24,8 @@
 //#include "game_object.h"
 #include "player.h"
 #include "ground.h"
-#include "contact_filter.h"
+#include "pickup.h"
+//#include "contact_filter.h"
 // my headers
 #include "free_camera.h"
 #include "game_state_enum.h"
@@ -60,6 +61,7 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	sfx_voice_id_(-1)
 {
 	ground_.reserve(5);
+	pickups_.reserve(2);
 }
 
 Game::~Game()
@@ -144,9 +146,16 @@ void Game::InitWorld()
 	//world_->SetContactFilter(contact_filter_);
 } // !InitWorld
 
+void Game::InitPlayer()
+{
+	// create Player player_ class
+	player_ = new Player();
+	player_->InitPlayer(primitive_builder_, world_, PLAYER, GROUND | PICKUP, 1);
+} // !InitPlayer
+
 void Game::InitGround()
 {
-	// create Ground ground_ class
+	// will be used for grounds intervals
 	float j = 0.0f;
 
 	//for (auto ground : ground_)
@@ -160,13 +169,19 @@ void Game::InitGround()
 	//ground_->InitGround(primitive_builder_, world_, b2Vec2(0.0f, 0.0f));
 } // !InitGround
 
-void Game::InitPlayer()
+void Game::InitPickups()
 {
-	// create Player player_ class
-	player_ = new Player();
-	player_->InitPlayer(primitive_builder_, world_, PLAYER, GROUND | PICKUP, 1);
-} // !InitPlayer
+	// create Pickup pclass
+	float j = 0.0f;
 
+	//for (auto ground : ground_)
+	for (int i = 0; i < 3; ++i)
+	{
+		ground_.push_back(new Ground());
+		ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + j, 0.0f), GROUND, PLAYER | PICKUP, 1);
+		j += 2.0f;
+	}
+} // !InitPickups()
 
 void Game::GameInit()
 {
@@ -192,9 +207,11 @@ void Game::GameInit()
 
 	InitWorld();
 
+	InitPlayer();
+
 	InitGround();
 
-	InitPlayer();
+	InitPickups();
 } // !GameInit
 
 void Game::GameRelease()
@@ -241,12 +258,18 @@ void Game::GameRelease()
 	//delete ground_mesh_;
 	//ground_mesh_ = nullptr;
 
-	for (auto ground : ground_)
+	for (Ground* ground : ground_)
 	{
 		delete ground;
 		ground = nullptr;
 		/*delete ground_;
 		ground_ = nullptr;*/
+	}
+
+	for (Pickup* pickup : pickups_)
+	{
+		delete pickup;
+		pickup = nullptr;
 	}
 
 	// clean up camera
@@ -351,16 +374,16 @@ void Game::UpdateSimulation(float frame_time)
 	world_->Step(timeStep, velocityIterations, positionIterations);
 
 	// move the player
-	b2Vec2 vel = player_->GetPlayerBody()->GetLinearVelocity();
+	b2Vec2 vel = player_->body_->GetLinearVelocity();
 	vel.x = 5; 
-	player_->GetPlayerBody()->SetLinearVelocity(vel);
+	player_->body_->SetLinearVelocity(vel);
 
 	/*case MS_LEFT:  vel.x = b2Max(vel.x - 0.1f, -5.0f); break;
 	case MS_STOP:  vel.x *= 0.98; break;
 	case MS_RIGHT: vel.x = b2Min(vel.x + 0.1f, 5.0f); break;*/
 	
 	// update object visuals from simulation data
-	player_->UpdateFromSimulation(player_->GetPlayerBody());
+	player_->UpdateFromSimulation(player_->body_);
 	/*
 	don't have to update the ground visuals as it is static
 	*/

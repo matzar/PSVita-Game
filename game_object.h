@@ -19,15 +19,22 @@ public:
 	void UpdateFromSimulation(const b2Body* body);
 	//void MyCollisionResponse();
 
-	b2Body* GetGroundBody() { return ground_body_; }
-	gef::Mesh* GetGroundMesh() { return ground_mesh_; }
+	/*inline void SetBody(b2Body* body) { body_ = body; }
+	inline b2Body* GetBody() { return body_; }
+
+	inline void SetMest(gef::Mesh* mesh) { mesh_ = mesh; }
+	inline gef::Mesh* GetMesh() { return mesh_; }*/
 
 	inline void SetGameObjectType(OBJECT_TYPE type) { type_ = type; }
 	inline OBJECT_TYPE GetGameObjectType() { return type_; }
 
 	inline void SetGameObjectColour(OBJECT_COLOUR colour) { colour_ = colour; }
 	inline OBJECT_COLOUR GetGameObjectColour() { return colour_; }
+
+	b2Body* body_;
+	gef::Mesh* mesh_;
 private:
+
 	OBJECT_TYPE type_;
 	OBJECT_COLOUR colour_;
 };

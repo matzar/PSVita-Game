@@ -27,13 +27,13 @@ public:
 	void EndContact();
 
 	int IsContacting() { return num_contacts_; }
-	b2Body* GetPlayerBody() { return player_body_; }
+	//b2Body* GetPlayerBody() { return player_body_; }
 private:
 	// player box 2d variables
 	// player body
-	b2Body* player_body_;
+	//b2Body* player_body_;
 	// player colour
-	b2Color colour_;
+	//b2Color colour_;
 
 	// jumping
 	bool jump_;

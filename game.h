@@ -25,6 +25,7 @@ namespace gef
 class PrimitiveBuilder;
 class Player;
 class Ground;
+class Pickup;
 //class GameObject;
 // Mine classes forward declarations
 enum GAMESTATE;
@@ -91,6 +92,9 @@ private:
 	// player
 	Player* player_;
 
+	// pickup
+	std::vector<Pickup*> pickups_;
+
 	float fps_;
 	// audio variables
 	int sfx_id_;
@@ -115,6 +119,7 @@ private:
 	void InitWorld();
 	void InitPlayer();
 	void InitGround();
+	void InitPickups();
 };
 
 #endif // !_GAME_H
