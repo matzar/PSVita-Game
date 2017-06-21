@@ -1,4 +1,5 @@
 #include "contact_listener.h"
+#include "system\debug_log.h"
 #include "player.h"
 #include "ground.h"
 
@@ -143,7 +144,15 @@ void ContactListener::BeginContact(b2Contact * contact)
 	// collision response
 	if (player)
 	{
-		player->StartContact();		
+		if (player->GetGameObjectColour() == game_object->GetGameObjectColour())
+		{
+			player->StartContact();
+			gef::DebugOut("Same colour\n");
+		}
+		else
+		{
+			gef::DebugOut("Different colours\n");
+		}
 	}
 
 	if (game_object)

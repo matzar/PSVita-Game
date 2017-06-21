@@ -9,6 +9,7 @@ Player::Player() :
 	num_contacts_(0)
 {
 	SetGameObjectType(PLAYER);
+	SetGameObjectColour(RED);
 }
 
 Player::~Player()

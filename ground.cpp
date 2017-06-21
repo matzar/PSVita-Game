@@ -4,6 +4,7 @@
 Ground::Ground()
 {
 	SetGameObjectType(GROUND);
+	SetGameObjectColour(RED);
 }
 
 Ground::~Ground()
