@@ -12,7 +12,7 @@ public:
 	// virtual functions from b2ContactListener to be overwritten 
 	virtual void BeginContact(b2Contact* contact);
 	virtual void EndContact(b2Contact* contact);
-	virtual void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
+	//virtual void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
 };
 
 #endif // !_CONTACT_LISTENER_H
