@@ -101,7 +101,7 @@
     <ClInclude Include="..\..\contact_filter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\colour_type.h">
+    <ClInclude Include="..\..\colour_type_enum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

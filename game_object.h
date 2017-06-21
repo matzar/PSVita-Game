@@ -5,6 +5,7 @@
 #include <graphics/mesh_instance.h>
 // my headers
 #include "object_type_enum.h"
+#include "colour_type_enum.h"
 // extra headers
 #include "primitive_builder.h"
 // box2D header
@@ -20,8 +21,12 @@ public:
 
 	inline void SetGameObjectType(OBJECT_TYPE type) { type_ = type; }
 	inline OBJECT_TYPE GetGameObjectType() { return type_; }
+
+	inline void SetGameObjectColour(OBJECT_COLOUR colour) { colour_ = colour; }
+	inline OBJECT_COLOUR GetGameObjectColour() { return colour_; }
 private:
 	OBJECT_TYPE type_;
+	OBJECT_COLOUR colour_;
 };
 
 #endif // !_GAME_OBJECT_H
