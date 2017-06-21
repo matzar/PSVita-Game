@@ -246,6 +246,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\camera.h" />
+    <ClInclude Include="..\..\colour_type.h" />
     <ClInclude Include="..\..\contact_filter.h" />
     <ClInclude Include="..\..\contact_listener.h" />
     <ClInclude Include="..\..\free_camera.h" />
