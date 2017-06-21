@@ -93,12 +93,12 @@ void Player::PlayerController(const gef::SonyController * controller)
 void Player::StartContact()
 {
 	num_contacts_++;
-	//jump_ = true;
-	//gef::DebugOut("Start Contact\n");
+	jump_ = true;
+	gef::DebugOut("Start Contact\n");
 }
 
 void Player::EndContact()
 {
 	num_contacts_--;
-	//gef::DebugOut("End Contact\n");
+	gef::DebugOut("End Contact\n");
 }
