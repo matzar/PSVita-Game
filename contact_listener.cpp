@@ -114,50 +114,75 @@ ContactListener::~ContactListener()
 
 void ContactListener::BeginContact(b2Contact * contact)
 {
-	//Player* player = nullptr;
-	//GameObject* game_object = nullptr;
+	Player* player = nullptr;
+	GameObject* game_object = nullptr;
 
+	void* bodyUserDataA = contact->GetFixtureA()->GetBody()->GetUserData();
+	OBJECT_TYPE typeA = ((GameObject*)(bodyUserDataA))->GetGameObjectType();
 
-	////check if fixture A is the player
-	//void* bodyUserDataA = contact->GetFixtureA()->GetBody()->GetUserData();
-	//OBJECT_TYPE typeA = ((GameObject*)(bodyUserDataA))->GetGameObjectType();
+	void* bodyUserDataB = contact->GetFixtureB()->GetBody()->GetUserData();
+	OBJECT_TYPE typeB = ((GameObject*)(bodyUserDataB))->GetGameObjectType();
 
-	//void* bodyUserDataB = contact->GetFixtureB()->GetBody()->GetUserData();
-	//OBJECT_TYPE typeB = ((GameObject*)(bodyUserDataB))->GetGameObjectType();
+	if (typeA == PLAYER)
+	{
+		player = static_cast<Player*>(bodyUserDataA);
+		game_object = static_cast<GameObject*>(bodyUserDataB);
+	}
 
-	//if (typeA == PLAYER)
-	//{
-	//	player = static_cast<Player*>(bodyUserDataA);
-	//	game_object = static_cast<GameObject*>(bodyUserDataB);
-	//}
+	else if (typeB == PLAYER)
+	{
+		player = static_cast<Player*>(bodyUserDataB);
+		game_object = static_cast<GameObject*>(bodyUserDataA);
+	}
 
-	//else if (typeB == PLAYER)
-	//{
-	//	player = static_cast<Player*>(bodyUserDataB);
-	//	game_object = static_cast<GameObject*>(bodyUserDataA);
-	//}
-
-	//if (player)
-	//{
-	//	player->StartContact();
-	//}
+	if (player)
+		{
+			player->StartContact();
 	
-
+			if (game_object)
+			{
+				if (game_object->GetGameObjectType() == GROUND)
+				{
+					
+				}
+			}
+		}
 }
 
 void ContactListener::EndContact(b2Contact * contact)
 {
-	//check if fixture A was the player
-	//void* bodyUserData = contact->GetFixtureA()->GetBody()->GetUserData();
+	Player* player = nullptr;
+	GameObject* game_object = nullptr;
 
-	//if (bodyUserData)
-	//	static_cast<Player*>(bodyUserData)->EndContact();
+	void* bodyUserDataA = contact->GetFixtureA()->GetBody()->GetUserData();
+	OBJECT_TYPE typeA = ((GameObject*)(bodyUserDataA))->GetGameObjectType();
 
-	////check if fixture B was the player
-	//bodyUserData = contact->GetFixtureB()->GetBody()->GetUserData();
+	void* bodyUserDataB = contact->GetFixtureB()->GetBody()->GetUserData();
+	OBJECT_TYPE typeB = ((GameObject*)(bodyUserDataB))->GetGameObjectType();
 
-	//if (bodyUserData)
-	//	static_cast<Player*>(bodyUserData)->EndContact();
+	if (typeA == PLAYER)
+	{
+		player = static_cast<Player*>(bodyUserDataA);
+		game_object = static_cast<GameObject*>(bodyUserDataB);
+	}
+	else if (typeB == PLAYER)
+	{
+		player = static_cast<Player*>(bodyUserDataB);
+		game_object = static_cast<GameObject*>(bodyUserDataA);
+	}
+
+	if (player)
+	{
+		player->EndContact();
+
+		if (game_object)
+		{
+			if (game_object->GetGameObjectType() == GROUND)
+			{
+
+			}
+		}
+	}
 }
 
 //void ContactListener::BeginContact(b2Contact * contact)
