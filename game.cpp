@@ -422,10 +422,18 @@ void Game::UpdateSimulation(float frame_time)
 
 	// move the player
 	// set player forward
-	b2Vec2 new_pos = player_->GetPlayerBody()->GetPosition();
-	new_pos += b2Vec2((2.0f * frame_time), 0); // multiply speed by frame time to create consistent movement
-	player_->GetPlayerBody()->SetTransform(new_pos, 0.0f);
+	//b2Vec2 new_pos = player_->GetPlayerBody()->GetPosition();
+	//new_pos += b2Vec2((2.0f * frame_time), 0); // multiply speed by frame time to create consistent movement
+	//player_->GetPlayerBody()->SetTransform(new_pos, 0.0f);
+	
+	b2Vec2 vel = player_->GetPlayerBody()->GetLinearVelocity();
+	vel.x = 5; 
+	player_->GetPlayerBody()->SetLinearVelocity(vel);
 
+	/*case MS_LEFT:  vel.x = b2Max(vel.x - 0.1f, -5.0f); break;
+	case MS_STOP:  vel.x *= 0.98; break;
+	case MS_RIGHT: vel.x = b2Min(vel.x + 0.1f, 5.0f); break;*/
+	
 	/*player_->GetPlayerBody()->ApplyForce(b2Vec2(4.f, 0.0f), player_->GetPlayerBody()->GetWorldCenter(), true);*/
 	//player_->GetPlayerBody()->SetLinearVelocity(b2Vec2(4.0f, 0.0f));
 	//player_->GetPlayerBody()->GetTransform().Set(position_, 0.0f);
@@ -437,16 +445,7 @@ void Game::UpdateSimulation(float frame_time)
 	*/
 
 	// collision detection
-	if (player_->IsContacting() > 0)
-	{
-		player_->DecrementHealth();
-	}
-	else
-	{
-		gef::DebugOut("End Contact\n");
-	}
-
-	/*if (contact_filter_->ShouldCollide(player_->GetPlayerBody()->GetFixtureList(), ground_.at(0)->GetGroundBody()->GetFixtureList()))
+	/*if (player_->IsContacting() > 0)
 	{
 		player_->DecrementHealth();
 	}
@@ -454,6 +453,15 @@ void Game::UpdateSimulation(float frame_time)
 	{
 		gef::DebugOut("End Contact\n");
 	}*/
+
+	if (contact_filter_->ShouldCollide(player_->GetPlayerBody()->GetFixtureList(), ground_.at(0)->GetGroundBody()->GetFixtureList()))
+	{
+		player_->DecrementHealth();
+	}
+	else
+	{
+		gef::DebugOut("End Contact\n");
+	}
 } // !UpdateSimulation
 
 void Game::GameUpdate(float frame_time)

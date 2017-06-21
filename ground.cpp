@@ -60,7 +60,7 @@ void Ground::InitGround(
 	UpdateFromSimulation(ground_body_);
 
 	// create a connection between the rigid body and GameObject
-	//ground_body_->SetUserData(this);
+	ground_body_->SetUserData(this);
 }
 
 //void Ground::CollisionResponse()
