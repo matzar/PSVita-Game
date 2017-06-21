@@ -77,10 +77,13 @@ void Player::PlayerController(const gef::SonyController * controller)
 	{
 		if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE)
 		{
-			player_body_->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 5.0f), true);
+			jump_ = false;
+			b2Vec2 vel = player_body_->GetLinearVelocity();
+			vel.y = 4.0f;//upwards - don't change x velocity
+			player_body_->SetLinearVelocity(vel);
+			//player_body_->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 5.0f), true);
 			//player_body_->ApplyLinearImpulse(b2Vec2(0, 10), player_body_->GetWorldCenter(), true);
 			//player_body_->ApplyForce(b2Vec2(0.0f, 10.0f), player_body_->GetWorldCenter(), true);
-			jump_ = false;
 		}
 	}
 }
