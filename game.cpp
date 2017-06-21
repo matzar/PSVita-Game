@@ -445,7 +445,16 @@ void Game::UpdateSimulation(float frame_time)
 	*/
 
 	// collision detection
-	/*if (player_->IsContacting() > 0)
+	if (player_->IsContacting() > 0)
+	{
+		player_->DecrementHealth();
+	}
+	else
+	{
+		gef::DebugOut("End Contact\n");
+	}
+
+	/*if (contact_filter_->ShouldCollide(player_->GetPlayerBody()->GetFixtureList(), ground_.at(0)->GetGroundBody()->GetFixtureList()))
 	{
 		player_->DecrementHealth();
 	}
@@ -453,15 +462,6 @@ void Game::UpdateSimulation(float frame_time)
 	{
 		gef::DebugOut("End Contact\n");
 	}*/
-
-	if (contact_filter_->ShouldCollide(player_->GetPlayerBody()->GetFixtureList(), ground_.at(0)->GetGroundBody()->GetFixtureList()))
-	{
-		player_->DecrementHealth();
-	}
-	else
-	{
-		gef::DebugOut("End Contact\n");
-	}
 } // !UpdateSimulation
 
 void Game::GameUpdate(float frame_time)

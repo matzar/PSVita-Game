@@ -67,8 +67,8 @@ void Player::InitPlayer(
 
 void Player::DecrementHealth()
 {
-	gef::DebugOut("Player has taken damage.\n");
-	jump_ = true;
+	//gef::DebugOut("Player has taken damage.\n");
+	//jump_ = true;
 }
 
 void Player::PlayerController(const gef::SonyController * controller)
@@ -77,13 +77,13 @@ void Player::PlayerController(const gef::SonyController * controller)
 	{
 		if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE)
 		{
-			jump_ = false;
 			b2Vec2 vel = player_body_->GetLinearVelocity();
-			vel.y = 4.0f;//upwards - don't change x velocity
+			vel.y = 10.0f;//upwards - don't change x velocity
 			player_body_->SetLinearVelocity(vel);
 			//player_body_->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 5.0f), true);
 			//player_body_->ApplyLinearImpulse(b2Vec2(0, 10), player_body_->GetWorldCenter(), true);
 			//player_body_->ApplyForce(b2Vec2(0.0f, 10.0f), player_body_->GetWorldCenter(), true);
+			jump_ = false;
 		}
 	}
 }
@@ -91,12 +91,12 @@ void Player::PlayerController(const gef::SonyController * controller)
 void Player::StartContact()
 {
 	num_contacts_++;
-	//jump_ = true;
-	//gef::DebugOut("Start Contact\n");
+	jump_ = true;
+	gef::DebugOut("Start Contact\n");
 }
 
 void Player::EndContact()
 {
 	num_contacts_--;
-	//gef::DebugOut("End Contact\n");
+	gef::DebugOut("End Contact\n");
 }
