@@ -1,5 +1,4 @@
 #include "pickup.h"
-#include "system\debug_log.h"
 
 Pickup::Pickup()
 {
@@ -7,8 +6,6 @@ Pickup::Pickup()
 
 Pickup::~Pickup()
 {
-	GetBody()->GetWorld()->DestroyBody(GetBody());
-	gef::DebugOut("delte pickup");
 }
 
 void Pickup::InitPickup(

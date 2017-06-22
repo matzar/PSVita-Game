@@ -240,6 +240,7 @@ void Game::GameRelease()
 	delete renderer_3d_;
 	renderer_3d_ = nullptr;
 
+	primitive_builder_->CleanUp();
 	delete primitive_builder_;
 	primitive_builder_ = nullptr;
 
@@ -360,6 +361,29 @@ void Game::SonyController(const gef::SonyController* controller)
 	} // !audio_manager_
 } // !SonyController
 
+void Game::UpdatePickups()
+{
+	if (!(contact_listener_->dying_pickups_scheduled_for_removal_.empty()))
+	{
+		for (GameObject* dying_pick_up : contact_listener_->dying_pickups_scheduled_for_removal_)
+		{
+			// pickup's physics body is destroyed here
+			delete dying_pick_up;
+
+			// remove the pickup from the rendering list
+			std::vector<Pickup*>::iterator it = std::find(pickups_.begin(), pickups_.end(), dying_pick_up);
+			if (it != pickups_.end())
+			{
+				pickups_.erase(it);
+			}
+
+			contact_listener_->dying_pickups_scheduled_for_removal_.erase(dying_pick_up);
+		}
+		//clear the set for the next time
+		contact_listener_->dying_pickups_scheduled_for_removal_.clear();
+	}
+}
+
 void Game::UpdateSimulation(float frame_time)
 {
 	fps_ = 1.0f / frame_time;
@@ -397,26 +421,7 @@ void Game::UpdateSimulation(float frame_time)
 	{
 		gef::DebugOut("End Contact\n");
 	}*/
-
-	if (!(contact_listener_->pickups_scheduled_for_removal_.empty()))
-	{
-		for (GameObject* dying_pick_up : contact_listener_->pickups_scheduled_for_removal_)
-		{
-			// pickup's physics body is destroyed here
-			delete dying_pick_up;
-
-			// remove the pickup from the rendering list
-			std::vector<Pickup*>::iterator it = std::find(pickups_.begin(), pickups_.end(), dying_pick_up);
-			if (it != pickups_.end())
-			{
-				pickups_.erase(it);
-			}
-
-			contact_listener_->pickups_scheduled_for_removal_.erase(dying_pick_up);
-		}
-		//clear the set for the next time
-		contact_listener_->pickups_scheduled_for_removal_.clear();
-	}
+	UpdatePickups();
 
 } // !UpdateSimulation
 

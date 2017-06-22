@@ -18,7 +18,6 @@ public:
 		uint16 mask_bits, 
 		uint16 group_index,
 		OBJECT_TYPE type);
-
 };
 
 #endif // !PICKUP_H

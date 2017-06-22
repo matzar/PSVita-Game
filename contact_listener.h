@@ -17,7 +17,7 @@ public:
 	virtual void EndContact(b2Contact* contact);
 	//virtual void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
 
-	std::set<GameObject*> pickups_scheduled_for_removal_;
+	std::set<GameObject*> dying_pickups_scheduled_for_removal_;
 };
 
 #endif // !_CONTACT_LISTENER_H

@@ -109,6 +109,7 @@ private:
 	void KeyboardController(Camera* camera, float fps);
 #endif // _WIN32
 	void SonyController(const gef::SonyController* controller);
+	void UpdatePickups();
 	void UpdateSimulation(float frame_time);
 	void InitAudio();
 	void InitFont();

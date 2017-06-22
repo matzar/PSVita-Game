@@ -116,6 +116,7 @@ void Player::StartContact()
 void Player::EndContact()
 {
 	num_contacts_--;
+	jump_ = false;
 	gef::DebugOut("EndContact()\n");
 }
 
