@@ -107,6 +107,8 @@ void Player::PlayerController(const gef::SonyController * controller)
 				jump_ = false;
 			}
 		}
+
+		// TODO change colour at runtime
 	}
 	else
 	{

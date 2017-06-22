@@ -165,8 +165,6 @@ void Game::InitGround()
 		ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + interval, 0.0f), GROUND, PLAYER | PICKUP, 1, GROUND, RED);
 		interval += 15.0f;
 	}
-	//ground_ = new Ground();
-	//ground_->InitGround(primitive_builder_, world_, b2Vec2(0.0f, 0.0f));
 } // !InitGround
 
 void Game::InitPickups()
