@@ -2,7 +2,6 @@
 #define PICKUP_H
 
 #include "game_object.h"
-#include <set>
 
 class Pickup : public GameObject
 {
@@ -20,10 +19,7 @@ public:
 		uint16 group_index,
 		OBJECT_TYPE type);
 
-private:
 };
-
-static std::set<GameObject*> pickups_scheduled_for_removal_;
 
 #endif // !PICKUP_H
 

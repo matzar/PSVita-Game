@@ -37,7 +37,7 @@ void Player::InitPlayer(
 	player_body_def.type = b2_dynamicBody;
 	player_body_def.position = b2Vec2(0.0f, 4.0f);
 	player_body_def.angle = 0.0f;
-	player_body_def.fixedRotation;
+	//player_body_def.fixedRotation;
 
 	SetBody(world->CreateBody(&player_body_def));
 

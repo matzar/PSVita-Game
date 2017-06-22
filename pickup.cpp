@@ -1,19 +1,14 @@
 #include "pickup.h"
-#include "primitive_builder.h"
+#include "system\debug_log.h"
 
 Pickup::Pickup()
 {
-	/*SetGameObjectType(PICKUP);*/
 }
 
 Pickup::~Pickup()
 {
-	// destroy pickup
-	//GetBody()->SetActive(false);
 	GetBody()->GetWorld()->DestroyBody(GetBody());
-	//~GameObject();
-	//GetBody()->SetActive(false);
-	//mesh_->~Mesh();
+	gef::DebugOut("delte pickup");
 }
 
 void Pickup::InitPickup(

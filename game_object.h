@@ -3,10 +3,6 @@
 
 // gef headers
 #include <graphics/mesh_instance.h>
-#include <graphics/mesh_data.h>
-#include <graphics/mesh.h>
-// std headers
-#include <set>
 // my headers
 #include "object_type_enum.h"
 #include "colour_type_enum.h"
@@ -15,11 +11,11 @@
 // box2D header
 #include <box2d/Box2D.h>
 
-class GameObject : public gef::MeshInstance
+class GameObject : public gef::MeshInstance, PrimitiveBuilder
 {
 public:
 	//GameObject() {}
-	virtual ~GameObject() {}
+	~GameObject();
 
 	void UpdateFromSimulation(const b2Body* body);
 	//void MyCollisionResponse();
@@ -41,8 +37,7 @@ public:
 
 	void SetMesh(gef::Mesh* mesh) { mesh_ = mesh; }
 	gef::Mesh* GetMesh() { return mesh_; }
-
-private:
+protected:
 	b2Body* body_;
 	gef::Mesh* mesh_;
 

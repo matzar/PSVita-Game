@@ -36,7 +36,7 @@ void ContactListener::BeginContact(b2Contact * contact)
 	// pointers for body A and body B
 	Player* player = nullptr;
 	GameObject* game_object = nullptr;
-	Pickup* pickup = nullptr;
+	//Pickup* pickup = nullptr;
 
 	// a pointer from the physics object to the entity in the game
 	void* bodyUserDataA = contact->GetFixtureA()->GetBody()->GetUserData();
