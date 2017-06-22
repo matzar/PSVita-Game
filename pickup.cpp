@@ -1,17 +1,26 @@
 #include "pickup.h"
 #include "primitive_builder.h"
 
-Pickup::Pickup()
+Pickup::Pickup(Platform& platform) :
+	platform_(platform)
 {
 	/*SetGameObjectType(PICKUP);*/
 }
 
 Pickup::~Pickup()
 {
+	// destroy pickup
+	//GetBody()->SetActive(false);
+	//GetBody()->GetWorld()->DestroyBody(GetBody());
+	//~GameObject();
+	GetBody()->SetActive(false);
+	//mesh_->~Mesh();
+	this->primitive_builder_->CleanUp();
 }
 
 void Pickup::InitPickup(
 	PrimitiveBuilder* primitive_builder, 
+	Platform& platform,
 	b2World* world, 
 	b2Vec2 position,
 	float32 radius,
@@ -20,8 +29,10 @@ void Pickup::InitPickup(
 	uint16 group_index,
 	OBJECT_TYPE type)
 {
+	platform_ = platform;
+	primitive_builder_ = new PrimitiveBuilder(platform);
 	// setup the mesh for the pickup
-	set_mesh(primitive_builder->CreateSphereMesh(radius, 10, 10, gef::Vector4(0.0f, 0.0f, 0.0f), (gef::Material*)(&primitive_builder->blue_material())));
+	set_mesh(primitive_builder_->CreateSphereMesh(radius, 10, 10, gef::Vector4(0.0f, 0.0f, 0.0f), (gef::Material*)(&primitive_builder->blue_material())));
 	//set_mesh(primitive_builder->GetDefaultSphereMesh());
 
 	// create a physics body for the pickup

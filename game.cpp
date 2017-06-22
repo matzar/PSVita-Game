@@ -177,7 +177,7 @@ void Game::InitPickups()
 	//for (auto ground : ground_)
 	for (int i = 0; i < 3; ++i)
 	{
-		pickups_.push_back(new Pickup());
+		pickups_.push_back(new Pickup(platform_));
 		pickups_.at(i)->InitPickup(primitive_builder_, world_, b2Vec2(0.0f + j, 1.0f), 0.2f, PICKUP, PLAYER | GROUND, 1, PICKUP);
 		j += 3.0f;
 	}
@@ -397,6 +397,18 @@ void Game::UpdateSimulation(float frame_time)
 	{
 		gef::DebugOut("End Contact\n");
 	}*/
+
+	for (Pickup* pickup : pickups_)
+	{
+		if (!(pickup->game_object_scheduled_for_removal_.empty()))
+		{
+			delete pickup;
+			
+			//pickup->game_object_scheduled_for_removal_.erase(pickup);
+			//pickup->game_object_scheduled_for_removal_.clear();
+		}
+	}
+
 } // !UpdateSimulation
 
 void Game::GameUpdate(float frame_time)

@@ -87,7 +87,7 @@ void ContactListener::BeginContact(b2Contact * contact)
 			if (game_object->GetGameObjectType() == PICKUP)
 			{
 				// set pickup to not active
-				game_object->GetBody()->SetActive(false);
+				game_object->game_object_scheduled_for_removal_.insert(game_object);
 
 				gef::DebugOut("Pick this shit up!\n");
 			}

@@ -3,6 +3,10 @@
 
 // gef headers
 #include <graphics/mesh_instance.h>
+#include <graphics/mesh_data.h>
+#include <graphics/mesh.h>
+// std headers
+#include <set>
 // my headers
 #include "object_type_enum.h"
 #include "colour_type_enum.h"
@@ -14,7 +18,7 @@
 class GameObject : public gef::MeshInstance
 {
 public:
-	GameObject() {}
+	//GameObject() {}
 	virtual ~GameObject() {}
 
 	void UpdateFromSimulation(const b2Body* body);
@@ -37,6 +41,9 @@ public:
 
 	void SetMesh(gef::Mesh* mesh) { mesh_ = mesh; }
 	gef::Mesh* GetMesh() { return mesh_; }
+
+	std::set<GameObject*> game_object_scheduled_for_removal_;
+	//void CleanUp();
 private:
 	b2Body* body_;
 	gef::Mesh* mesh_;

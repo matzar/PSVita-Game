@@ -7,6 +7,7 @@
 // 
 // Update the transform of this object from a physics rigid body
 //
+
 void GameObject::UpdateFromSimulation(const b2Body* body)
 {
 	if (body)
