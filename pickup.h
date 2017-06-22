@@ -16,7 +16,8 @@ public:
 		float32 radius, 
 		uint16 category_bits, 
 		uint16 mask_bits, 
-		uint16 group_index);
+		uint16 group_index,
+		OBJECT_TYPE type);
 
 private:
 };

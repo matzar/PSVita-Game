@@ -17,15 +17,6 @@ public:
 	GameObject() {}
 	virtual ~GameObject() {}
 
-	virtual void Init(
-		PrimitiveBuilder* primitve_builder,
-		b2World* world,
-		uint16 categoryBits,
-		uint16 maskBits,
-		uint16 group_index,
-		OBJECT_TYPE type,
-		OBJECT_COLOUR colour) = 0;
-
 	void UpdateFromSimulation(const b2Body* body);
 	//void MyCollisionResponse();
 

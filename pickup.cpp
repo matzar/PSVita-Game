@@ -3,7 +3,7 @@
 
 Pickup::Pickup()
 {
-	SetGameObjectType(PICKUP);
+	/*SetGameObjectType(PICKUP);*/
 }
 
 Pickup::~Pickup()
@@ -17,7 +17,8 @@ void Pickup::InitPickup(
 	float32 radius,
 	uint16 category_bits, 
 	uint16 mask_bits, 
-	uint16 group_index)
+	uint16 group_index,
+	OBJECT_TYPE type)
 {
 	// setup the mesh for the pickup
 	set_mesh(primitive_builder->CreateSphereMesh(radius, 10, 10, gef::Vector4(0.0f, 0.0f, 0.0f), (gef::Material*)(&primitive_builder->blue_material())));
@@ -49,6 +50,8 @@ void Pickup::InitPickup(
 	// if both groupIndex values are the same and positive, collide 
 	// if both groupIndex values are the same and negative, don't collide
 	pickup_fixture_def.filter.groupIndex = group_index;
+
+	SetGameObjectType(type);
 
 	// create the fixture on the rigid body
 	body_->CreateFixture(&pickup_fixture_def);
