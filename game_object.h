@@ -31,12 +31,12 @@ public:
 
 	inline void SetGameObjectColour(OBJECT_COLOUR colour) { colour_ = colour; }
 	inline OBJECT_COLOUR GetGameObjectColour() { return colour_; }
-
-	void SetBody(b2Body* body) { body_ = body; }
-	b2Body* GetBody() { return body_; }
-
-	void SetMesh(gef::Mesh* mesh) { mesh_ = mesh; }
-	gef::Mesh* GetMesh() { return mesh_; }
+	inline void SetBody(b2Body* body) { body_ = body; }
+	// TODO keep it no-const or just make body_ public?
+	inline b2Body* GetBody() { return body_; }
+	
+	inline void SetMesh(gef::Mesh* mesh) { mesh_ = mesh; }
+	inline gef::Mesh* GetMesh() { return mesh_; }
 protected:
 	b2Body* body_;
 	gef::Mesh* mesh_;
@@ -45,5 +45,4 @@ protected:
 	OBJECT_COLOUR colour_;
 };
 
-//static std::set<GameObject*> pickups_scheduled_for_removal_;
 #endif // !_GAME_OBJECT_H

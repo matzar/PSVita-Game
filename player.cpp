@@ -7,7 +7,9 @@ Player::Player() :
 	//body_(nullptr),
 	jump_(false),
 	alive_(true),
-	num_contacts_(0)
+	num_contacts_(0),
+	x_velocity(5.0f),
+	y_velocity(8.0f)
 {
 	//SetGameObjectType(PLAYER);
 	//SetGameObjectColour(RED);
@@ -89,7 +91,7 @@ void Player::PlayerController(const gef::SonyController * controller)
 	{
 		// move the player
 		b2Vec2 vel = GetBody()->GetLinearVelocity();
-		vel.x = 5;
+		vel.x = x_velocity;
 		GetBody()->SetLinearVelocity(vel);
 
 		if (jump_)
@@ -97,7 +99,7 @@ void Player::PlayerController(const gef::SonyController * controller)
 			if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE)
 			{
 				b2Vec2 vel = GetBody()->GetLinearVelocity();
-				vel.y = 10.0f;//upwards - don't change x velocity
+				vel.y = y_velocity;//upwards - don't change x velocity
 				GetBody()->SetLinearVelocity(vel);
 				//player_body_->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 5.0f), true);
 				//player_body_->ApplyLinearImpulse(b2Vec2(0, 10), player_body_->GetWorldCenter(), true);
@@ -106,19 +108,25 @@ void Player::PlayerController(const gef::SonyController * controller)
 			}
 		}
 	}
+	else
+	{
+		// stop the player
+		b2Vec2 vel = GetBody()->GetLinearVelocity();
+		vel.x = 0.0f;
+		GetBody()->SetLinearVelocity(vel);
+	}
 }
 
 void Player::StartContact()
 {
 	num_contacts_++;
-	//jump_ = true;
 	gef::DebugOut("Start Contact()\n");
 }
 
 void Player::EndContact()
 {
 	num_contacts_--;
-	jump_ = false;
+	//jump_ = false;
 	gef::DebugOut("EndContact()\n");
 }
 

@@ -58,7 +58,7 @@ void Ground::InitGround(
 
 	// create the fixture on the rigid body
 	GetBody()->CreateFixture(&ground_fixture_def);
-
+	
 	// update visuals from simulation data
 	UpdateFromSimulation(GetBody());
 

@@ -55,6 +55,11 @@ private:
 
 	// contacting
 	int num_contacts_;
+
+	// player's x velocity
+	float32 x_velocity;
+	// player's y velocity (jumping force)
+	float32 y_velocity;
 };
 
 #endif // !_PLAYER_H
