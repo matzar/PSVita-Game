@@ -34,7 +34,6 @@ public:
 	b2Body* body_;
 	gef::Mesh* mesh_;
 private:
-
 	OBJECT_TYPE type_;
 	OBJECT_COLOUR colour_;
 };

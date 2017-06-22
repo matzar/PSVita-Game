@@ -6,10 +6,11 @@
 Player::Player() :
 	//body_(nullptr),
 	jump_(false),
+	alive_(true),
 	num_contacts_(0)
 {
-	SetGameObjectType(PLAYER);
-	SetGameObjectColour(RED);
+	//SetGameObjectType(PLAYER);
+	//SetGameObjectColour(RED);
 }
 
 Player::~Player()
@@ -21,7 +22,9 @@ void Player::InitPlayer(
 	b2World* world, 
 	uint16 category_bits, 
 	uint16 mask_bits,
-	uint16 group_index)
+	uint16 group_index,
+	OBJECT_TYPE type,
+	OBJECT_COLOUR colour)
 {
 	//// set colour
 	//colour_ = colour;
@@ -59,6 +62,9 @@ void Player::InitPlayer(
 	// if both groupIndex values are the same and negative, don't collide
 	player_fixture_def.filter.groupIndex = group_index;
 
+	SetGameObjectType(type);
+	SetGameObjectColour(colour);
+
 	// create the fixture on the rigid body
 	body_->CreateFixture(&player_fixture_def);
 
@@ -77,22 +83,25 @@ void Player::DecrementHealth()
 
 void Player::PlayerController(const gef::SonyController * controller)
 {
-	// move the player
-	b2Vec2 vel = body_->GetLinearVelocity();
-	vel.x = 5;
-	body_->SetLinearVelocity(vel);
-
-	if (jump_)
+	if (alive_)
 	{
-		if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE)
+		// move the player
+		b2Vec2 vel = body_->GetLinearVelocity();
+		vel.x = 5;
+		body_->SetLinearVelocity(vel);
+
+		if (jump_)
 		{
-			b2Vec2 vel = body_->GetLinearVelocity();
-			vel.y = 10.0f;//upwards - don't change x velocity
-			body_->SetLinearVelocity(vel);
-			//player_body_->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 5.0f), true);
-			//player_body_->ApplyLinearImpulse(b2Vec2(0, 10), player_body_->GetWorldCenter(), true);
-			//player_body_->ApplyForce(b2Vec2(0.0f, 10.0f), player_body_->GetWorldCenter(), true);
-			jump_ = false;
+			if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE)
+			{
+				b2Vec2 vel = body_->GetLinearVelocity();
+				vel.y = 10.0f;//upwards - don't change x velocity
+				body_->SetLinearVelocity(vel);
+				//player_body_->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 5.0f), true);
+				//player_body_->ApplyLinearImpulse(b2Vec2(0, 10), player_body_->GetWorldCenter(), true);
+				//player_body_->ApplyForce(b2Vec2(0.0f, 10.0f), player_body_->GetWorldCenter(), true);
+				jump_ = false;
+			}
 		}
 	}
 }
@@ -100,12 +109,24 @@ void Player::PlayerController(const gef::SonyController * controller)
 void Player::StartContact()
 {
 	num_contacts_++;
-	jump_ = true;
-	gef::DebugOut("Start Contact\n");
+	//jump_ = true;
+	gef::DebugOut("Start Contact()\n");
 }
 
 void Player::EndContact()
 {
 	num_contacts_--;
-	gef::DebugOut("End Contact\n");
+	gef::DebugOut("EndContact()\n");
+}
+
+void Player::RestartJump()
+{
+	jump_ = true;
+	gef::DebugOut("RestartJump()\n");
+}
+
+void Player::DeadPlayer()
+{
+	alive_ = false;
+	gef::DebugOut("DeadPlayer()\n");
 }

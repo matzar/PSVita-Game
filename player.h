@@ -19,12 +19,22 @@ public:
 	Player();
 	~Player();
 
-	void InitPlayer(PrimitiveBuilder* primitve_builder, b2World* world, uint16 categoryBits, uint16 maskBits, uint16 group_index);
+	void InitPlayer(
+		PrimitiveBuilder* primitve_builder,
+		b2World* world,
+		uint16 categoryBits,
+		uint16 maskBits,
+		uint16 group_index,
+		OBJECT_TYPE type,
+		OBJECT_COLOUR colour);
+
 	void DecrementHealth();
 	
 	void PlayerController(const gef::SonyController* controller);
 	void StartContact();
 	void EndContact();
+	void RestartJump();
+	void DeadPlayer();
 
 	int IsContacting() { return num_contacts_; }
 	//b2Body* GetPlayerBody() { return player_body_; }
@@ -37,6 +47,9 @@ private:
 
 	// jumping
 	bool jump_;
+
+	// player alive
+	bool alive_;
 
 	// contacting
 	int num_contacts_;

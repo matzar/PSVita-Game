@@ -150,7 +150,7 @@ void Game::InitPlayer()
 {
 	// create Player player_ class
 	player_ = new Player();
-	player_->InitPlayer(primitive_builder_, world_, PLAYER, GROUND | PICKUP, 1);
+	player_->InitPlayer(primitive_builder_, world_, PLAYER, GROUND | PICKUP, 1, PLAYER, RED);
 } // !InitPlayer
 
 void Game::InitGround()

@@ -39,6 +39,7 @@ void Pickup::InitPickup(
 	b2FixtureDef pickup_fixture_def;
 	pickup_fixture_def.shape = &pickup_shape;
 	pickup_fixture_def.density = 1.0f;
+	pickup_fixture_def.isSensor = true;
 	// filter mask fixture definition
 	// I am a ... (category_bits)
 	pickup_fixture_def.filter.categoryBits = category_bits;

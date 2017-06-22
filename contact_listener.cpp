@@ -13,6 +13,25 @@ ContactListener::~ContactListener()
 
 void ContactListener::BeginContact(b2Contact * contact)
 {
+	/*Player* player = nullptr;
+	GameObject* game_object = nullptr;
+
+	GameObject* gameObjectA = nullptr;
+	GameObject* gameObjectB = nullptr;
+
+	b2Body* bodyA = contact->GetFixtureA()->GetBody();
+	b2Body* bodyB = contact->GetFixtureB()->GetBody();
+
+	gameObjectA = (GameObject*)bodyA->GetUserData();
+	gameObjectB = (GameObject*)bodyB->GetUserData();
+
+	if (gameObjectA->type() == PLAYER)
+	{
+		player = (Player*)gameObjectA;
+
+	}*/
+
+
 	// pointers for body A and body B
 	Player* player = nullptr;
 	GameObject* game_object = nullptr;
@@ -20,12 +39,14 @@ void ContactListener::BeginContact(b2Contact * contact)
 	// a pointer from the physics object to the entity in the game
 	void* bodyUserDataA = contact->GetFixtureA()->GetBody()->GetUserData();
 	// get body's A type
-	OBJECT_TYPE typeA = ((GameObject*)(bodyUserDataA))->GetGameObjectType();
+	// we cast body's A user data to GameObject pointer to be able to access its type
+	uint16 typeA = ((GameObject*)(bodyUserDataA))->GetGameObjectType();
 
 	// a pointer from the physics object to the entity in the game
 	void* bodyUserDataB = contact->GetFixtureB()->GetBody()->GetUserData();
 	// get body's B type
-	OBJECT_TYPE typeB = ((GameObject*)(bodyUserDataB))->GetGameObjectType();
+	// we cast body's B user data to GameObject pointer to be able to access its type
+	uint16 typeB = ((GameObject*)(bodyUserDataB))->GetGameObjectType();
 
 	// if body A is of the type PLAYER
 	if (typeA == PLAYER)
@@ -47,18 +68,16 @@ void ContactListener::BeginContact(b2Contact * contact)
 		if (player->GetGameObjectColour() == game_object->GetGameObjectColour())
 		{
 			// reset jump
-
-			player->StartContact();
+			player->RestartJump();
 			gef::DebugOut("Same colour\n");
 		}
 		//
 		if (game_object->GetGameObjectType() == GROUND && player->GetGameObjectColour() != game_object->GetGameObjectColour())
 		{
 			// destroy player
+			player->DeadPlayer();
 
 			// restart screen
-
-			player->StartContact();
 			gef::DebugOut("Different colours\n");
 		}
 
@@ -91,11 +110,13 @@ void ContactListener::EndContact(b2Contact * contact)
 	// a pointer from the physics object to the entity in the game
 	void* bodyUserDataA = contact->GetFixtureA()->GetBody()->GetUserData();
 	// get body's A type
+	// we cast body's A user data to GameObject pointer to be able to access its type
 	OBJECT_TYPE typeA = ((GameObject*)(bodyUserDataA))->GetGameObjectType();
 
 	// a pointer from the physics object to the entity in the game
 	void* bodyUserDataB = contact->GetFixtureB()->GetBody()->GetUserData();
 	// get body's B type
+	// we cast body's B user data to GameObject pointer to be able to access its type
 	OBJECT_TYPE typeB = ((GameObject*)(bodyUserDataB))->GetGameObjectType();
 
 	// if body A is of the type PLAYER
