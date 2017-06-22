@@ -8,12 +8,11 @@ class Platform;
 class Pickup : public GameObject
 {
 public:
-	Pickup(Platform& platform);
+	Pickup();
 	~Pickup();
 
 	void InitPickup(
 		PrimitiveBuilder* primitive_builder, 
-		Platform& platform,
 		b2World* world, 
 		b2Vec2 position, 
 		float32 radius, 
@@ -22,8 +21,6 @@ public:
 		uint16 group_index,
 		OBJECT_TYPE type);
 private:
-	Platform& platform_;
-	PrimitiveBuilder* primitive_builder_;
 };
 
 #endif // !PICKUP_H
