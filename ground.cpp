@@ -25,8 +25,8 @@ void Ground::InitGround(
 	gef::Vector4 ground_half_dimensions(5.0f, 0.5f, 0.5f);
 
 	// setup the mesh for the ground
-	mesh_ = primitive_builder->CreateBoxMesh(ground_half_dimensions);
-	set_mesh(mesh_);
+	SetMesh(primitive_builder->CreateBoxMesh(ground_half_dimensions));
+	set_mesh(GetMesh());
 
 	// create a physics body
 	b2BodyDef ground_body_def;
@@ -34,7 +34,7 @@ void Ground::InitGround(
 	ground_body_def.position = position;
 	ground_body_def.angle = 0.0f;
 
-	body_ = world->CreateBody(&ground_body_def);
+	SetBody(world->CreateBody(&ground_body_def));
 
 	// create the shape
 	b2PolygonShape shape;
@@ -57,13 +57,13 @@ void Ground::InitGround(
 	SetGameObjectColour(colour);
 
 	// create the fixture on the rigid body
-	body_->CreateFixture(&ground_fixture_def);
+	GetBody()->CreateFixture(&ground_fixture_def);
 
 	// update visuals from simulation data
-	UpdateFromSimulation(body_);
+	UpdateFromSimulation(GetBody());
 
 	// create a connection between the rigid body and GameObject
-	body_->SetUserData(this);
+	GetBody()->SetUserData(this);
 }
 
 //void Ground::CollisionResponse()

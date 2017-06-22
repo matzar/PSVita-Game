@@ -383,7 +383,7 @@ void Game::UpdateSimulation(float frame_time)
 	case MS_RIGHT: vel.x = b2Min(vel.x + 0.1f, 5.0f); break;*/
 	
 	// update object visuals from simulation data
-	player_->UpdateFromSimulation(player_->body_);
+	player_->UpdateFromSimulation(player_->GetBody());
 	/*
 	don't have to update the ground visuals as it is static
 	*/

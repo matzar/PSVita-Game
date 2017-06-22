@@ -32,9 +32,15 @@ public:
 	inline void SetGameObjectColour(OBJECT_COLOUR colour) { colour_ = colour; }
 	inline OBJECT_COLOUR GetGameObjectColour() { return colour_; }
 
+	void SetBody(b2Body* body) { body_ = body; }
+	b2Body* GetBody() { return body_; }
+
+	void SetMesh(gef::Mesh* mesh) { mesh_ = mesh; }
+	gef::Mesh* GetMesh() { return mesh_; }
+private:
 	b2Body* body_;
 	gef::Mesh* mesh_;
-private:
+
 	OBJECT_TYPE type_;
 	OBJECT_COLOUR colour_;
 };

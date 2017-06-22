@@ -13,23 +13,23 @@ ContactListener::~ContactListener()
 
 void ContactListener::BeginContact(b2Contact * contact)
 {
-	/*Player* player = nullptr;
-	GameObject* game_object = nullptr;
+	//Player* player = nullptr;
+	//GameObject* game_object = nullptr;
 
-	GameObject* gameObjectA = nullptr;
-	GameObject* gameObjectB = nullptr;
+	//GameObject* gameObjectA = nullptr;
+	//GameObject* gameObjectB = nullptr;
 
-	b2Body* bodyA = contact->GetFixtureA()->GetBody();
-	b2Body* bodyB = contact->GetFixtureB()->GetBody();
+	//b2Body* bodyA = contact->GetFixtureA()->GetBody();
+	//b2Body* bodyB = contact->GetFixtureB()->GetBody();
 
-	gameObjectA = (GameObject*)bodyA->GetUserData();
-	gameObjectB = (GameObject*)bodyB->GetUserData();
+	//gameObjectA = (GameObject*)bodyA->GetUserData();
+	//gameObjectB = (GameObject*)bodyB->GetUserData();
 
-	if (gameObjectA->type() == PLAYER)
-	{
-		player = (Player*)gameObjectA;
+	//if (gameObjectA->type() == PLAYER)
+	//{
+	//	player = (Player*)gameObjectA;
 
-	}*/
+	//}
 
 
 	// pointers for body A and body B
@@ -87,6 +87,8 @@ void ContactListener::BeginContact(b2Contact * contact)
 			if (game_object->GetGameObjectType() == PICKUP)
 			{
 				// set pickup to not active
+				game_object->GetBody()->SetActive(false);
+
 				gef::DebugOut("Pick this shit up!\n");
 			}
 		}

@@ -30,7 +30,7 @@ void Pickup::InitPickup(
 	pickup_body_def.position = position;
 	pickup_body_def.angle = 0.0f;
 
-	body_ = world->CreateBody(&pickup_body_def);
+	SetBody(world->CreateBody(&pickup_body_def));
 
 	// create the shape for the pickup
 	b2CircleShape pickup_shape;
@@ -54,11 +54,11 @@ void Pickup::InitPickup(
 	SetGameObjectType(type);
 
 	// create the fixture on the rigid body
-	body_->CreateFixture(&pickup_fixture_def);
+	GetBody()->CreateFixture(&pickup_fixture_def);
 
 	// update visuals from simulation data
-	UpdateFromSimulation(body_);
+	UpdateFromSimulation(GetBody());
 
 	// create a connection between the rigid body and GameObject
-	body_->SetUserData(this);
+	GetBody()->SetUserData(this);
 }
