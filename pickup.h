@@ -9,7 +9,15 @@ public:
 	Pickup();
 	~Pickup();
 
-	void InitPickup(PrimitiveBuilder* primitive_builder, b2World* world, b2Vec2 position, float32 radius, uint16 category_bits, uint16 mask_bits, uint16 group_index);
+	void InitPickup(
+		PrimitiveBuilder* primitive_builder, 
+		b2World* world, 
+		b2Vec2 position, 
+		float32 radius, 
+		uint16 category_bits, 
+		uint16 mask_bits, 
+		uint16 group_index);
+
 private:
 };
 

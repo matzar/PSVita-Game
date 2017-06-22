@@ -3,8 +3,8 @@
 
 Ground::Ground()
 {
-	SetGameObjectType(GROUND);
-	SetGameObjectColour(BLUE);
+	/*SetGameObjectType(GROUND);
+	SetGameObjectColour(BLUE);*/
 }
 
 Ground::~Ground()
@@ -17,7 +17,9 @@ void Ground::InitGround(
 	b2Vec2 position,
 	uint16 category_bits,
 	uint16 mask_bits,
-	uint16 group_index)
+	uint16 group_index,
+	OBJECT_TYPE type,
+	OBJECT_COLOUR colour)
 {
 	// ground dimensions
 	gef::Vector4 ground_half_dimensions(5.0f, 0.5f, 0.5f);
@@ -51,9 +53,8 @@ void Ground::InitGround(
 	// if both groupIndex values are the same and negative, don't collide
 	ground_fixture_def.filter.groupIndex = group_index;
 
-	/*
-	Since the default category for a fixture is 1, this arrangement means we don't need to do anything special for the boundary fixture 
-	*/
+	SetGameObjectType(type);
+	SetGameObjectColour(colour);
 
 	// create the fixture on the rigid body
 	body_->CreateFixture(&ground_fixture_def);
