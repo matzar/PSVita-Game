@@ -418,15 +418,21 @@ void Game::UpdateSimulation(float frame_time)
 
 	if (!(contact_listener_->pickups_scheduled_for_removal_.empty()))
 	{
-		for (GameObject* pickup : contact_listener_->pickups_scheduled_for_removal_)
+		for (GameObject* dying_game_object : contact_listener_->pickups_scheduled_for_removal_)
 		{
+			//pickup->GetBody()->GetWorld()->DestroyBody(pickup->GetBody());
+			//delete primitive_builder_->GetDefaultSphereMesh();
+			std::vector<Pickup*>::iterator it = std::find(pickups_.begin(), pickups_.end(), dying_game_object);
+			if (it != pickups_.end())
 			{
-				delete pickup;
-				
-				contact_listener_->pickups_scheduled_for_removal_.erase(pickup);
-				contact_listener_->pickups_scheduled_for_removal_.clear();
+				pickups_.erase(it);
 			}
+
+			delete dying_game_object;
+			
+			contact_listener_->pickups_scheduled_for_removal_.erase(dying_game_object);
 		}
+		contact_listener_->pickups_scheduled_for_removal_.clear();
 	}
 
 } // !UpdateSimulation

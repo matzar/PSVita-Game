@@ -11,7 +11,7 @@
 // box2D header
 #include <box2d/Box2D.h>
 
-class GameObject : public gef::MeshInstance, PrimitiveBuilder
+class GameObject : public gef::MeshInstance
 {
 public:
 	//GameObject() {}
