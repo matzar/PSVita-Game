@@ -62,16 +62,6 @@ void ContactListener::BeginContact(b2Contact * contact)
 		player = static_cast<Player*>(bodyUserDataB);
 		game_object = static_cast<GameObject*>(bodyUserDataA);
 	}
-	/*else if (typeA == PLAYER && typeB == PICKUP)
-	{
-		player = static_cast<Player*>(bodyUserDataA);
-		game_object = static_cast<Pickup*>(bodyUserDataB);
-	}
-	else if (typeB == PLAYER && typeA == PICKUP)
-	{
-		player = static_cast<Player*>(bodyUserDataB);
-		game_object = static_cast<Pickup*>(bodyUserDataA);
-	}*/
 
 	// collision response
 	if (player)

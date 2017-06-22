@@ -1,18 +1,17 @@
 #include "game_object.h"
 #include <system/debug_log.h>
-//
-// UpdateFromSimulation
-// 
-// Update the transform of this object from a physics rigid body
-//
 
 GameObject::~GameObject()
 {
 	gef::DebugOut("DELETE GAME OBJECT!\n");
 	this->body_->GetWorld()->DestroyBody(body_);
-	this->UpdateFromSimulation(body_);
 }
 
+//
+// UpdateFromSimulation
+// 
+// Update the transform of this object from a physics rigid body
+//
 void GameObject::UpdateFromSimulation(const b2Body* body)
 {
 	if (body)
