@@ -10,9 +10,9 @@ Pickup::~Pickup()
 {
 	// destroy pickup
 	//GetBody()->SetActive(false);
-	//GetBody()->GetWorld()->DestroyBody(GetBody());
+	GetBody()->GetWorld()->DestroyBody(GetBody());
 	//~GameObject();
-	GetBody()->SetActive(false);
+	//GetBody()->SetActive(false);
 	//mesh_->~Mesh();
 }
 

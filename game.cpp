@@ -398,16 +398,34 @@ void Game::UpdateSimulation(float frame_time)
 		gef::DebugOut("End Contact\n");
 	}*/
 
-	for (Pickup* pickup : pickups_)
+	std::set<GameObject*>::iterator it = pickups_scheduled_for_removal_.begin();
+	std::set<GameObject*>::iterator end = pickups_scheduled_for_removal_.end();
+
+	for (; it != end; ++it) 
 	{
-		if (!(pickup->game_object_scheduled_for_removal_.empty()))
-		{
-			delete pickup;
-			
-			//pickup->game_object_scheduled_for_removal_.erase(pickup);
-			//pickup->game_object_scheduled_for_removal_.clear();
-		}
+		GameObject* dyingGameObject = *it;
+
+		delete dyingGameObject;
+
+		//... and remove it from main list of balls
+		std::vector<Pickup*>::iterator it = std::find(pickups_.begin(), pickups_.end(), dyingGameObject);
+		if (it != pickups_.end())
+			pickups_.erase(it);
 	}
+
+	//clear this list for next time
+	pickups_scheduled_for_removal_.clear();
+
+	//for (Pickup* pickup : pickups_)
+	//{
+	//	if (!(pickup->pickups_scheduled_for_removal_.empty()))
+	//	{
+	//		delete pickup;
+	//		gef::DebugOut("delete!\n");
+	//		//pickup->game_object_scheduled_for_removal_.erase(pickup);
+	//		//pickup->game_object_scheduled_for_removal_.clear();
+	//	}
+	//}
 
 } // !UpdateSimulation
 

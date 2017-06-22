@@ -2,6 +2,7 @@
 #include "system\debug_log.h"
 #include "player.h"
 #include "ground.h"
+#include "pickup.h"
 
 ContactListener::ContactListener()
 {
@@ -35,6 +36,7 @@ void ContactListener::BeginContact(b2Contact * contact)
 	// pointers for body A and body B
 	Player* player = nullptr;
 	GameObject* game_object = nullptr;
+	Pickup* pickup = nullptr;
 
 	// a pointer from the physics object to the entity in the game
 	void* bodyUserDataA = contact->GetFixtureA()->GetBody()->GetUserData();
@@ -60,6 +62,16 @@ void ContactListener::BeginContact(b2Contact * contact)
 		player = static_cast<Player*>(bodyUserDataB);
 		game_object = static_cast<GameObject*>(bodyUserDataA);
 	}
+	/*else if (typeA == PLAYER && typeB == PICKUP)
+	{
+		player = static_cast<Player*>(bodyUserDataA);
+		game_object = static_cast<Pickup*>(bodyUserDataB);
+	}
+	else if (typeB == PLAYER && typeA == PICKUP)
+	{
+		player = static_cast<Player*>(bodyUserDataB);
+		game_object = static_cast<Pickup*>(bodyUserDataA);
+	}*/
 
 	// collision response
 	if (player)
@@ -87,7 +99,7 @@ void ContactListener::BeginContact(b2Contact * contact)
 			if (game_object->GetGameObjectType() == PICKUP)
 			{
 				// set pickup to not active
-				game_object->game_object_scheduled_for_removal_.insert(game_object);
+				pickups_scheduled_for_removal_.insert(game_object);
 
 				gef::DebugOut("Pick this shit up!\n");
 			}

@@ -42,8 +42,6 @@ public:
 	void SetMesh(gef::Mesh* mesh) { mesh_ = mesh; }
 	gef::Mesh* GetMesh() { return mesh_; }
 
-	std::set<GameObject*> game_object_scheduled_for_removal_;
-	//void CleanUp();
 private:
 	b2Body* body_;
 	gef::Mesh* mesh_;
@@ -52,4 +50,5 @@ private:
 	OBJECT_COLOUR colour_;
 };
 
+//static std::set<GameObject*> pickups_scheduled_for_removal_;
 #endif // !_GAME_OBJECT_H
