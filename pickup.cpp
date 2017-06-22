@@ -13,12 +13,12 @@ Pickup::~Pickup()
 void Pickup::InitPickup(
 	PrimitiveBuilder* primitive_builder, 
 	b2World* world, 
-	b2Vec2 position, 
+	b2Vec2 position,
+	float32 radius,
 	uint16 category_bits, 
 	uint16 mask_bits, 
 	uint16 group_index)
 {
-	float radius = 0.2;
 	// setup the mesh for the pickup
 	set_mesh(primitive_builder->CreateSphereMesh(radius, 10, 10, gef::Vector4(0.0f, 0.0f, 0.0f), (gef::Material*)(&primitive_builder->blue_material())));
 	//set_mesh(primitive_builder->GetDefaultSphereMesh());
@@ -33,7 +33,7 @@ void Pickup::InitPickup(
 
 	// create the shape for the pickup
 	b2CircleShape pickup_shape;
-	pickup_shape.m_radius = 0.5f;
+	pickup_shape.m_radius = radius;
 
 	// create the fixture
 	b2FixtureDef pickup_fixture_def;

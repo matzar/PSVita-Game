@@ -156,14 +156,14 @@ void Game::InitPlayer()
 void Game::InitGround()
 {
 	// will be used for grounds intervals
-	float j = 0.0f;
+	float interval = 0.0f;
 
 	//for (auto ground : ground_)
 	for (int i = 0; i < 5; ++i)
 	{
 		ground_.push_back( new Ground());
-		ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + j, 0.0f), GROUND, PLAYER | PICKUP, 1);
-		j += 15.0f;
+		ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + interval, 0.0f), GROUND, PLAYER | PICKUP, 1);
+		interval += 15.0f;
 	}
 	//ground_ = new Ground();
 	//ground_->InitGround(primitive_builder_, world_, b2Vec2(0.0f, 0.0f));
@@ -178,7 +178,7 @@ void Game::InitPickups()
 	for (int i = 0; i < 3; ++i)
 	{
 		pickups_.push_back(new Pickup());
-		pickups_.at(i)->InitPickup(primitive_builder_, world_, b2Vec2(0.0f + j, 1.0f), PICKUP, PLAYER | GROUND, 1);
+		pickups_.at(i)->InitPickup(primitive_builder_, world_, b2Vec2(0.0f + j, 1.0f), 0.2f, PICKUP, PLAYER | GROUND, 1);
 		j += 3.0f;
 	}
 } // !InitPickups()

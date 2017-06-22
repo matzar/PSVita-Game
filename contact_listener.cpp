@@ -43,20 +43,31 @@ void ContactListener::BeginContact(b2Contact * contact)
 	// collision response
 	if (player)
 	{
+		//
 		if (player->GetGameObjectColour() == game_object->GetGameObjectColour())
 		{
+			// reset jump
+
 			player->StartContact();
 			gef::DebugOut("Same colour\n");
 		}
+		//
 		if (game_object->GetGameObjectType() == GROUND && player->GetGameObjectColour() != game_object->GetGameObjectColour())
 		{
+			// destroy player
+
+			// restart screen
+
+			player->StartContact();
 			gef::DebugOut("Different colours\n");
 		}
 
 		if (game_object)
 		{
+			//
 			if (game_object->GetGameObjectType() == PICKUP)
 			{
+				// set pickup to not active
 				gef::DebugOut("Pick this shit up!\n");
 			}
 		}
