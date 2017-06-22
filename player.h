@@ -22,6 +22,8 @@ public:
 	void InitPlayer(
 		PrimitiveBuilder* primitve_builder,
 		b2World* world,
+		b2Vec2 position,
+		float32 radius,
 		uint16 categoryBits,
 		uint16 maskBits,
 		uint16 group_index,

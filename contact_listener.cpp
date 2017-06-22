@@ -140,14 +140,33 @@ void ContactListener::EndContact(b2Contact * contact)
 	// collision response
 	if (player)
 	{
-		player->EndContact();
-	}
-
-	if (game_object)
-	{
-		if (game_object->GetGameObjectType() == GROUND)
+		//
+		if (player->GetGameObjectColour() == game_object->GetGameObjectColour())
 		{
-
+			// reset jump
+			player->EndContact();
+			gef::DebugOut("Same colour\n");
 		}
+		//
+		//if (game_object->GetGameObjectType() == GROUND && player->GetGameObjectColour() != game_object->GetGameObjectColour())
+		//{
+		//	// destroy player
+		//	player->DeadPlayer();
+
+		//	// restart screen
+		//	gef::DebugOut("Different colours\n");
+		//}
+
+		//if (game_object)
+		//{
+		//	//
+		//	if (game_object->GetGameObjectType() == PICKUP)
+		//	{
+		//		// set pickup to not active
+		//		dying_pickups_scheduled_for_removal_.insert(game_object);
+
+		//		gef::DebugOut("Pick this shit up!\n");
+		//	}
+		//}
 	}
 }

@@ -19,7 +19,9 @@ Player::~Player()
 
 void Player::InitPlayer(
 	PrimitiveBuilder* primitve_builder, 
-	b2World* world, 
+	b2World* world,
+	b2Vec2 position,
+	float32 radius,
 	uint16 category_bits, 
 	uint16 mask_bits,
 	uint16 group_index,
@@ -35,7 +37,7 @@ void Player::InitPlayer(
 	// create a physics body for the player
 	b2BodyDef player_body_def;
 	player_body_def.type = b2_dynamicBody;
-	player_body_def.position = b2Vec2(0.0f, 4.0f);
+	player_body_def.position = position;
 	player_body_def.angle = 0.0f;
 	//player_body_def.fixedRotation;
 
@@ -46,7 +48,7 @@ void Player::InitPlayer(
 	b2CircleShape player_shape;
 	// if cube 1x1, need to pass half of both dimensions
 	//player_shape.SetAsBox(0.5f, 0.5f);
-	player_shape.m_radius = 0.5f;
+	player_shape.m_radius = radius;
 
 	// create the fixture
 	b2FixtureDef player_fixture_def;
