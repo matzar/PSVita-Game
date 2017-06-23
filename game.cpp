@@ -258,34 +258,12 @@ void Game::GameRelease()
 	delete primitive_builder_;
 	primitive_builder_ = nullptr;
 
-	delete contact_listener_;
-	contact_listener_ = nullptr;
-
 	// destroying the physics world also destroys all the objects within it
 	// shapes and joints are destroyed in b2World::Destroy 
-	// not need to explicitly delete player_body_ and ground_body_
+	// no need to explicitly delete player, ground or pickups
+	// contact listener part of the world as well, no need to explicitly delete either
 	delete world_;
 	world_ = nullptr;
-
-	delete player_;
-	player_ = nullptr;
-
-	//delete ground_mesh_;
-	//ground_mesh_ = nullptr;
-
-	for (Ground* ground : ground_)
-	{
-		delete ground;
-		ground = nullptr;
-		/*delete ground_;
-		ground_ = nullptr;*/
-	}
-
-	for (Pickup* pickup : pickups_)
-	{
-		delete pickup;
-		pickup = nullptr;
-	}
 
 	// clean up camera
 	delete camera_;
