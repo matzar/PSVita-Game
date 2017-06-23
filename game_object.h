@@ -33,6 +33,7 @@ public:
 	inline OBJECT_COLOUR GetGameObjectColour() { return colour_; }
 	inline void SetBody(b2Body* body) { body_ = body; }
 	// TODO keep it no-const or just make body_ public?
+	// could use const meaybe somewhere
 	inline b2Body* GetBody() { return body_; }
 	
 	inline void SetMesh(gef::Mesh* mesh) { mesh_ = mesh; }

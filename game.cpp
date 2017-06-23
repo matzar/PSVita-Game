@@ -467,7 +467,7 @@ void Game::GameRender()
 	// draw 3d geometry
 	renderer_3d_->Begin();
 	{
-
+		// TODO
 		// draw player
 		renderer_3d_->set_override_material(&primitive_builder_->red_material());
 		renderer_3d_->DrawMesh(*player_);

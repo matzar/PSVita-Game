@@ -7,6 +7,7 @@
 
 #include <graphics/sprite_renderer.h>
 #include <graphics/sprite.h>
+#include <graphics/material.h>
 
 #include <input/input_manager.h>
 #include <input/sony_controller_input_manager.h>
@@ -88,9 +89,11 @@ void Frontend::FrontendInit()
 
 	InitAudio();
 
+	// TODO createing material from the texture
 	// initialise button icon
 	button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
-
+	/*gef::Material texture_material;
+	texture_material.set_texture(button_icon_);*/
 	InitFont();
 } // !FrontendInit
 
