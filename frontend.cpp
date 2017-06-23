@@ -7,7 +7,6 @@
 
 #include <graphics/sprite_renderer.h>
 #include <graphics/sprite.h>
-#include <graphics/material.h>
 
 #include <input/input_manager.h>
 #include <input/sony_controller_input_manager.h>

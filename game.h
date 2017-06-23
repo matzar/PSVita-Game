@@ -4,6 +4,7 @@
 // gef headers
 #include <system/application.h>
 #include <maths/vector2.h>
+#include <graphics/material.h>
 // std headers
 #include <vector>
 #include <box2d/Box2D.h>
@@ -19,6 +20,8 @@ namespace gef
 	class Renderer3D;
 	class Mesh;
 	class SonyController;
+	class Texture;
+
 } // gef
 
 // Class forward declarations
@@ -57,6 +60,11 @@ private:
 	
 	// font
 	gef::Font* font_;
+
+	// textures
+	gef::Texture* texture_;
+	// textures' materials
+	gef::Material texture_material_;
 
 	// sprite renderer
 	gef::SpriteRenderer* sprite_renderer_;
@@ -116,6 +124,7 @@ private:
 	void CleanUpFont();
 	void DrawHUD();
 	void SetupLights();
+	void InitTextures();
 	void InitCamera();
 	void InitWorld();
 	void InitPlayer();

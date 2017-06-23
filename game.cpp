@@ -45,6 +45,8 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	platform_(platform),
 	gamestate_(gamestate),
 	font_(nullptr),
+	texture_(nullptr),
+	//texture_material_(nullptr),
 	sprite_renderer_(nullptr),
 	input_manager_(nullptr),
 	audio_manager_(nullptr),
@@ -103,6 +105,12 @@ void Game::SetupLights()
 	default_point_light.set_colour(gef::Colour(0.7f, 0.7f, 1.0f, 1.0f));
 	default_point_light.set_position(gef::Vector4(-500.0f, 400.0f, 700.0f));
 	default_shader_data.AddPointLight(default_point_light);
+}
+
+void Game::InitTextures()
+{
+	texture_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
+	texture_material_.set_texture(texture_);
 }
 
 void Game::InitAudio()
@@ -200,6 +208,8 @@ void Game::GameInit()
 	InitFont();
 
 	SetupLights();
+
+	InitTextures();
 
 	InitCamera();
 
@@ -467,7 +477,7 @@ void Game::GameRender()
 	// draw 3d geometry
 	renderer_3d_->Begin();
 	{
-		// TODO
+
 		// draw player
 		renderer_3d_->set_override_material(&primitive_builder_->red_material());
 		renderer_3d_->DrawMesh(*player_);
@@ -476,7 +486,9 @@ void Game::GameRender()
 		// draw ground
 		for (auto ground : ground_)
 		{
+			renderer_3d_->set_override_material(&texture_material_);
 			renderer_3d_->DrawMesh(*ground);
+			renderer_3d_->set_override_material(nullptr);
 		}
 
 		// draw pickups
