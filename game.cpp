@@ -109,7 +109,7 @@ void Game::SetupLights()
 
 void Game::InitTextures()
 {
-	texture_ = CreateTextureFromPNG("ground1.png", platform_);
+	texture_ = CreateTextureFromPNG("nauticalTile_160.png", platform_);
 	texture_material_.set_texture(texture_);
 }
 

@@ -126,10 +126,15 @@ private:
 	void InitTextures();
 	void CleanupTextures();
 	void InitCamera();
+	void CleanupCamera();
 	void InitWorld();
+	void CleanupWorld();
 	void InitPlayer();
+	void CleanupPlayer();
 	void InitGround();
+	void CleanupGround();
 	void InitPickups();
+	void CleanupPickups();
 };
 
 #endif // !_GAME_H
