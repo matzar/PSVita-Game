@@ -21,7 +21,6 @@ namespace gef
 	class Mesh;
 	class SonyController;
 	class Texture;
-
 } // gef
 
 // Class forward declarations
@@ -121,10 +120,11 @@ private:
 	void UpdateSimulation(float frame_time);
 	void InitAudio();
 	void InitFont();
-	void CleanUpFont();
+	void CleanupFont();
 	void DrawHUD();
 	void SetupLights();
 	void InitTextures();
+	void CleanupTextures();
 	void InitCamera();
 	void InitWorld();
 	void InitPlayer();

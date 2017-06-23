@@ -76,7 +76,7 @@ void Game::InitFont()
 	font_->Load("comic_sans");
 }
 
-void Game::CleanUpFont()
+void Game::CleanupFont()
 {
 	delete font_;
 	font_ = nullptr;
@@ -109,8 +109,14 @@ void Game::SetupLights()
 
 void Game::InitTextures()
 {
-	texture_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
+	texture_ = CreateTextureFromPNG("ground1.png", platform_);
 	texture_material_.set_texture(texture_);
+}
+
+void Game::CleanupTextures()
+{
+	delete texture_;
+	texture_ = nullptr;
 }
 
 void Game::InitAudio()
@@ -284,6 +290,8 @@ void Game::GameRelease()
 	// clean up camera
 	delete camera_;
 	camera_ = nullptr;
+
+	CleanupTextures();
 }
 
 #ifdef _WIN32 
