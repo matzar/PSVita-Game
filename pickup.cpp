@@ -13,13 +13,15 @@ void Pickup::InitPickup(
 	b2World* world, 
 	b2Vec2 position,
 	float32 radius,
+	gef::Mesh* mesh,
 	uint16 category_bits, 
 	uint16 mask_bits, 
 	uint16 group_index,
 	OBJECT_TYPE type)
 {
 	// setup the mesh for the pickup
-	set_mesh(primitive_builder->CreateSphereMesh(radius, 10, 10, gef::Vector4(0.0f, 0.0f, 0.0f), (gef::Material*)(&primitive_builder->blue_material())));
+	set_mesh(mesh);
+	//set_mesh(primitive_builder->CreateSphereMesh(radius, 10, 10, gef::Vector4(0.0f, 0.0f, 0.0f), (gef::Material*)(&primitive_builder->blue_material())));
 	//set_mesh(primitive_builder->GetDefaultSphereMesh());
 
 	// create a physics body for the pickup

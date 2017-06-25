@@ -10,6 +10,7 @@
 
 #include <graphics/renderer_3d.h>
 #include <graphics/mesh.h>
+#include <graphics/scene.h>
 #include <maths/math_utils.h>
 
 #include <input/input_manager.h>
@@ -58,6 +59,7 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	world_(nullptr),
 	player_(nullptr),
 	model_scene_(nullptr),
+	mesh_(nullptr),
 	//ground_,
 	fps_(0),
 	sfx_id_(-1),
@@ -187,6 +189,22 @@ void Game::InitGround()
 
 void Game::InitPickups()
 {
+	// create a new scene object and read in the data from the file
+	// no meshes or materials are created yet
+	// we're not making any assumptions about what the data may be loaded in for
+	model_scene_ = new gef::Scene();
+	model_scene_->ReadSceneFromFile(platform_, "rock.scn");
+
+	// we do want to render the data stored in the scene file so lets create the materials from the material data present in the scene file
+	model_scene_->CreateMaterials(platform_);
+
+	// now check to see if there is any mesh data in the file, if so lets create a mesh from it
+	if (model_scene_->meshes.size() > 0)
+		mesh_ = model_scene_->CreateMesh(platform_, model_scene_->meshes.front());
+
+	// get the player mesh instance to use this mesh for drawing
+	//pickups_.at(0)->set_mesh(mesh_);
+
 	// create Pickup pclass
 	float j = 0.0f;
 
@@ -194,7 +212,7 @@ void Game::InitPickups()
 	for (int i = 0; i < 3; ++i)
 	{
 		pickups_.push_back(new Pickup());
-		pickups_.at(i)->InitPickup(primitive_builder_, world_, b2Vec2(0.0f + j, 1.0f), 0.2f, PICKUP, PLAYER | GROUND, 1, PICKUP);
+		pickups_.at(i)->InitPickup(primitive_builder_, world_, b2Vec2(0.0f + j, 1.0f), 0.2f, mesh_, PICKUP, PLAYER | GROUND, 1, PICKUP);
 		j += 3.0f;
 	}
 } // !InitPickups

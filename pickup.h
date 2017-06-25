@@ -14,6 +14,7 @@ public:
 		b2World* world, 
 		b2Vec2 position, 
 		float32 radius, 
+		gef::Mesh* mesh,
 		uint16 category_bits, 
 		uint16 mask_bits, 
 		uint16 group_index,

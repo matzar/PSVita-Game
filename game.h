@@ -105,6 +105,8 @@ private:
 
 	// model
 	gef::Scene* model_scene_;
+	gef::Mesh* mesh_;
+	//gef::MeshInstance apple_;
 
 	float fps_;
 	// audio variables
