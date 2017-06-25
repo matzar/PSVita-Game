@@ -47,7 +47,6 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	gamestate_(gamestate),
 	font_(nullptr),
 	texture_(nullptr),
-	//texture_material_(nullptr),
 	sprite_renderer_(nullptr),
 	input_manager_(nullptr),
 	audio_manager_(nullptr),
@@ -112,7 +111,7 @@ void Game::SetupLights()
 
 void Game::InitTextures()
 {
-	texture_ = CreateTextureFromPNG("nauticalTile_160.png", platform_);
+	texture_ = CreateTextureFromPNG("rock.png", platform_);
 	texture_material_.set_texture(texture_);
 } // !InitTextures
 
@@ -193,7 +192,7 @@ void Game::InitPickups()
 	// no meshes or materials are created yet
 	// we're not making any assumptions about what the data may be loaded in for
 	model_scene_ = new gef::Scene();
-	model_scene_->ReadSceneFromFile(platform_, "rock.scn");
+	model_scene_->ReadSceneFromFile(platform_, "triceratop.scn");
 
 	// we do want to render the data stored in the scene file so lets create the materials from the material data present in the scene file
 	model_scene_->CreateMaterials(platform_);
@@ -522,7 +521,11 @@ void Game::GameRender()
 		// draw pickups
 		for (auto pickup : pickups_)
 		{
+			// set texture
+			//renderer_3d_->set_override_material(&texture_material_);
 			renderer_3d_->DrawMesh(*pickup);
+			// unmount texture
+			//renderer_3d_->set_override_material(nullptr);
 		}
 	}
 	renderer_3d_->End();
