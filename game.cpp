@@ -463,21 +463,34 @@ void Game::GameRender()
 	// draw 3d geometry
 	renderer_3d_->Begin();
 	{
-
 		// draw player
+		// set texture
 		if (player_->PlayerIsRed())
 			renderer_3d_->set_override_material(&primitive_builder_->red_material());
 		else
 			renderer_3d_->set_override_material(&primitive_builder_->blue_material());
-			renderer_3d_->DrawMesh(*player_);
-			renderer_3d_->set_override_material(nullptr);
+		// draw texture
+		renderer_3d_->DrawMesh(*player_);
+		// unmount texture
+		renderer_3d_->set_override_material(nullptr);
 
 		// draw ground
 		for (auto ground : ground_)
 		{
 			// set texture
-			//renderer_3d_->set_override_material(&texture_material_);
+			if (ground->GetGameObjectColour() == RED)
+				renderer_3d_->set_override_material(&primitive_builder_->red_material());
+			else
+				renderer_3d_->set_override_material(&primitive_builder_->blue_material());
+			// draw texture
 			renderer_3d_->DrawMesh(*ground);
+			// unmount texture
+			renderer_3d_->set_override_material(nullptr);
+
+			// TODO set texture
+			// set texture
+			//renderer_3d_->set_override_material(&texture_material_);
+			//renderer_3d_->DrawMesh(*ground);
 			// unmount texture
 			//renderer_3d_->set_override_material(nullptr);
 		}
