@@ -57,6 +57,7 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	contact_filter_(nullptr),
 	world_(nullptr),
 	player_(nullptr),
+	model_scene_(nullptr),
 	//ground_,
 	fps_(0),
 	sfx_id_(-1),
@@ -176,7 +177,10 @@ void Game::InitGround()
 	for (int i = 0; i < 5; ++i)
 	{
 		ground_.push_back( new Ground());
-		ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + interval, 0.0f), GROUND, PLAYER | PICKUP, 1, GROUND, RED);
+		if (i % 2 == 0)
+			ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + interval, 0.0f), GROUND, PLAYER | PICKUP, 1, GROUND, RED);
+		else
+			ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + interval, 0.0f), GROUND, PLAYER | PICKUP, 1, GROUND, BLUE);
 		interval += 15.0f;
 	}
 } // !InitGround
@@ -193,7 +197,7 @@ void Game::InitPickups()
 		pickups_.at(i)->InitPickup(primitive_builder_, world_, b2Vec2(0.0f + j, 1.0f), 0.2f, PICKUP, PLAYER | GROUND, 1, PICKUP);
 		j += 3.0f;
 	}
-} // !InitPickups()
+} // !InitPickups
 
 void Game::GameInit()
 {
@@ -480,8 +484,10 @@ void Game::GameRender()
 			// set texture
 			if (ground->GetGameObjectColour() == RED)
 				renderer_3d_->set_override_material(&primitive_builder_->red_material());
-			else
+			else if (ground->GetGameObjectColour() == BLUE)
 				renderer_3d_->set_override_material(&primitive_builder_->blue_material());
+			else
+				renderer_3d_->set_override_material(&texture_material_);
 			// draw texture
 			renderer_3d_->DrawMesh(*ground);
 			// unmount texture

@@ -21,6 +21,7 @@ namespace gef
 	class Mesh;
 	class SonyController;
 	class Texture;
+	class Scene;
 } // gef
 
 // Class forward declarations
@@ -101,6 +102,9 @@ private:
 
 	// pickup
 	std::vector<Pickup*> pickups_;
+
+	// model
+	gef::Scene* model_scene_;
 
 	float fps_;
 	// audio variables
