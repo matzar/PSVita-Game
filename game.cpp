@@ -74,13 +74,13 @@ void Game::InitFont()
 {
 	font_ = new gef::Font(platform_);
 	font_->Load("comic_sans");
-}
+} // !InitFont
 
 void Game::CleanupFont()
 {
 	delete font_;
 	font_ = nullptr;
-}
+} // !CleanupFont
 
 void Game::DrawHUD()
 {
@@ -89,7 +89,7 @@ void Game::DrawHUD()
 		// display frame rate
 		font_->RenderText(sprite_renderer_, gef::Vector4(850.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f", fps_);
 	}
-}
+} // !DrawHUD
 
 void Game::SetupLights()
 {
@@ -105,19 +105,19 @@ void Game::SetupLights()
 	default_point_light.set_colour(gef::Colour(0.7f, 0.7f, 1.0f, 1.0f));
 	default_point_light.set_position(gef::Vector4(-500.0f, 400.0f, 700.0f));
 	default_shader_data.AddPointLight(default_point_light);
-}
+} // !SetupLights
 
 void Game::InitTextures()
 {
 	texture_ = CreateTextureFromPNG("nauticalTile_160.png", platform_);
 	texture_material_.set_texture(texture_);
-}
+} // !InitTextures
 
 void Game::CleanupTextures()
 {
 	delete texture_;
 	texture_ = nullptr;
-}
+} // !ClenupTextures
 
 void Game::InitAudio()
 {
@@ -270,7 +270,7 @@ void Game::GameRelease()
 	camera_ = nullptr;
 
 	CleanupTextures();
-}
+} // !GameRelease
 
 #ifdef _WIN32 
 // Only on windows platforms
@@ -376,7 +376,7 @@ void Game::UpdatePickups()
 		//clear the set for the next time
 		contact_listener_->dying_pickups_scheduled_for_removal_.clear();
 	}
-}
+} // !UpdatePickups
 
 void Game::UpdateSimulation(float frame_time)
 {
@@ -440,7 +440,7 @@ void Game::GameUpdate(float frame_time)
 	} // !input_manager_
 
 	UpdateSimulation(frame_time);
-}
+} // !GameUpdate
 
 void Game::GameRender()
 {
@@ -465,16 +465,21 @@ void Game::GameRender()
 	{
 
 		// draw player
-		renderer_3d_->set_override_material(&primitive_builder_->red_material());
-		renderer_3d_->DrawMesh(*player_);
-		renderer_3d_->set_override_material(nullptr);
+		if (player_->PlayerIsRed())
+			renderer_3d_->set_override_material(&primitive_builder_->red_material());
+		else
+			renderer_3d_->set_override_material(&primitive_builder_->blue_material());
+			renderer_3d_->DrawMesh(*player_);
+			renderer_3d_->set_override_material(nullptr);
 
 		// draw ground
 		for (auto ground : ground_)
 		{
-			renderer_3d_->set_override_material(&texture_material_);
+			// set texture
+			//renderer_3d_->set_override_material(&texture_material_);
 			renderer_3d_->DrawMesh(*ground);
-			renderer_3d_->set_override_material(nullptr);
+			// unmount texture
+			//renderer_3d_->set_override_material(nullptr);
 		}
 
 		// draw pickups
@@ -491,4 +496,4 @@ void Game::GameRender()
 		DrawHUD();
 	}
 	sprite_renderer_->End();
-}
+} // !GameRenderer

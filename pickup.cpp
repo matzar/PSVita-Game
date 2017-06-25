@@ -59,4 +59,4 @@ void Pickup::InitPickup(
 
 	// create a connection between the rigid body and GameObject
 	GetBody()->SetUserData(this);
-}
+} // !InitPickup

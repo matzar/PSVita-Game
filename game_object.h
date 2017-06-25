@@ -20,12 +20,6 @@ public:
 	void UpdateFromSimulation(const b2Body* body);
 	//void MyCollisionResponse();
 
-	/*inline void SetBody(b2Body* body) { body_ = body; }
-	inline b2Body* GetBody() { return body_; }
-
-	inline void SetMest(gef::Mesh* mesh) { mesh_ = mesh; }
-	inline gef::Mesh* GetMesh() { return mesh_; }*/
-
 	inline void SetGameObjectType(OBJECT_TYPE type) { type_ = type; }
 	inline OBJECT_TYPE GetGameObjectType() { return type_; }
 

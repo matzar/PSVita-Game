@@ -7,6 +7,7 @@ Player::Player() :
 	//body_(nullptr),
 	jump_(false),
 	alive_(true),
+	red_(true),
 	num_contacts_(0),
 	x_velocity(5.0f),
 	y_velocity(8.0f)
@@ -96,7 +97,7 @@ void Player::PlayerController(const gef::SonyController * controller)
 
 		if (jump_)
 		{
-			if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE)
+			if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
 			{
 				b2Vec2 vel = GetBody()->GetLinearVelocity();
 				vel.y = y_velocity;//upwards - don't change x velocity
@@ -109,6 +110,15 @@ void Player::PlayerController(const gef::SonyController * controller)
 		}
 
 		// TODO change colour at runtime
+		if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE)
+		{
+			red_ = !red_;
+
+			if (red_)
+				this->SetGameObjectColour(RED);
+			else
+				this->SetGameObjectColour(BLUE);
+		}
 	}
 	else
 	{

@@ -39,6 +39,7 @@ public:
 	void DeadPlayer();
 
 	int IsContacting() { return num_contacts_; }
+	bool PlayerIsRed() { return red_; }
 	//b2Body* GetPlayerBody() { return player_body_; }
 private:
 	// player box 2d variables
@@ -52,6 +53,9 @@ private:
 
 	// player alive
 	bool alive_;
+
+	// player colour
+	bool red_;
 
 	// contacting
 	int num_contacts_;

@@ -91,8 +91,7 @@ void Frontend::FrontendInit()
 	// TODO createing material from the texture
 	// initialise button icon
 	button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
-	/*gef::Material texture_material;
-	texture_material.set_texture(button_icon_);*/
+	
 	InitFont();
 } // !FrontendInit
 
@@ -197,7 +196,7 @@ void Frontend::FrontendUpdate(float frame_time)
 		KeyboardController(frame_time);
 #endif // _WIN32
 	} // !input_manager_
-}
+} // !FrontendUpdate
 
 void Frontend::FrontendRender()
 {
@@ -234,4 +233,4 @@ void Frontend::FrontendRender()
 		DrawHUD();
 	}
 	sprite_renderer_->End();
-}
+} // !FrontendRender
