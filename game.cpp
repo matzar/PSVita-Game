@@ -390,8 +390,8 @@ void Game::SonyController(const gef::SonyController* controller)
 void Game::UpdatePickups()
 {
 	//process list for deletion
-	std::set<Pickup*>::iterator it = dying_pickups_scheduled_for_removal_.begin();
-	std::set<Pickup*>::iterator end = dying_pickups_scheduled_for_removal_.end();
+	std::set<Pickup*>::iterator it = contact_listener_->dying_pickups_scheduled_for_removal_.begin();
+	std::set<Pickup*>::iterator end = contact_listener_->dying_pickups_scheduled_for_removal_.end();
 	for (; it != end; ++it) {
 		Pickup* dyingBall = *it;
 
@@ -405,7 +405,7 @@ void Game::UpdatePickups()
 	}
 
 	//clear this list for next time
-	dying_pickups_scheduled_for_removal_.clear();
+	contact_listener_->dying_pickups_scheduled_for_removal_.clear();
 
 	//if (!(dying_pickups_scheduled_for_removal_.empty()))
 	//{
