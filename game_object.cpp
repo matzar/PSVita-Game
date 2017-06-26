@@ -4,8 +4,8 @@
 GameObject::~GameObject()
 {
 	gef::DebugOut("DELETE GAME OBJECT!\n");
-	//body_->GetWorld()->DestroyBody(body_);
-	body_->SetActive(false);
+	this->body_->GetWorld()->DestroyBody(body_);
+	//body_->SetActive(false);
 }
 
 //

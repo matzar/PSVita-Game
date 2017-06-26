@@ -246,7 +246,7 @@ void Game::GameInit()
 
 	InitGround();
 
-	InitPickups();
+	//InitPickups();
 } // !GameInit
 
 void Game::GameRelease()
@@ -286,20 +286,11 @@ void Game::GameRelease()
 	delete world_;
 	world_ = nullptr;
 
-	//delete contact_listener_;
-	//contact_listener_ = nullptr;
-
 	// clean up camera
 	delete camera_;
 	camera_ = nullptr;
 
 	CleanupTextures();
-
-	/*for (Pickup* pickup : pickups_)
-		pickups_.get_allocator().deallocate(&pickup, pickups_.size());
-	
-	for (Ground* ground : ground_)
-		ground_.get_allocator().deallocate(&ground, ground_.size());*/
 
 	delete model_scene_;
 	model_scene_ = nullptr;
@@ -309,9 +300,6 @@ void Game::GameRelease()
 
 	pickups_.~vector();
 	ground_.~vector();
-
-	//pickups_.clear();
-	//ground_.clear();
 } // !GameRelease
 
 #ifdef _WIN32 
@@ -411,11 +399,12 @@ void Game::UpdatePickups()
 			{
 				pickups_.erase(it);
 			}
+			// TODO is it okay to call it before iterator?
+			// pickup's physics body is destroyed here
+			delete dying_pick_up;
 
 			contact_listener_->dying_pickups_scheduled_for_removal_.erase(dying_pick_up);
 
-			// pickup's physics body is destroyed here
-			delete dying_pick_up;
 		}
 		//clear the set for the next time
 		contact_listener_->dying_pickups_scheduled_for_removal_.clear();
@@ -544,14 +533,14 @@ void Game::GameRender()
 		}
 
 		// draw pickups
-		for (auto pickup : pickups_)
-		{
+		//for (auto pickup : pickups_)
+		//{
 			// set texture
 			//renderer_3d_->set_override_material(&texture_material_);
-			renderer_3d_->DrawMesh(*pickup);
+		//	renderer_3d_->DrawMesh(*pickup);
 			// unmount texture
 			//renderer_3d_->set_override_material(nullptr);
-		}
+		//}
 	}
 	renderer_3d_->End();
 
