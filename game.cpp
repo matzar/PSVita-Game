@@ -392,14 +392,15 @@ void Game::UpdatePickups()
 	//process list for deletion
 	std::set<Pickup*>::iterator it = contact_listener_->dying_pickups_scheduled_for_removal_.begin();
 	std::set<Pickup*>::iterator end = contact_listener_->dying_pickups_scheduled_for_removal_.end();
-	for (; it != end; ++it) {
-		Pickup* dyingBall = *it;
+	for (; it != end; ++it) 
+	{
+		Pickup* dying_pickup = *it;
 
-		//delete ball... physics body is destroyed here
-		delete dyingBall;
+		//delete pickup... physics body is destroyed here
+		delete dying_pickup;
 
-		//... and remove it from main list of balls
-		std::vector<Pickup*>::iterator it = std::find(pickups_.begin(), pickups_.end(), dyingBall);
+		//... and remove it from main list of pickups
+		std::vector<Pickup*>::iterator it = std::find(pickups_.begin(), pickups_.end(), dying_pickup);
 		if (it != pickups_.end())
 			pickups_.erase(it);
 	}
