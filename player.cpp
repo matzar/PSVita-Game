@@ -94,17 +94,21 @@ void Player::PlayerController(const gef::SonyController * controller)
 		b2Vec2 vel = GetBody()->GetLinearVelocity();
 		vel.x = x_velocity;
 		GetBody()->SetLinearVelocity(vel);
+		
+		/*b2Vec2 vel = GetBody()->GetLinearVelocity();
+		vel.x = b2Max(vel.x - 0.1f, -5.0f);
+		vel.x *= 0.98;
+		vel.x = b2Min(vel.x + 0.1f, 5.0f);
+		GetBody()->SetLinearVelocity(vel);*/
 
 		if (jump_)
 		{
 			if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
 			{
 				b2Vec2 vel = GetBody()->GetLinearVelocity();
-				vel.y = y_velocity;//upwards - don't change x velocity
+				vel.y = y_velocity;	//upwards - don't change x velocity
 				GetBody()->SetLinearVelocity(vel);
-				//player_body_->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 5.0f), true);
-				//player_body_->ApplyLinearImpulse(b2Vec2(0, 10), player_body_->GetWorldCenter(), true);
-				//player_body_->ApplyForce(b2Vec2(0.0f, 10.0f), player_body_->GetWorldCenter(), true);
+
 				jump_ = false;
 			}
 		}

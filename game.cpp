@@ -412,15 +412,6 @@ void Game::UpdateSimulation(float frame_time)
 
 	world_->Step(timeStep, velocityIterations, positionIterations);
 
-	// move the player
-	/*b2Vec2 vel = player_->body_->GetLinearVelocity();
-	vel.x = 5; 
-	player_->body_->SetLinearVelocity(vel);*/
-
-	/*case MS_LEFT:  vel.x = b2Max(vel.x - 0.1f, -5.0f); break;
-	case MS_STOP:  vel.x *= 0.98; break;
-	case MS_RIGHT: vel.x = b2Min(vel.x + 0.1f, 5.0f); break;*/
-	
 	// update object visuals from simulation data
 	player_->UpdateFromSimulation(player_->GetBody());
 	/*
@@ -430,28 +421,24 @@ void Game::UpdateSimulation(float frame_time)
 	// collision detection
 	if (player_->IsContacting() > 0)
 	{
-		// Am i colliding with pickup or ground?
-		// if ground -
+		// is current ground set
 		if (contact_listener_->current_ground_)
 		{
+			// if current ground is different colour than the player - game over
 			if (contact_listener_->current_ground_->GetGameObjectColour() != player_->GetGameObjectColour())
 			{
-				gef::DebugOut("DeadPlayer game\n");
 				player_->DeadPlayer();
 			}
 		}
-		// if not ground -
-		// blah blah blah
 	}
-	/*else
-	{
-		gef::DebugOut("End Contact\n");
-	}*/
+
 	UpdatePickups();
 
-	// set camera to follow the player 
+	// set camera to follow the player
 	if (player_->IsAlive())
+	{
 		camera_->SetCameraPosition(90.0f, -12.0f, 0.0f, gef::Vector4(player_->GetBody()->GetPosition().x - 8.0f, 3.5f, 0.0f));
+	}
 } // !UpdateSimulation
 
 void Game::GameUpdate(float frame_time)
