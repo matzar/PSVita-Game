@@ -246,7 +246,7 @@ void Game::GameInit()
 
 	InitGround();
 
-	InitPickups();
+	//InitPickups();
 } // !GameInit
 
 void Game::GameRelease()
@@ -519,14 +519,14 @@ void Game::GameRender()
 		}
 
 		// draw pickups
-		for (auto pickup : pickups_)
-		{
+		//for (auto pickup : pickups_)
+		//{
 			// set texture
 			//renderer_3d_->set_override_material(&texture_material_);
-			renderer_3d_->DrawMesh(*pickup);
+		//	renderer_3d_->DrawMesh(*pickup);
 			// unmount texture
 			//renderer_3d_->set_override_material(nullptr);
-		}
+		//}
 	}
 	renderer_3d_->End();
 
