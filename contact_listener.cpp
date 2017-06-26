@@ -66,13 +66,14 @@ void ContactListener::BeginContact(b2Contact * contact)
 	// collision response
 	if (player)
 	{
-		player->StartContact();
+		
 
 		if (game_object)
 		{
 			// get the current ground player is at
 			if (game_object->GetGameObjectType() == GROUND)
 			{
+				player->StartContact();
 				current_ground_ = (Ground*)(game_object);
 			}
 			// check if player is colliding with a pickup

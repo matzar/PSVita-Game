@@ -246,7 +246,7 @@ void Game::GameInit()
 
 	InitGround();
 
-	//InitPickups();
+	InitPickups();
 } // !GameInit
 
 void Game::GameRelease()
@@ -430,10 +430,15 @@ void Game::UpdateSimulation(float frame_time)
 	// collision detection
 	if (player_->IsContacting() > 0)
 	{
+		// Am i colliding with pickup or ground?
+		// if ground -
 		if (contact_listener_->current_ground_->GetGameObjectColour() != player_->GetGameObjectColour())
 		{
 			player_->DeadPlayer();
 		}
+
+		// if not ground -
+		// blah blah blah
 	}
 	/*else
 	{
@@ -524,14 +529,14 @@ void Game::GameRender()
 		}
 
 		// draw pickups
-		//for (auto pickup : pickups_)
-		//{
+		for (auto pickup : pickups_)
+		{
 			// set texture
 			//renderer_3d_->set_override_material(&texture_material_);
-		//	renderer_3d_->DrawMesh(*pickup);
+			renderer_3d_->DrawMesh(*pickup);
 			// unmount texture
 			//renderer_3d_->set_override_material(nullptr);
-		//}
+		}
 	}
 	renderer_3d_->End();
 
