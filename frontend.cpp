@@ -26,6 +26,7 @@ Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate) :
 	platform_(platform),
 	gamestate_(gamestate),
 	input_manager_(nullptr),
+	sprite_renderer_(nullptr),
 	audio_manager_(nullptr),
 	button_icon_(nullptr),
 	quit_(false),
@@ -104,8 +105,17 @@ void Frontend::FrontendRelease()
 	delete sprite_renderer_;
 	sprite_renderer_ = nullptr;
 
-	delete audio_manager_;
-	audio_manager_ = nullptr;
+	if (audio_manager_)
+	{
+		audio_manager_->StopMusic();
+		audio_manager_->UnloadAllSamples();
+		sfx_id_ = -1;
+		sfx_voice_id_ = -1;
+
+		delete audio_manager_;
+		audio_manager_ = nullptr;
+	}
+
 
 	delete button_icon_;
 	button_icon_ = nullptr;

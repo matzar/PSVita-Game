@@ -286,11 +286,29 @@ void Game::GameRelease()
 	delete world_;
 	world_ = nullptr;
 
+	delete contact_listener_;
+	contact_listener_ = nullptr;
+
 	// clean up camera
 	delete camera_;
 	camera_ = nullptr;
 
 	CleanupTextures();
+
+	/*for (Pickup* pickup : pickups_)
+		pickups_.get_allocator().deallocate(&pickup, pickups_.size());
+	
+	for (Ground* ground : ground_)
+		ground_.get_allocator().deallocate(&ground, ground_.size());*/
+
+	delete model_scene_;
+	model_scene_ = nullptr;
+
+	delete mesh_;
+	mesh_ = nullptr;
+
+	pickups_.~vector();
+	ground_.~vector();
 } // !GameRelease
 
 #ifdef _WIN32 
