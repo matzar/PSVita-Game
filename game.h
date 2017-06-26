@@ -90,7 +90,7 @@ private:
 	ContactListener* contact_listener_;
 
 	// contact filter
-	b2ContactFilter* contact_filter_;
+	//b2ContactFilter* contact_filter_;
 
 	// create the physics world
 	b2World* world_;

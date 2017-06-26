@@ -54,7 +54,7 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	primitive_builder_(nullptr),
 	camera_(nullptr),
 	contact_listener_(nullptr),
-	contact_filter_(nullptr),
+	//contact_filter_(nullptr),
 	world_(nullptr),
 	player_(nullptr),
 	model_scene_(nullptr),
@@ -246,7 +246,7 @@ void Game::GameInit()
 
 	InitGround();
 
-	//InitPickups();
+	InitPickups();
 } // !GameInit
 
 void Game::GameRelease()
@@ -533,14 +533,14 @@ void Game::GameRender()
 		}
 
 		// draw pickups
-		//for (auto pickup : pickups_)
-		//{
+		for (auto pickup : pickups_)
+		{
 			// set texture
 			//renderer_3d_->set_override_material(&texture_material_);
-		//	renderer_3d_->DrawMesh(*pickup);
+			renderer_3d_->DrawMesh(*pickup);
 			// unmount texture
 			//renderer_3d_->set_override_material(nullptr);
-		//}
+		}
 	}
 	renderer_3d_->End();
 
