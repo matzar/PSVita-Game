@@ -61,7 +61,9 @@ bool SceneApp::Update(float frame_time)
 
 			// quit application
 			if (frontend_->Quit())
-				return false;			
+			{
+				return false;
+			}
 		} // !FRONTEND
 		break;
 
@@ -89,7 +91,9 @@ bool SceneApp::Update(float frame_time)
 
 			// quit application
 			if (game_->Quit())
+			{
 				return false;
+			}
 		} // !GAME
 		break;
 
