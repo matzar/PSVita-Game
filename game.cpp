@@ -465,6 +465,9 @@ void Game::GameUpdate(float frame_time)
 	} // !input_manager_
 
 	UpdateSimulation(frame_time);
+
+	// set camera to follow the player 
+	camera_->SetCameraPosition(90.0f, -12.0f, 0.0f, gef::Vector4(player_->GetBody()->GetPosition().x - 8.0f, 3.5f, 0.0f));
 } // !GameUpdate
 
 void Game::GameRender()
@@ -478,19 +481,9 @@ void Game::GameRender()
 	renderer_3d_->set_projection_matrix(projection_matrix);
 
 	// view
-	// gef::Vector4(-8.0f, 3.5f, 0.0f)
-	float x_pos = camera_->GetPositionVector().x();
-	float y_pos = camera_->GetPositionVector().y();
-	float position_x = x_pos + player_->GetBody()->GetPosition().x;
-	float position_y = y_pos + player_->GetBody()->GetPosition().y;
-	gef::Vector4 camera_eye(player_->GetBody()->GetPosition().x - 8.0f, 3.5f, 0.0f);
-	//LookAt: x - 7.0f y3.3f z - 0.0f
-	//Up : x0.2f y1.0f z - 0.0f
-	/*gef::Vector4 camera_eye(camera_->GetPositionVector().x(), camera_->GetPositionVector().y(), camera_->GetPositionVector().z());*/
-	/*gef::Vector4 camera_lookat(camera_->GetLookAtVector().x(), camera_->GetLookAtVector().y(), camera_->GetLookAtVector().z());
-	gef::Vector4 camera_up(camera_->GetUpVector().x(), camera_->GetUpVector().y(), camera_->GetUpVector().z());*/
-	gef::Vector4 camera_lookat(-7.0f, 3.3f, 0.0f);
-	gef::Vector4 camera_up(0.2f, 1.0f, 0.0f);
+	gef::Vector4 camera_eye(camera_->GetPositionVector().x(), camera_->GetPositionVector().y(), camera_->GetPositionVector().z());
+	gef::Vector4 camera_lookat(camera_->GetLookAtVector().x(), camera_->GetLookAtVector().y(), camera_->GetLookAtVector().z());
+	gef::Vector4 camera_up(camera_->GetUpVector().x(), camera_->GetUpVector().y(), camera_->GetUpVector().z());
 	gef::Matrix44 view_matrix;
 	view_matrix.LookAt(camera_eye, camera_lookat, camera_up);
 	renderer_3d_->set_view_matrix(view_matrix);
