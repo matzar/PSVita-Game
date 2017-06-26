@@ -428,14 +428,17 @@ void Game::UpdateSimulation(float frame_time)
 	*/
 
 	// collision detection
-	/*if (player_->IsContacting() > 0)
+	if (player_->IsContacting() > 0)
 	{
-		player_->DecrementHealth();
+		if (contact_listener_->current_ground_->GetGameObjectColour() != player_->GetGameObjectColour())
+		{
+			player_->DeadPlayer();
+		}
 	}
 	else
 	{
 		gef::DebugOut("End Contact\n");
-	}*/
+	}
 	UpdatePickups();
 
 } // !UpdateSimulation

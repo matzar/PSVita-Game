@@ -66,6 +66,12 @@ void ContactListener::BeginContact(b2Contact * contact)
 	// collision response
 	if (player)
 	{
+		player->StartContact();
+
+		if (game_object->GetGameObjectType() == GROUND)
+		{
+			current_ground_ = (Ground*)(game_object);
+		}
 		//
 		if (player->GetGameObjectColour() == game_object->GetGameObjectColour())
 		{
@@ -140,13 +146,13 @@ void ContactListener::EndContact(b2Contact * contact)
 	// collision response
 	if (player)
 	{
+		player->EndContact();
 		//
-		if (player->GetGameObjectColour() == game_object->GetGameObjectColour())
-		{
-			// reset jump
-			player->EndContact();
-			gef::DebugOut("Same colour\n");
-		}
+		//if (player->GetGameObjectColour() == game_object->GetGameObjectColour())
+		//{
+		//	// reset jump
+		//	gef::DebugOut("Same colour\n");
+		//}
 		//
 		//if (game_object->GetGameObjectType() == GROUND && player->GetGameObjectColour() != game_object->GetGameObjectColour())
 		//{
