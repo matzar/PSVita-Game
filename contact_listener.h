@@ -6,6 +6,7 @@
 
 class GameObject;
 class Ground;
+class Pickup;
 
 class ContactListener : public b2ContactListener
 {
@@ -18,7 +19,7 @@ public:
 	virtual void EndContact(b2Contact* contact);
 	//virtual void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
 
-	std::set<GameObject*> dying_pickups_scheduled_for_removal_;
+	std::set<Pickup*> dying_pickups_scheduled_for_removal_;
 
 	Ground* current_ground_;
 };

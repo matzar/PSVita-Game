@@ -391,7 +391,7 @@ void Game::UpdatePickups()
 {
 	if (!(contact_listener_->dying_pickups_scheduled_for_removal_.empty()))
 	{
-		for (GameObject* dying_pick_up : contact_listener_->dying_pickups_scheduled_for_removal_)
+		for (Pickup* dying_pick_up : contact_listener_->dying_pickups_scheduled_for_removal_)
 		{
 			// remove the pickup from the rendering list
 			std::vector<Pickup*>::iterator it = std::find(pickups_.begin(), pickups_.end(), dying_pick_up);

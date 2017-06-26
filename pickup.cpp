@@ -2,10 +2,12 @@
 
 Pickup::Pickup()
 {
+	
 }
 
 Pickup::~Pickup()
 {
+	this->GetBody()->GetWorld()->DestroyBody(this->GetBody());
 }
 
 void Pickup::InitPickup(

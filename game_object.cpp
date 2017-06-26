@@ -3,8 +3,8 @@
 
 GameObject::~GameObject()
 {
-	gef::DebugOut("DELETE GAME OBJECT!\n");
-	this->body_->GetWorld()->DestroyBody(body_);
+	//gef::DebugOut("DELETE GAME OBJECT!\n");
+	//this->body_->GetWorld()->DestroyBody(body_);
 	//body_->SetActive(false);
 }
 
