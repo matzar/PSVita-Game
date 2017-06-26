@@ -440,8 +440,6 @@ void Game::UpdateSimulation(float frame_time)
 		gef::DebugOut("End Contact\n");
 	}*/
 	UpdatePickups();
-
-	camera_->DisplayCameraPosition();
 } // !UpdateSimulation
 
 void Game::GameUpdate(float frame_time)
