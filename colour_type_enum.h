@@ -3,8 +3,9 @@
 
 enum OBJECT_COLOUR
 {
-	BLUE = 0x0001,
-	RED  = 0x0002
+	DEF_COL = 0x0000,
+	BLUE    = 0x0001,
+	RED     = 0x0002
 };
 
 #endif // !_COLOUR_TYPE_ENUM_H

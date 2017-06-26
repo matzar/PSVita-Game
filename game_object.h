@@ -14,7 +14,7 @@
 class GameObject : public gef::MeshInstance
 {
 public:
-	//GameObject() {}
+	GameObject();
 	~GameObject();
 
 	void UpdateFromSimulation(const b2Body* body);

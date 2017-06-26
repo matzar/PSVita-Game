@@ -1,6 +1,12 @@
 #include "game_object.h"
 #include <system/debug_log.h>
 
+GameObject::GameObject() :
+	type_(DEF_TYPE),
+	colour_(DEF_COL)
+{
+}
+
 GameObject::~GameObject()
 {
 	//gef::DebugOut("DELETE GAME OBJECT!\n");
