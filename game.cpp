@@ -286,8 +286,8 @@ void Game::GameRelease()
 	delete world_;
 	world_ = nullptr;
 
-	delete contact_listener_;
-	contact_listener_ = nullptr;
+	//delete contact_listener_;
+	//contact_listener_ = nullptr;
 
 	// clean up camera
 	delete camera_;
@@ -309,6 +309,9 @@ void Game::GameRelease()
 
 	pickups_.~vector();
 	ground_.~vector();
+
+	//pickups_.clear();
+	//ground_.clear();
 } // !GameRelease
 
 #ifdef _WIN32 
@@ -402,9 +405,6 @@ void Game::UpdatePickups()
 	{
 		for (GameObject* dying_pick_up : contact_listener_->dying_pickups_scheduled_for_removal_)
 		{
-			// pickup's physics body is destroyed here
-			delete dying_pick_up;
-
 			// remove the pickup from the rendering list
 			std::vector<Pickup*>::iterator it = std::find(pickups_.begin(), pickups_.end(), dying_pick_up);
 			if (it != pickups_.end())
@@ -413,6 +413,9 @@ void Game::UpdatePickups()
 			}
 
 			contact_listener_->dying_pickups_scheduled_for_removal_.erase(dying_pick_up);
+
+			// pickup's physics body is destroyed here
+			delete dying_pick_up;
 		}
 		//clear the set for the next time
 		contact_listener_->dying_pickups_scheduled_for_removal_.clear();

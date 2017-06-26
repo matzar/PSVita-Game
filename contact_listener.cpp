@@ -11,6 +11,10 @@ ContactListener::ContactListener() :
 
 ContactListener::~ContactListener()
 {
+	delete current_ground_;
+	current_ground_ = nullptr;
+
+	//dying_pickups_scheduled_for_removal_.~set();
 }
 
 void ContactListener::BeginContact(b2Contact * contact)
