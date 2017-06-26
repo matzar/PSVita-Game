@@ -1,18 +1,10 @@
 #include "scene_app.h"
 
 SceneApp::SceneApp(gef::Platform& platform) :
-	Application(platform)
+	Application(platform),
+	frontend_(nullptr),
+	game_(nullptr)
 {
-	// frontend scene
-	// reference to the platform object is passed
-	// Frontend class has 'GAMESTATE* gamestate' pointer
-	// adress of gamestate_ is passed to the class and assigned to the GAMESTATE pointer
-	frontend_ = nullptr;
-	// game scene
-	// reference to the platform object is passed
-	// Game class has 'GAMESTATE* gamestate' pointer
-	// adress of gamestate_ is passed to the class and assigned to the GAMESTATE pointer
-	game_ = nullptr;
 } // !SceneApp
 
 void SceneApp::Init()
@@ -24,14 +16,16 @@ void SceneApp::Init()
 void SceneApp::CleanUp()
 {
 	// frontend_
-	if (frontend_) {
+	if (frontend_) 
+	{
 		frontend_->FrontendRelease();
 		delete frontend_;
 		frontend_ = nullptr;
 	}
 
 	// game_
-	if (game_) {
+	if (game_) 
+	{
 		game_->GameRelease();
 		delete game_;
 		game_ = nullptr;
@@ -44,42 +38,63 @@ bool SceneApp::Update(float frame_time)
 	{
 		case FRONTEND:
 		{
-			if (frontend_ == nullptr) {
-				// Create frontend
+			if (frontend_ == nullptr) 
+			{
+				// create frontend
+				// reference to the platform object is passed
+				// Frontend class has 'GAMESTATE* gamestate' pointer
+				// adress of gamestate_ is passed to the class and assigned to the GAMESTATE pointer
 				frontend_ = new Frontend(platform_, &gamestate_);
 				frontend_->FrontendInit();
 
-				// Delete game
-				if (game_) {
+				// delete game
+				if (game_) 
+				{
 					game_->GameRelease();
 					delete game_;
 					game_ = nullptr;
 				}
 			}
+
+			// frontend update function
 			frontend_->FrontendUpdate(frame_time);
+
+			if (frontend_->Quit())
+				return false;
 		} // !FRONTEND
 		break;
 
 		case GAME:
 		{
-			if (game_ == nullptr) {
-				// Create frontend
+			if (game_ == nullptr) 
+			{
+				// create game
+				// reference to the platform object is passed
+				// Game class has 'GAMESTATE* gamestate' pointer
+				// adress of gamestate_ is passed to the class and assigned to the GAMESTATE pointer
 				game_ = new Game(platform_, &gamestate_);
 				game_->GameInit();
 
-				if (frontend_) {
-					// Delete game
+				if (frontend_) 
+				{
+					// delete frontend
 					frontend_->FrontendRelease();
 					delete frontend_;
 					frontend_ = nullptr;
 				}
 			}
+
+			// game update function
 			game_->GameUpdate(frame_time);
+
+			if (game_->Quit())
+				return false;
 		} // !GAME
 		break;
-	} // !gamestate_
 
+		
 	return true;
+	} // !gamestate_
 } // !Update
 
 void SceneApp::Render()
@@ -89,14 +104,18 @@ void SceneApp::Render()
 		case FRONTEND:
 		{
 			if (frontend_)
-			frontend_->FrontendRender();
+			{
+				frontend_->FrontendRender();
+			}
 		} // !FRONTEND
 		break;
 
 		case GAME:
 		{
 			if (game_)
-			game_->GameRender();
+			{
+				game_->GameRender();
+			}
 		} // !GAME
 		break;
 	} // !gamestate_

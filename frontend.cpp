@@ -28,6 +28,7 @@ Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate) :
 	input_manager_(nullptr),
 	audio_manager_(nullptr),
 	button_icon_(nullptr),
+	quit_(false),
 	sfx_voice_id_(-1),
 	sfx_id_(-1),
 	fps_(0)
@@ -118,13 +119,14 @@ void Frontend::SonyController(const gef::SonyController* controller)
 	{
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
 		{
-			// TODO release any resources for the frontend
-
-
 			// update the current state for the game state machine
 			(*gamestate_) = GAME; // get the object that gamestate points to
 		}
 
+		if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
+		{
+			quit_ = true;
+		}
 		// trigger a sound effect
 		if (audio_manager_)
 		{

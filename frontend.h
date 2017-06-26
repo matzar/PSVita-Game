@@ -26,6 +26,8 @@ public:
 	void FrontendRelease();
 	void FrontendUpdate(float frame_time);
 	void FrontendRender();
+
+	inline const bool Quit() { return quit_; }
 private:
 	// platform 
 	gef::Platform& platform_;
@@ -52,6 +54,8 @@ private:
 
 	int sfx_id_;
 	int sfx_voice_id_;
+
+	bool quit_;
 
 	void SonyController(const gef::SonyController* controller);
 #ifdef _WIN32

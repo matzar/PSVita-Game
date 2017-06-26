@@ -59,7 +59,7 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	player_(nullptr),
 	model_scene_(nullptr),
 	mesh_(nullptr),
-	//ground_,
+	quit_(false),
 	fps_(0),
 	sfx_id_(-1),
 	sfx_voice_id_(-1)
@@ -356,12 +356,14 @@ void Game::SonyController(const gef::SonyController* controller)
 	{
 		if (controller->buttons_pressed() & gef_SONY_CTRL_START)
 		{
-			// release any resources for the frontend
-			//GameRelease();
-
 			// update the current state for the game state machine
 			(*gamestate_) = FRONTEND; // get the object that gamestate points to
 			//GameInit();
+		}
+
+		if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
+		{
+			quit_ = true;
 		}
 
 		// trigger a sound effect
@@ -454,6 +456,7 @@ void Game::GameUpdate(float frame_time)
 		camera_->CameraController(frame_time, controller);
 		player_->PlayerController(controller);
 		SonyController(controller);
+
 
 #ifdef _WIN32 // Only on windows platforms
 		// if there is a keyboard, check the arrow keys to control the direction of the character

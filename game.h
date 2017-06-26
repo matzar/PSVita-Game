@@ -51,6 +51,8 @@ public:
 	void GameRelease();
 	void GameUpdate(float frame_time);
 	void GameRender();
+
+	inline const bool Quit() { return quit_; }
 private:
 	// platform
 	gef::Platform& platform_;
@@ -112,6 +114,8 @@ private:
 	// audio variables
 	int sfx_id_;
 	int sfx_voice_id_;
+
+	bool quit_;
 
 	uint16 catA;
 	uint16 maskA;
