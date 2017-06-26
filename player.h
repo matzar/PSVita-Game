@@ -38,8 +38,9 @@ public:
 	void RestartJump();
 	void DeadPlayer();
 
-	int IsContacting() { return num_contacts_; }
-	bool PlayerIsRed() { return red_; }
+	int IsContacting() const { return num_contacts_; }
+	bool PlayerIsRed() const { return red_; }
+	bool IsAlive() const { return alive_; }
 	//b2Body* GetPlayerBody() { return player_body_; }
 private:
 	// player box 2d variables

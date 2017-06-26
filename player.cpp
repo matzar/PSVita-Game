@@ -153,3 +153,5 @@ void Player::DeadPlayer()
 	alive_ = false;
 	gef::DebugOut("DeadPlayer()\n");
 }
+
+

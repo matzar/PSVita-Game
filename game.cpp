@@ -432,11 +432,14 @@ void Game::UpdateSimulation(float frame_time)
 	{
 		// Am i colliding with pickup or ground?
 		// if ground -
-		if (contact_listener_->current_ground_->GetGameObjectColour() != player_->GetGameObjectColour())
+		if (contact_listener_->current_ground_)
 		{
-			player_->DeadPlayer();
+			if (contact_listener_->current_ground_->GetGameObjectColour() != player_->GetGameObjectColour())
+			{
+				gef::DebugOut("DeadPlayer game\n");
+				player_->DeadPlayer();
+			}
 		}
-
 		// if not ground -
 		// blah blah blah
 	}
@@ -445,6 +448,10 @@ void Game::UpdateSimulation(float frame_time)
 		gef::DebugOut("End Contact\n");
 	}*/
 	UpdatePickups();
+
+	// set camera to follow the player 
+	if (player_->IsAlive())
+		camera_->SetCameraPosition(90.0f, -12.0f, 0.0f, gef::Vector4(player_->GetBody()->GetPosition().x - 8.0f, 3.5f, 0.0f));
 } // !UpdateSimulation
 
 void Game::GameUpdate(float frame_time)
@@ -468,9 +475,6 @@ void Game::GameUpdate(float frame_time)
 	} // !input_manager_
 
 	UpdateSimulation(frame_time);
-
-	// set camera to follow the player 
-	camera_->SetCameraPosition(90.0f, -12.0f, 0.0f, gef::Vector4(player_->GetBody()->GetPosition().x - 8.0f, 3.5f, 0.0f));
 } // !GameUpdate
 
 void Game::GameRender()
