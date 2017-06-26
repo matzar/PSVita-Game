@@ -389,9 +389,9 @@ void Game::SonyController(const gef::SonyController* controller)
 
 void Game::UpdatePickups()
 {
-	if (!(contact_listener_->dying_pickups_scheduled_for_removal_.empty()))
+	if (!(dying_pickups_scheduled_for_removal_.empty()))
 	{
-		for (Pickup* dying_pick_up : contact_listener_->dying_pickups_scheduled_for_removal_)
+		for (Pickup* dying_pick_up : dying_pickups_scheduled_for_removal_)
 		{
 			// remove the pickup from the rendering list
 			std::vector<Pickup*>::iterator it = std::find(pickups_.begin(), pickups_.end(), dying_pick_up);
@@ -403,11 +403,11 @@ void Game::UpdatePickups()
 			// pickup's physics body is destroyed here
 			delete dying_pick_up;
 
-			contact_listener_->dying_pickups_scheduled_for_removal_.erase(dying_pick_up);
+			dying_pickups_scheduled_for_removal_.erase(dying_pick_up);
 
 		}
 		//clear the set for the next time
-		contact_listener_->dying_pickups_scheduled_for_removal_.clear();
+		dying_pickups_scheduled_for_removal_.clear();
 	}
 } // !UpdatePickups
 
