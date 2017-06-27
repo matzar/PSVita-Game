@@ -434,31 +434,6 @@ void Game::UpdatePickups()
 
 	//clear this list for next time
 	contact_listener_->dying_pickups_scheduled_for_removal_.clear();
-
-	//if (!(dying_pickups_scheduled_for_removal_.empty()))
-	//{
-	//	for (Pickup* dying_pick_up : dying_pickups_scheduled_for_removal_)
-	//	{
-	//		if (dying_pickups_scheduled_for_removal_.empty())
-	//		{
-	//			return;
-	//		}
-	//			// remove the pickup from the rendering list
-	//			std::vector<Pickup*>::iterator it = std::find(pickups_.begin(), pickups_.end(), dying_pick_up);
-	//			//if (it != pickups_.end())
-	//			if (&it)
-	//			{
-	//				pickups_.erase(it);
-	//			}
-	//			// TODO is it okay to call it before iterator?
-	//			// pickup's physics body is destroyed here
-	//			delete dying_pick_up;
-
-	//			dying_pickups_scheduled_for_removal_.erase(dying_pick_up);
-	//	}
-	//	//clear the set for the next time
-	//	dying_pickups_scheduled_for_removal_.clear();
-	//}
 } // !UpdatePickups
 
 void Game::UpdateSimulation(float frame_time)
