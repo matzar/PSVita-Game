@@ -24,6 +24,12 @@ namespace gef
 	class Scene;
 } // gef
 
+enum CAMERA_ENUM
+{
+	CAM1,
+	CAM2,
+	CAM3
+};
 // Class forward declarations
 class PrimitiveBuilder;
 class Player;
@@ -59,7 +65,7 @@ private:
 
 	// gamestate_ pointer
 	GAMESTATE* gamestate_;
-	
+	CAMERA_ENUM camera_enum;
 	// font
 	gef::Font* font_;
 
@@ -83,7 +89,7 @@ private:
 	// primitive builder
 	PrimitiveBuilder* primitive_builder_;
 
-	// camera variables
+	// camera
 	Camera* camera_;
 
 	// contact listener
@@ -110,6 +116,11 @@ private:
 	gef::Mesh* mesh_;
 	//gef::MeshInstance apple_;
 
+	// camera variables
+	bool camera_1;
+	bool camera_2;
+	bool camera_3;
+	uint16 camera_count;
 	// quit
 	bool quit_;
 	// FPS

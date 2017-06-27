@@ -56,6 +56,10 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	player_(nullptr),
 	model_scene_(nullptr),
 	mesh_(nullptr),
+	camera_1(true),
+	camera_2(false),
+	camera_3(false),
+	camera_count(0),
 	quit_(false),
 	fps_(0),
 	sfx_id_(-1),
@@ -425,6 +429,14 @@ void Game::SonyController(const gef::SonyController* controller)
 			quit_ = true;
 		}
 
+		if (controller->buttons_pressed() & gef_SONY_CTRL_TRIANGLE)
+		{
+			camera_count++;
+
+			if (camera_count >= 3)
+				camera_count = 0;
+		}
+
 		// trigger a sound effect
 		if (audio_manager_)
 		{
@@ -500,11 +512,25 @@ void Game::UpdateSimulation(float frame_time)
 
 	UpdatePickups();
 
+	if (player_->GetBody)
+
 	// set camera to follow the player
 	if (player_->IsAlive())
 	{
-		camera_->SetCameraPosition(63.4f, -8.6f, 0.0f, gef::Vector4(player_->GetBody()->GetPosition().x - 9.3f, 3.3f, 7.3f));
-		//camera_->SetCameraPosition(90.0f, -12.0f, 0.0f, gef::Vector4(player_->GetBody()->GetPosition().x - 8.0f, 3.5f, 0.0f));
+		switch (camera_count)
+		{
+		case CAM1:
+			camera_->SetCameraPosition(63.4f, -8.6f, 0.0f, gef::Vector4(player_->GetBody()->GetPosition().x - 9.3f, 3.3f, 7.3f));
+			break;
+
+		case CAM2:
+			camera_->SetCameraPosition(73.6f, -13.6f, 0.0f, gef::Vector4(player_->GetBody()->GetPosition().x - 9.8f, 6.1f, 8.7f));
+			break;
+
+		case CAM3:
+			camera_->SetCameraPosition(126.7f, -13.6f, 0.0f, gef::Vector4(player_->GetBody()->GetPosition().x -5.9f, 4.0f, -8.8f));
+			break;
+		}
 	}
 } // !UpdateSimulation
 
