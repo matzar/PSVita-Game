@@ -36,10 +36,8 @@
 
 #ifdef _WIN32
 // only on windows platforms
-#include <Windows.h>
 #include <platform/d3d11/input/keyboard_d3d11.h>
 #include <platform/d3d11/input/touch_input_manager_d3d11.h>
-//#include <freeglut.h>
 #endif 
 
 Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
@@ -111,7 +109,7 @@ void Game::SetupLights()
 
 void Game::InitTextures()
 {
-	texture_ = CreateTextureFromPNG("rock.png", platform_);
+	texture_ = CreateTextureFromPNG("nauticalTile_160.png", platform_);
 	texture_material_.set_texture(texture_);
 } // !InitTextures
 
@@ -389,35 +387,12 @@ void Game::SonyController(const gef::SonyController* controller)
 
 void Game::UpdatePickups()
 {
-	////process list for deletion
-	//std::set<Pickup*>::iterator it = contact_listener_->dying_pickups_scheduled_for_removal_.begin();
-	//std::set<Pickup*>::iterator end = contact_listener_->dying_pickups_scheduled_for_removal_.end();
-	//for (; it != end; ++it) 
-	//{
-	//	
-	//	Pickup* dying_pickup = *it;
-	//	// TODO delete - gef::DebugOut("it* = %s\n", typeid(*it).name());
-	//	// TODO delete - gef::DebugOut("it = %s\n", typeid(it).name());
-	//	// TODO delete - gef::DebugOut("Pickup* = %s\n", typeid(dying_pickup).name());
-
-	//	//delete pickup... physics body is destroyed here
-	//	delete dying_pickup;
-
-	//	//... and remove it from main list of pickups
-	//	std::vector<Pickup*>::iterator it = std::find(pickups_.begin(), pickups_.end(), dying_pickup);
-	//	if (it != pickups_.end())
-	//		pickups_.erase(it);
-	//}
-
-	////clear this list for next time
-	//contact_listener_->dying_pickups_scheduled_for_removal_.clear();
-
 	//process list for deletion
 	std::set<Pickup*>::iterator it = contact_listener_->dying_pickups_scheduled_for_removal_.begin();
 	std::set<Pickup*>::iterator end = contact_listener_->dying_pickups_scheduled_for_removal_.end();
-	for (; it != end; ++it)
+	for (; it != end; ++it) 
 	{
-
+		
 		Pickup* dying_pickup = *it;
 		// TODO delete - gef::DebugOut("it* = %s\n", typeid(*it).name());
 		// TODO delete - gef::DebugOut("it = %s\n", typeid(it).name());

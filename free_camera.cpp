@@ -3,14 +3,6 @@
 #include "maths/vector4.h"
 #include "input/sony_controller_input_manager.h"
 
-
-#ifdef _WIN32
-// only on windows platforms
-#include <platform/d3d11/input/keyboard_d3d11.h>
-#include <platform/d3d11/input/touch_input_manager_d3d11.h>
-//#include <freeglut.h>
-#endif 
-
 FreeCamera::FreeCamera()
 {
 	Update();
@@ -81,7 +73,8 @@ void FreeCamera::CameraController(const float frame_time, const gef::SonyControl
 		{
 			MoveDown(frame_time * camera_speed);
 		}
-		if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
+		if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE || 
+			controller->buttons_pressed() & gef_SONY_CTRL_TOUCH_PAD)
 		{
 			DisplayCameraPosition();
 		}
