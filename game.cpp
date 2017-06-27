@@ -52,7 +52,6 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	primitive_builder_(nullptr),
 	camera_(nullptr),
 	contact_listener_(nullptr),
-	//contact_filter_(nullptr),
 	world_(nullptr),
 	player_(nullptr),
 	model_scene_(nullptr),
@@ -504,7 +503,8 @@ void Game::UpdateSimulation(float frame_time)
 	// set camera to follow the player
 	if (player_->IsAlive())
 	{
-		camera_->SetCameraPosition(90.0f, -12.0f, 0.0f, gef::Vector4(player_->GetBody()->GetPosition().x - 8.0f, 3.5f, 0.0f));
+		camera_->SetCameraPosition(63.4f, -8.6f, 0.0f, gef::Vector4(player_->GetBody()->GetPosition().x - 9.3f, 3.3f, 7.3f));
+		//camera_->SetCameraPosition(90.0f, -12.0f, 0.0f, gef::Vector4(player_->GetBody()->GetPosition().x - 8.0f, 3.5f, 0.0f));
 	}
 } // !UpdateSimulation
 
