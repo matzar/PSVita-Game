@@ -177,7 +177,7 @@ void Game::InitGround()
 	float32 texture_ground_x = 3.0f;
 	b2Vec2 start_position(0.0f, 0.0f);
 
-	for (int i = 0; i < 5; ++i)
+	for (int i = 0; i < 20; ++i)
 	{
 		ground_.push_back( new Ground());
 		if (i % 2 == 0) // RED GROUND
@@ -197,7 +197,7 @@ void Game::InitGround()
 		}
 		else if (i % 3 == 0) // TEXTURED GROUND
 		{
-			start_position.x -= interval / 2.0f;
+			start_position.x -= interval / 2.0f + 0.5f;
 			ground_.at(i)->InitGround(
 				primitive_builder_,                   // primitive builder
 				world_, 							  // world

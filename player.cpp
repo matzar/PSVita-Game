@@ -10,7 +10,7 @@ Player::Player() :
 	red_(true),
 	num_contacts_(0),
 	x_velocity(5.0f),
-	y_velocity(8.0f)
+	y_velocity(7.0f)
 {
 	//SetGameObjectType(PLAYER);
 	//SetGameObjectColour(RED);
