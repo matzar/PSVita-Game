@@ -110,12 +110,15 @@ private:
 	gef::Mesh* mesh_;
 	//gef::MeshInstance apple_;
 
+	// quit
+	bool quit_;
+	// FPS
 	float fps_;
 	// audio variables
 	int sfx_id_;
 	int sfx_voice_id_;
-
-	bool quit_;
+	// pickups count
+	uint16 pickups_count_;
 
 	uint16 catA;
 	uint16 maskA;

@@ -60,7 +60,8 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	quit_(false),
 	fps_(0),
 	sfx_id_(-1),
-	sfx_voice_id_(-1)
+	sfx_voice_id_(-1),
+	pickups_count_(0)
 {
 	ground_.reserve(5);
 	pickups_.reserve(3);
@@ -88,6 +89,7 @@ void Game::DrawHUD()
 	{
 		// display frame rate
 		font_->RenderText(sprite_renderer_, gef::Vector4(850.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f", fps_);
+		font_->RenderText(sprite_renderer_, gef::Vector4(10.0f, 5.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "PICKUP: %d", pickups_count_);
 	}
 } // !DrawHUD
 
@@ -405,6 +407,8 @@ void Game::UpdatePickups()
 		std::vector<Pickup*>::iterator it = std::find(pickups_.begin(), pickups_.end(), dying_pickup);
 		if (it != pickups_.end())
 			pickups_.erase(it);
+
+		pickups_count_++;
 	}
 
 	//clear this list for next time
@@ -523,13 +527,6 @@ void Game::GameRender()
 			renderer_3d_->DrawMesh(*ground);
 			// unmount texture
 			renderer_3d_->set_override_material(nullptr);
-
-			// TODO set texture
-			// set texture
-			//renderer_3d_->set_override_material(&texture_material_);
-			//renderer_3d_->DrawMesh(*ground);
-			// unmount texture
-			//renderer_3d_->set_override_material(nullptr);
 		}
 
 		// draw pickups
