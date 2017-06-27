@@ -254,18 +254,15 @@ void Game::InitPickups()
 	if (model_scene_->meshes.size() > 0)
 		mesh_ = model_scene_->CreateMesh(platform_, model_scene_->meshes.front());
 
-	// get the player mesh instance to use this mesh for drawing
-	//pickups_.at(0)->set_mesh(mesh_);
-
-	// create Pickup pclass
-	float j = 0.0f;
+	b2Vec2 start_position(0.0f, 1.0f);
 
 	//for (auto ground : ground_)
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < 30; ++i)
 	{
 		pickups_.push_back(new Pickup());
-		pickups_.at(i)->InitPickup(primitive_builder_, world_, b2Vec2(0.0f + j, 1.0f), 0.2f, mesh_, PICKUP, PLAYER | GROUND, 1, PICKUP);
-		j += 3.0f;
+		pickups_.at(i)->InitPickup(primitive_builder_, world_, start_position, 0.2f, mesh_, PICKUP, PLAYER | GROUND, 1, PICKUP);
+
+		start_position.x += 3.0f;
 	}
 } // !InitPickups
 
