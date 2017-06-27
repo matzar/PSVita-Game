@@ -154,7 +154,7 @@ private:
 	void CleanupPlayer();
 	void InitLevel();
 	void CleanupGround();
-	void InitPickups();
+	//void InitPickups();
 	void CleanupPickups();
 };
 
