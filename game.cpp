@@ -484,11 +484,11 @@ void Game::UpdateSimulation(float frame_time)
 	don't have to update the ground visuals as it is static
 	*/
 
-	// is current ground set
-	if (contact_listener_->current_ground_)
+	// collision detection
+	if (player_->IsContacting() > 0)
 	{
-		// collision detection
-		if (player_->IsContacting() > 0)
+		// is current ground set
+		if (contact_listener_->current_ground_)
 		{
 			// if current ground is different colour than the player - game over
 			if (contact_listener_->current_ground_->GetGameObjectColour() != player_->GetGameObjectColour())
