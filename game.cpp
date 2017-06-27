@@ -178,12 +178,39 @@ void Game::InitGround()
 	for (int i = 0; i < 5; ++i)
 	{
 		ground_.push_back( new Ground());
-		if (i % 2 == 0)
-			ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + interval, 0.0f), GROUND, PLAYER | PICKUP, 1, GROUND, RED);
-		else if (i % 3 == 0)
-			ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + interval, 0.0f), GROUND, PLAYER | PICKUP, 1, GROUND, DEF_COL);
-		else
-			ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + interval, 0.0f), GROUND, PLAYER | PICKUP, 1, GROUND, BLUE);
+		if (i % 2 == 0) // RED GROUND
+			ground_.at(i)->InitGround(
+				primitive_builder_,                   // primitive builder
+				world_,                               // world
+				gef::Vector4(5.0f, 0.5f, 0.5f),       // ground half dimensions
+				b2Vec2(0.0f + interval, 0.0f),        // position
+				GROUND,                               // I am...
+				PLAYER | PICKUP,                      // ..and I collide with
+				1,                                    // group index (objects with the same positive index collide with each other)
+				GROUND,                               // type
+				RED);                                 // colour
+		else if (i % 3 == 0) // TEXTURED GROUND
+			ground_.at(i)->InitGround(
+				primitive_builder_,                   // primitive builder
+				world_, 							  // world
+				gef::Vector4(2.0f, 0.5f, 0.5f), 	  // ground half dimensions
+				b2Vec2(0.0f + interval, 0.0f), 		  // position
+				GROUND, 							  // I am...
+				PLAYER | PICKUP, 					  // ..and I collide with
+				1, 									  // group index (objects with the same positive index collide with each other)
+				GROUND, 							  // type
+				DEF_COL);							  // colour
+		else // BLUE GROUND
+			ground_.at(i)->InitGround(
+				primitive_builder_,                   // primitive builder
+				world_, 							  // world
+				gef::Vector4(5.0f, 0.5f, 0.5f), 	  // ground half dimensions
+				b2Vec2(0.0f + interval, 0.0f), 		  // position
+				GROUND, 							  // I am...
+				PLAYER | PICKUP, 					  // ..and I collide with
+				1, 									  // group index (objects with the same positive index collide with each other)
+				GROUND, 							  // type
+				BLUE);								  // colour
 		interval += 15.0f;
 	}
 } // !InitGround

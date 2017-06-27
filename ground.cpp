@@ -14,6 +14,7 @@ Ground::~Ground()
 void Ground::InitGround(
 	PrimitiveBuilder* primitive_builder, 
 	b2World* world, 
+	gef::Vector4 ground_half_dimensions,
 	b2Vec2 position,
 	uint16 category_bits,
 	uint16 mask_bits,
@@ -22,7 +23,7 @@ void Ground::InitGround(
 	OBJECT_COLOUR colour)
 {
 	// ground dimensions
-	gef::Vector4 ground_half_dimensions(5.0f, 0.5f, 0.5f);
+	//gef::Vector4 ground_half_dimensions(5.0f, 0.5f, 0.5f);
 
 	// setup the mesh for the ground
 	SetMesh(primitive_builder->CreateBoxMesh(ground_half_dimensions));
