@@ -194,6 +194,11 @@ void Game::InitGround()
 				RED);                                 // colour
 
 			start_position.x += (colour_ground_x + interval);
+
+			if (i % 4 == 0)
+				start_position.y += 2.0f;
+			else
+				start_position.y = 0.0f;
 		}
 		else if (i % 3 == 0) // TEXTURED GROUND
 		{
@@ -223,6 +228,11 @@ void Game::InitGround()
 				GROUND, 							  // type
 				BLUE);								  // colour
 			start_position.x += (colour_ground_x + interval);
+
+			if (i % 6 == 0)
+				start_position.y += 2.0f;
+			else
+				start_position.y = 0.0f;
 		}
 	}
 } // !InitGround
