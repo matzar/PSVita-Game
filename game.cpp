@@ -18,19 +18,18 @@
 #include <audio/audio_manager.h>
 // std headers
 #include <typeinfo>	 // for 'typeid'
-//#include <vector>
 // extra headers
 #include "load_texture.h"
 #include "primitive_builder.h"
-//#include "game_object.h"
+//#include "contact_filter.h"
+// my headers
+#include "contact_listener.h"
+#include "free_camera.h"
+#include "camera_enum.h"
+#include "game_state_enum.h"
 #include "player.h"
 #include "ground.h"
 #include "pickup.h"
-//#include "contact_filter.h"
-// my headers
-#include "free_camera.h"
-#include "game_state_enum.h"
-#include "contact_listener.h"
 // box2D headers
 #include <box2d/Box2D.h>
 
@@ -512,7 +511,10 @@ void Game::UpdateSimulation(float frame_time)
 
 	UpdatePickups();
 
-	if (player_->GetBody)
+	if (player_->GetBody()->GetPosition().y < -10.f)
+	{
+		player_->DeadPlayer();
+	}
 
 	// set camera to follow the player
 	if (player_->IsAlive())

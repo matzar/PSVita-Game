@@ -24,12 +24,7 @@ namespace gef
 	class Scene;
 } // gef
 
-enum CAMERA_ENUM
-{
-	CAM1,
-	CAM2,
-	CAM3
-};
+
 // Class forward declarations
 class PrimitiveBuilder;
 class Player;
@@ -38,6 +33,7 @@ class Pickup;
 //class GameObject;
 // Mine classes forward declarations
 enum GAMESTATE;
+enum CAMERA_ENUM;
 class Camera;
 class ContactListener;
 class ContactFilter;
@@ -65,6 +61,7 @@ private:
 
 	// gamestate_ pointer
 	GAMESTATE* gamestate_;
+
 	CAMERA_ENUM camera_enum;
 	// font
 	gef::Font* font_;

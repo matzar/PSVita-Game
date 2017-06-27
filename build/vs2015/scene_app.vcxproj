@@ -262,6 +262,7 @@
     <ClInclude Include="..\..\player.h" />
     <ClInclude Include="..\..\primitive_builder.h" />
     <ClInclude Include="..\..\scene_app.h" />
+    <ClInclude Include="camera_enum.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
