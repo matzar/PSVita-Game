@@ -172,46 +172,57 @@ void Game::InitPlayer()
 void Game::InitGround()
 {
 	// will be used for grounds intervals
-	float interval = 0.0f;
+	float interval = 5.0f;
+	float32 colour_ground_x = 5.0f;
+	float32 texture_ground_x = 2.0f;
+	b2Vec2 start_position(0.0f, 0.0f);
 
-	//for (auto ground : ground_)
 	for (int i = 0; i < 5; ++i)
 	{
 		ground_.push_back( new Ground());
 		if (i % 2 == 0) // RED GROUND
+		{
 			ground_.at(i)->InitGround(
 				primitive_builder_,                   // primitive builder
 				world_,                               // world
-				gef::Vector4(5.0f, 0.5f, 0.5f),       // ground half dimensions
-				b2Vec2(0.0f + interval, 0.0f),        // position
+				start_position,                       // position
+				gef::Vector4(colour_ground_x, 0.5f, 0.5f),       // ground half dimensions
 				GROUND,                               // I am...
 				PLAYER | PICKUP,                      // ..and I collide with
 				1,                                    // group index (objects with the same positive index collide with each other)
 				GROUND,                               // type
 				RED);                                 // colour
+
+			start_position.x += (colour_ground_x + interval);
+		}
 		else if (i % 3 == 0) // TEXTURED GROUND
+		{
 			ground_.at(i)->InitGround(
 				primitive_builder_,                   // primitive builder
 				world_, 							  // world
-				gef::Vector4(2.0f, 0.5f, 0.5f), 	  // ground half dimensions
-				b2Vec2(0.0f + interval, 0.0f), 		  // position
+				start_position, 		              // position
+				gef::Vector4(texture_ground_x, 0.5f, 0.5f), 	  // ground half dimensions
 				GROUND, 							  // I am...
 				PLAYER | PICKUP, 					  // ..and I collide with
 				1, 									  // group index (objects with the same positive index collide with each other)
 				GROUND, 							  // type
 				DEF_COL);							  // colour
+			start_position.x += (texture_ground_x + interval);
+		}
 		else // BLUE GROUND
+		{
 			ground_.at(i)->InitGround(
 				primitive_builder_,                   // primitive builder
 				world_, 							  // world
-				gef::Vector4(5.0f, 0.5f, 0.5f), 	  // ground half dimensions
-				b2Vec2(0.0f + interval, 0.0f), 		  // position
+				start_position, 		              // position
+				gef::Vector4(colour_ground_x, 0.5f, 0.5f), 	  // ground half dimensions
 				GROUND, 							  // I am...
 				PLAYER | PICKUP, 					  // ..and I collide with
 				1, 									  // group index (objects with the same positive index collide with each other)
 				GROUND, 							  // type
 				BLUE);								  // colour
-		interval += 15.0f;
+			start_position.x += (colour_ground_x + interval);
+		}
 	}
 } // !InitGround
 

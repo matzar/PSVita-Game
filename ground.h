@@ -12,8 +12,8 @@ public:
 	void InitGround(
 		PrimitiveBuilder* primitive_builder,
 		b2World* world, 
-		gef::Vector4 ground_half_dimensions,
 		b2Vec2 position, 
+		gef::Vector4 ground_half_dimensions,
 		uint16 category_bits, 
 		uint16 mask_bits, 
 		uint16 group_index,
