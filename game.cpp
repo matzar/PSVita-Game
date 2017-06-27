@@ -171,7 +171,7 @@ void Game::InitPlayer()
 	player_->InitPlayer(primitive_builder_, world_, b2Vec2(-4.0f, 4.0f), 0.5f, PLAYER, GROUND | PICKUP, 1, PLAYER, RED);
 } // !InitPlayer
 
-void Game::InitGround()
+void Game::InitLevel()
 {
 	// create a new scene object and read in the data from the file
 	// no meshes or materials are created yet
@@ -192,12 +192,12 @@ void Game::InitGround()
 	float32 texture_ground_x = 3.0f;
 	b2Vec2 start_position(0.0f, 0.0f);
 
-	int j = 0;
+	//int j = 0;
 
 	for (int i = 0; i < 20; ++i)
 	{
 		ground_.push_back( new Ground());
-
+		pickups_.push_back(new Pickup());
 		if (i % 2 == 0) // RED GROUND
 		{
 			if (i % 4 == 0)
@@ -205,17 +205,19 @@ void Game::InitGround()
 			else
 				start_position.y = 0.0f;
 
-			for (int i = 0; i < 3; ++i)
-			{
-				b2Vec2 pickup_start_position = start_position;
-				pickup_start_position.y = start_position.y + 4.0f;
+			b2Vec2 pickup_start_position = start_position;
+			pickup_start_position.y += 1.0f;
 
-				pickups_.push_back(new Pickup());
-				pickups_.at(j)->InitPickup(primitive_builder_, world_, start_position, 0.2f, mesh_, PICKUP, PLAYER | GROUND, 1, PICKUP);
-
-				pickup_start_position.x += 3.0f;
-				++j;
-			}
+			pickups_.at(i)->InitPickup(
+				primitive_builder_, 
+				world_, 
+				pickup_start_position, 
+				0.2f, 
+				mesh_, 
+				PICKUP, 
+				PLAYER | GROUND, 
+				1, 
+				PICKUP);
 
 			ground_.at(i)->InitGround(
 				primitive_builder_,                   // primitive builder
@@ -233,18 +235,6 @@ void Game::InitGround()
 		}
 		else if (i % 3 == 0) // TEXTURED GROUND
 		{
-			for (int i = 0; i < 3; ++i)
-			{
-				b2Vec2 pickup_start_position = start_position;
-				pickup_start_position.y = start_position.y + 4.0f;
-
-				pickups_.push_back(new Pickup());
-				pickups_.at(j)->InitPickup(primitive_builder_, world_, start_position, 0.2f, mesh_, PICKUP, PLAYER | GROUND, 1, PICKUP);
-
-				pickup_start_position.x += 3.0f;
-				++j;
-			}
-
 			start_position.x -= interval / 2.0f + 0.5f;
 			ground_.at(i)->InitGround(
 				primitive_builder_,                   // primitive builder
@@ -265,17 +255,19 @@ void Game::InitGround()
 			else
 				start_position.y = 0.0f;
 			
-			for (int i = 0; i < 3; ++i)
-			{
-				b2Vec2 pickup_start_position = start_position;
-				pickup_start_position.y = start_position.y + 4.0f;
+			b2Vec2 pickup_start_position = start_position;
+			pickup_start_position.y += 1.0f;
 
-				pickups_.push_back(new Pickup());
-				pickups_.at(j)->InitPickup(primitive_builder_, world_, start_position, 0.2f, mesh_, PICKUP, PLAYER | GROUND, 1, PICKUP);
-
-				pickup_start_position.x += 3.0f;
-				++j;
-			}
+			pickups_.at(i)->InitPickup(
+				primitive_builder_,
+				world_,
+				pickup_start_position,
+				0.2f,
+				mesh_,
+				PICKUP,
+				PLAYER | GROUND,
+				1,
+				PICKUP);
 
 			ground_.at(i)->InitGround(
 				primitive_builder_,                   // primitive builder
@@ -347,7 +339,7 @@ void Game::GameInit()
 
 	InitPlayer();
 
-	InitGround();
+	InitLevel();
 
 	//InitPickups();
 } // !GameInit

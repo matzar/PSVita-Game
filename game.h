@@ -152,7 +152,7 @@ private:
 	void CleanupWorld();
 	void InitPlayer();
 	void CleanupPlayer();
-	void InitGround();
+	void InitLevel();
 	void CleanupGround();
 	void InitPickups();
 	void CleanupPickups();
