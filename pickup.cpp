@@ -54,6 +54,7 @@ void Pickup::InitPickup(
 	pickup_fixture_def.filter.groupIndex = group_index;
 
 	SetGameObjectType(type);
+	SetGameObjectColour(NO_COL);
 
 	// create the fixture on the rigid body
 	GetBody()->CreateFixture(&pickup_fixture_def);

@@ -211,7 +211,7 @@ void Game::InitGround()
 				PLAYER | PICKUP, 					  // ..and I collide with
 				1, 									  // group index (objects with the same positive index collide with each other)
 				GROUND, 							  // type
-				DEF_COL);							  // colour
+				NO_COL);							  // colour
 			start_position.x += (texture_ground_x + interval);
 		}
 		else // BLUE GROUND
@@ -484,11 +484,11 @@ void Game::UpdateSimulation(float frame_time)
 	don't have to update the ground visuals as it is static
 	*/
 
-	// collision detection
-	if (player_->IsContacting() > 0)
+	// is current ground set
+	if (contact_listener_->current_ground_)
 	{
-		// is current ground set
-		if (contact_listener_->current_ground_)
+		// collision detection
+		if (player_->IsContacting() > 0)
 		{
 			// if current ground is different colour than the player - game over
 			if (contact_listener_->current_ground_->GetGameObjectColour() != player_->GetGameObjectColour())

@@ -71,13 +71,12 @@ void ContactListener::BeginContact(b2Contact * contact)
 	// collision response
 	if (player)
 	{
-		player->StartContact();
-
 		if (game_object)
 		{
 			// get the current ground player is at
 			if (game_object->GetGameObjectType() == GROUND)
 			{
+				player->StartContact();
 				current_ground_ = (Ground*)(game_object);
 			}
 		}
@@ -93,14 +92,16 @@ void ContactListener::BeginContact(b2Contact * contact)
 				gef::DebugOut("Pick this shit up!\n");
 			}
 		}
-		// check if player is of the same colour as the ground
-		if (player->GetGameObjectColour() == game_object->GetGameObjectColour())
+		if (game_object)
 		{
-			// reset jump
-			player->RestartJump();
-			gef::DebugOut("Same colour\n");
+			// check if player is of the same colour as the ground
+			if (player->GetGameObjectColour() == game_object->GetGameObjectColour() && game_object->GetGameObjectType() == GROUND)
+			{
+				// reset jump
+				player->RestartJump();
+				gef::DebugOut("Same colour\n");
+			}
 		}
-
 		// check if the player is of the different colour than the ground
 		//if (game_object->GetGameObjectType() == GROUND && player->GetGameObjectColour() != game_object->GetGameObjectColour())
 		//{
@@ -148,7 +149,15 @@ void ContactListener::EndContact(b2Contact * contact)
 	// collision response
 	if (player)
 	{
-		player->EndContact();
+		if (game_object)
+		{
+			// get the current ground player is at
+			if (game_object->GetGameObjectType() == GROUND)
+			{
+				player->EndContact();
+				current_ground_ = (Ground*)(game_object);
+			}
+		}
 		//
 		//if (player->GetGameObjectColour() == game_object->GetGameObjectColour())
 		//{
