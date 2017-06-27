@@ -174,7 +174,7 @@ void Game::InitGround()
 	// will be used for grounds intervals
 	float interval = 3.0f;
 	float32 colour_ground_x = 5.0f;
-	float32 texture_ground_x = 2.0f;
+	float32 texture_ground_x = 3.0f;
 	b2Vec2 start_position(0.0f, 0.0f);
 
 	for (int i = 0; i < 5; ++i)
@@ -197,6 +197,7 @@ void Game::InitGround()
 		}
 		else if (i % 3 == 0) // TEXTURED GROUND
 		{
+			start_position.x -= interval / 2.0f;
 			ground_.at(i)->InitGround(
 				primitive_builder_,                   // primitive builder
 				world_, 							  // world
