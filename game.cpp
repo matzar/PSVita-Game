@@ -180,6 +180,8 @@ void Game::InitGround()
 		ground_.push_back( new Ground());
 		if (i % 2 == 0)
 			ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + interval, 0.0f), GROUND, PLAYER | PICKUP, 1, GROUND, RED);
+		else if (i % 3 == 0)
+			ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + interval, 0.0f), GROUND, PLAYER | PICKUP, 1, GROUND, DEF_COL);
 		else
 			ground_.at(i)->InitGround(primitive_builder_, world_, b2Vec2(0.0f + interval, 0.0f), GROUND, PLAYER | PICKUP, 1, GROUND, BLUE);
 		interval += 15.0f;
