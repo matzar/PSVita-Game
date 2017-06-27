@@ -172,7 +172,7 @@ void Game::InitPlayer()
 void Game::InitGround()
 {
 	// will be used for grounds intervals
-	float interval = 5.0f;
+	float interval = 3.0f;
 	float32 colour_ground_x = 5.0f;
 	float32 texture_ground_x = 2.0f;
 	b2Vec2 start_position(0.0f, 0.0f);
@@ -186,7 +186,7 @@ void Game::InitGround()
 				primitive_builder_,                   // primitive builder
 				world_,                               // world
 				start_position,                       // position
-				gef::Vector4(colour_ground_x, 0.5f, 0.5f),       // ground half dimensions
+				gef::Vector4(colour_ground_x / 2.0f, 0.5f, 0.5f),       // ground half dimensions
 				GROUND,                               // I am...
 				PLAYER | PICKUP,                      // ..and I collide with
 				1,                                    // group index (objects with the same positive index collide with each other)
@@ -201,7 +201,7 @@ void Game::InitGround()
 				primitive_builder_,                   // primitive builder
 				world_, 							  // world
 				start_position, 		              // position
-				gef::Vector4(texture_ground_x, 0.5f, 0.5f), 	  // ground half dimensions
+				gef::Vector4(texture_ground_x / 2.0f, 0.5f, 0.5f), 	  // ground half dimensions
 				GROUND, 							  // I am...
 				PLAYER | PICKUP, 					  // ..and I collide with
 				1, 									  // group index (objects with the same positive index collide with each other)
@@ -215,7 +215,7 @@ void Game::InitGround()
 				primitive_builder_,                   // primitive builder
 				world_, 							  // world
 				start_position, 		              // position
-				gef::Vector4(colour_ground_x, 0.5f, 0.5f), 	  // ground half dimensions
+				gef::Vector4(colour_ground_x / 2.0f, 0.5f, 0.5f), 	  // ground half dimensions
 				GROUND, 							  // I am...
 				PLAYER | PICKUP, 					  // ..and I collide with
 				1, 									  // group index (objects with the same positive index collide with each other)
