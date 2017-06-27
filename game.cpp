@@ -394,7 +394,11 @@ void Game::UpdatePickups()
 	std::set<Pickup*>::iterator end = contact_listener_->dying_pickups_scheduled_for_removal_.end();
 	for (; it != end; ++it) 
 	{
+		
 		Pickup* dying_pickup = *it;
+		// TODO delete - gef::DebugOut("it* = %s\n", typeid(*it).name());
+		// TODO delete - gef::DebugOut("it = %s\n", typeid(it).name());
+		// TODO delete - gef::DebugOut("Pickup* = %s\n", typeid(dying_pickup).name());
 
 		//delete pickup... physics body is destroyed here
 		delete dying_pickup;
