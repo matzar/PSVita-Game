@@ -173,17 +173,50 @@ void Game::InitPlayer()
 
 void Game::InitGround()
 {
+	// create a new scene object and read in the data from the file
+	// no meshes or materials are created yet
+	// we're not making any assumptions about what the data may be loaded in for
+	model_scene_ = new gef::Scene();
+	model_scene_->ReadSceneFromFile(platform_, "triceratop.scn");
+
+	// we do want to render the data stored in the scene file so lets create the materials from the material data present in the scene file
+	model_scene_->CreateMaterials(platform_);
+
+	// now check to see if there is any mesh data in the file, if so lets create a mesh from it
+	if (model_scene_->meshes.size() > 0)
+		mesh_ = model_scene_->CreateMesh(platform_, model_scene_->meshes.front());
+
 	// will be used for grounds intervals
 	float interval = 3.0f;
 	float32 colour_ground_x = 5.0f;
 	float32 texture_ground_x = 3.0f;
 	b2Vec2 start_position(0.0f, 0.0f);
 
+	int j = 0;
+
 	for (int i = 0; i < 20; ++i)
 	{
 		ground_.push_back( new Ground());
+
 		if (i % 2 == 0) // RED GROUND
 		{
+			if (i % 4 == 0)
+				start_position.y += 2.0f;
+			else
+				start_position.y = 0.0f;
+
+			for (int i = 0; i < 3; ++i)
+			{
+				b2Vec2 pickup_start_position = start_position;
+				pickup_start_position.y = start_position.y + 4.0f;
+
+				pickups_.push_back(new Pickup());
+				pickups_.at(j)->InitPickup(primitive_builder_, world_, start_position, 0.2f, mesh_, PICKUP, PLAYER | GROUND, 1, PICKUP);
+
+				pickup_start_position.x += 3.0f;
+				++j;
+			}
+
 			ground_.at(i)->InitGround(
 				primitive_builder_,                   // primitive builder
 				world_,                               // world
@@ -197,13 +230,21 @@ void Game::InitGround()
 
 			start_position.x += (colour_ground_x + interval);
 
-			if (i % 4 == 0)
-				start_position.y += 2.0f;
-			else
-				start_position.y = 0.0f;
 		}
 		else if (i % 3 == 0) // TEXTURED GROUND
 		{
+			for (int i = 0; i < 3; ++i)
+			{
+				b2Vec2 pickup_start_position = start_position;
+				pickup_start_position.y = start_position.y + 4.0f;
+
+				pickups_.push_back(new Pickup());
+				pickups_.at(j)->InitPickup(primitive_builder_, world_, start_position, 0.2f, mesh_, PICKUP, PLAYER | GROUND, 1, PICKUP);
+
+				pickup_start_position.x += 3.0f;
+				++j;
+			}
+
 			start_position.x -= interval / 2.0f + 0.5f;
 			ground_.at(i)->InitGround(
 				primitive_builder_,                   // primitive builder
@@ -219,6 +260,23 @@ void Game::InitGround()
 		}
 		else // BLUE GROUND
 		{
+			if (i % 6 == 0)
+				start_position.y += 2.0f;
+			else
+				start_position.y = 0.0f;
+			
+			for (int i = 0; i < 3; ++i)
+			{
+				b2Vec2 pickup_start_position = start_position;
+				pickup_start_position.y = start_position.y + 4.0f;
+
+				pickups_.push_back(new Pickup());
+				pickups_.at(j)->InitPickup(primitive_builder_, world_, start_position, 0.2f, mesh_, PICKUP, PLAYER | GROUND, 1, PICKUP);
+
+				pickup_start_position.x += 3.0f;
+				++j;
+			}
+
 			ground_.at(i)->InitGround(
 				primitive_builder_,                   // primitive builder
 				world_, 							  // world
@@ -230,11 +288,6 @@ void Game::InitGround()
 				GROUND, 							  // type
 				BLUE);								  // colour
 			start_position.x += (colour_ground_x + interval);
-
-			if (i % 6 == 0)
-				start_position.y += 2.0f;
-			else
-				start_position.y = 0.0f;
 		}
 	}
 } // !InitGround
@@ -257,7 +310,7 @@ void Game::InitPickups()
 	b2Vec2 start_position(0.0f, 1.0f);
 
 	//for (auto ground : ground_)
-	for (int i = 0; i < 30; ++i)
+	for (int i = 0; i < 3; ++i)
 	{
 		pickups_.push_back(new Pickup());
 		pickups_.at(i)->InitPickup(primitive_builder_, world_, start_position, 0.2f, mesh_, PICKUP, PLAYER | GROUND, 1, PICKUP);
@@ -296,7 +349,7 @@ void Game::GameInit()
 
 	InitGround();
 
-	InitPickups();
+	//InitPickups();
 } // !GameInit
 
 void Game::GameRelease()
