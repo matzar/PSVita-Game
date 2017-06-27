@@ -389,12 +389,35 @@ void Game::SonyController(const gef::SonyController* controller)
 
 void Game::UpdatePickups()
 {
+	////process list for deletion
+	//std::set<Pickup*>::iterator it = contact_listener_->dying_pickups_scheduled_for_removal_.begin();
+	//std::set<Pickup*>::iterator end = contact_listener_->dying_pickups_scheduled_for_removal_.end();
+	//for (; it != end; ++it) 
+	//{
+	//	
+	//	Pickup* dying_pickup = *it;
+	//	// TODO delete - gef::DebugOut("it* = %s\n", typeid(*it).name());
+	//	// TODO delete - gef::DebugOut("it = %s\n", typeid(it).name());
+	//	// TODO delete - gef::DebugOut("Pickup* = %s\n", typeid(dying_pickup).name());
+
+	//	//delete pickup... physics body is destroyed here
+	//	delete dying_pickup;
+
+	//	//... and remove it from main list of pickups
+	//	std::vector<Pickup*>::iterator it = std::find(pickups_.begin(), pickups_.end(), dying_pickup);
+	//	if (it != pickups_.end())
+	//		pickups_.erase(it);
+	//}
+
+	////clear this list for next time
+	//contact_listener_->dying_pickups_scheduled_for_removal_.clear();
+
 	//process list for deletion
 	std::set<Pickup*>::iterator it = contact_listener_->dying_pickups_scheduled_for_removal_.begin();
 	std::set<Pickup*>::iterator end = contact_listener_->dying_pickups_scheduled_for_removal_.end();
-	for (; it != end; ++it) 
+	for (; it != end; ++it)
 	{
-		
+
 		Pickup* dying_pickup = *it;
 		// TODO delete - gef::DebugOut("it* = %s\n", typeid(*it).name());
 		// TODO delete - gef::DebugOut("it = %s\n", typeid(it).name());
