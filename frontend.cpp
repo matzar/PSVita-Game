@@ -120,7 +120,7 @@ void Frontend::FrontendInit()
 	//sprite_.set_position(14.0f, 14.0f, 0.0f);
 	sprite_.set_width(sprite_width_);
 	sprite_.set_height(sprite_height);
-
+	
 	sprite_position_to_lerp_end_ = sprite_.position();
 
 	// initialise input manager
@@ -166,7 +166,30 @@ void Frontend::SonyController(const gef::SonyController* controller)
 {
 	if (controller)
 	{
-		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
+		// record where to move sprite
+		float left_horizontal_input = controller->left_stick_x_axis();
+		float left_vertical_input = controller->left_stick_y_axis();
+
+		float right_horizontal_input = controller->right_stick_x_axis();
+		float right_vertical_input = controller->right_stick_y_axis();
+
+		// left stick up
+		if (controller->left_stick_y_axis() < 0 ||
+			controller->buttons_pressed() & gef_SONY_CTRL_UP)
+		{
+			sprite_position_to_lerp_end_.set_value(sprite_.position().x(), sprite_.position().y() - sprite_height, 0.0);
+		}
+
+		// left stick down
+		if (controller->left_stick_y_axis() > 0 ||
+			controller->buttons_pressed() & gef_SONY_CTRL_DOWN)
+		{
+			sprite_position_to_lerp_end_.set_value(sprite_.position().x(), sprite_.position().y() + sprite_height, 0.0);
+		}
+
+		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
+			sprite_.position().y() > 260.0f &&
+			sprite_.position().y() < 280.0f)
 		{
 			// update the current state for the game state machine
 			(*gamestate_) = GAME; // get the object that gamestate points to
@@ -315,7 +338,6 @@ void Frontend::FrontendUpdate(float frame_time)
 
 	 // new version using LerpReturnVector function which returns a vector
 	sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_position_to_lerp_end_, 0.1));
-
 } // !FrontendUpdate
 
 void Frontend::FrontendRender()
