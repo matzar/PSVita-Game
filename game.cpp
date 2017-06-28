@@ -477,17 +477,7 @@ void Game::SonyController(const gef::SonyController* controller)
 			if (camera_count >= 3)
 				camera_count = 0;
 		}
-
-		// trigger a sound effect
-		if (audio_manager_)
-		{
-			if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
-			{
-				audio_manager_->StopPlayingSampleVoice(sfx_voice_id_);
-				sfx_voice_id_ = -1;
-			}
-		}
-	} // !audio_manager_
+	} 
 } // !SonyController
 
 void Game::UpdatePickups()
@@ -514,6 +504,12 @@ void Game::UpdatePickups()
 			pickups_.erase(it);
 
 		pickups_count_++;
+		// trigger a sound effect
+		if (audio_manager_)
+		{
+			audio_manager_->StopPlayingSampleVoice(sfx_voice_id_);
+			sfx_voice_id_ = -1;
+		}// !audio_manager_
 	}
 
 	//clear this list for next time

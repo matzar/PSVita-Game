@@ -8,6 +8,7 @@
 // std headers
 #include <vector>
 #include <box2d/Box2D.h>
+#include <camera_enum.h>
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
