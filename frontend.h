@@ -3,6 +3,7 @@
 
 // mu headers
 #include "game_state_enum.h"
+#include <input/touch_input_manager.h>
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
@@ -14,6 +15,8 @@ namespace gef
 	class AudioManager;
 	class Texture;
 	class SonyController;
+	class Sprite;
+	class Vector2;
 } // gef
 
 class Frontend
@@ -57,6 +60,14 @@ private:
 
 	bool quit_;
 
+	// touch variables
+	Int32 active_touch_id_;
+	gef::Vector2 touch_position_;
+	gef::Sprite sprite_;
+	// lerp move variables
+	gef::Vector4 sprite_lerp_;
+	gef::Vector4 sprite_position_to_lerp_end_;
+
 	void SonyController(const gef::SonyController* controller);
 #ifdef _WIN32
 	void KeyboardController(float fps);
@@ -65,6 +76,7 @@ private:
 	void CleanUpFont();
 	void DrawHUD();
 	void InitAudio();
+	void ProcessTouchInput();
 };
 
 #endif // !_FRONT_END_H

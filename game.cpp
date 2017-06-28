@@ -61,7 +61,7 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	camera_count(0),
 	quit_(false),
 	fps_(0),
-	sfx_id_(-1),
+	pickup_sfx_id_(-1),
 	sfx_voice_id_(-1),
 	pickups_count_(0)
 {
@@ -132,7 +132,7 @@ void Game::InitAudio()
 	if (audio_manager_)
 	{
 		// load a sound effect
-		sfx_id_ = audio_manager_->LoadSample("box_collected.wav", platform_);
+		pickup_sfx_id_ = audio_manager_->LoadSample("box_collected.wav", platform_);
 
 		// load in music
 		audio_manager_->LoadMusic("music.wav", platform_);
@@ -313,6 +313,10 @@ void Game::InitLevel()
 
 void Game::GameInit()
 {
+	// make sure if there is a panel to detect touch input, then activate it
+	if (input_manager_ && input_manager_->touch_manager() && (input_manager_->touch_manager()->max_num_panels() > 0))
+		input_manager_->touch_manager()->EnablePanel(0);
+
 	// initialise input manager
 	input_manager_ = gef::InputManager::Create(platform_);
 
@@ -360,7 +364,7 @@ void Game::GameRelease()
 	{
 		audio_manager_->StopMusic();
 		audio_manager_->UnloadAllSamples();
-		sfx_id_ = -1;
+		pickup_sfx_id_ = -1;
 		sfx_voice_id_ = -1;
 
 		delete audio_manager_;
@@ -487,9 +491,9 @@ void Game::UpdatePickups()
 	//process list for deletion
 	std::set<Pickup*>::iterator it = contact_listener_->dying_pickups_scheduled_for_removal_.begin();
 	std::set<Pickup*>::iterator end = contact_listener_->dying_pickups_scheduled_for_removal_.end();
-	for (; it != end; ++it) 
+	for (; it != end; ++it)
 	{
-		
+
 		Pickup* dying_pickup = *it;
 		// TODO delete - gef::DebugOut("it* = %s\n", typeid(*it).name());
 		// TODO delete - gef::DebugOut("it = %s\n", typeid(it).name());
@@ -504,12 +508,29 @@ void Game::UpdatePickups()
 			pickups_.erase(it);
 
 		pickups_count_++;
-		// trigger a sound effect
+
 		if (audio_manager_)
 		{
-			audio_manager_->StopPlayingSampleVoice(sfx_voice_id_);
-			sfx_voice_id_ = -1;
-		}// !audio_manager_
+			if (pickup_sfx_id_ != -1)
+			{
+				// for two or more sounds make it the id local
+				//{
+				//	int voice_id  = audio_manager_->PlaySample(pickup_sfx_id_);
+				//}
+
+				int sfx_voice_id_ = audio_manager_->PlaySample(pickup_sfx_id_);
+
+				gef::VolumeInfo volume_info;
+				volume_info.volume = 0.5f;
+				volume_info.pan = -1.0f;
+
+				audio_manager_->SetSampleVoiceVolumeInfo(sfx_voice_id_, volume_info);
+
+				audio_manager_->SetSamplePitch(sfx_voice_id_, 1.5f);
+
+				audio_manager_->PlaySample(sfx_voice_id_);
+			} // !pickup_sfx_id
+		} // !audio_manager_
 	}
 
 	//clear this list for next time
@@ -547,7 +568,7 @@ void Game::UpdateSimulation(float frame_time)
 				player_->DeadPlayer();
 				// update the current state for the game state machine
 				// get the object that gamestate points to
-				(*gamestate_) = FRONTEND;
+				//(*gamestate_) = FRONTEND;
 			}
 		}
 	}
@@ -559,7 +580,7 @@ void Game::UpdateSimulation(float frame_time)
 		player_->DeadPlayer();
 		// update the current state for the game state machine
 		// get the object that gamestate points to
-		(*gamestate_) = FRONTEND;
+		//(*gamestate_) = FRONTEND;
 	}
 
 	// set camera to follow the player

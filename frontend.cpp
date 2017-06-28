@@ -10,8 +10,11 @@
 
 #include <input/input_manager.h>
 #include <input/sony_controller_input_manager.h>
+#include <input/touch_input_manager.h>
+
 #include <audio/audio_manager.h>
 
+#include <maths/vector2.h>
 #include <maths/vector4.h>
 // extra headers
 #include "load_texture.h"
@@ -83,6 +86,10 @@ void Frontend::InitAudio()
 
 void Frontend::FrontendInit()
 {
+	// make sure if there is a panel to detect touch input, then activate it
+	if (input_manager_ && input_manager_->touch_manager() && (input_manager_->touch_manager()->max_num_panels() > 0))
+		input_manager_->touch_manager()->EnablePanel(0);
+
 	// initialise input manager
 	input_manager_ = gef::InputManager::Create(platform_);
 	// initlalise sprite renderer
@@ -90,7 +97,6 @@ void Frontend::FrontendInit()
 
 	InitAudio();
 
-	// TODO createing material from the texture
 	// initialise button icon
 	button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
 	
@@ -170,27 +176,90 @@ void Frontend::KeyboardController(float frame_time)
 	} // keyboard
 
 	  // mouse input
-	const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
-	if (touch_input)
-	{
-		// initialise the mouse position
-		gef::Vector2 mouse_position(0.0f, 0.0f); // left upper corner of the window
+	//const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
+	//if (touch_input)
+	//{
+	//	// initialise the mouse position
+	//	gef::Vector2 mouse_position(0.0f, 0.0f); // left upper corner of the window
 
-												 // get a pointer to the d3d11 implementation of the TouchInputManager
-		const gef::TouchInputManagerD3D11* touch_input_d3d11 = (const gef::TouchInputManagerD3D11*)touch_input;
+	//											 // get a pointer to the d3d11 implementation of the TouchInputManager
+	//	const gef::TouchInputManagerD3D11* touch_input_d3d11 = (const gef::TouchInputManagerD3D11*)touch_input;
 
-		// get the mouse position
-		mouse_position = touch_input_d3d11->mouse_position();
+	//	// get the mouse position
+	//	mouse_position = touch_input_d3d11->mouse_position();
 
-		if (touch_input_d3d11->is_button_down(0))
-		{
-			//SetCursorPos(480, 272);	
-		}
+	//	if (touch_input_d3d11->is_button_down(0))
+	//	{
+	//		//SetCursorPos(480, 272);	
+	//	}
 
-		//gef::DebugOut("Mouse position x, y: %f %f\n", mouse_position.x, mouse_position.y);
-	} // touch_input (mouse)
+	//	//gef::DebugOut("Mouse position x, y: %f %f\n", mouse_position.x, mouse_position.y);
+	//} // touch_input (mouse)
 }
 #endif // !_WIN32
+
+void Frontend::ProcessTouchInput()
+{
+	const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
+	if (touch_input && (touch_input->max_num_panels() > 0))
+	{
+		// get the active touches for this panel
+		const gef::TouchContainer& panel_touches = touch_input->touches(0);
+
+		// go through the touches
+		for (gef::ConstTouchIterator touch = panel_touches.begin(); touch != panel_touches.end(); ++touch)
+		{
+			// if active touch id is -1, then we are not currently processing a touch
+			if (active_touch_id_ == -1)
+			{
+				// check for the start of a new touch
+				if (touch->type == gef::TT_NEW)
+				{
+					active_touch_id_ = touch->id;
+
+					// we're just going to record the position of the touch
+					touch_position_ = touch->position;
+
+					// do any processing for a new touch here
+
+					// record where to move sprite
+					sprite_position_to_lerp_end_.set_value(touch_position_.x, touch_position_.y, 0.0);
+					// change colour
+					sprite_.set_colour(gef::Colour(1.0f, 0.0f, 0.0f).GetABGR());
+				}
+			}
+			else if (active_touch_id_ == touch->id)
+			{
+				// we are processing touch data with a matching id to the one we are looking for
+				if (touch->type == gef::TT_ACTIVE)
+				{
+					// update an active touch here
+					gef::DebugOut("Touch position: %f\n", touch->position);
+					gef::DebugOut("Touch id: %f\n", touch->id);
+
+					sprite_.set_position(touch_position_.x, touch_position_.y);
+
+					// we're just going to record the position of the touch
+					touch_position_ = touch->position;
+
+					//// update variable
+					sprite_position_to_lerp_end_.set_value(touch_position_.x, touch_position_.y, 0.0);
+				}
+				else if (touch->type == gef::TT_RELEASED)
+				{
+					// the touch we are tracking has been released
+					// perform any actions that need to happen when a touch is released here
+
+					// change colour
+					//sprite_.set_colour(gef::Colour(0.0f, 1.0f, 0.0f).GetABGR());
+
+					// we're not doing anything here apart from resetting the active touch id
+					active_touch_id_ = -1;
+				}
+			}
+		}
+	}
+}
 
 void Frontend::FrontendUpdate(float frame_time)
 {
@@ -204,10 +273,15 @@ void Frontend::FrontendUpdate(float frame_time)
 		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
 
 		SonyController(controller);
+
+		ProcessTouchInput();
 #ifdef _WIN32
-		KeyboardController(frame_time);
+		//KeyboardController(frame_time);
 #endif // _WIN32
 	} // !input_manager_
+
+	 // new version using LerpReturnVector function which returns a vector
+	sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_position_to_lerp_end_, 0.1));
 } // !FrontendUpdate
 
 void Frontend::FrontendRender()
