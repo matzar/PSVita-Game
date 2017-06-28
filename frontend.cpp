@@ -167,24 +167,22 @@ void Frontend::SonyController(const gef::SonyController* controller)
 	if (controller)
 	{
 		// record where to move sprite
-		float left_horizontal_input = controller->left_stick_x_axis();
+		/*float left_horizontal_input = controller->left_stick_x_axis();
 		float left_vertical_input = controller->left_stick_y_axis();
 
 		float right_horizontal_input = controller->right_stick_x_axis();
-		float right_vertical_input = controller->right_stick_y_axis();
+		float right_vertical_input = controller->right_stick_y_axis();*/
 
 		// left stick up
-		if (controller->left_stick_y_axis() < 0 ||
-			controller->buttons_pressed() & gef_SONY_CTRL_UP)
+		if (controller->buttons_pressed() & gef_SONY_CTRL_UP)
 		{
-			sprite_position_to_lerp_end_.set_value(sprite_.position().x(), sprite_.position().y() - sprite_height, 0.0);
+			sprite_position_to_lerp_end_.set_value(sprite_.position().x(), sprite_.position().y() - sprite_height * 2.0f, 0.0);
 		}
 
 		// left stick down
-		if (controller->left_stick_y_axis() > 0 ||
-			controller->buttons_pressed() & gef_SONY_CTRL_DOWN)
+		if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN)
 		{
-			sprite_position_to_lerp_end_.set_value(sprite_.position().x(), sprite_.position().y() + sprite_height, 0.0);
+			sprite_position_to_lerp_end_.set_value(sprite_.position().x(), sprite_.position().y() + sprite_height * 2.0f, 0.0);
 		}
 
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
@@ -337,7 +335,7 @@ void Frontend::FrontendUpdate(float frame_time)
 	} // !input_manager_
 
 	 // new version using LerpReturnVector function which returns a vector
-	sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_position_to_lerp_end_, 0.1));
+	sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_position_to_lerp_end_, 1.0));
 } // !FrontendUpdate
 
 void Frontend::FrontendRender()
