@@ -461,8 +461,8 @@ void Game::SonyController(const gef::SonyController* controller)
 		if (controller->buttons_pressed() & gef_SONY_CTRL_START)
 		{
 			// update the current state for the game state machine
-			(*gamestate_) = FRONTEND; // get the object that gamestate points to
-			//GameInit();
+			// get the object that gamestate points to
+			(*gamestate_) = FRONTEND; 
 		}
 
 		if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
@@ -492,6 +492,8 @@ void Game::SonyController(const gef::SonyController* controller)
 
 void Game::UpdatePickups()
 {
+	// TODO
+	//if (!(contact_listener_->dying_pickups_scheduled_for_removal_.empty()))
 	//process list for deletion
 	std::set<Pickup*>::iterator it = contact_listener_->dying_pickups_scheduled_for_removal_.begin();
 	std::set<Pickup*>::iterator end = contact_listener_->dying_pickups_scheduled_for_removal_.end();
@@ -547,6 +549,9 @@ void Game::UpdateSimulation(float frame_time)
 			if (contact_listener_->current_ground_->GetGameObjectColour() != player_->GetGameObjectColour())
 			{
 				player_->DeadPlayer();
+				// update the current state for the game state machine
+				// get the object that gamestate points to
+				(*gamestate_) = FRONTEND;
 			}
 		}
 	}
@@ -556,6 +561,9 @@ void Game::UpdateSimulation(float frame_time)
 	if (player_->GetBody()->GetPosition().y < -10.f)
 	{
 		player_->DeadPlayer();
+		// update the current state for the game state machine
+		// get the object that gamestate points to
+		(*gamestate_) = FRONTEND;
 	}
 
 	// set camera to follow the player
