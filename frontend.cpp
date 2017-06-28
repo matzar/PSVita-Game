@@ -35,6 +35,7 @@ Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate) :
 	quit_(false),
 	sfx_voice_id_(-1),
 	sfx_id_(-1),
+	active_touch_id_(-1),
 	fps_(0)
 {
 }
@@ -60,6 +61,17 @@ void Frontend::DrawHUD()
 {
 	if (font_)
 	{
+		// if a touch is active lets draw some text
+		if (active_touch_id_ != -1)
+		{
+			font_->RenderText(
+				sprite_renderer_,
+				gef::Vector4(touch_position_.x, touch_position_.y, -0.9f),
+				1.0f, 0xffffffff, gef::TJ_LEFT,
+				"(%.1f, %.1f)",
+				touch_position_.x, touch_position_.y);
+		}
+
 		// display frame rate
 		font_->RenderText(sprite_renderer_, gef::Vector4(850.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f", fps_);
 	} // !font_
@@ -89,6 +101,13 @@ void Frontend::FrontendInit()
 	// make sure if there is a panel to detect touch input, then activate it
 	if (input_manager_ && input_manager_->touch_manager() && (input_manager_->touch_manager()->max_num_panels() > 0))
 		input_manager_->touch_manager()->EnablePanel(0);
+
+	// sprite
+	sprite_.set_position(platform_.width()*0.5f, platform_.height()*0.5f, 0.0f);
+	sprite_.set_width(32.0f);
+	sprite_.set_height(32.0f);
+
+	sprite_position_to_lerp_end_ = sprite_.position();
 
 	// initialise input manager
 	input_manager_ = gef::InputManager::Create(platform_);
@@ -175,7 +194,7 @@ void Frontend::KeyboardController(float frame_time)
 			
 	} // keyboard
 
-	  // mouse input
+	// mouse input
 	//const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
 	//if (touch_input)
 	//{
@@ -237,7 +256,7 @@ void Frontend::ProcessTouchInput()
 					gef::DebugOut("Touch position: %f\n", touch->position);
 					gef::DebugOut("Touch id: %f\n", touch->id);
 
-					sprite_.set_position(touch_position_.x, touch_position_.y);
+					//sprite_.set_position(touch_position_.x, touch_position_.y);
 
 					// we're just going to record the position of the touch
 					touch_position_ = touch->position;
@@ -251,7 +270,7 @@ void Frontend::ProcessTouchInput()
 					// perform any actions that need to happen when a touch is released here
 
 					// change colour
-					//sprite_.set_colour(gef::Colour(0.0f, 1.0f, 0.0f).GetABGR());
+					sprite_.set_colour(gef::Colour(0.0f, 1.0f, 0.0f).GetABGR());
 
 					// we're not doing anything here apart from resetting the active touch id
 					active_touch_id_ = -1;
@@ -282,6 +301,7 @@ void Frontend::FrontendUpdate(float frame_time)
 
 	 // new version using LerpReturnVector function which returns a vector
 	sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_position_to_lerp_end_, 0.1));
+
 } // !FrontendUpdate
 
 void Frontend::FrontendRender()
@@ -315,6 +335,8 @@ void Frontend::FrontendRender()
 			gef::TJ_CENTRE,
 			"TO START");
 
+		// draw sprites here
+		sprite_renderer_->DrawSprite(sprite_);
 
 		DrawHUD();
 	}

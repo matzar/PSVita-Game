@@ -4,6 +4,7 @@
 // mu headers
 #include "game_state_enum.h"
 #include <input/touch_input_manager.h>
+#include <graphics/sprite.h>
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
@@ -17,6 +18,7 @@ namespace gef
 	class SonyController;
 	class Sprite;
 	class Vector2;
+	class Vector4;
 } // gef
 
 class Frontend
