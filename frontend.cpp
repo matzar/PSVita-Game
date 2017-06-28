@@ -33,6 +33,8 @@ Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate) :
 	audio_manager_(nullptr),
 	button_icon_(nullptr),
 	quit_(false),
+	sprite_width_(190.0f),
+	sprite_height(38.0f),
 	sfx_voice_id_(-1),
 	sfx_id_(-1),
 	active_touch_id_(-1),
@@ -67,13 +69,24 @@ void Frontend::DrawHUD()
 			font_->RenderText(
 				sprite_renderer_,
 				gef::Vector4(touch_position_.x, touch_position_.y, -0.9f),
-				1.0f, 0xffffffff, gef::TJ_LEFT,
+				1.0f, 
+				0xffffffff, 
+				gef::TJ_LEFT,
 				"(%.1f, %.1f)",
-				touch_position_.x, touch_position_.y);
+				touch_position_.x, 
+				touch_position_.y);
 		}
 
 		// display frame rate
-		font_->RenderText(sprite_renderer_, gef::Vector4(850.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f", fps_);
+		font_->RenderText(
+			sprite_renderer_, 
+			gef::Vector4(850.0f, 510.0f, -0.9f), 
+			1.0f, 
+			0xffffffff, 
+			gef::TJ_LEFT, 
+			"FPS: %.1f", 
+			fps_);
+
 	} // !font_
 } // !DrawHUD
 
@@ -104,8 +117,9 @@ void Frontend::FrontendInit()
 
 	// sprite
 	sprite_.set_position(platform_.width()*0.5f, platform_.height()*0.5f, 0.0f);
-	sprite_.set_width(32.0f);
-	sprite_.set_height(32.0f);
+	//sprite_.set_position(14.0f, 14.0f, 0.0f);
+	sprite_.set_width(sprite_width_);
+	sprite_.set_height(sprite_height);
 
 	sprite_position_to_lerp_end_ = sprite_.position();
 
@@ -311,7 +325,7 @@ void Frontend::FrontendRender()
 		// render "PRESS" text
 		font_->RenderText(
 			sprite_renderer_,
-			gef::Vector4(platform_.width()*0.5f, platform_.height()*0.5f - 56.0f, -0.99f),
+			gef::Vector4(platform_.width()*0.5f, platform_.height()*0.5f - 2.0f * sprite_height, -0.99f),
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
@@ -329,7 +343,7 @@ void Frontend::FrontendRender()
 		// render "TO START" text
 		font_->RenderText(
 			sprite_renderer_,
-			gef::Vector4(platform_.width()*0.5f, platform_.height()*0.5f + 32.0f, -0.99f),
+			gef::Vector4(platform_.width()*0.5f, platform_.height()*0.5f + sprite_height, -0.99f),
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,

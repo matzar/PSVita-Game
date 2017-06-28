@@ -65,7 +65,11 @@ private:
 	// touch variables
 	Int32 active_touch_id_;
 	gef::Vector2 touch_position_;
+	// sprite
 	gef::Sprite sprite_;
+	float sprite_width_;
+	float sprite_height;
+
 	// lerp move variables
 	gef::Vector4 sprite_lerp_;
 	gef::Vector4 sprite_position_to_lerp_end_;
