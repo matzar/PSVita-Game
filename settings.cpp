@@ -136,7 +136,7 @@ void Settings::SettingsInit()
 	start_text_position_.set_value(sprite_.position().x(), sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
 	// set "SETTINGS" vector
 	settings_text_position_.set_value(sprite_.position().x(), sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
-	// set "QUIT" vector
+	// set "BACK" vector
 	quit_text_position_.set_value(sprite_.position().x(), sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
 
 	InitAudio();
@@ -208,7 +208,7 @@ void Settings::SonyController(const gef::SonyController* controller)
 			sprite_.position().y() < (start_text_position_.y() + sprite_height))
 		{
 			// update the current state for the game state machine
-			(*gamestate_) = GAME; // get the object that gamestate points to
+			//(*gamestate_) = GAME; // get the object that gamestate points to
 		}
 		// SETTINGS press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
@@ -216,14 +216,15 @@ void Settings::SonyController(const gef::SonyController* controller)
 			sprite_.position().y() < (settings_text_position_.y() + sprite_height))
 		{
 			// update the current state for the game state machine
-			(*gamestate_) = GAME; // get the object that gamestate points to
+			//(*gamestate_) = GAME; // get the object that gamestate points to
 		}
-		// QUIT press
+		// BACK press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
 			sprite_.position().y() > (quit_text_position_.y() - sprite_height * 0.5f) &&
 			sprite_.position().y() < (quit_text_position_.y() + sprite_height))
 		{
-			quit_ = true;
+			// update the current state for the game state machine
+			(*gamestate_) = FRONTEND; // get the object that gamestate points to
 		}
 		// TODO delete
 		if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
@@ -254,11 +255,11 @@ void Settings::KeyboardController(float frame_time)
 		float camera_speed = 10.0f;
 
 		// keyboard input
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_X))
-		{
+		//if (keyboard->IsKeyDown(gef::Keyboard::KC_X))
+		//{
 			// update the current state for the game state machine
-			(*gamestate_) = GAME; // get the object that gamestate points to
-		}
+		//	(*gamestate_) = GAME; // get the object that gamestate points to
+		//}
 
 	} // keyboard
 
@@ -382,7 +383,7 @@ void Settings::SettingsRender()
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
-			"START");
+			"CAMERA");
 
 		// render "SETTINGS" text
 		font_->RenderText(
@@ -391,16 +392,16 @@ void Settings::SettingsRender()
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
-			"SETTINGS");
+			"DIFFICULTY");
 
-		// render "QUIT" text
+		// render "BACK" text
 		font_->RenderText(
 			sprite_renderer_,
 			gef::Vector4(quit_text_position_.x(), quit_text_position_.y(), -0.99f),
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
-			"QUIT");
+			"BACK");
 
 		// Render button icon
 		/*gef::Sprite button;

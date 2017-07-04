@@ -216,7 +216,7 @@ void Frontend::SonyController(const gef::SonyController* controller)
 			sprite_.position().y() < (settings_text_position_.y() + sprite_height))
 		{
 			// update the current state for the game state machine
-			(*gamestate_) = GAME; // get the object that gamestate points to
+			(*gamestate_) = SETTINGS; // get the object that gamestate points to
 		}
 		// QUIT press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
@@ -254,11 +254,11 @@ void Frontend::KeyboardController(float frame_time)
 		float camera_speed = 10.0f;
 
 		// keyboard input
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_X))
-		{
+		//if (keyboard->IsKeyDown(gef::Keyboard::KC_X))
+		//{
 			// update the current state for the game state machine
-			(*gamestate_) = GAME; // get the object that gamestate points to
-		}
+		//	(*gamestate_) = GAME; // get the object that gamestate points to
+		//}
 			
 	} // keyboard
 
