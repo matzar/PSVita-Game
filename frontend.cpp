@@ -416,7 +416,7 @@ void Frontend::FrontendRender()
 		DrawHUD();
 	}
 	sprite_renderer_->End();
-	gef::DebugOut("sprite_.position().y(): %f\n", sprite_.position().y());
+	/*gef::DebugOut("sprite_.position().y(): %f\n", sprite_.position().y());
 	gef::DebugOut("start_text_position_.y() - sprite_height * 0.5f: %f\n", sprite_.position().y() - sprite_height * 0.5f);
-	gef::DebugOut("start_text_position_.y() + sprite_height: %f\n", sprite_.position().y() + sprite_height);
+	gef::DebugOut("start_text_position_.y() + sprite_height: %f\n", sprite_.position().y() + sprite_height);*/
 } // !FrontendRender
