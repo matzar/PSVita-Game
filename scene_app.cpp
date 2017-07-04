@@ -76,6 +76,36 @@ bool SceneApp::Update(float frame_time)
 		} // !FRONTEND
 		break;
 
+		case SETTINGS:
+		{
+			if (settings_ == nullptr)
+			{
+				// create settings
+				// reference to the platform object is passed
+				// Settings class has 'GAMESTATE* gamestate' pointer
+				// adress of gamestate_ is passed to the class and assigned to the GAMESTATE pointer
+				settings_ = new Settings(platform_, &gamestate_);
+				settings_->SettingsInit();
+
+				// delete game
+				if (settings_)
+				{
+					settings_->SettingsRelease();
+					delete settings_;
+					settings_ = nullptr;
+				}
+			}
+
+			// settings update function
+			settings_->SettingsUpdate(frame_time);
+
+			// quit application
+			if (settings_->Quit())
+			{
+				return false;
+			}
+		} // !SETTINGS
+
 		case GAME:
 		{
 			if (game_ == nullptr) 
@@ -124,6 +154,15 @@ void SceneApp::Render()
 				frontend_->FrontendRender();
 			}
 		} // !FRONTEND
+		break;
+
+		case SETTINGS:
+		{
+			if (settings_)
+			{
+				settings_->SettingsRender();
+			}
+		} // !SETTINGS
 		break;
 
 		case GAME:
