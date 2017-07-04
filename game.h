@@ -3,8 +3,7 @@
 
 // gef headers
 #include <system/application.h>
-#include <maths/vector2.h>
-#include <graphics/material.h>
+
 // std headers
 #include <vector>
 #include <box2d/Box2D.h>
@@ -23,6 +22,8 @@ namespace gef
 	class SonyController;
 	class Texture;
 	class Scene;
+	class Vector2;
+	class Material;
 } // gef
 
 
@@ -70,7 +71,7 @@ private:
 	// textures
 	gef::Texture* texture_;
 	// textures' materials
-	gef::Material texture_material_;
+	gef::Material* texture_material_;
 
 	// sprite renderer
 	gef::SpriteRenderer* sprite_renderer_;

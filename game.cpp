@@ -5,13 +5,16 @@
 
 #include <graphics/font.h>
 
+#include <graphics/material.h>
 #include <graphics/sprite_renderer.h>
 #include <graphics/sprite.h>
 
 #include <graphics/renderer_3d.h>
 #include <graphics/mesh.h>
 #include <graphics/scene.h>
+
 #include <maths/math_utils.h>
+#include <maths/vector2.h>
 
 #include <input/input_manager.h>
 #include <input/sony_controller_input_manager.h>
@@ -114,7 +117,8 @@ void Game::SetupLights()
 void Game::InitTextures()
 {
 	texture_ = CreateTextureFromPNG("nauticalTile_160.png", platform_);
-	texture_material_.set_texture(texture_);
+	texture_material_ = new gef::Material();
+	texture_material_->set_texture(texture_);
 } // !InitTextures
 
 void Game::CleanupTextures()
@@ -669,7 +673,7 @@ void Game::GameRender()
 			else if (ground->GetGameObjectColour() == BLUE)
 				renderer_3d_->set_override_material(&primitive_builder_->blue_material());
 			else
-				renderer_3d_->set_override_material(&texture_material_);
+				renderer_3d_->set_override_material(texture_material_);
 			// draw texture
 			renderer_3d_->DrawMesh(*ground);
 			// unmount texture
