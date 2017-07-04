@@ -178,12 +178,14 @@ void Frontend::SonyController(const gef::SonyController* controller)
 		if (controller->buttons_pressed() & gef_SONY_CTRL_UP)
 		{
 			sprite_position_to_lerp_end_.set_value(sprite_.position().x(), sprite_.position().y() - sprite_height * 2.0f, 0.0);
+			sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_position_to_lerp_end_, 1.0));
 		}
 
 		// left stick down
 		if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN)
 		{
 			sprite_position_to_lerp_end_.set_value(sprite_.position().x(), sprite_.position().y() + sprite_height * 2.0f, 0.0);
+			sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_position_to_lerp_end_, 1.0));
 		}
 
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
@@ -336,7 +338,7 @@ void Frontend::FrontendUpdate(float frame_time)
 	} // !input_manager_
 
 	 // new version using LerpReturnVector function which returns a vector
-	sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_position_to_lerp_end_, 1.0));
+	//sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_position_to_lerp_end_, 1.0));
 } // !FrontendUpdate
 
 void Frontend::FrontendRender()
