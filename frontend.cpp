@@ -111,22 +111,23 @@ void Frontend::InitAudio()
 
 void Frontend::FrontendInit()
 {
+	// initialise input manager
+	input_manager_ = gef::InputManager::Create(platform_);
+
 	// make sure if there is a panel to detect touch input, then activate it
 	if (input_manager_ && input_manager_->touch_manager() && (input_manager_->touch_manager()->max_num_panels() > 0))
 		input_manager_->touch_manager()->EnablePanel(0);
+
+	// initlalise sprite renderer
+	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
 
 	// sprite
 	sprite_.set_position(platform_.width()*0.5f, platform_.height()*0.5f, 0.0f);
 	//sprite_.set_position(14.0f, 14.0f, 0.0f);
 	sprite_.set_width(sprite_width_);
 	sprite_.set_height(sprite_height);
-	
-	sprite_position_to_lerp_end_ = sprite_.position();
 
-	// initialise input manager
-	input_manager_ = gef::InputManager::Create(platform_);
-	// initlalise sprite renderer
-	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
+	sprite_position_to_lerp_end_ = sprite_.position();
 
 	InitAudio();
 

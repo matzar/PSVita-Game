@@ -313,12 +313,13 @@ void Game::InitLevel()
 
 void Game::GameInit()
 {
-	// make sure if there is a panel to detect touch input, then activate it
-	if (input_manager_ && input_manager_->touch_manager() && (input_manager_->touch_manager()->max_num_panels() > 0))
-		input_manager_->touch_manager()->EnablePanel(0);
 
 	// initialise input manager
 	input_manager_ = gef::InputManager::Create(platform_);
+
+	// make sure if there is a panel to detect touch input, then activate it
+	//if (input_manager_ && input_manager_->touch_manager() && (input_manager_->touch_manager()->max_num_panels() > 0))
+	//	input_manager_->touch_manager()->EnablePanel(0);
 
 	// initlalise sprite renderer
 	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
