@@ -90,4 +90,4 @@ private:
 	void ProcessTouchInput();
 };
 
-#endif // !_FRONT_END_H
+#endif // !_FRONTEND_H

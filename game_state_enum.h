@@ -5,6 +5,7 @@
 enum GAMESTATE
 {
 	FRONTEND,
+	SETTINGS,
 	GAME
 }; // GAMESTATE
 
