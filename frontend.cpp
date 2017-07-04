@@ -122,7 +122,7 @@ void Frontend::FrontendInit()
 	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
 
 	// sprite
-	sprite_.set_position(platform_.width()*0.5f, platform_.height()*0.5f, 0.0f);
+	sprite_.set_position(platform_.width() * 0.5f, platform_.height() * 0.5f + sprite_height * 1.5f, 0.0f);
 	//sprite_.set_position(14.0f, 14.0f, 0.0f);
 	sprite_.set_width(sprite_width_);
 	sprite_.set_height(sprite_height);
@@ -367,7 +367,7 @@ void Frontend::FrontendRender()
 		sprite_renderer_->DrawSprite(button);*/
 		font_->RenderText(
 			sprite_renderer_,
-			gef::Vector4(text_position_.x(), text_position_.y() - 0.5*sprite_height, -0.99f),
+			gef::Vector4(text_position_.x(), text_position_.y() - 0.5 * sprite_height, -0.99f),
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
@@ -377,7 +377,7 @@ void Frontend::FrontendRender()
 		// render "TO START" text
 		font_->RenderText(
 			sprite_renderer_,
-			gef::Vector4(text_position_.x(), 348.0f - 0.5*sprite_height, -0.99f),
+			gef::Vector4(text_position_.x(), text_position_.y() + 1.5 * sprite_height, -0.99f),
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
