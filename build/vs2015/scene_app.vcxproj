@@ -244,6 +244,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\settings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\camera.h" />
@@ -262,6 +263,7 @@
     <ClInclude Include="..\..\player.h" />
     <ClInclude Include="..\..\primitive_builder.h" />
     <ClInclude Include="..\..\scene_app.h" />
+    <ClInclude Include="..\..\settings.h" />
     <ClInclude Include="camera_enum.h" />
   </ItemGroup>
   <ItemGroup>

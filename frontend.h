@@ -1,7 +1,7 @@
 #ifndef _FRONTEND_H
 #define _FRONTEND_H
 
-// mu headers
+// my headers
 #include "game_state_enum.h"
 #include <input/touch_input_manager.h>
 #include <graphics/sprite.h>
