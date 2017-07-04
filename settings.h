@@ -4,8 +4,6 @@
 // gef headers
 #include <input/touch_input_manager.h>
 #include <graphics/sprite.h>
-// my headers
-#include "game_state_enum.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
@@ -21,6 +19,14 @@ namespace gef
 	class Vector2;
 	class Vector4;
 } // gef
+
+// Class forward declarations
+class PrimitiveBuilder;
+class Player;
+class Ground;
+// My class forward declarations
+enum GAMESTATE;
+class Camera;
 
 class Settings
 {

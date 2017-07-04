@@ -1,8 +1,7 @@
 #ifndef _FRONTEND_H
 #define _FRONTEND_H
 
-// my headers
-#include "game_state_enum.h"
+// gef headers
 #include <input/touch_input_manager.h>
 #include <graphics/sprite.h>
 
@@ -20,6 +19,9 @@ namespace gef
 	class Vector2;
 	class Vector4;
 } // gef
+
+// my class forward declarations
+enum GAMESTATE;
 
 class Frontend
 {

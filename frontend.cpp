@@ -18,6 +18,8 @@
 #include <maths/vector4.h>
 // extra headers
 #include "load_texture.h"
+// my headers
+#include "game_state_enum.h"
 
 #ifdef _WIN32
 // only on windows platforms
