@@ -42,9 +42,10 @@
 #include <platform/d3d11/input/touch_input_manager_d3d11.h>
 #endif 
 
-Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
+Game::Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count) :
 	platform_(platform),
 	gamestate_(gamestate),
+	camera_count_(camera_count),
 	font_(nullptr),
 	texture_(nullptr),
 	sprite_renderer_(nullptr),
@@ -61,7 +62,6 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	camera_1(true),
 	camera_2(false),
 	camera_3(false),
-	camera_count(0),
 	quit_(false),
 	fps_(0),
 	pickup_sfx_id_(-1),
@@ -481,10 +481,10 @@ void Game::SonyController(const gef::SonyController* controller)
 
 		if (controller->buttons_pressed() & gef_SONY_CTRL_TRIANGLE)
 		{
-			camera_count++;
+			(*camera_count_)++;
 
-			if (camera_count >= 3)
-				camera_count = 0;
+			if ((*camera_count_) >= 3)
+				(*camera_count_) = 0;
 		}
 	} 
 } // !SonyController
@@ -591,7 +591,7 @@ void Game::UpdateSimulation(float frame_time)
 	// set camera to follow the player
 	if (player_->IsAlive())
 	{
-		switch (camera_count)
+		switch ((*camera_count_))
 		{
 		case CAM1:
 			camera_->SetCameraPosition(63.4f, -8.6f, 0.0f, gef::Vector4(player_->GetBody()->GetPosition().x - 9.3f, 3.3f, 7.3f));

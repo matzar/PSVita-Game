@@ -48,7 +48,7 @@ class b2ContactFilter;
 class Game
 {
 public:
-	Game(gef::Platform& platform, GAMESTATE* gamestate);
+	Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count);
 	~Game();
 
 	void GameInit();
@@ -64,7 +64,11 @@ private:
 	// gamestate_ pointer
 	GAMESTATE* gamestate_;
 
+	// camera
+	Camera* camera_;
+	unsigned* camera_count_;
 	CAMERA_ENUM camera_enum;
+
 	// font
 	gef::Font* font_;
 
@@ -87,9 +91,6 @@ private:
 
 	// primitive builder
 	PrimitiveBuilder* primitive_builder_;
-
-	// camera
-	Camera* camera_;
 
 	// contact listener
 	ContactListener* contact_listener_;
@@ -119,7 +120,6 @@ private:
 	bool camera_1;
 	bool camera_2;
 	bool camera_3;
-	uint16 camera_count;
 	// quit
 	bool quit_;
 	// FPS

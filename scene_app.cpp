@@ -137,7 +137,7 @@ bool SceneApp::Update(float frame_time)
 				// reference to the platform object is passed
 				// Game class has 'GAMESTATE* gamestate' pointer
 				// adress of gamestate_ is passed to the class and assigned to the GAMESTATE pointer
-				game_ = new Game(platform_, &gamestate_);
+				game_ = new Game(platform_, &gamestate_, &camera_count_);
 				game_->GameInit();
 
 				// going to the GAME state possible only from the FRONTEND state
