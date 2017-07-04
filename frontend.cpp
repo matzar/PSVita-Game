@@ -352,29 +352,36 @@ void Frontend::FrontendRender()
 		// render "PRESS" text
 		font_->RenderText(
 			sprite_renderer_,
-			gef::Vector4(text_position_.x(), text_position_.y() - sprite_height * 2.0f, -0.99f),
+			gef::Vector4(text_position_.x(), text_position_.y() - sprite_height * 2.5f, -0.99f),
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
-			"PRESS");
+			"START");
 
 		// Render button icon
-		gef::Sprite button;
+		/*gef::Sprite button;
 		button.set_texture(button_icon_);
 		button.set_position(gef::Vector4(text_position_.x(), text_position_.y(), -0.99f));
 		button.set_height(32.0f);
 		button.set_width(32.0f);
-		sprite_renderer_->DrawSprite(button);
+		sprite_renderer_->DrawSprite(button);*/
+		font_->RenderText(
+			sprite_renderer_,
+			gef::Vector4(text_position_.x(), text_position_.y() - 0.5*sprite_height, -0.99f),
+			1.0f,
+			0xffffffff,
+			gef::TJ_CENTRE,
+			"SETTINGS");
 
 
 		// render "TO START" text
 		font_->RenderText(
 			sprite_renderer_,
-			gef::Vector4(platform_.width()*0.5f, platform_.height()*0.5f + sprite_height, -0.99f),
+			gef::Vector4(text_position_.x(), 348.0f - 0.5*sprite_height, -0.99f),
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
-			"TO START");
+			"QUIT");
 
 		// draw sprites here
 		sprite_renderer_->DrawSprite(sprite_);
