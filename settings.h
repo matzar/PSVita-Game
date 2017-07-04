@@ -22,8 +22,7 @@ namespace gef
 
 // Class forward declarations
 class PrimitiveBuilder;
-class Player;
-class Ground;
+class GameObject;
 // My class forward declarations
 enum GAMESTATE;
 class Camera;
@@ -48,8 +47,11 @@ private:
 	GAMESTATE* gamestate_;
 
 	// camera
-	Camera* camera_;
 	unsigned* camera_count_;
+	Camera* camera_;
+
+	// game objects
+	GameObject* player_;
 
 	// input manager
 	gef::InputManager* input_manager_;
@@ -94,6 +96,7 @@ private:
 #ifdef _WIN32
 	void KeyboardController(float fps);
 #endif // _WIN32
+	void InitGameObjects();
 	void InitFont();
 	void CleanUpFont();
 	void DrawHUD();
