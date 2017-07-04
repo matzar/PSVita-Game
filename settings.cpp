@@ -18,6 +18,8 @@
 #include <maths/vector4.h>
 // extra headers
 #include "load_texture.h"
+// my headers
+#include "camera_enum.h"
 
 #ifdef _WIN32
 // only on windows platforms
@@ -25,9 +27,10 @@
 #include <platform/d3d11/input/touch_input_manager_d3d11.h>
 #endif 
 
-Settings::Settings(gef::Platform& platform, GAMESTATE* gamestate) :
+Settings::Settings(gef::Platform& platform, GAMESTATE* gamestate, CAMERA_ENUM* camera_enum) :
 	platform_(platform),
 	gamestate_(gamestate),
+	camera_enum_(camera_enum),
 	input_manager_(nullptr),
 	sprite_renderer_(nullptr),
 	audio_manager_(nullptr),
@@ -202,16 +205,17 @@ void Settings::SonyController(const gef::SonyController* controller)
 			sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_end_position_to_lerp_, 1.0));
 		}
 
-		// START press
+		// CAMERA press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
 			sprite_.position().y() > (camera_text_position_.y() - sprite_height * 0.5f) &&
 			sprite_.position().y() < (camera_text_position_.y() + sprite_height))
 		{
-			// update the current state of the game state machine
-			// get the value that the gamestate points to and change it
-			//(*gamestate_) = GAME; 
+			camera_count++;
+
+			if (camera_count >= 3)
+				camera_count = 0;
 		}
-		// SETTINGS press
+		// DIFFICULTY press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
 			sprite_.position().y() > (difficulty_text_position_.y() - sprite_height * 0.5f) &&
 			sprite_.position().y() < (difficulty_text_position_.y() + sprite_height))

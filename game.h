@@ -3,11 +3,10 @@
 
 // gef headers
 #include <system/application.h>
-
 // std headers
 #include <vector>
+// box2d headers
 #include <box2d/Box2D.h>
-#include <camera_enum.h>
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
@@ -33,7 +32,7 @@ class Player;
 class Ground;
 class Pickup;
 //class GameObject;
-// Mine classes forward declarations
+// My class forward declarations
 enum GAMESTATE;
 enum CAMERA_ENUM;
 class Camera;
@@ -48,7 +47,7 @@ class b2ContactFilter;
 class Game
 {
 public:
-	Game(gef::Platform& platform, GAMESTATE* gamestate);
+	Game(gef::Platform& platform, GAMESTATE* gamestate, CAMERA_ENUM* camera_enum);
 	~Game();
 
 	void GameInit();
@@ -64,7 +63,10 @@ private:
 	// gamestate_ pointer
 	GAMESTATE* gamestate_;
 
-	CAMERA_ENUM camera_enum;
+	// camaera enum
+	CAMERA_ENUM* camera_enum_;
+	//CAMERA_ENUM camera_enum;
+
 	// font
 	gef::Font* font_;
 

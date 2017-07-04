@@ -1,4 +1,7 @@
 #include "scene_app.h"
+#include "game.h"
+#include "frontend.h"
+#include "settings.h"
 
 SceneApp::SceneApp(gef::Platform& platform) :
 	Application(platform),
@@ -12,6 +15,7 @@ void SceneApp::Init()
 {
 	// initialise gamestate_
 	gamestate_ = FRONTEND;
+	camera_enum_ = CAM1;
 } // !Init
 
 void SceneApp::CleanUp()
@@ -93,7 +97,7 @@ bool SceneApp::Update(float frame_time)
 				// reference to the platform object is passed
 				// Settings class has 'GAMESTATE* gamestate' pointer
 				// adress of gamestate_ is passed to the class and assigned to the GAMESTATE pointer
-				settings_ = new Settings(platform_, &gamestate_);
+				settings_ = new Settings(platform_, &gamestate_, &camera_enum_);
 				settings_->SettingsInit();
 
 				// going to the SETTINGS state possible only from the FRONTEND state

@@ -1,10 +1,11 @@
 #ifndef _SETTINGS_H
 #define _SETTINGS_H
 
-// my headers
-#include "game_state_enum.h"
+// gef headers
 #include <input/touch_input_manager.h>
 #include <graphics/sprite.h>
+// my headers
+#include "game_state_enum.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
@@ -24,7 +25,7 @@ namespace gef
 class Settings
 {
 public:
-	Settings(gef::Platform& platform, GAMESTATE* gamestate);
+	Settings(gef::Platform& platform, GAMESTATE* gamestate, CAMERA_ENUM* camera_enum);
 	~Settings();
 
 	void SettingsInit();
@@ -39,6 +40,8 @@ private:
 
 	// gamestate
 	GAMESTATE* gamestate_;
+
+	unsigned camera_count;
 
 	// input manager
 	gef::InputManager* input_manager_;

@@ -5,10 +5,9 @@
 #include <system/application.h>
 // my headers
 #include "free_camera.h"
-#include "game.h"
-#include "frontend.h"
-#include "settings.h"
+
 #include "game_state_enum.h"
+#include "camera_enum.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
@@ -19,6 +18,10 @@ namespace gef
 	class InputManager;
 	class Renderer3D;
 } // !gef
+// My class forward declarations
+class Frontend;
+class Settings;
+class Game;
 
 class SceneApp : public gef::Application
 {
@@ -32,6 +35,7 @@ public:
 	virtual void Render();
 private:
 	GAMESTATE gamestate_;
+	CAMERA_ENUM camera_enum_;
 
 	Frontend* frontend_;
 	Settings* settings_;
