@@ -195,7 +195,8 @@ void Frontend::SonyController(const gef::SonyController* controller)
 		}
 
 		// left stick down
-		if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN)
+		if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
+			sprite_init_position_y_ + sprite_height * 6.0f > sprite_.position().y() + sprite_height * 2.0f)
 		{
 			sprite_end_position_to_lerp_.set_value(sprite_.position().x(), sprite_.position().y() + sprite_height * 2.0f, 0.0);
 			sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_end_position_to_lerp_, 1.0));
