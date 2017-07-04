@@ -75,9 +75,9 @@ private:
 	gef::Vector4 sprite_lerp_;
 	gef::Vector4 sprite_end_position_to_lerp_;
 	// menu text vectors
-	gef::Vector4 start_text_position_;
-	gef::Vector4 settings_text_position_;
-	gef::Vector4 quit_text_position_;
+	gef::Vector4 camera_text_position_;
+	gef::Vector4 difficulty_text_position_;
+	gef::Vector4 back_text_position_;
 
 	void SonyController(const gef::SonyController* controller);
 #ifdef _WIN32

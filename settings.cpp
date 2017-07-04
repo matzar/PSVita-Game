@@ -133,11 +133,11 @@ void Settings::SettingsInit()
 	// menu text vectors init
 	float height_correction = 2.0f;
 	// set "START" vector
-	start_text_position_.set_value(sprite_.position().x(), sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
+	camera_text_position_.set_value(sprite_.position().x(), sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
 	// set "SETTINGS" vector
-	settings_text_position_.set_value(sprite_.position().x(), sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
+	difficulty_text_position_.set_value(sprite_.position().x(), sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
 	// set "BACK" vector
-	quit_text_position_.set_value(sprite_.position().x(), sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
+	back_text_position_.set_value(sprite_.position().x(), sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
 
 	InitAudio();
 
@@ -204,8 +204,8 @@ void Settings::SonyController(const gef::SonyController* controller)
 
 		// START press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			sprite_.position().y() > (start_text_position_.y() - sprite_height * 0.5f) &&
-			sprite_.position().y() < (start_text_position_.y() + sprite_height))
+			sprite_.position().y() > (camera_text_position_.y() - sprite_height * 0.5f) &&
+			sprite_.position().y() < (camera_text_position_.y() + sprite_height))
 		{
 			// update the current state of the game state machine
 			// get the value that the gamestate points to and change it
@@ -213,8 +213,8 @@ void Settings::SonyController(const gef::SonyController* controller)
 		}
 		// SETTINGS press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			sprite_.position().y() > (settings_text_position_.y() - sprite_height * 0.5f) &&
-			sprite_.position().y() < (settings_text_position_.y() + sprite_height))
+			sprite_.position().y() > (difficulty_text_position_.y() - sprite_height * 0.5f) &&
+			sprite_.position().y() < (difficulty_text_position_.y() + sprite_height))
 		{
 			// update the current state of the game state machine
 			// get the value that the gamestate points to and change it
@@ -222,8 +222,8 @@ void Settings::SonyController(const gef::SonyController* controller)
 		}
 		// BACK press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			sprite_.position().y() > (quit_text_position_.y() - sprite_height * 0.5f) &&
-			sprite_.position().y() < (quit_text_position_.y() + sprite_height))
+			sprite_.position().y() > (back_text_position_.y() - sprite_height * 0.5f) &&
+			sprite_.position().y() < (back_text_position_.y() + sprite_height))
 		{
 			// update the current state of the game state machine
 			// get the value that the gamestate points to and change it
@@ -383,7 +383,7 @@ void Settings::SettingsRender()
 		// render "START" text
 		font_->RenderText(
 			sprite_renderer_,
-			gef::Vector4(start_text_position_.x(), start_text_position_.y(), -0.99f),
+			gef::Vector4(camera_text_position_.x(), camera_text_position_.y(), -0.99f),
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
@@ -392,7 +392,7 @@ void Settings::SettingsRender()
 		// render "SETTINGS" text
 		font_->RenderText(
 			sprite_renderer_,
-			gef::Vector4(settings_text_position_.x(), settings_text_position_.y(), -0.99f),
+			gef::Vector4(difficulty_text_position_.x(), difficulty_text_position_.y(), -0.99f),
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
@@ -401,7 +401,7 @@ void Settings::SettingsRender()
 		// render "BACK" text
 		font_->RenderText(
 			sprite_renderer_,
-			gef::Vector4(quit_text_position_.x(), quit_text_position_.y(), -0.99f),
+			gef::Vector4(back_text_position_.x(), back_text_position_.y(), -0.99f),
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
@@ -422,6 +422,6 @@ void Settings::SettingsRender()
 	}
 	sprite_renderer_->End();
 	/*gef::DebugOut("sprite_.position().y(): %f\n", sprite_.position().y());
-	gef::DebugOut("start_text_position_.y() - sprite_height * 0.5f: %f\n", sprite_.position().y() - sprite_height * 0.5f);
-	gef::DebugOut("start_text_position_.y() + sprite_height: %f\n", sprite_.position().y() + sprite_height);*/
+	gef::DebugOut("camera_text_position_.y() - sprite_height * 0.5f: %f\n", sprite_.position().y() - sprite_height * 0.5f);
+	gef::DebugOut("camera_text_position_.y() + sprite_height: %f\n", sprite_.position().y() + sprite_height);*/
 } // !SettingsRender
