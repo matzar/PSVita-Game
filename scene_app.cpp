@@ -3,6 +3,7 @@
 SceneApp::SceneApp(gef::Platform& platform) :
 	Application(platform),
 	frontend_(nullptr),
+	settings_(nullptr),
 	game_(nullptr)
 {
 } // !SceneApp
@@ -21,6 +22,14 @@ void SceneApp::CleanUp()
 		frontend_->FrontendRelease();
 		delete frontend_;
 		frontend_ = nullptr;
+	}
+
+	// settings
+	if (settings_)
+	{
+		settings_->SettingsRelease();
+		delete settings_;
+		settings_ = nullptr;
 	}
 
 	// game_

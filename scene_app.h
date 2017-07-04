@@ -7,6 +7,7 @@
 #include "free_camera.h"
 #include "game.h"
 #include "frontend.h"
+#include "settings.h"
 #include "game_state_enum.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
@@ -32,8 +33,9 @@ public:
 private:
 	GAMESTATE gamestate_;
 
-	Game* game_;
 	Frontend* frontend_;
+	Settings* settings_;
+	Game* game_;
 }; // !SceneApp
 
 #endif // !_SCENE_APP_H
