@@ -406,8 +406,8 @@ void Settings::SettingsRender()
 				gef::Sprite camera_1;
 				camera_1.set_texture(camera_1_texture_);
 				camera_1.set_position(gef::Vector4(camera_text_position_.x(), camera_text_position_.y() - sprite_height * 4.0f, -0.99f));
-				camera_1.set_height(32.0f);
-				camera_1.set_width(32.0f);
+				camera_1.set_height(platform_.height() * 0.5f);
+				camera_1.set_width(platform_.width() * 0.5f);
 				sprite_renderer_->DrawSprite(camera_1);
 
 				// render "CAMERA1" text
@@ -423,7 +423,15 @@ void Settings::SettingsRender()
 
 			case CAM2:
 			{
-				// render "CAMERA1" text
+				// render CAM2 picture
+				gef::Sprite camera_2;
+				camera_2.set_texture(camera_2_texture_);
+				camera_2.set_position(gef::Vector4(camera_text_position_.x(), camera_text_position_.y() - sprite_height * 4.0f, -0.99f));
+				camera_2.set_height(platform_.height() * 0.5f);
+				camera_2.set_width(platform_.width() * 0.5f);
+				sprite_renderer_->DrawSprite(camera_2);
+
+				// render "CAMERA 2" text
 				font_->RenderText(
 					sprite_renderer_,
 					gef::Vector4(camera_text_position_.x(), camera_text_position_.y(), -0.99f),
@@ -436,7 +444,15 @@ void Settings::SettingsRender()
 
 			case CAM3:
 			{
-				// render "CAMERA1" text
+				// render CAM3 picture
+				gef::Sprite camera_3;
+				camera_3.set_texture(camera_3_texture_);
+				camera_3.set_position(gef::Vector4(camera_text_position_.x(), camera_text_position_.y() - sprite_height * 4.0f, -0.99f));
+				camera_3.set_height(platform_.height() * 0.5f);
+				camera_3.set_width(platform_.width() * 0.5f);
+				sprite_renderer_->DrawSprite(camera_3);
+
+				// render "CAMERA 3" text
 				font_->RenderText(
 					sprite_renderer_,
 					gef::Vector4(camera_text_position_.x(), camera_text_position_.y(), -0.99f),
