@@ -126,22 +126,22 @@ void Settings::SettingsInit()
 	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
 
 	// sprite
-	sprite_.set_position(platform_.width() * 0.5f, platform_.height() * 0.5f + sprite_height * 1.5f, 0.0f);
+	menu_box_sprite_.set_position(platform_.width() * 0.5f, platform_.height() * 0.5f + sprite_height * 1.5f, 0.0f);
 	//sprite_.set_position(14.0f, 14.0f, 0.0f);
-	sprite_.set_width(sprite_width_);
-	sprite_.set_height(sprite_height);
+	menu_box_sprite_.set_width(sprite_width_);
+	menu_box_sprite_.set_height(sprite_height);
 
-	sprite_end_position_to_lerp_ = sprite_.position();
-	sprite_init_position_y_ = sprite_.position().y();
+	sprite_end_position_to_lerp_ = menu_box_sprite_.position();
+	sprite_init_position_y_ = menu_box_sprite_.position().y();
 
 	// menu text vectors init
 	float height_correction = 2.0f;
 	// set "START" vector
-	camera_text_position_.set_value(sprite_.position().x(), sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
+	camera_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
 	// set "SETTINGS" vector
-	difficulty_text_position_.set_value(sprite_.position().x(), sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
+	difficulty_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
 	// set "BACK" vector
-	back_text_position_.set_value(sprite_.position().x(), sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
+	back_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
 
 	InitAudio();
 
@@ -205,24 +205,24 @@ void Settings::SonyController(const gef::SonyController* controller)
 
 		// left stick up
 		if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
-			sprite_init_position_y_ - sprite_height <= sprite_.position().y() - sprite_height * 2.0f)
+			sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
 		{
-			sprite_end_position_to_lerp_.set_value(sprite_.position().x(), sprite_.position().y() - sprite_height * 2.0f, 0.0);
-			sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_end_position_to_lerp_, 1.0));
+			sprite_end_position_to_lerp_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - sprite_height * 2.0f, 0.0);
+			menu_box_sprite_.set_position(sprite_lerp_.LerpReturnVector(menu_box_sprite_.position(), sprite_end_position_to_lerp_, 1.0));
 		}
 
 		// left stick down
 		if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
-			sprite_init_position_y_ + sprite_height * 4.0f >= sprite_.position().y() + sprite_height * 2.0f)
+			sprite_init_position_y_ + sprite_height * 4.0f >= menu_box_sprite_.position().y() + sprite_height * 2.0f)
 		{
-			sprite_end_position_to_lerp_.set_value(sprite_.position().x(), sprite_.position().y() + sprite_height * 2.0f, 0.0);
-			sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_end_position_to_lerp_, 1.0));
+			sprite_end_position_to_lerp_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 2.0f, 0.0);
+			menu_box_sprite_.set_position(sprite_lerp_.LerpReturnVector(menu_box_sprite_.position(), sprite_end_position_to_lerp_, 1.0));
 		}
 
 		// CAMERA press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			sprite_.position().y() > (camera_text_position_.y() - sprite_height * 0.5f) &&
-			sprite_.position().y() < (camera_text_position_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (camera_text_position_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (camera_text_position_.y() + sprite_height))
 		{
 			(*camera_count_)++;
 
@@ -231,8 +231,8 @@ void Settings::SonyController(const gef::SonyController* controller)
 		}
 		// DIFFICULTY press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			sprite_.position().y() > (difficulty_text_position_.y() - sprite_height * 0.5f) &&
-			sprite_.position().y() < (difficulty_text_position_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (difficulty_text_position_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (difficulty_text_position_.y() + sprite_height))
 		{
 			// update the current state of the game state machine
 			// get the value that the gamestate points to and change it
@@ -240,8 +240,8 @@ void Settings::SonyController(const gef::SonyController* controller)
 		}
 		// BACK press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			sprite_.position().y() > (back_text_position_.y() - sprite_height * 0.5f) &&
-			sprite_.position().y() < (back_text_position_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (back_text_position_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (back_text_position_.y() + sprite_height))
 		{
 			// update the current state of the game state machine
 			// get the value that the gamestate points to and change it
@@ -335,7 +335,7 @@ void Settings::ProcessTouchInput()
 					// record where to move sprite
 					sprite_end_position_to_lerp_.set_value(touch_position_.x, touch_position_.y, 0.0);
 					// change colour
-					sprite_.set_colour(gef::Colour(1.0f, 0.0f, 0.0f).GetABGR());
+					menu_box_sprite_.set_colour(gef::Colour(1.0f, 0.0f, 0.0f).GetABGR());
 				}
 			}
 			else if (active_touch_id_ == touch->id)
@@ -361,7 +361,7 @@ void Settings::ProcessTouchInput()
 					// perform any actions that need to happen when a touch is released here
 
 					// change colour
-					sprite_.set_colour(gef::Colour(0.0f, 1.0f, 0.0f).GetABGR());
+					menu_box_sprite_.set_colour(gef::Colour(0.0f, 1.0f, 0.0f).GetABGR());
 
 					// we're not doing anything here apart from resetting the active touch id
 					active_touch_id_ = -1;
@@ -483,7 +483,7 @@ void Settings::SettingsRender()
 			"BACK");
 
 		// draw sprites here
-		sprite_renderer_->DrawSprite(sprite_);
+		sprite_renderer_->DrawSprite(menu_box_sprite_);
 
 		DrawHUD();
 	}
