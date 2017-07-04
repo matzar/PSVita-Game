@@ -128,6 +128,7 @@ void Frontend::FrontendInit()
 	sprite_.set_height(sprite_height);
 
 	sprite_end_position_to_lerp_ = sprite_.position();
+	sprite_init_position_y_ = sprite_.position().y();
 
 	// menu text vectors init
 	float height_correction = 2.0f;
@@ -177,14 +178,17 @@ void Frontend::SonyController(const gef::SonyController* controller)
 	if (controller)
 	{
 		// record where to move sprite
-		/*float left_horizontal_input = controller->left_stick_x_axis();
+		float left_horizontal_input = controller->left_stick_x_axis();
 		float left_vertical_input = controller->left_stick_y_axis();
 
 		float right_horizontal_input = controller->right_stick_x_axis();
-		float right_vertical_input = controller->right_stick_y_axis();*/
+		float right_vertical_input = controller->right_stick_y_axis();
+
+		//if (left_vertical_input < 0) up = true;
 
 		// left stick up
-		if (controller->buttons_pressed() & gef_SONY_CTRL_UP)
+		if (controller->buttons_pressed() & gef_SONY_CTRL_UP && 
+			sprite_init_position_y_ - sprite_height * 2.0f < sprite_.position().y() - sprite_height * 2.0f)
 		{
 			sprite_end_position_to_lerp_.set_value(sprite_.position().x(), sprite_.position().y() - sprite_height * 2.0f, 0.0);
 			sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_end_position_to_lerp_, 1.0));
@@ -220,7 +224,7 @@ void Frontend::SonyController(const gef::SonyController* controller)
 		{
 			quit_ = true;
 		}
-
+		// TODO delete
 		if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
 		{
 			quit_ = true;
@@ -356,7 +360,7 @@ void Frontend::FrontendUpdate(float frame_time)
 
 		SonyController(controller);
 
-		ProcessTouchInput();
+		//ProcessTouchInput();
 #ifdef _WIN32
 		//KeyboardController(frame_time);
 #endif // _WIN32
@@ -411,7 +415,7 @@ void Frontend::FrontendRender()
 		DrawHUD();
 	}
 	sprite_renderer_->End();
-	gef::DebugOut("sprite position: %f\n", sprite_.position().y());
-	gef::DebugOut("sprite minus position: %f\n", start_text_position_.y() - sprite_height * 0.5f);
-	gef::DebugOut("sprite plus position: %f\n", start_text_position_.y() + sprite_height);
+	gef::DebugOut("sprite_.position().y(): %f\n", sprite_.position().y());
+	gef::DebugOut("start_text_position_.y() - sprite_height * 0.5f: %f\n", sprite_.position().y() - sprite_height * 0.5f);
+	gef::DebugOut("start_text_position_.y() + sprite_height: %f\n", sprite_.position().y() + sprite_height);
 } // !FrontendRender

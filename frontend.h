@@ -69,6 +69,7 @@ private:
 	gef::Sprite sprite_;
 	float sprite_width_;
 	float sprite_height;
+	float sprite_init_position_y_;
 
 	// lerp move variables
 	gef::Vector4 sprite_lerp_;
