@@ -61,6 +61,9 @@ private:
 
 	// texture
 	gef::Texture* button_icon_;
+	gef::Texture* camera_1_texture_;
+	gef::Texture* camera_2_texture_;
+	gef::Texture* camera_3_texture_;
 
 	// font
 	gef::Font* font_;

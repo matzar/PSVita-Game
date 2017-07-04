@@ -147,6 +147,10 @@ void Settings::SettingsInit()
 
 	// initialise button icon
 	button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
+	// initialise cameras' textures
+	camera_1_texture_ = CreateTextureFromPNG("CAM1.png", platform_);
+	camera_2_texture_ = CreateTextureFromPNG("CAM2.png", platform_);
+	camera_3_texture_ = CreateTextureFromPNG("CAM3.png", platform_);
 
 	InitFont();
 } // !SettingsInit
@@ -173,6 +177,15 @@ void Settings::SettingsRelease()
 
 	delete button_icon_;
 	button_icon_ = nullptr;
+
+	delete camera_1_texture_;
+	camera_1_texture_ = nullptr;
+
+	delete camera_2_texture_;
+	camera_2_texture_ = nullptr;
+
+	delete camera_3_texture_;
+	camera_3_texture_ = nullptr;
 
 	CleanUpFont();
 } // !SettingsRelease
@@ -387,37 +400,51 @@ void Settings::SettingsRender()
 	{
 		switch ((*camera_count_))
 		{
-		case CAM1:
-			// render "CAMERA1" text
-			font_->RenderText(
-				sprite_renderer_,
-				gef::Vector4(camera_text_position_.x(), camera_text_position_.y(), -0.99f),
-				1.0f,
-				0xffffffff,
-				gef::TJ_CENTRE,
-				"CAMERA 1");
+			case CAM1:
+			{
+				// render CAM1 picture
+				gef::Sprite camera_1;
+				camera_1.set_texture(camera_1_texture_);
+				camera_1.set_position(gef::Vector4(camera_text_position_.x(), camera_text_position_.y() - sprite_height * 4.0f, -0.99f));
+				camera_1.set_height(32.0f);
+				camera_1.set_width(32.0f);
+				sprite_renderer_->DrawSprite(camera_1);
+
+				// render "CAMERA1" text
+				font_->RenderText(
+					sprite_renderer_,
+					gef::Vector4(camera_text_position_.x(), camera_text_position_.y(), -0.99f),
+					1.0f,
+					0xffffffff,
+					gef::TJ_CENTRE,
+					"CAMERA 1");
+			} // !CAM1
 			break;
 
-		case CAM2:
-			// render "CAMERA1" text
-			font_->RenderText(
-				sprite_renderer_,
-				gef::Vector4(camera_text_position_.x(), camera_text_position_.y(), -0.99f),
-				1.0f,
-				0xffffffff,
-				gef::TJ_CENTRE,
-				"CAMERA 2");
+			case CAM2:
+			{
+				// render "CAMERA1" text
+				font_->RenderText(
+					sprite_renderer_,
+					gef::Vector4(camera_text_position_.x(), camera_text_position_.y(), -0.99f),
+					1.0f,
+					0xffffffff,
+					gef::TJ_CENTRE,
+					"CAMERA 2");
+			} // !CAM2
 			break;
 
-		case CAM3:
-			// render "CAMERA1" text
-			font_->RenderText(
-				sprite_renderer_,
-				gef::Vector4(camera_text_position_.x(), camera_text_position_.y(), -0.99f),
-				1.0f,
-				0xffffffff,
-				gef::TJ_CENTRE,
-				"CAMERA 3");
+			case CAM3:
+			{
+				// render "CAMERA1" text
+				font_->RenderText(
+					sprite_renderer_,
+					gef::Vector4(camera_text_position_.x(), camera_text_position_.y(), -0.99f),
+					1.0f,
+					0xffffffff,
+					gef::TJ_CENTRE,
+					"CAMERA 3");
+			} // !CAM3
 			break;
 		}
 
