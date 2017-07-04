@@ -20,13 +20,8 @@ namespace gef
 	class Vector4;
 } // gef
 
-// Class forward declarations
-class PrimitiveBuilder;
-class Player;
-class Ground;
 // My class forward declarations
 enum GAMESTATE;
-class Camera;
 
 class Settings
 {
