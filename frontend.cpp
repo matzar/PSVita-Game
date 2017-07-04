@@ -349,30 +349,13 @@ void Frontend::FrontendRender()
 		//sprite_position_to_lerp_end_.set_value(sprite_.position().x(), sprite_.position().y() - sprite_height * 2.0f, 0.0);
 		//sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_position_to_lerp_end_, 1.0));
 
-		// render "PRESS" text
-		font_->RenderText(
-			sprite_renderer_,
-			gef::Vector4(text_position_.x(), text_position_.y() - sprite_height * 2.5f, -0.99f),
-			1.0f,
-			0xffffffff,
-			gef::TJ_CENTRE,
-			"START");
-
-		// Render button icon
-		/*gef::Sprite button;
-		button.set_texture(button_icon_);
-		button.set_position(gef::Vector4(text_position_.x(), text_position_.y(), -0.99f));
-		button.set_height(32.0f);
-		button.set_width(32.0f);
-		sprite_renderer_->DrawSprite(button);*/
 		font_->RenderText(
 			sprite_renderer_,
 			gef::Vector4(text_position_.x(), text_position_.y() - 0.5 * sprite_height, -0.99f),
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
-			"SETTINGS");
-
+			"START");
 
 		// render "TO START" text
 		font_->RenderText(
@@ -381,7 +364,28 @@ void Frontend::FrontendRender()
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
+			"SETTINGS");
+
+		// render "PRESS" text
+		font_->RenderText(
+			sprite_renderer_,
+			gef::Vector4(text_position_.x(), text_position_.y() + sprite_height * 3.5f, -0.99f),
+			1.0f,
+			0xffffffff,
+			gef::TJ_CENTRE,
 			"QUIT");
+
+		// Render button icon
+		/*gef::Sprite button;
+		button.set_texture(button_icon_);
+		button.set_position(gef::Vector4(text_position_.x(), text_position_.y(), -0.99f));
+		button.set_height(32.0f);
+		button.set_width(32.0f);
+		sprite_renderer_->DrawSprite(button);*/
+		
+
+
+		
 
 		// draw sprites here
 		sprite_renderer_->DrawSprite(sprite_);
