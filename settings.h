@@ -47,6 +47,8 @@ private:
 	// gamestate
 	GAMESTATE* gamestate_;
 
+	// camera
+	Camera* camera_;
 	unsigned* camera_count_;
 
 	// input manager

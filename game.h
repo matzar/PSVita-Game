@@ -7,7 +7,6 @@
 // std headers
 #include <vector>
 #include <box2d/Box2D.h>
-#include <camera_enum.h>
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
@@ -66,7 +65,6 @@ private:
 	// camera
 	Camera* camera_;
 	unsigned* camera_count_;
-	CAMERA_ENUM camera_enum;
 
 	// font
 	gef::Font* font_;
