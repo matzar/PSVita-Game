@@ -469,7 +469,7 @@ void Game::SonyController(const gef::SonyController* controller)
 	{
 		if (controller->buttons_pressed() & gef_SONY_CTRL_START)
 		{
-			// update the current state for the game state machine
+			// update the current state of the game state machine
 			// get the object that gamestate points to
 			(*gamestate_) = FRONTEND; 
 		}

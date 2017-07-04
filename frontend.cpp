@@ -207,7 +207,7 @@ void Frontend::SonyController(const gef::SonyController* controller)
 			sprite_.position().y() > (start_text_position_.y() - sprite_height * 0.5f) &&
 			sprite_.position().y() < (start_text_position_.y() + sprite_height))
 		{
-			// update the current state for the game state machine
+			// update the current state of the game state machine
 			(*gamestate_) = GAME; // get the object that gamestate points to
 		}
 		// SETTINGS press
@@ -215,7 +215,7 @@ void Frontend::SonyController(const gef::SonyController* controller)
 			sprite_.position().y() > (settings_text_position_.y() - sprite_height * 0.5f) &&
 			sprite_.position().y() < (settings_text_position_.y() + sprite_height))
 		{
-			// update the current state for the game state machine
+			// update the current state of the game state machine
 			(*gamestate_) = SETTINGS; // get the object that gamestate points to
 		}
 		// QUIT press

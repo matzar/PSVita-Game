@@ -162,8 +162,6 @@ bool SceneApp::Update(float frame_time)
 			}
 		} // !GAME
 		break;
-
-		
 	} // !gamestate_
 
 	// keep running application
