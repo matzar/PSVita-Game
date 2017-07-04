@@ -127,7 +127,8 @@ void Frontend::FrontendInit()
 	sprite_.set_width(sprite_width_);
 	sprite_.set_height(sprite_height);
 
-	sprite_position_to_lerp_end_ = sprite_.position();
+	sprite_end_position_to_lerp_ = sprite_.position();
+	text_position_.set_value(sprite_.position().x(), sprite_.position().y(), 0.0f);
 
 	InitAudio();
 
@@ -177,15 +178,15 @@ void Frontend::SonyController(const gef::SonyController* controller)
 		// left stick up
 		if (controller->buttons_pressed() & gef_SONY_CTRL_UP)
 		{
-			sprite_position_to_lerp_end_.set_value(sprite_.position().x(), sprite_.position().y() - sprite_height * 2.0f, 0.0);
-			sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_position_to_lerp_end_, 1.0));
+			sprite_end_position_to_lerp_.set_value(sprite_.position().x(), sprite_.position().y() - sprite_height * 2.0f, 0.0);
+			sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_end_position_to_lerp_, 1.0));
 		}
 
 		// left stick down
 		if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN)
 		{
-			sprite_position_to_lerp_end_.set_value(sprite_.position().x(), sprite_.position().y() + sprite_height * 2.0f, 0.0);
-			sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_position_to_lerp_end_, 1.0));
+			sprite_end_position_to_lerp_.set_value(sprite_.position().x(), sprite_.position().y() + sprite_height * 2.0f, 0.0);
+			sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_end_position_to_lerp_, 1.0));
 		}
 
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
@@ -280,7 +281,7 @@ void Frontend::ProcessTouchInput()
 					// do any processing for a new touch here
 
 					// record where to move sprite
-					sprite_position_to_lerp_end_.set_value(touch_position_.x, touch_position_.y, 0.0);
+					sprite_end_position_to_lerp_.set_value(touch_position_.x, touch_position_.y, 0.0);
 					// change colour
 					sprite_.set_colour(gef::Colour(1.0f, 0.0f, 0.0f).GetABGR());
 				}
@@ -300,7 +301,7 @@ void Frontend::ProcessTouchInput()
 					touch_position_ = touch->position;
 
 					//// update variable
-					sprite_position_to_lerp_end_.set_value(touch_position_.x, touch_position_.y, 0.0);
+					sprite_end_position_to_lerp_.set_value(touch_position_.x, touch_position_.y, 0.0);
 				}
 				else if (touch->type == gef::TT_RELEASED)
 				{
@@ -345,10 +346,13 @@ void Frontend::FrontendRender()
 {
 	sprite_renderer_->Begin();
 	{
+		//sprite_position_to_lerp_end_.set_value(sprite_.position().x(), sprite_.position().y() - sprite_height * 2.0f, 0.0);
+		//sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_position_to_lerp_end_, 1.0));
+
 		// render "PRESS" text
 		font_->RenderText(
 			sprite_renderer_,
-			gef::Vector4(platform_.width()*0.5f, platform_.height()*0.5f - 2.0f * sprite_height, -0.99f),
+			gef::Vector4(text_position_.x(), text_position_.y() - sprite_height * 2.0f, -0.99f),
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
@@ -357,7 +361,7 @@ void Frontend::FrontendRender()
 		// Render button icon
 		gef::Sprite button;
 		button.set_texture(button_icon_);
-		button.set_position(gef::Vector4(platform_.width()*0.5f, platform_.height()*0.5f, -0.99f));
+		button.set_position(gef::Vector4(text_position_.x(), text_position_.y(), -0.99f));
 		button.set_height(32.0f);
 		button.set_width(32.0f);
 		sprite_renderer_->DrawSprite(button);
@@ -378,4 +382,7 @@ void Frontend::FrontendRender()
 		DrawHUD();
 	}
 	sprite_renderer_->End();
+
+	gef::DebugOut("Text position: X:%f Y:%f\n", text_position_.x(), text_position_.y());
+	gef::DebugOut("Sprite position: X:%f Y:%f\n", sprite_.position().x(), sprite_.position().y());
 } // !FrontendRender
