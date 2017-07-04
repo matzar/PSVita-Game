@@ -384,14 +384,41 @@ void Settings::SettingsRender()
 {
 	sprite_renderer_->Begin();
 	{
-		// render "START" text
-		font_->RenderText(
-			sprite_renderer_,
-			gef::Vector4(camera_text_position_.x(), camera_text_position_.y(), -0.99f),
-			1.0f,
-			0xffffffff,
-			gef::TJ_CENTRE,
-			"CAMERA");
+		switch ((*camera_count_))
+		{
+		case CAM1:
+			// render "CAMERA1" text
+			font_->RenderText(
+				sprite_renderer_,
+				gef::Vector4(camera_text_position_.x(), camera_text_position_.y(), -0.99f),
+				1.0f,
+				0xffffffff,
+				gef::TJ_CENTRE,
+				"CAMERA 1");
+			break;
+
+		case CAM2:
+			// render "CAMERA1" text
+			font_->RenderText(
+				sprite_renderer_,
+				gef::Vector4(camera_text_position_.x(), camera_text_position_.y(), -0.99f),
+				1.0f,
+				0xffffffff,
+				gef::TJ_CENTRE,
+				"CAMERA 2");
+			break;
+
+		case CAM3:
+			// render "CAMERA1" text
+			font_->RenderText(
+				sprite_renderer_,
+				gef::Vector4(camera_text_position_.x(), camera_text_position_.y(), -0.99f),
+				1.0f,
+				0xffffffff,
+				gef::TJ_CENTRE,
+				"CAMERA 3");
+			break;
+		}
 
 		// render "SETTINGS" text
 		font_->RenderText(
