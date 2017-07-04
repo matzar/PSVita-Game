@@ -27,10 +27,10 @@
 #include <platform/d3d11/input/touch_input_manager_d3d11.h>
 #endif 
 
-Settings::Settings(gef::Platform& platform, GAMESTATE* gamestate, CAMERA_ENUM* camera_enum) :
+Settings::Settings(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count) :
 	platform_(platform),
 	gamestate_(gamestate),
-	camera_enum_(camera_enum),
+	camera_count_(camera_count),
 	input_manager_(nullptr),
 	sprite_renderer_(nullptr),
 	audio_manager_(nullptr),
@@ -210,10 +210,10 @@ void Settings::SonyController(const gef::SonyController* controller)
 			sprite_.position().y() > (camera_text_position_.y() - sprite_height * 0.5f) &&
 			sprite_.position().y() < (camera_text_position_.y() + sprite_height))
 		{
-			camera_count++;
+			(*camera_count_)++;
 
-			if (camera_count >= 3)
-				camera_count = 0;
+			if ((*camera_count_) >= 3)
+				(*camera_count_) = 0;
 		}
 		// DIFFICULTY press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
@@ -425,6 +425,7 @@ void Settings::SettingsRender()
 		DrawHUD();
 	}
 	sprite_renderer_->End();
+	gef::DebugOut("camera_count_: %d\n", (*camera_count_));
 	/*gef::DebugOut("sprite_.position().y(): %f\n", sprite_.position().y());
 	gef::DebugOut("camera_text_position_.y() - sprite_height * 0.5f: %f\n", sprite_.position().y() - sprite_height * 0.5f);
 	gef::DebugOut("camera_text_position_.y() + sprite_height: %f\n", sprite_.position().y() + sprite_height);*/

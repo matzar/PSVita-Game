@@ -42,10 +42,9 @@
 #include <platform/d3d11/input/touch_input_manager_d3d11.h>
 #endif 
 
-Game::Game(gef::Platform& platform, GAMESTATE* gamestate, CAMERA_ENUM* camera_enum) :
+Game::Game(gef::Platform& platform, GAMESTATE* gamestate) :
 	platform_(platform),
 	gamestate_(gamestate),
-	camera_enum_(camera_enum),
 	font_(nullptr),
 	texture_(nullptr),
 	sprite_renderer_(nullptr),

@@ -4,10 +4,9 @@
 // gef headers
 #include <system/application.h>
 // my headers
+// TODO delete
 #include "free_camera.h"
-
 #include "game_state_enum.h"
-#include "camera_enum.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
@@ -35,7 +34,8 @@ public:
 	virtual void Render();
 private:
 	GAMESTATE gamestate_;
-	CAMERA_ENUM camera_enum_;
+
+	unsigned camera_count_;
 
 	Frontend* frontend_;
 	Settings* settings_;

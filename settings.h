@@ -25,7 +25,7 @@ namespace gef
 class Settings
 {
 public:
-	Settings(gef::Platform& platform, GAMESTATE* gamestate, CAMERA_ENUM* camera_enum);
+	Settings(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count);
 	~Settings();
 
 	void SettingsInit();
@@ -41,7 +41,7 @@ private:
 	// gamestate
 	GAMESTATE* gamestate_;
 
-	unsigned camera_count;
+	unsigned* camera_count_;
 
 	// input manager
 	gef::InputManager* input_manager_;
