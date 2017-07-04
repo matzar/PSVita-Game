@@ -35,7 +35,6 @@ class Pickup;
 //class GameObject;
 // My class forward declarations
 enum GAMESTATE;
-enum CAMERA_ENUM;
 class Camera;
 class ContactListener;
 class ContactFilter;
@@ -116,10 +115,6 @@ private:
 	gef::Mesh* mesh_;
 	//gef::MeshInstance apple_;
 
-	// camera variables
-	bool camera_1;
-	bool camera_2;
-	bool camera_3;
 	// quit
 	bool quit_;
 	// FPS
