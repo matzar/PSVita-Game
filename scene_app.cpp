@@ -56,19 +56,21 @@ bool SceneApp::Update(float frame_time)
 				frontend_ = new Frontend(platform_, &gamestate_);
 				frontend_->FrontendInit();
 
-				// delete settings
-				if (settings_)
-				{
-					settings_->SettingsRelease();
-					delete settings_;
-					settings_ = nullptr;
-				}
-				// delete game
+				// going to the FRONTEND state possible only from the GAME state...
 				if (game_) 
 				{
+					// delete game
 					game_->GameRelease();
 					delete game_;
 					game_ = nullptr;
+				}
+				// ... or the SETTINGS state
+				if (settings_)
+				{
+					// delete settings
+					settings_->SettingsRelease();
+					delete settings_;
+					settings_ = nullptr;
 				}
 			}
 
@@ -94,13 +96,7 @@ bool SceneApp::Update(float frame_time)
 				settings_ = new Settings(platform_, &gamestate_);
 				settings_->SettingsInit();
 
-				// delete game
-				if (game_)
-				{
-					game_->GameRelease();
-					delete game_;
-					game_ = nullptr;
-				}
+				// going to the SETTINGS state possible only from the FRONTEND state
 				// delete frontend
 				if (frontend_) 
 				{
@@ -109,6 +105,13 @@ bool SceneApp::Update(float frame_time)
 					delete frontend_;
 					frontend_ = nullptr;
 				}
+				//if (game_)
+				//{
+				//	// delete game
+				//	game_->GameRelease();
+				//	delete game_;
+				//	game_ = nullptr;
+				//}
 			}
 
 			// settings update function
@@ -133,8 +136,7 @@ bool SceneApp::Update(float frame_time)
 				game_ = new Game(platform_, &gamestate_);
 				game_->GameInit();
 
-				// delete frontend
-				// going to GAME state possible only from FRONTEND state
+				// going to the GAME state possible only from the FRONTEND state
 				if (frontend_) 
 				{
 					// delete frontend
