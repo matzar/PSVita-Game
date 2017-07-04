@@ -482,14 +482,6 @@ void Settings::SettingsRender()
 			gef::TJ_CENTRE,
 			"BACK");
 
-		// Render button icon
-		/*gef::Sprite button;
-		button.set_texture(button_icon_);
-		button.set_position(gef::Vector4(text_position_.x(), text_position_.y(), -0.99f));
-		button.set_height(32.0f);
-		button.set_width(32.0f);
-		sprite_renderer_->DrawSprite(button);*/
-
 		// draw sprites here
 		sprite_renderer_->DrawSprite(sprite_);
 

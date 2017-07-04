@@ -52,7 +52,7 @@ private:
 	gef::SpriteRenderer* sprite_renderer_;
 
 	// texture
-	gef::Texture* button_icon_;
+	gef::Texture* title_texture_;
 
 	// font
 	gef::Font* font_;
@@ -68,7 +68,7 @@ private:
 	Int32 active_touch_id_;
 	gef::Vector2 touch_position_;
 	// sprite
-	gef::Sprite sprite_;
+	gef::Sprite menu_box_sprite_;
 	float sprite_width_;
 	float sprite_height;
 	float sprite_init_position_y_;
