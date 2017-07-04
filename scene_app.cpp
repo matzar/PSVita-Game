@@ -64,7 +64,7 @@ bool SceneApp::Update(float frame_time)
 					delete game_;
 					game_ = nullptr;
 				}
-				// ... or the SETTINGS state
+				// ...or the SETTINGS state
 				if (settings_)
 				{
 					// delete settings
