@@ -128,7 +128,16 @@ void Frontend::FrontendInit()
 	sprite_.set_height(sprite_height);
 
 	sprite_end_position_to_lerp_ = sprite_.position();
-	text_position_.set_value(sprite_.position().x(), sprite_.position().y(), 0.0f);
+
+	// text vectors init
+	//text_position_.set_value(sprite_.position().x(), sprite_.position().y(), 0.0f);
+
+	// set "START" vector
+	start_text_position_.set_value(sprite_.position().x(), sprite_.position().y() - 0.5 * sprite_height, -0.99f);
+	// set "SETTINGS" vector
+	settings_text_position_.set_value(sprite_.position().x(), sprite_.position().y() + 1.5 * sprite_height, -0.99f);
+	// set "QUIT" vector
+	quit_text_position_.set_value(sprite_.position().x(), sprite_.position().y() + sprite_height * 3.5f, -0.99f);
 
 	InitAudio();
 
@@ -346,30 +355,28 @@ void Frontend::FrontendRender()
 {
 	sprite_renderer_->Begin();
 	{
-		//sprite_position_to_lerp_end_.set_value(sprite_.position().x(), sprite_.position().y() - sprite_height * 2.0f, 0.0);
-		//sprite_.set_position(sprite_lerp_.LerpReturnVector(sprite_.position(), sprite_position_to_lerp_end_, 1.0));
-
+		// render "START" text
 		font_->RenderText(
 			sprite_renderer_,
-			gef::Vector4(text_position_.x(), text_position_.y() - 0.5 * sprite_height, -0.99f),
+			gef::Vector4(start_text_position_.x(), start_text_position_.y(), -0.99f),
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
 			"START");
 
-		// render "TO START" text
+		// render "SETTINGS" text
 		font_->RenderText(
 			sprite_renderer_,
-			gef::Vector4(text_position_.x(), text_position_.y() + 1.5 * sprite_height, -0.99f),
+			gef::Vector4(settings_text_position_.x(), settings_text_position_.y(), -0.99f),
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
 			"SETTINGS");
 
-		// render "PRESS" text
+		// render "QUIT" text
 		font_->RenderText(
 			sprite_renderer_,
-			gef::Vector4(text_position_.x(), text_position_.y() + sprite_height * 3.5f, -0.99f),
+			gef::Vector4(quit_text_position_.x(), quit_text_position_.y(), -0.99f),
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
@@ -382,10 +389,6 @@ void Frontend::FrontendRender()
 		button.set_height(32.0f);
 		button.set_width(32.0f);
 		sprite_renderer_->DrawSprite(button);*/
-		
-
-
-		
 
 		// draw sprites here
 		sprite_renderer_->DrawSprite(sprite_);
@@ -393,7 +396,4 @@ void Frontend::FrontendRender()
 		DrawHUD();
 	}
 	sprite_renderer_->End();
-
-	gef::DebugOut("Text position: X:%f Y:%f\n", text_position_.x(), text_position_.y());
-	gef::DebugOut("Sprite position: X:%f Y:%f\n", sprite_.position().x(), sprite_.position().y());
 } // !FrontendRender

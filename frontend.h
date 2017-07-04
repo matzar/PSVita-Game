@@ -73,7 +73,11 @@ private:
 	// lerp move variables
 	gef::Vector4 sprite_lerp_;
 	gef::Vector4 sprite_end_position_to_lerp_;
-	gef::Vector4 text_position_;
+
+	//gef::Vector4 text_position_;
+	gef::Vector4 start_text_position_;
+	gef::Vector4 settings_text_position_;
+	gef::Vector4 quit_text_position_;
 
 	void SonyController(const gef::SonyController* controller);
 #ifdef _WIN32
