@@ -347,8 +347,8 @@ void Settings::ProcessTouchInput()
 				if (touch->type == gef::TT_ACTIVE)
 				{
 					// update an active touch here
-					gef::DebugOut("Touch position: %f\n", touch->position);
-					gef::DebugOut("Touch id: %f\n", touch->id);
+					//gef::DebugOut("Touch position: %f\n", touch->position);
+					//gef::DebugOut("Touch id: %f\n", touch->id);
 
 					//sprite_.set_position(touch_position_.x, touch_position_.y);
 
@@ -510,7 +510,7 @@ void Settings::SettingsRender()
 		DrawHUD();
 	}
 	sprite_renderer_->End();
-	gef::DebugOut("camera_count_: %d\n", (*camera_count_));
+	//gef::DebugOut("camera_count_: %d\n", (*camera_count_));
 	/*gef::DebugOut("sprite_.position().y(): %f\n", sprite_.position().y());
 	gef::DebugOut("camera_text_position_.y() - sprite_height * 0.5f: %f\n", sprite_.position().y() - sprite_height * 0.5f);
 	gef::DebugOut("camera_text_position_.y() + sprite_height: %f\n", sprite_.position().y() + sprite_height);*/

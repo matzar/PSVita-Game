@@ -81,7 +81,7 @@ void Player::InitPlayer(
 
 void Player::DecrementHealth()
 {
-	gef::DebugOut("Player has taken damage.\n");
+	//gef::DebugOut("Player has taken damage.\n");
 	jump_ = true;
 }
 
@@ -135,26 +135,26 @@ void Player::PlayerController(const gef::SonyController * controller)
 void Player::StartContact()
 {
 	num_contacts_++;
-	gef::DebugOut("Start Contact()\n");
+	//gef::DebugOut("Start Contact()\n");
 }
 
 void Player::EndContact()
 {
 	num_contacts_--;
 	//jump_ = false;
-	gef::DebugOut("EndContact()\n");
+	//gef::DebugOut("EndContact()\n");
 }
 
 void Player::RestartJump()
 {
 	jump_ = true;
-	gef::DebugOut("RestartJump()\n");
+	//gef::DebugOut("RestartJump()\n");
 }
 
 void Player::DeadPlayer()
 {
 	alive_ = false;
-	gef::DebugOut("DeadPlayer()\n");
+	//gef::DebugOut("DeadPlayer()\n");
 }
 
 

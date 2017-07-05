@@ -89,7 +89,7 @@ void ContactListener::BeginContact(b2Contact * contact)
 				// schedule pickup for removal
 				dying_pickups_scheduled_for_removal_.insert((Pickup*)(game_object));
 
-				gef::DebugOut("Pick this shit up!\n");
+				//gef::DebugOut("Pick this shit up!\n");
 			}
 		}
 		if (game_object)
@@ -99,7 +99,7 @@ void ContactListener::BeginContact(b2Contact * contact)
 			{
 				// reset jump
 				player->RestartJump();
-				gef::DebugOut("Same colour\n");
+				//gef::DebugOut("Same colour\n");
 			}
 		}
 		// check if the player is of the different colour than the ground
