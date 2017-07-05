@@ -61,6 +61,7 @@ private:
 	gef::Texture* cross_button_icon_;
 	gef::Texture* playstation_left_d_pad_;
 	gef::Texture* playstation_right_d_pad_;
+
 	// camera illustration textures
 	gef::Texture* camera_1_texture_;
 	gef::Texture* camera_2_texture_;
@@ -79,15 +80,21 @@ private:
 	// touch variables
 	Int32 active_touch_id_;
 	gef::Vector2 touch_position_;
-	// sprite
+
+	// menu box sprite
 	gef::Sprite menu_box_sprite_;
 	float sprite_width_;
 	float sprite_height;
 	float sprite_init_position_y_;
+	// d-pad sprites
+	gef::Sprite left_d_pad_;
+	gef::Sprite right_d_pad_;
 
 	// lerp move variables
 	gef::Vector4 sprite_lerp_;
-	gef::Vector4 sprite_end_position_to_lerp_;
+	gef::Vector4 menu_box_sprite_end_position_to_lerp_;
+	gef::Vector4 left_d_pad_sprite_end_position_to_lerp_;
+	gef::Vector4 right_d_pad_sprite_end_position_to_lerp_;
 	// menu text vectors
 	gef::Vector4 camera_text_position_;
 	gef::Vector4 difficulty_text_position_;
@@ -96,7 +103,7 @@ private:
 	void SonyController(const gef::SonyController* controller);
 #ifdef _WIN32
 	void KeyboardController(float fps);
-#endif // _WIN32
+#endif // !_WIN32
 	void InitFont();
 	void CleanUpFont();
 	void DrawHUD();
