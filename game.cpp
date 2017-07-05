@@ -48,6 +48,8 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count
 	gamestate_(gamestate),
 	camera_count_(camera_count),
 	difficulty_count_(difficulty_count),
+	x_velocity(5.0f), // initialize by default to EASY
+	y_velocity(7.5f), // initialize by default to EASY
 	font_(nullptr),
 	texture_(nullptr),
 	sprite_renderer_(nullptr),
@@ -174,23 +176,21 @@ void Game::InitPlayer()
 	{
 		case EASY:
 		{
-			float32 x_velocity = 5.0f;
-			float32 y_velocity = 7.5f;
+			x_velocity = 5.0f;
+			y_velocity = 7.5f;
 		} // !EASY
 		break;
 
 		case HARD:
 		{
-			float32 x_velocity = 7.0f;
-			float32 y_velocity = 6.5f;
+			x_velocity = 7.0f;
+			y_velocity = 6.5f;
 		} // !HARD
-	break;
-
+		break;
 	} // !difficulty_count_
 
-
 	// create Player player_ class
-	player_ = new Player();
+	player_ = new Player(&x_velocity, &y_velocity);
 	player_->InitPlayer(primitive_builder_, world_, b2Vec2(-4.0f, 4.0f), 0.5f, PLAYER, GROUND | PICKUP, 1, PLAYER, RED);
 } // !InitPlayer
 

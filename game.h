@@ -68,6 +68,8 @@ private:
 
 	// difficulty
 	unsigned* difficulty_count_;
+	float32 x_velocity;
+	float32 y_velocity;
 
 	// font
 	gef::Font* font_;
