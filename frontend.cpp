@@ -168,9 +168,15 @@ void Frontend::FrontendInit()
 
 	InitAudio();
 
-	// initialise button icon
+	// initialize title texture
 	title_texture_ = CreateTextureFromPNG("frontend_instructions.png", platform_);
-	
+	// initialize instructions page 1
+	instructions_texture_1 = CreateTextureFromPNG("playstation-circle-dark-icon.png", platform_);
+	instructions_texture_2 = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
+	instructions_texture_3 = CreateTextureFromPNG("playstation-circle-dark-icon.png", platform_);
+	instructions_texture_4 = CreateTextureFromPNG("playstation-square-dark-icon.png", platform_);
+	instructions_texture_5 = CreateTextureFromPNG("playstation-triangle-dark-icon.png", platform_);
+
 	InitFont();
 } // !FrontendInit
 
@@ -316,7 +322,7 @@ void Frontend::SonyController(const gef::SonyController* controller)
 		{
 			instructions_page_++;
 
-			if (instructions_page_ <= 5)
+			if (instructions_page_ <= 4)
 				instructions_page_ = 0;
 		}
 		// INSTRUCTIONS left d-pad
@@ -332,7 +338,7 @@ void Frontend::SonyController(const gef::SonyController* controller)
 			menu_box_sprite_.position().y() > (instructions_text_position_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (instructions_text_position_.y() + sprite_height))
 		{
-			if (instructions_page_ < 5)
+			if (instructions_page_ < 4)
 				instructions_page_++;
 		}
 		// hide d-pad
@@ -528,7 +534,63 @@ void Frontend::FrontendRender()
 		// Render title picture
 		if (display_instrucitons_)
 		{
+			switch (instructions_page_)
+			{ 
+			case 0 :
+			{
+				gef::Sprite instructions_page_1;
+				instructions_page_1.set_texture(instructions_texture_1);
+				instructions_page_1.set_position(gef::Vector4(start_text_position_.x(), start_text_position_.y() - sprite_height * 4.0f, -0.99f));
+				instructions_page_1.set_height(platform_.height() * 0.5f);
+				instructions_page_1.set_width(platform_.width() * 0.5f);
+				sprite_renderer_->DrawSprite(instructions_page_1);
+			} //
+			break;
 
+			case 1 :
+			{
+				gef::Sprite instructions_page_2;
+				instructions_page_2.set_texture(instructions_texture_2);
+				instructions_page_2.set_position(gef::Vector4(start_text_position_.x(), start_text_position_.y() - sprite_height * 4.0f, -0.99f));
+				instructions_page_2.set_height(platform_.height() * 0.5f);
+				instructions_page_2.set_width(platform_.width() * 0.5f);
+				sprite_renderer_->DrawSprite(instructions_page_2);
+			} //
+			break;
+
+			case 2 :
+			{
+				gef::Sprite instructions_page_3;
+				instructions_page_3.set_texture(instructions_texture_3);
+				instructions_page_3.set_position(gef::Vector4(start_text_position_.x(), start_text_position_.y() - sprite_height * 4.0f, -0.99f));
+				instructions_page_3.set_height(platform_.height() * 0.5f);
+				instructions_page_3.set_width(platform_.width() * 0.5f);
+				sprite_renderer_->DrawSprite(instructions_page_3);
+			} //
+			break;
+
+			case 3 :
+			{
+				gef::Sprite instructions_page_4;
+				instructions_page_4.set_texture(instructions_texture_4);
+				instructions_page_4.set_position(gef::Vector4(start_text_position_.x(), start_text_position_.y() - sprite_height * 4.0f, -0.99f));
+				instructions_page_4.set_height(platform_.height() * 0.5f);
+				instructions_page_4.set_width(platform_.width() * 0.5f);
+				sprite_renderer_->DrawSprite(instructions_page_4);
+			} //
+			break;
+
+			case 4 :
+			{
+				gef::Sprite instructions_page_5;
+				instructions_page_5.set_texture(instructions_texture_5);
+				instructions_page_5.set_position(gef::Vector4(start_text_position_.x(), start_text_position_.y() - sprite_height * 4.0f, -0.99f));
+				instructions_page_5.set_height(platform_.height() * 0.5f);
+				instructions_page_5.set_width(platform_.width() * 0.5f);
+				sprite_renderer_->DrawSprite(instructions_page_5);
+			} //
+			break;
+			} // !display_instructions_
 		}
 		else
 		{
