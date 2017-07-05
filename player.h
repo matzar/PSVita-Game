@@ -16,7 +16,7 @@ class Player :
 	public GameObject 
 {
 public:
-	Player();
+	Player(float32 x_velocity, float32 y_velocity);
 	~Player();
 
 	void InitPlayer(

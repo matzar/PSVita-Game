@@ -35,8 +35,14 @@ public:
 private:
 	GAMESTATE gamestate_;
 
+	// camera state holder
 	unsigned camera_count_;
 
+	// Player variables
+	float32 x_velocity; 
+	float32 y_velocity;
+
+	// classes pointers
 	Frontend* frontend_;
 	Settings* settings_;
 	Game* game_;

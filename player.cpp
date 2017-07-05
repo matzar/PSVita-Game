@@ -3,14 +3,14 @@
 
 #include "input/sony_controller_input_manager.h"
 
-Player::Player() :
+Player::Player(float32 x_velocity, float32 y_velocity) :
 	//body_(nullptr),
 	jump_(false),
 	alive_(true),
 	red_(true),
 	num_contacts_(0),
-	x_velocity(5.0f),
-	y_velocity(7.5f)
+	x_velocity(x_velocity), // 5.0
+	y_velocity(y_velocity)	// 7.5
 {
 	//SetGameObjectType(PLAYER);
 	//SetGameObjectColour(RED);

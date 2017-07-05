@@ -62,7 +62,7 @@ private:
 
 	// font
 	gef::Font* font_;
-
+	
 	float fps_;
 
 	int sfx_id_;
