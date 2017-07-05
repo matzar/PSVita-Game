@@ -139,23 +139,23 @@ void Settings::SettingsInit()
 	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
 
 	// left d-pad sprite
-	left_d_pad_.set_position(platform_.width() * 0.5f - sprite_width_, platform_.height() * 0.5f + sprite_height * 1.5f, 0.0f);
-	left_d_pad_.set_texture(playstation_left_d_pad_);
-	left_d_pad_.set_width(sprite_height);
-	left_d_pad_.set_height(sprite_height);
+	left_d_pad_sprite_.set_position(platform_.width() * 0.5f - sprite_width_, platform_.height() * 0.5f + sprite_height * 1.5f, 0.0f);
+	left_d_pad_sprite_.set_texture(playstation_left_d_pad_);
+	left_d_pad_sprite_.set_width(sprite_height);
+	left_d_pad_sprite_.set_height(sprite_height);
 	// right d-pad sprite			
-	right_d_pad_.set_position(platform_.width() * 0.5f + sprite_width_, platform_.height() * 0.5f + sprite_height * 1.5f, 0.0f);
-	right_d_pad_.set_texture(playstation_right_d_pad_);
-	right_d_pad_.set_width(sprite_height);
-	right_d_pad_.set_height(sprite_height);
+	right_d_pad_sprite_.set_position(platform_.width() * 0.5f + sprite_width_, platform_.height() * 0.5f + sprite_height * 1.5f, 0.0f);
+	right_d_pad_sprite_.set_texture(playstation_right_d_pad_);
+	right_d_pad_sprite_.set_width(sprite_height);
+	right_d_pad_sprite_.set_height(sprite_height);
 	// menu box sprite
 	menu_box_sprite_.set_position(platform_.width() * 0.5f, platform_.height() * 0.5f + sprite_height * 1.5f, 0.0f);
 	menu_box_sprite_.set_width(sprite_width_);
 	menu_box_sprite_.set_height(sprite_height);
 
-	menu_box_sprite_end_position_to_lerp_ = menu_box_sprite_.position();
-	left_d_pad_sprite_end_position_to_lerp_ = right_d_pad_.position();
-	right_d_pad_sprite_end_position_to_lerp_ = left_d_pad_.position();
+	//menu_box_sprite_end_position_to_lerp_ = menu_box_sprite_.position();
+	//left_d_pad_sprite_end_position_to_lerp_ = right_d_pad_sprite_.position();
+	//right_d_pad_sprite_end_position_to_lerp_ = left_d_pad_sprite_.position();
 
 	sprite_init_position_y_ = menu_box_sprite_.position().y();
 
@@ -232,30 +232,42 @@ void Settings::SonyController(const gef::SonyController* controller)
 		if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
 			sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
 		{
-			gef::Vector4 sprite_lerp;
-			menu_box_sprite_end_position_to_lerp_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - sprite_height * 2.0f, 0.0);
-			menu_box_sprite_.set_position(sprite_lerp.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp_, 1.0));
+			// lerp menu box sprite
+			gef::Vector4 menu_box_sprite_end_position_to_lerp;
+			menu_box_sprite_end_position_to_lerp.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - sprite_height * 2.0f, 0.0);
 
-			/*left_d_pad_.set_position(sprite_lerp_.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp_, 1.0));
-			right_d_pad_.set_position(sprite_lerp_.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp_, 1.0));*/
+			gef::Vector4 menu_box_sprite_lerp;
+			menu_box_sprite_.set_position(menu_box_sprite_lerp.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp, 1.0));
+
+			// lerp left d-pad sprite
+			gef::Vector4 left_d_pad_end_position_to_lerp;
+			left_d_pad_end_position_to_lerp.set_value(left_d_pad_sprite_.position().x(), left_d_pad_sprite_.position().y() - sprite_height * 2.0f, 0.0);
+
+			gef::Vector4 left_d_pad_sprite_lerp;
+			left_d_pad_sprite_.set_position(left_d_pad_sprite_lerp.LerpReturnVector(left_d_pad_sprite_.position(), left_d_pad_end_position_to_lerp, 1.0));
+
+			// right right d-pad sprite
+			gef::Vector4 right_d_pad_end_position_to_lerp;
+			right_d_pad_end_position_to_lerp.set_value(right_d_pad_sprite_.position().x(), right_d_pad_sprite_.position().y() - sprite_height * 2.0f, 0.0);
+
+			gef::Vector4 right_d_pad_sprite_lerp;
+			right_d_pad_sprite_.set_position(right_d_pad_sprite_lerp.LerpReturnVector(right_d_pad_sprite_.position(), right_d_pad_end_position_to_lerp, 1.0));
 		}
 
 		// D-pad down
 		if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
 			sprite_init_position_y_ + sprite_height * 4.0f >= menu_box_sprite_.position().y() + sprite_height * 2.0f)
 		{
-			//gef::Vector4 sprite_lerp;
-			
-			// update variable
-			//sprite_lerp.Lerp(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 2.0f, 0.0);
-			//menu_box_sprite_end_position_to_lerp_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 2.0f, 0.0);
-			
-			// update sprite
-			//menu_box_sprite_.set_position(sprite_lerp);
+			// lerp menu box sprite
+			gef::Vector4 menu_box_sprite_end_position_to_lerp;
+			menu_box_sprite_end_position_to_lerp.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 2.0f, 0.0);
 
-			gef::Vector4 sprite_lerp;
+			gef::Vector4 menu_box_sprite_lerp;
+			menu_box_sprite_.set_position(menu_box_sprite_lerp.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp, 1.0));
+
+			/*gef::Vector4 menu_box_sprite_lerp;
 			menu_box_sprite_end_position_to_lerp_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 2.0f, 0.0);
-			menu_box_sprite_.set_position(sprite_lerp.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp_, 1.0));
+			menu_box_sprite_.set_position(menu_box_sprite_lerp.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp_, 1.0));*/
 
 			/*left_d_pad_sprite_end_position_to_lerp_.set_value();
 			left_d_pad_.set_position(sprite_lerp_.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp_, 1.0));
@@ -410,7 +422,7 @@ void Settings::ProcessTouchInput()
 					// do any processing for a new touch here
 
 					// record where to move sprite
-					menu_box_sprite_end_position_to_lerp_.set_value(touch_position_.x, touch_position_.y, 0.0);
+					//menu_box_sprite_end_position_to_lerp_.set_value(touch_position_.x, touch_position_.y, 0.0);
 					// change colour
 					menu_box_sprite_.set_colour(gef::Colour(1.0f, 0.0f, 0.0f).GetABGR());
 				}
@@ -430,7 +442,7 @@ void Settings::ProcessTouchInput()
 					touch_position_ = touch->position;
 
 					//// update variable
-					menu_box_sprite_end_position_to_lerp_.set_value(touch_position_.x, touch_position_.y, 0.0);
+					//menu_box_sprite_end_position_to_lerp_.set_value(touch_position_.x, touch_position_.y, 0.0);
 				}
 				else if (touch->type == gef::TT_RELEASED)
 				{
@@ -580,8 +592,8 @@ void Settings::SettingsRender()
 
 		// draw sprites here
 		sprite_renderer_->DrawSprite(menu_box_sprite_);
-		sprite_renderer_->DrawSprite(left_d_pad_);
-		sprite_renderer_->DrawSprite(right_d_pad_);
+		sprite_renderer_->DrawSprite(left_d_pad_sprite_);
+		sprite_renderer_->DrawSprite(right_d_pad_sprite_);
 
 		DrawHUD();
 	}
