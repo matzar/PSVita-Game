@@ -46,7 +46,7 @@ class b2ContactFilter;
 class Game
 {
 public:
-	Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count);
+	Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, unsigned* difficulty_count);
 	~Game();
 
 	void GameInit();
@@ -65,6 +65,9 @@ private:
 	// camera
 	Camera* camera_;
 	unsigned* camera_count_;
+
+	// difficulty
+	unsigned* difficulty_count_;
 
 	// font
 	gef::Font* font_;

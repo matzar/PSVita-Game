@@ -30,6 +30,7 @@
 #include "free_camera.h"
 #include "camera_enum.h"
 #include "game_state_enum.h"
+#include "difficulty_enum.h"
 #include "player.h"
 #include "ground.h"
 #include "pickup.h"
@@ -42,10 +43,11 @@
 #include <platform/d3d11/input/touch_input_manager_d3d11.h>
 #endif 
 
-Game::Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count) :
+Game::Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, unsigned* difficulty_count) :
 	platform_(platform),
 	gamestate_(gamestate),
 	camera_count_(camera_count),
+	difficulty_count_(difficulty_count),
 	font_(nullptr),
 	texture_(nullptr),
 	sprite_renderer_(nullptr),
@@ -167,6 +169,26 @@ void Game::InitWorld()
 
 void Game::InitPlayer()
 {
+	// set difficulty
+	switch (*difficulty_count_)
+	{
+		case EASY:
+		{
+			float32 x_velocity = 5.0f;
+			float32 y_velocity = 7.5f;
+		} // !EASY
+		break;
+
+		case HARD:
+		{
+			float32 x_velocity = 7.0f;
+			float32 y_velocity = 6.5f;
+		} // !HARD
+	break;
+
+	} // !difficulty_count_
+
+
 	// create Player player_ class
 	player_ = new Player();
 	player_->InitPlayer(primitive_builder_, world_, b2Vec2(-4.0f, 4.0f), 0.5f, PLAYER, GROUND | PICKUP, 1, PLAYER, RED);
