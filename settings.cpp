@@ -232,8 +232,9 @@ void Settings::SonyController(const gef::SonyController* controller)
 		if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
 			sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
 		{
+			gef::Vector4 sprite_lerp;
 			menu_box_sprite_end_position_to_lerp_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - sprite_height * 2.0f, 0.0);
-			menu_box_sprite_.set_position(sprite_lerp_.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp_, 1.0));
+			menu_box_sprite_.set_position(sprite_lerp.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp_, 1.0));
 
 			/*left_d_pad_.set_position(sprite_lerp_.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp_, 1.0));
 			right_d_pad_.set_position(sprite_lerp_.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp_, 1.0));*/
@@ -246,12 +247,15 @@ void Settings::SonyController(const gef::SonyController* controller)
 			//gef::Vector4 sprite_lerp;
 			
 			// update variable
-			//sprite_lerp.Lerp(menu_box_sprite_.position(), sprite_position_lerp_end, 0.1);
+			//sprite_lerp.Lerp(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 2.0f, 0.0);
+			//menu_box_sprite_end_position_to_lerp_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 2.0f, 0.0);
 			
 			// update sprite
-			//sprite_.set_position(sprite_lerp);
+			//menu_box_sprite_.set_position(sprite_lerp);
+
+			gef::Vector4 sprite_lerp;
 			menu_box_sprite_end_position_to_lerp_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 2.0f, 0.0);
-			menu_box_sprite_.set_position(sprite_lerp_.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp_, 1.0));
+			menu_box_sprite_.set_position(sprite_lerp.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp_, 1.0));
 
 			/*left_d_pad_sprite_end_position_to_lerp_.set_value();
 			left_d_pad_.set_position(sprite_lerp_.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp_, 1.0));
