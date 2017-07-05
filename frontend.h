@@ -59,6 +59,9 @@ private:
 	int sfx_id_;
 	int sfx_voice_id_;
 
+	unsigned instructions_page_;
+	bool display_instrucitons_;
+
 	bool quit_;
 
 	// touch variables
@@ -89,7 +92,7 @@ private:
 	// menu text vectors
 	gef::Vector4 start_text_position_;
 	gef::Vector4 settings_text_position_;
-	gef::Vector4 quit_text_position_;
+	gef::Vector4 instructions_text_position_;
 
 	void SonyController(const gef::SonyController* controller);
 #ifdef _WIN32
