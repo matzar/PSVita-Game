@@ -26,7 +26,7 @@ enum GAMESTATE;
 class Settings
 {
 public:
-	Settings(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, float32* x_velocity, float32* y_velocity);
+	Settings(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, float* x_velocity, float* y_velocity);
 	~Settings();
 
 	void SettingsInit();
@@ -46,8 +46,8 @@ private:
 	unsigned* camera_count_;
 
 	// Player variables
-	float32* p_x_velocity;
-	float32* p_y_velocity;
+	float* p_x_velocity;
+	float* p_y_velocity;
 
 	// input manager
 	gef::InputManager* input_manager_;

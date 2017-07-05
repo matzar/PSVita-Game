@@ -21,6 +21,7 @@
 // my headers
 #include "game_state_enum.h"
 #include "camera_enum.h"
+#include "difficulty_enum.h"
 
 #ifdef _WIN32
 // only on windows platforms
@@ -28,7 +29,7 @@
 #include <platform/d3d11/input/touch_input_manager_d3d11.h>
 #endif 
 
-Settings::Settings(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, float32* x_velocity, float32* y_velocity) :
+Settings::Settings(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, float* x_velocity, float* y_velocity) :
 	platform_(platform),
 	gamestate_(gamestate),
 	camera_count_(camera_count),
