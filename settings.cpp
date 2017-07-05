@@ -465,16 +465,35 @@ void Settings::SettingsRender()
 					"CAMERA 3");
 			} // !CAM3
 			break;
-		}
+		} // !camera_count_
 
-		// render "SETTINGS" text
-		font_->RenderText(
-			sprite_renderer_,
-			gef::Vector4(difficulty_text_position_.x(), difficulty_text_position_.y(), -0.99f),
-			1.0f,
-			0xffffffff,
-			gef::TJ_CENTRE,
-			"DIFFICULTY");
+		// render "DIFFICULTY" text
+		switch (*difficulty_count_)
+		{
+			case EASY:
+			{
+				font_->RenderText(
+					sprite_renderer_,
+					gef::Vector4(difficulty_text_position_.x(), difficulty_text_position_.y(), -0.99f),
+					1.0f,
+					0xffffffff,
+					gef::TJ_CENTRE,
+					"DIFFICULTY: EASY");
+			} // !EASY
+			break;
+
+			case HARD:
+			{
+				font_->RenderText(
+					sprite_renderer_,
+					gef::Vector4(difficulty_text_position_.x(), difficulty_text_position_.y(), -0.99f),
+					1.0f,
+					0xffffffff,
+					gef::TJ_CENTRE,
+					"DIFFICULTY: HARD");
+			} // !EASY
+			break;
+		} // !difficulty_count_
 
 		// render "BACK" text
 		font_->RenderText(
