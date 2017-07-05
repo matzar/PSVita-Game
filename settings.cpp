@@ -263,20 +263,16 @@ void Settings::SonyController(const gef::SonyController* controller)
 			menu_box_sprite_.position().y() > (difficulty_text_position_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (difficulty_text_position_.y() + sprite_height))
 		{
-			(*difficulty_count_)++;
-
-			if ((*difficulty_count_) >= 2)
-				(*difficulty_count_) = 0;
+			if ((*difficulty_count_) > 0)
+				(*difficulty_count_)--;
 		}
 		// DIFFICULTY D-pad right
 		if (controller->buttons_pressed() & gef_SONY_CTRL_RIGHT &&
 			menu_box_sprite_.position().y() > (difficulty_text_position_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (difficulty_text_position_.y() + sprite_height))
 		{
-			(*difficulty_count_)++;
-
-			if ((*difficulty_count_) >= 2)
-				(*difficulty_count_) = 0;
+			if ((*difficulty_count_) < 1)
+				(*difficulty_count_)++;
 		}
 		// BACK press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
@@ -548,7 +544,7 @@ void Settings::SettingsRender()
 	}
 	sprite_renderer_->End();
 	
-	gef::DebugOut("camera_count_: %d\n", (*camera_count_));
+	//gef::DebugOut("camera_count_: %d\n", (*camera_count_));
 	//gef::DebugOut("camera_count_: %d\n", (*camera_count_));
 	/*gef::DebugOut("sprite_.position().y(): %f\n", sprite_.position().y());
 	gef::DebugOut("camera_text_position_.y() - sprite_height * 0.5f: %f\n", sprite_.position().y() - sprite_height * 0.5f);
