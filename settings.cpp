@@ -221,7 +221,7 @@ void Settings::SonyController(const gef::SonyController* controller)
 			menu_box_sprite_.set_position(sprite_lerp_.LerpReturnVector(menu_box_sprite_.position(), sprite_end_position_to_lerp_, 1.0));
 		}
 
-		// CAMERA press
+		// CAMERA CROSS press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
 			menu_box_sprite_.position().y() > (camera_text_position_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (camera_text_position_.y() + sprite_height))
@@ -236,23 +236,40 @@ void Settings::SonyController(const gef::SonyController* controller)
 			menu_box_sprite_.position().y() > (camera_text_position_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (camera_text_position_.y() + sprite_height))
 		{
-			(*camera_count_)--;
-			if ((*camera_count_) < 0)
-				(*camera_count_) = 2;
-
+			if ((*camera_count_) > 0)
+				(*camera_count_)--;
 		}
 		// CAMERA - D-pad right
 		if (controller->buttons_pressed() & gef_SONY_CTRL_RIGHT &&
 			menu_box_sprite_.position().y() > (camera_text_position_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (camera_text_position_.y() + sprite_height))
 		{
-			(*camera_count_)++;
 
-			if ((*camera_count_) >= 3)
-				(*camera_count_) = 0;
+			if ((*camera_count_) < 2)
+				(*camera_count_)++;
 		}
 		// DIFFICULTY press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
+			menu_box_sprite_.position().y() > (difficulty_text_position_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (difficulty_text_position_.y() + sprite_height))
+		{
+			(*difficulty_count_)++;
+
+			if ((*difficulty_count_) >= 2)
+				(*difficulty_count_) = 0;
+		}
+		// DIFFICULTY D-pad left
+		if (controller->buttons_pressed() & gef_SONY_CTRL_LEFT &&
+			menu_box_sprite_.position().y() > (difficulty_text_position_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (difficulty_text_position_.y() + sprite_height))
+		{
+			(*difficulty_count_)++;
+
+			if ((*difficulty_count_) >= 2)
+				(*difficulty_count_) = 0;
+		}
+		// DIFFICULTY D-pad right
+		if (controller->buttons_pressed() & gef_SONY_CTRL_RIGHT &&
 			menu_box_sprite_.position().y() > (difficulty_text_position_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (difficulty_text_position_.y() + sprite_height))
 		{

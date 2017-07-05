@@ -43,7 +43,7 @@ private:
 	GAMESTATE* gamestate_;
 
 	// camera
-	int* camera_count_;
+	unsigned* camera_count_;
 
 	// difficulty
 	unsigned* difficulty_count_;
