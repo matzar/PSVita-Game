@@ -3,7 +3,7 @@
 
 #include "input/sony_controller_input_manager.h"
 
-Player::Player(float* x_velocity, float* y_velocity) :
+Player::Player(float32* x_velocity, float32* y_velocity) :
 	p_x_velocity(x_velocity), // 5.0
 	p_y_velocity(y_velocity),	// 7.5
 	jump_(false),

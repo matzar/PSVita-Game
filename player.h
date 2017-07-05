@@ -16,7 +16,7 @@ class Player :
 	public GameObject 
 {
 public:
-	Player(float* x_velocity, float* y_velocity);
+	Player(float32* x_velocity, float32* y_velocity);
 	~Player();
 
 	void InitPlayer(
@@ -62,9 +62,9 @@ private:
 	int num_contacts_;
 
 	// player's x velocity
-	float* p_x_velocity;
+	float32* p_x_velocity;
 	// player's y velocity (jumping force)
-	float* p_y_velocity;
+	float32* p_y_velocity;
 };
 
 #endif // !_PLAYER_H

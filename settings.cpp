@@ -29,12 +29,11 @@
 #include <platform/d3d11/input/touch_input_manager_d3d11.h>
 #endif 
 
-Settings::Settings(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, float* x_velocity, float* y_velocity) :
+Settings::Settings(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, unsigned* difficulty_count) :
 	platform_(platform),
 	gamestate_(gamestate),
 	camera_count_(camera_count),
-	p_x_velocity(x_velocity),
-	p_y_velocity(y_velocity),
+	difficulty_count_(difficulty_count),
 	input_manager_(nullptr),
 	sprite_renderer_(nullptr),
 	audio_manager_(nullptr),

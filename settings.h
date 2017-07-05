@@ -26,7 +26,7 @@ enum GAMESTATE;
 class Settings
 {
 public:
-	Settings(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, float* x_velocity, float* y_velocity);
+	Settings(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, unsigned* difficulty_count);
 	~Settings();
 
 	void SettingsInit();
