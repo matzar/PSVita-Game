@@ -144,7 +144,7 @@ void Frontend::FrontendInit()
 	InitAudio();
 
 	// initialise button icon
-	title_texture_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
+	title_texture_ = CreateTextureFromPNG("frontend_instructions.png", platform_);
 	
 	InitFont();
 } // !FrontendInit
