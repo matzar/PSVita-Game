@@ -34,6 +34,11 @@ Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate) :
 	sprite_renderer_(nullptr),
 	audio_manager_(nullptr),
 	title_texture_(nullptr),
+	instructions_texture_1(nullptr),
+	instructions_texture_2(nullptr),
+	instructions_texture_3(nullptr),
+	instructions_texture_4(nullptr),
+	instructions_texture_5(nullptr),
 	cross_button_icon_(nullptr),
 	playstation_left_d_pad_(nullptr),
 	playstation_right_d_pad_(nullptr),
@@ -191,6 +196,31 @@ void Frontend::FrontendRelease()
 
 	delete title_texture_;
 	title_texture_ = nullptr;
+
+	delete instructions_texture_1;
+	instructions_texture_1 = nullptr;
+
+	delete instructions_texture_2;
+	instructions_texture_2 = nullptr;
+
+	delete instructions_texture_3;
+	instructions_texture_3 = nullptr;
+
+	delete instructions_texture_4;
+	instructions_texture_4 = nullptr;
+
+	delete instructions_texture_5;
+	instructions_texture_5 = nullptr;
+
+	// icon textures
+	delete cross_button_icon_;
+	cross_button_icon_ = nullptr;
+
+	delete playstation_left_d_pad_;
+	playstation_left_d_pad_ = nullptr;
+
+	delete playstation_right_d_pad_;
+	playstation_right_d_pad_ = nullptr;
 
 	CleanUpFont();
 } // !FrontendRelease

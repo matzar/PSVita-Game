@@ -70,6 +70,12 @@ private:
 
 	// title texture
 	gef::Texture* title_texture_;
+	// instructions textures
+	gef::Texture* instructions_texture_1;
+	gef::Texture* instructions_texture_2;
+	gef::Texture* instructions_texture_3;
+	gef::Texture* instructions_texture_4;
+	gef::Texture* instructions_texture_5;
 	// icons textures
 	gef::Texture* cross_button_icon_;
 	gef::Texture* playstation_left_d_pad_;
