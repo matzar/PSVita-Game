@@ -4,6 +4,7 @@
 // gef headers
 #include <input/touch_input_manager.h>
 #include <graphics/sprite.h>
+#include <box2d/Box2D.h> // included for float32 access
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
@@ -26,7 +27,7 @@ enum GAMESTATE;
 class Settings
 {
 public:
-	Settings(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count);
+	Settings(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, float32* x_velocity, float32* y_velocity);
 	~Settings();
 
 	void SettingsInit();
@@ -44,6 +45,10 @@ private:
 
 	// camera
 	unsigned* camera_count_;
+
+	// Player variables
+	float32* p_x_velocity;
+	float32* p_y_velocity;
 
 	// input manager
 	gef::InputManager* input_manager_;
