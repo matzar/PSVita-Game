@@ -197,11 +197,11 @@ void Settings::SonyController(const gef::SonyController* controller)
 	if (controller)
 	{
 		// record where to move sprite
-		float left_horizontal_input = controller->left_stick_x_axis();
+		/*float left_horizontal_input = controller->left_stick_x_axis();
 		float left_vertical_input = controller->left_stick_y_axis();
 
 		float right_horizontal_input = controller->right_stick_x_axis();
-		float right_vertical_input = controller->right_stick_y_axis();
+		float right_vertical_input = controller->right_stick_y_axis();*/
 
 		//if (left_vertical_input < 0) up = true;
 
@@ -511,7 +511,7 @@ void Settings::SettingsRender()
 					1.0f,
 					0xffffffff,
 					gef::TJ_CENTRE,
-					"DIFFICULTY: EASY");
+					"DIFFIC EASY");
 			} // !EASY
 			break;
 
@@ -523,7 +523,7 @@ void Settings::SettingsRender()
 					1.0f,
 					0xffffffff,
 					gef::TJ_CENTRE,
-					"DIFFICULTY: HARD");
+					"DIFFIC HARD");
 			} // !EASY
 			break;
 		} // !difficulty_count_
