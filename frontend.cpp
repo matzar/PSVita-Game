@@ -34,6 +34,9 @@ Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate) :
 	sprite_renderer_(nullptr),
 	audio_manager_(nullptr),
 	title_texture_(nullptr),
+	cross_button_icon_(nullptr),
+	playstation_left_d_pad_(nullptr),
+	playstation_right_d_pad_(nullptr),
 	quit_(false),
 	sprite_width_(190.0f),
 	sprite_height(38.0f),
@@ -120,12 +123,27 @@ void Frontend::FrontendInit()
 	if (input_manager_ && input_manager_->touch_manager() && (input_manager_->touch_manager()->max_num_panels() > 0))
 		input_manager_->touch_manager()->EnablePanel(0);
 
+	// initialise button icon
+	cross_button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
+	playstation_left_d_pad_ = CreateTextureFromPNG("playstation-left-d-pad.png", platform_);
+	playstation_right_d_pad_ = CreateTextureFromPNG("playstation-right-d-pad.png", platform_);
+
 	// initlalise sprite renderer
 	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
 
+	// left d-pad sprite
+	left_d_pad_sprite_.set_position(platform_.width() * 0.5f - sprite_width_, platform_.height() * 0.5f + sprite_height * 1.5f, 0.0f);
+	left_d_pad_sprite_.set_texture(playstation_left_d_pad_);
+	left_d_pad_sprite_.set_width(sprite_height);
+	left_d_pad_sprite_.set_height(sprite_height);
+	// right d-pad sprite			
+	right_d_pad_sprite_.set_position(platform_.width() * 0.5f + sprite_width_, platform_.height() * 0.5f + sprite_height * 1.5f, 0.0f);
+	right_d_pad_sprite_.set_texture(playstation_right_d_pad_);
+	right_d_pad_sprite_.set_width(sprite_height);
+	right_d_pad_sprite_.set_height(sprite_height);
+
 	// sprite
 	menu_box_sprite_.set_position(platform_.width() * 0.5f, platform_.height() * 0.5f + sprite_height * 1.5f, 0.0f);
-	//sprite_.set_position(14.0f, 14.0f, 0.0f);
 	menu_box_sprite_.set_width(sprite_width_);
 	menu_box_sprite_.set_height(sprite_height);
 

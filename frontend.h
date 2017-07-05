@@ -51,9 +51,6 @@ private:
 	// sprite renderer
 	gef::SpriteRenderer* sprite_renderer_;
 
-	// texture
-	gef::Texture* title_texture_;
-
 	// font
 	gef::Font* font_;
 
@@ -67,6 +64,14 @@ private:
 	// touch variables
 	Int32 active_touch_id_;
 	gef::Vector2 touch_position_;
+
+	// title texture
+	gef::Texture* title_texture_;
+	// icons textures
+	gef::Texture* cross_button_icon_;
+	gef::Texture* playstation_left_d_pad_;
+	gef::Texture* playstation_right_d_pad_;
+
 	// sprite
 	gef::Sprite menu_box_sprite_;
 	float sprite_width_;
