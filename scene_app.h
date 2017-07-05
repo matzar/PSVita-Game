@@ -38,9 +38,8 @@ private:
 	// camera state holder
 	unsigned camera_count_;
 
-	// Player variables
-	float x_velocity; 
-	float y_velocity;
+	// difficulty
+	unsigned difficulty_count_;
 
 	// classes pointers
 	Frontend* frontend_;

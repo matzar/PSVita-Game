@@ -45,9 +45,8 @@ private:
 	// camera
 	unsigned* camera_count_;
 
-	// Player variables
-	float* p_x_velocity;
-	float* p_y_velocity;
+	// difficulty
+	unsigned* difficulty_count_;
 
 	// input manager
 	gef::InputManager* input_manager_;

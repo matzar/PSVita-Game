@@ -236,9 +236,10 @@ void Settings::SonyController(const gef::SonyController* controller)
 			menu_box_sprite_.position().y() > (difficulty_text_position_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (difficulty_text_position_.y() + sprite_height))
 		{
-			// update the current state of the game state machine
-			// get the value that the gamestate points to and change it
-			//(*gamestate_) = GAME; 
+			(*difficulty_count_)++;
+
+			if ((*difficulty_count_) >= 2)
+				(*difficulty_count_) = 0;
 		}
 		// BACK press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
