@@ -39,8 +39,8 @@ private:
 	unsigned camera_count_;
 
 	// Player variables
-	float32 x_velocity; 
-	float32 y_velocity;
+	float x_velocity; 
+	float y_velocity;
 
 	// classes pointers
 	Frontend* frontend_;

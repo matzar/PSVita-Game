@@ -4,7 +4,6 @@
 // gef headers
 #include <input/touch_input_manager.h>
 #include <graphics/sprite.h>
-#include <box2d/Box2D.h> // included for float32 access
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef

@@ -3,14 +3,13 @@
 
 #include "input/sony_controller_input_manager.h"
 
-Player::Player(float32 x_velocity, float32 y_velocity) :
-	//body_(nullptr),
+Player::Player(float* x_velocity, float* y_velocity) :
+	p_x_velocity(x_velocity), // 5.0
+	p_y_velocity(y_velocity),	// 7.5
 	jump_(false),
 	alive_(true),
 	red_(true),
-	num_contacts_(0),
-	x_velocity(x_velocity), // 5.0
-	y_velocity(y_velocity)	// 7.5
+	num_contacts_(0)
 {
 	//SetGameObjectType(PLAYER);
 	//SetGameObjectColour(RED);
@@ -92,7 +91,7 @@ void Player::PlayerController(const gef::SonyController * controller)
 	{
 		// move the player
 		b2Vec2 vel = GetBody()->GetLinearVelocity();
-		vel.x = x_velocity;
+		vel.x = (*p_x_velocity);
 		GetBody()->SetLinearVelocity(vel);
 		
 		/*b2Vec2 vel = GetBody()->GetLinearVelocity();
@@ -106,7 +105,7 @@ void Player::PlayerController(const gef::SonyController * controller)
 			if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
 			{
 				b2Vec2 vel = GetBody()->GetLinearVelocity();
-				vel.y = y_velocity;	//upwards - don't change x velocity
+				vel.y = (*p_y_velocity);	//upwards - don't change x velocity
 				GetBody()->SetLinearVelocity(vel);
 
 				jump_ = false;
