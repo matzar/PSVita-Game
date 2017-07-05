@@ -90,6 +90,8 @@ private:
 	gef::Sprite left_d_pad_sprite_;
 	gef::Sprite right_d_pad_sprite_;
 
+	bool display_d_pad = true;
+
 	// lerp move variables
 	//gef::Vector4 sprite_lerp_;
 	//gef::Vector4 menu_box_sprite_end_position_to_lerp_;
