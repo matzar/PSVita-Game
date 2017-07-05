@@ -57,8 +57,11 @@ private:
 	// sprite renderer
 	gef::SpriteRenderer* sprite_renderer_;
 
-	// texture
-	gef::Texture* button_icon_;
+	// icons textures
+	gef::Texture* cross_button_icon_;
+	gef::Texture* playstation_left_d_pad_;
+	gef::Texture* playstation_right_d_pad_;
+	// camera illustration textures
 	gef::Texture* camera_1_texture_;
 	gef::Texture* camera_2_texture_;
 	gef::Texture* camera_3_texture_;

@@ -37,7 +37,9 @@ Settings::Settings(gef::Platform& platform, GAMESTATE* gamestate, unsigned* came
 	input_manager_(nullptr),
 	sprite_renderer_(nullptr),
 	audio_manager_(nullptr),
-	button_icon_(nullptr),
+	cross_button_icon_(nullptr),
+	playstation_left_d_pad_(nullptr),
+	playstation_right_d_pad_(nullptr),
 	quit_(false),
 	sprite_width_(190.0f),
 	sprite_height(38.0f),
@@ -148,7 +150,7 @@ void Settings::SettingsInit()
 	InitAudio();
 
 	// initialise button icon
-	button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
+	cross_button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
 	// initialise cameras' textures
 	camera_1_texture_ = CreateTextureFromPNG("CAM1.png", platform_);
 	camera_2_texture_ = CreateTextureFromPNG("CAM2.png", platform_);
@@ -177,8 +179,14 @@ void Settings::SettingsRelease()
 	}
 
 
-	delete button_icon_;
-	button_icon_ = nullptr;
+	delete cross_button_icon_;
+	cross_button_icon_ = nullptr;
+
+	delete playstation_left_d_pad_;
+	playstation_left_d_pad_ = nullptr;
+
+	delete playstation_right_d_pad_;
+	playstation_right_d_pad_ = nullptr;
 
 	delete camera_1_texture_;
 	camera_1_texture_ = nullptr;
