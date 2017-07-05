@@ -241,14 +241,14 @@ void Settings::SonyController(const gef::SonyController* controller)
 
 			// lerp left d-pad sprite
 			gef::Vector4 left_d_pad_end_position_to_lerp;
-			left_d_pad_end_position_to_lerp.set_value(left_d_pad_sprite_.position().x(), left_d_pad_sprite_.position().y() - sprite_height * 2.0f, 0.0);
+			left_d_pad_end_position_to_lerp.set_value(platform_.width() * 0.5f - sprite_width_, left_d_pad_sprite_.position().y() - sprite_height * 2.0f, 0.0);
 
 			gef::Vector4 left_d_pad_sprite_lerp;
 			left_d_pad_sprite_.set_position(left_d_pad_sprite_lerp.LerpReturnVector(left_d_pad_sprite_.position(), left_d_pad_end_position_to_lerp, 1.0));
 
 			// right right d-pad sprite
 			gef::Vector4 right_d_pad_end_position_to_lerp;
-			right_d_pad_end_position_to_lerp.set_value(right_d_pad_sprite_.position().x(), right_d_pad_sprite_.position().y() - sprite_height * 2.0f, 0.0);
+			right_d_pad_end_position_to_lerp.set_value(platform_.width() * 0.5f + sprite_width_, right_d_pad_sprite_.position().y() - sprite_height * 2.0f, 0.0);
 
 			gef::Vector4 right_d_pad_sprite_lerp;
 			right_d_pad_sprite_.set_position(right_d_pad_sprite_lerp.LerpReturnVector(right_d_pad_sprite_.position(), right_d_pad_end_position_to_lerp, 1.0));
@@ -265,13 +265,19 @@ void Settings::SonyController(const gef::SonyController* controller)
 			gef::Vector4 menu_box_sprite_lerp;
 			menu_box_sprite_.set_position(menu_box_sprite_lerp.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp, 1.0));
 
-			/*gef::Vector4 menu_box_sprite_lerp;
-			menu_box_sprite_end_position_to_lerp_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 2.0f, 0.0);
-			menu_box_sprite_.set_position(menu_box_sprite_lerp.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp_, 1.0));*/
+			// lerp left d-pad sprite
+			gef::Vector4 left_d_pad_end_position_to_lerp;
+			left_d_pad_end_position_to_lerp.set_value(platform_.width() * 0.5f - sprite_width_, left_d_pad_sprite_.position().y() + sprite_height * 2.0f, 0.0);
 
-			/*left_d_pad_sprite_end_position_to_lerp_.set_value();
-			left_d_pad_.set_position(sprite_lerp_.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp_, 1.0));
-			right_d_pad_.set_position(sprite_lerp_.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp_, 1.0));*/
+			gef::Vector4 left_d_pad_sprite_lerp;
+			left_d_pad_sprite_.set_position(left_d_pad_sprite_lerp.LerpReturnVector(left_d_pad_sprite_.position(), left_d_pad_end_position_to_lerp, 1.0));
+
+			// right right d-pad sprite
+			gef::Vector4 right_d_pad_end_position_to_lerp;
+			right_d_pad_end_position_to_lerp.set_value(platform_.width() * 0.5f + sprite_width_, right_d_pad_sprite_.position().y() + sprite_height * 2.0f, 0.0);
+
+			gef::Vector4 right_d_pad_sprite_lerp;
+			right_d_pad_sprite_.set_position(right_d_pad_sprite_lerp.LerpReturnVector(right_d_pad_sprite_.position(), right_d_pad_end_position_to_lerp, 1.0));
 		}
 
 		// CAMERA CROSS press
