@@ -8,7 +8,7 @@
 SceneApp::SceneApp(gef::Platform& platform) :
 	Application(platform),
 	camera_count_(CAM1),
-	difficulty_count_(HARD),
+	difficulty_count_(EASY),
 	frontend_(nullptr),
 	settings_(nullptr),
 	game_(nullptr)
