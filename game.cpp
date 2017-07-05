@@ -184,7 +184,7 @@ void Game::InitPlayer()
 		case HARD:
 		{
 			x_velocity = 7.0f;
-			y_velocity = 6.5f;
+			y_velocity = 5.5f;
 		} // !HARD
 		break;
 	} // !difficulty_count_
