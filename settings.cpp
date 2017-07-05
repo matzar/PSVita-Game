@@ -342,6 +342,7 @@ void Settings::SonyController(const gef::SonyController* controller)
 			// get the value that the gamestate points to and change it
 			(*gamestate_) = FRONTEND; 
 		}
+		// hide d-pad
 		if (menu_box_sprite_.position().y() > (back_text_position_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (back_text_position_.y() + sprite_height))
 		{

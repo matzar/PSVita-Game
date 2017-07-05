@@ -72,10 +72,15 @@ private:
 	float sprite_width_;
 	float sprite_height;
 	float sprite_init_position_y_;
+	// d-pad sprites
+	gef::Sprite left_d_pad_sprite_;
+	gef::Sprite right_d_pad_sprite_;
+
+	bool display_d_pad = true;
 
 	// lerp move variables
-	gef::Vector4 sprite_lerp_;
-	gef::Vector4 sprite_end_position_to_lerp_;
+	//gef::Vector4 sprite_lerp_;
+	//gef::Vector4 sprite_end_position_to_lerp_;
 	// menu text vectors
 	gef::Vector4 start_text_position_;
 	gef::Vector4 settings_text_position_;
