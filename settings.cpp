@@ -205,7 +205,7 @@ void Settings::SonyController(const gef::SonyController* controller)
 
 		//if (left_vertical_input < 0) up = true;
 
-		// left stick up
+		// D-pad up
 		if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
 			sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
 		{
@@ -213,7 +213,7 @@ void Settings::SonyController(const gef::SonyController* controller)
 			menu_box_sprite_.set_position(sprite_lerp_.LerpReturnVector(menu_box_sprite_.position(), sprite_end_position_to_lerp_, 1.0));
 		}
 
-		// left stick down
+		// D-pad down
 		if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
 			sprite_init_position_y_ + sprite_height * 4.0f >= menu_box_sprite_.position().y() + sprite_height * 2.0f)
 		{
@@ -223,6 +223,26 @@ void Settings::SonyController(const gef::SonyController* controller)
 
 		// CAMERA press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
+			menu_box_sprite_.position().y() > (camera_text_position_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (camera_text_position_.y() + sprite_height))
+		{
+			(*camera_count_)++;
+
+			if ((*camera_count_) >= 3)
+				(*camera_count_) = 0;
+		}
+		// CAMERA - D-pad left
+		if (controller->buttons_pressed() & gef_SONY_CTRL_LEFT &&
+			menu_box_sprite_.position().y() > (camera_text_position_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (camera_text_position_.y() + sprite_height))
+		{
+			(*camera_count_)--;
+			if ((*camera_count_) < 0)
+				(*camera_count_) = 2;
+
+		}
+		// CAMERA - D-pad right
+		if (controller->buttons_pressed() & gef_SONY_CTRL_RIGHT &&
 			menu_box_sprite_.position().y() > (camera_text_position_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (camera_text_position_.y() + sprite_height))
 		{
@@ -510,6 +530,8 @@ void Settings::SettingsRender()
 		DrawHUD();
 	}
 	sprite_renderer_->End();
+	
+	gef::DebugOut("camera_count_: %d\n", (*camera_count_));
 	//gef::DebugOut("camera_count_: %d\n", (*camera_count_));
 	/*gef::DebugOut("sprite_.position().y(): %f\n", sprite_.position().y());
 	gef::DebugOut("camera_text_position_.y() - sprite_height * 0.5f: %f\n", sprite_.position().y() - sprite_height * 0.5f);

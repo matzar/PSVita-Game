@@ -43,7 +43,7 @@ private:
 	GAMESTATE* gamestate_;
 
 	// camera
-	unsigned* camera_count_;
+	int* camera_count_;
 
 	// difficulty
 	unsigned* difficulty_count_;
@@ -98,7 +98,7 @@ private:
 	void CleanUpFont();
 	void DrawHUD();
 	void InitAudio();
-	void ProcessTouchInput();
+	void ProcessTouchInput(); // TODO delete if not needed
 };
 
 #endif // !_SETTINGS_H

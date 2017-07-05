@@ -89,7 +89,7 @@ private:
 	void CleanUpFont();
 	void DrawHUD();
 	void InitAudio();
-	void ProcessTouchInput();
+	void ProcessTouchInput(); // TODO delete if not needed
 };
 
 #endif // !_FRONTEND_H
