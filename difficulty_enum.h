@@ -1,0 +1,11 @@
+#ifndef _DIFFICULTY_ENUM_H
+#define _DIFFICULTY_ENUM_H
+
+enum DIFFICULTY_ENUM
+{
+	EASY,
+	HARD
+};
+
+#endif // !_DIFFICULTY_ENUM_H
+
