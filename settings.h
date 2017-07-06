@@ -2,7 +2,6 @@
 #define _SETTINGS_H
 
 // gef headers
-#include <input/touch_input_manager.h>
 #include <graphics/sprite.h>
 
 // FRAMEWORK FORWARD DECLARATIONS
@@ -76,10 +75,6 @@ private:
 	int sfx_voice_id_;
 
 	bool quit_;
-
-	// touch variables
-	Int32 active_touch_id_;
-	gef::Vector2 touch_position_;
 
 	// menu box sprite
 	gef::Sprite menu_box_sprite_;

@@ -10,7 +10,6 @@
 
 #include <input/input_manager.h>
 #include <input/sony_controller_input_manager.h>
-#include <input/touch_input_manager.h>
 
 #include <audio/audio_manager.h>
 
@@ -43,7 +42,6 @@ Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate) :
 	sprite_height(38.0f),
 	sfx_voice_id_(-1),
 	sfx_id_(-1),
-	active_touch_id_(-1),
 	fps_(0)
 {
 }
@@ -68,20 +66,6 @@ void Frontend::DrawHUD()
 {
 	if (font_)
 	{
-		// if a touch is active lets draw some text
-		if (active_touch_id_ != -1)
-		{
-			font_->RenderText(
-				sprite_renderer_,
-				gef::Vector4(touch_position_.x, touch_position_.y, -0.9f),
-				1.0f,
-				0xffffffff,
-				gef::TJ_LEFT,
-				"(%.1f, %.1f)",
-				touch_position_.x,
-				touch_position_.y);
-		}
-
 		// display frame rate
 		font_->RenderText(
 			sprite_renderer_,
