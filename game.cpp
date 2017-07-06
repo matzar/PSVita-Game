@@ -635,16 +635,18 @@ void Game::GameUpdate(float frame_time)
 
 		camera_->CameraController(frame_time, controller);
 
+		
 		if (!pause_)
+		{
+			// player controller update and simulation update
+			// must be under the same condition statement 
+			// to keep the simulation consistent between restarts
 			player_->PlayerController(controller);
+			UpdateSimulation(frame_time);
+		}
 
 		SonyController(controller);
 	} // !input_manager_
-
-	if (!pause_)
-	{
-		UpdateSimulation(frame_time);
-	}
 } // !GameUpdate
 
 void Game::GameRender()
