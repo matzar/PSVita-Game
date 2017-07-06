@@ -162,7 +162,8 @@ void Settings::InitSprites()
 
 void Settings::CleanSprites()
 {
-
+	delete sprite_renderer_;
+	sprite_renderer_ = nullptr;
 } // !CleanSprites
 
 void Settings::InitText()
@@ -196,14 +197,28 @@ void Settings::InitAudio()
 	}
 } // !InitAudio
 
+void Settings::CleanAudio()
+{
+	if (audio_manager_)
+	{
+		audio_manager_->StopMusic();
+		audio_manager_->UnloadAllSamples();
+		sfx_id_ = -1;
+		sfx_voice_id_ = -1;
+
+		delete audio_manager_;
+		audio_manager_ = nullptr;
+	}
+} // !CleanAudio
+
 void Settings::SettingsInit()
 {
 	// initialise input manager
 	input_manager_ = gef::InputManager::Create(platform_);
 
-	// make sure if there is a panel to detect touch input, then activate it
-	if (input_manager_ && input_manager_->touch_manager() && (input_manager_->touch_manager()->max_num_panels() > 0))
-		input_manager_->touch_manager()->EnablePanel(0);
+	//// make sure if there is a panel to detect touch input, then activate it
+	//if (input_manager_ && input_manager_->touch_manager() && (input_manager_->touch_manager()->max_num_panels() > 0))
+	//	input_manager_->touch_manager()->EnablePanel(0);
 
 	InitTextures();
 
@@ -221,19 +236,9 @@ void Settings::SettingsRelease()
 	delete input_manager_;
 	input_manager_ = nullptr;
 
-	delete sprite_renderer_;
-	sprite_renderer_ = nullptr;
+	CleanSprites();
 
-	if (audio_manager_)
-	{
-		audio_manager_->StopMusic();
-		audio_manager_->UnloadAllSamples();
-		sfx_id_ = -1;
-		sfx_voice_id_ = -1;
-
-		delete audio_manager_;
-		audio_manager_ = nullptr;
-	}
+	CleanAudio();
 
 	CleanTextures();
 

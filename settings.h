@@ -109,8 +109,10 @@ private:
 	void InitFont();
 	void CleanFont();
 	void DrawHUD();
-	void InitAudio();
 	void ProcessTouchInput(); // TODO delete if not needed
+
+	void InitAudio();
+	void CleanAudio();
 
 	void InitSprites();
 	void CleanSprites();
