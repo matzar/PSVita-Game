@@ -106,22 +106,22 @@ private:
 #ifdef _WIN32
 	void KeyboardController(float fps);
 #endif // !_WIN32
+	void ProcessTouchInput(); // TODO delete if not needed
+
 	void InitFont();
 	void CleanFont();
 	void DrawHUD();
-	void ProcessTouchInput(); // TODO delete if not needed
-
-	void InitAudio();
-	void CleanAudio();
-
-	void InitSprites();
-	void CleanSprites();
 
 	void InitTextures();
 	void CleanTextures();
 
+	void InitSprites();
+	void CleanSprites();
+
 	void InitText();
-	void CleanText();
+
+	void InitAudio();
+	void CleanAudio();
 };
 
 #endif // !_SETTINGS_H

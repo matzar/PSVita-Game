@@ -107,8 +107,19 @@ private:
 	void InitFont();
 	void CleanUpFont();
 	void DrawHUD();
-	void InitAudio();
 	void ProcessTouchInput(); // TODO delete if not needed
+
+	void InitTextures();
+	void CleanTextures();
+
+	void InitSprites();
+	void CleanSprites();
+
+	void InitText();
+	void CleanText();
+
+	void InitAudio();
+	void CleanAudio();
 };
 
 #endif // !_FRONTEND_H

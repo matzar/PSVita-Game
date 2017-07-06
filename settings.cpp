@@ -220,6 +220,8 @@ void Settings::SettingsInit()
 	//if (input_manager_ && input_manager_->touch_manager() && (input_manager_->touch_manager()->max_num_panels() > 0))
 	//	input_manager_->touch_manager()->EnablePanel(0);
 
+	InitFont();
+
 	InitTextures();
 
 	InitSprites();
@@ -227,8 +229,6 @@ void Settings::SettingsInit()
 	InitText();
 
 	InitAudio();
-
-	InitFont();
 } // !SettingsInit
 
 void Settings::SettingsRelease()
@@ -236,13 +236,13 @@ void Settings::SettingsRelease()
 	delete input_manager_;
 	input_manager_ = nullptr;
 
-	CleanSprites();
-
-	CleanAudio();
+	CleanFont();
 
 	CleanTextures();
 
-	CleanFont();
+	CleanSprites();
+
+	CleanAudio();
 } // !SettingsRelease
 
 void Settings::SonyController(const gef::SonyController* controller)
