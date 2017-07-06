@@ -61,7 +61,7 @@ void Settings::InitFont()
 	font_->Load("comic_sans");
 } // !InitFont
 
-void Settings::CleanUpFont()
+void Settings::CleanFont()
 {
 	delete font_;
 	font_ = nullptr;
@@ -116,25 +116,48 @@ void Settings::InitAudio()
 	}
 } // !InitAudio
 
-void Settings::SettingsInit()
+void Settings::InitTextures()
 {
-	// initialise input manager
-	input_manager_ = gef::InputManager::Create(platform_);
-
-	// make sure if there is a panel to detect touch input, then activate it
-	if (input_manager_ && input_manager_->touch_manager() && (input_manager_->touch_manager()->max_num_panels() > 0))
-		input_manager_->touch_manager()->EnablePanel(0);
-
 	// initialise button icon
 	cross_button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
+	// initialise left d-pad icon
 	playstation_left_d_pad_ = CreateTextureFromPNG("playstation-left-d-pad.png", platform_);
+	// initialise right d-pad icon
 	playstation_right_d_pad_ = CreateTextureFromPNG("playstation-right-d-pad.png", platform_);
 
-	// initialise cameras' textures
+	// initialise camera's 1 texture to show its perspective
 	camera_1_texture_ = CreateTextureFromPNG("CAM1.png", platform_);
+	// initialise camera's 2 texture to show its perspective
 	camera_2_texture_ = CreateTextureFromPNG("CAM2.png", platform_);
+	// initialise camera's 3 texture to show its perspective
 	camera_3_texture_ = CreateTextureFromPNG("CAM3.png", platform_);
+} // !InitTextures
 
+void Settings::CleanTextures()
+{
+	// icon textures
+	delete cross_button_icon_;
+	cross_button_icon_ = nullptr;
+
+	delete playstation_left_d_pad_;
+	playstation_left_d_pad_ = nullptr;
+
+	delete playstation_right_d_pad_;
+	playstation_right_d_pad_ = nullptr;
+
+	// camera illustrations textures
+	delete camera_1_texture_;
+	camera_1_texture_ = nullptr;
+
+	delete camera_2_texture_;
+	camera_2_texture_ = nullptr;
+
+	delete camera_3_texture_;
+	camera_3_texture_ = nullptr;
+} // !CleanTextures
+
+void Settings::InitSprites()
+{
 	// initlalise sprite renderer
 	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
 
@@ -153,12 +176,27 @@ void Settings::SettingsInit()
 	menu_box_sprite_.set_width(sprite_width_);
 	menu_box_sprite_.set_height(sprite_height);
 
-	//menu_box_sprite_end_position_to_lerp_ = menu_box_sprite_.position();
-	//left_d_pad_sprite_end_position_to_lerp_ = right_d_pad_sprite_.position();
-	//right_d_pad_sprite_end_position_to_lerp_ = left_d_pad_sprite_.position();
-
 	sprite_init_position_y_ = menu_box_sprite_.position().y();
+} // !InitSprites
 
+void Settings::CleanSprites()
+{
+
+} // !CleanSprites
+
+void Settings::SettingsInit()
+{
+	// initialise input manager
+	input_manager_ = gef::InputManager::Create(platform_);
+
+	// make sure if there is a panel to detect touch input, then activate it
+	if (input_manager_ && input_manager_->touch_manager() && (input_manager_->touch_manager()->max_num_panels() > 0))
+		input_manager_->touch_manager()->EnablePanel(0);
+
+	InitTextures();
+
+	InitSprites();
+	
 	// menu text vectors init
 	float height_correction = 2.0f;
 	// set "START" vector
@@ -192,27 +230,9 @@ void Settings::SettingsRelease()
 		audio_manager_ = nullptr;
 	}
 
-	// icon textures
-	delete cross_button_icon_;
-	cross_button_icon_ = nullptr;
+	CleanTextures();
 
-	delete playstation_left_d_pad_;
-	playstation_left_d_pad_ = nullptr;
-
-	delete playstation_right_d_pad_;
-	playstation_right_d_pad_ = nullptr;
-
-	// camera illustrations textures
-	delete camera_1_texture_;
-	camera_1_texture_ = nullptr;
-
-	delete camera_2_texture_;
-	camera_2_texture_ = nullptr;
-
-	delete camera_3_texture_;
-	camera_3_texture_ = nullptr;
-
-	CleanUpFont();
+	CleanFont();
 } // !SettingsRelease
 
 void Settings::SonyController(const gef::SonyController* controller)

@@ -3,7 +3,7 @@
 
 // gef headers
 #include <system/application.h>
-
+#include "graphics/sprite.h"
 // std headers
 #include <vector>
 #include <box2d/Box2D.h>
@@ -23,6 +23,7 @@ namespace gef
 	class Scene;
 	class Vector2;
 	class Material;
+	class Sprite;
 } // gef
 
 
@@ -116,7 +117,12 @@ private:
 	// model
 	gef::Scene* model_scene_;
 	gef::Mesh* mesh_;
-	//gef::MeshInstance apple_;
+
+	// menu box sprite
+	gef::Sprite menu_box_sprite_;
+	float sprite_width_;
+	float sprite_height;
+	float sprite_init_position_y_;
 
 	// quit
 	bool quit_;

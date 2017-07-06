@@ -107,10 +107,16 @@ private:
 	void KeyboardController(float fps);
 #endif // !_WIN32
 	void InitFont();
-	void CleanUpFont();
+	void CleanFont();
 	void DrawHUD();
 	void InitAudio();
 	void ProcessTouchInput(); // TODO delete if not needed
+
+	void InitSprites();
+	void CleanSprites();
+
+	void InitTextures();
+	void CleanTextures();
 };
 
 #endif // !_SETTINGS_H

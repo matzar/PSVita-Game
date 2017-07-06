@@ -7,7 +7,6 @@
 
 #include <graphics/material.h>
 #include <graphics/sprite_renderer.h>
-#include <graphics/sprite.h>
 
 #include <graphics/renderer_3d.h>
 #include <graphics/mesh.h>
