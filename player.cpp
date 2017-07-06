@@ -149,7 +149,9 @@ void Player::ReloadPlayer()
 	GetBody()->SetLinearVelocity(vel);
 
 	alive_ = true;
+
 	this->SetGameObjectColour(RED);
+	red_ = true;
 }
 
 

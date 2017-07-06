@@ -665,6 +665,8 @@ void Game::GameUpdate(float frame_time)
 
 		SonyController(controller);
 	} // !input_manager_
+
+	gef::DebugOut("player colour: %d\n", player_->GetGameObjectColour());
 } // !GameUpdate
 
 void Game::GameRender()
