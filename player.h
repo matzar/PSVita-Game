@@ -37,6 +37,7 @@ public:
 	void EndContact();
 	void RestartJump();
 	void DeadPlayer();
+	void ReloadPlayer();
 
 	int IsContacting() const { return num_contacts_; }
 	bool PlayerIsRed() const { return red_; }

@@ -11,8 +11,6 @@ Player::Player(float32* x_velocity, float32* y_velocity) :
 	red_(true),
 	num_contacts_(0)
 {
-	//SetGameObjectType(PLAYER);
-	//SetGameObjectColour(RED);
 }
 
 Player::~Player()
@@ -30,9 +28,6 @@ void Player::InitPlayer(
 	OBJECT_TYPE type,
 	OBJECT_COLOUR colour)
 {
-	//// set colour
-	//colour_ = colour;
-
 	// setup the mesh for the player
 	set_mesh(primitve_builder->GetDefaultSphereMesh());
 
@@ -46,7 +41,6 @@ void Player::InitPlayer(
 	SetBody(world->CreateBody(&player_body_def));
 
 	// create the shape for the player
-	//b2PolygonShape player_shape;
 	b2CircleShape player_shape;
 	// if cube 1x1, need to pass half of both dimensions
 	//player_shape.SetAsBox(0.5f, 0.5f);
@@ -94,12 +88,6 @@ void Player::PlayerController(const gef::SonyController * controller)
 		vel.x = (*p_x_velocity);
 		GetBody()->SetLinearVelocity(vel);
 		
-		/*b2Vec2 vel = GetBody()->GetLinearVelocity();
-		vel.x = b2Max(vel.x - 0.1f, -5.0f);
-		vel.x *= 0.98;
-		vel.x = b2Min(vel.x + 0.1f, 5.0f);
-		GetBody()->SetLinearVelocity(vel);*/
-
 		if (jump_)
 		{
 			if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
@@ -112,7 +100,6 @@ void Player::PlayerController(const gef::SonyController * controller)
 			}
 		}
 
-		// TODO change colour at runtime
 		if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE)
 		{
 			red_ = !red_;
@@ -135,26 +122,28 @@ void Player::PlayerController(const gef::SonyController * controller)
 void Player::StartContact()
 {
 	num_contacts_++;
-	//gef::DebugOut("Start Contact()\n");
 }
 
 void Player::EndContact()
 {
 	num_contacts_--;
-	//jump_ = false;
-	//gef::DebugOut("EndContact()\n");
 }
 
 void Player::RestartJump()
 {
 	jump_ = true;
-	//gef::DebugOut("RestartJump()\n");
 }
 
 void Player::DeadPlayer()
 {
 	alive_ = false;
-	//gef::DebugOut("DeadPlayer()\n");
+}
+
+void Player::ReloadPlayer()
+{
+	body_->SetTransform(b2Vec2(-4.0f, 4.0f), 0.0f);
+	alive_ = true;
+	this->SetGameObjectColour(RED);
 }
 
 

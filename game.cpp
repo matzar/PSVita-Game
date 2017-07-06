@@ -578,7 +578,8 @@ void Game::UpdateSimulation(float frame_time)
 			if (contact_listener_->current_ground_->GetGameObjectColour() != player_->GetGameObjectColour())
 			{
 				player_->DeadPlayer();
-				pause_ = true;
+				player_->ReloadPlayer();
+				//pause_ = true;
 			}
 		}
 	}
