@@ -73,11 +73,11 @@ void Game::InitFont()
 	font_->Load("comic_sans");
 } // !InitFont
 
-void Game::CleanupFont()
+void Game::CleanFont()
 {
 	delete font_;
 	font_ = nullptr;
-} // !CleanupFont
+} // !CleanFont
 
 void Game::DrawHUD()
 {
@@ -110,9 +110,10 @@ void Game::InitTextures()
 	texture_ = CreateTextureFromPNG("nauticalTile_160.png", platform_);
 	texture_material_ = new gef::Material();
 	texture_material_->set_texture(texture_);
+
 } // !InitTextures
 
-void Game::CleanupTextures()
+void Game::CleanTextures()
 {
 	delete texture_;
 	texture_ = nullptr;
@@ -144,6 +145,10 @@ void Game::InitCamera()
 	camera_->DisplayCameraPosition();
 } // !InitCamera
 
+void Game::CleanCamera()
+{
+} // !CleanCamera
+
 void Game::InitWorld()
 {
 	// initialise the physics world
@@ -158,6 +163,10 @@ void Game::InitWorld()
 	//contact_filter_ = new ContactFilter();
 	//world_->SetContactFilter(contact_filter_);
 } // !InitWorld
+
+void Game::CleanWorld()
+{
+} // CleanWorld
 
 void Game::InitPlayer()
 {
@@ -183,6 +192,10 @@ void Game::InitPlayer()
 	player_ = new Player(&x_velocity, &y_velocity);
 	player_->InitPlayer(primitive_builder_, world_, b2Vec2(-4.0f, 4.0f), 0.5f, PLAYER, GROUND | PICKUP, 1, PLAYER, RED);
 } // !InitPlayer
+
+void Game::CleanPlayer()
+{
+} // !CleanPlayer
 
 void Game::InitLevel()
 {
@@ -297,6 +310,10 @@ void Game::InitLevel()
 	}
 } // !InitLevel
 
+void Game::CleanLevel()
+{
+} // !CleanLevel
+
 void Game::GameInit()
 {
 
@@ -327,8 +344,6 @@ void Game::GameInit()
 	InitPlayer();
 
 	InitLevel();
-
-	//InitPickups();
 } // !GameInit
 
 void Game::GameRelease()
@@ -372,7 +387,7 @@ void Game::GameRelease()
 	delete camera_;
 	camera_ = nullptr;
 
-	CleanupTextures();
+	CleanTextures();
 
 	delete model_scene_;
 	model_scene_ = nullptr;

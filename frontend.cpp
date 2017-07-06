@@ -60,7 +60,7 @@ void Frontend::CleanFont()
 {
 	delete font_;
 	font_ = nullptr;
-} // CleanUpFont
+} // CleanFont
 
 void Frontend::DrawHUD()
 {

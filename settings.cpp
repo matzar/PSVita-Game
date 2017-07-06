@@ -56,7 +56,7 @@ void Settings::CleanFont()
 {
 	delete font_;
 	font_ = nullptr;
-} // CleanUpFont
+} // CleanFont
 
 void Settings::DrawHUD()
 {

@@ -114,12 +114,6 @@ private:
 	gef::Scene* model_scene_;
 	gef::Mesh* mesh_;
 
-	// menu box sprite
-	gef::Sprite menu_box_sprite_;
-	float sprite_width_;
-	float sprite_height;
-	float sprite_init_position_y_;
-
 	// quit
 	bool quit_;
 	// FPS
@@ -135,26 +129,46 @@ private:
 	uint16 catB;
 	uint16 maskB;
 
+	// menu box sprite
+	gef::Sprite menu_box_sprite_;
+	float sprite_width_;
+	float sprite_height;
+	float sprite_init_position_y_;
+
+	// private member functions
 	void SonyController(const gef::SonyController* controller);
 
 	void UpdatePickups();
 	void UpdateSimulation(float frame_time);
-	void InitAudio();
+
 	void InitFont();
-	void CleanupFont();
+	void CleanFont();
 	void DrawHUD();
-	void SetupLights();
+
 	void InitTextures();
-	void CleanupTextures();
+	void CleanTextures();
+
+	void InitSprites();
+	void CleanSprites();
+
+	void InitText();
+
+	void InitAudio();
+	void CleanAudio();
+
+	void SetupLights();
+
 	void InitCamera();
-	void CleanupCamera();
+	void CleanCamera();
+
 	void InitWorld();
-	void CleanupWorld();
+	void CleanWorld();
+
 	void InitPlayer();
-	void CleanupPlayer();
+	void CleanPlayer();
+
 	void InitLevel();
-	void CleanupGround();
-	void CleanupPickups();
+	void CleanLevel();
 };
 
 #endif // !_GAME_H

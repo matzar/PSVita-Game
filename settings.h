@@ -92,6 +92,7 @@ private:
 	gef::Vector4 difficulty_text_position_;
 	gef::Vector4 back_text_position_;
 
+	// private member functions
 	void SonyController(const gef::SonyController* controller);
 
 	void InitFont();

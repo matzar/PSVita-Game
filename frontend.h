@@ -91,7 +91,8 @@ private:
 	gef::Vector4 start_text_position_;
 	gef::Vector4 settings_text_position_;
 	gef::Vector4 instructions_text_position_;
-
+	
+	// private member functions
 	void SonyController(const gef::SonyController* controller);
 
 	void InitFont();
