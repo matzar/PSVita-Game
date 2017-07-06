@@ -154,6 +154,7 @@ void Game::InitAudio()
 
 void Game::CleanAudio()
 {
+	// unload audio resources
 	if (audio_manager_)
 	{
 		audio_manager_->StopMusic();
@@ -191,6 +192,9 @@ void Game::InitCamera()
 
 void Game::CleanCamera()
 {
+	// clean up camera
+	delete camera_;
+	camera_ = nullptr;
 } // !CleanCamera
 
 void Game::InitWorld()
@@ -210,6 +214,8 @@ void Game::InitWorld()
 
 void Game::CleanWorld()
 {
+	delete world_;
+	world_ = nullptr;
 } // CleanWorld
 
 void Game::InitPlayer()
@@ -392,26 +398,8 @@ void Game::GameInit()
 
 void Game::GameRelease()
 {
-	delete font_;
-	font_ = nullptr;
-
-	delete sprite_renderer_;
-	sprite_renderer_ = nullptr;
-
 	delete  input_manager_;
 	input_manager_ = nullptr;
-
-	// unload audio resources
-	if (audio_manager_)
-	{
-		audio_manager_->StopMusic();
-		audio_manager_->UnloadAllSamples();
-		pickup_sfx_id_ = -1;
-		sfx_voice_id_ = -1;
-
-		delete audio_manager_;
-		audio_manager_ = nullptr;
-	}
 
 	delete renderer_3d_;
 	renderer_3d_ = nullptr;
@@ -424,14 +412,9 @@ void Game::GameRelease()
 	// shapes and joints are destroyed in b2World::Destroy 
 	// no need to explicitly delete player, ground or pickups
 	// contact listener part of the world as well, no need to explicitly delete either
-	delete world_;
-	world_ = nullptr;
+	CleanWorld();
 
-	// clean up camera
-	delete camera_;
-	camera_ = nullptr;
-
-	CleanTextures();
+	CleanCamera();
 
 	delete model_scene_;
 	model_scene_ = nullptr;
@@ -441,6 +424,14 @@ void Game::GameRelease()
 
 	pickups_.~vector();
 	ground_.~vector();
+
+	CleanFont();
+
+	CleanTextures();
+
+	CleanSprites();
+
+	CleanAudio();
 } // !GameRelease
 
 void Game::SonyController(const gef::SonyController* controller)
