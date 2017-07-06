@@ -139,10 +139,8 @@ private:
 	uint16 catB;
 	uint16 maskB;
 
-#ifdef _WIN32
-	void KeyboardController(Camera* camera, float fps);
-#endif // _WIN32
 	void SonyController(const gef::SonyController* controller);
+
 	void UpdatePickups();
 	void UpdateSimulation(float frame_time);
 	void InitAudio();
@@ -160,7 +158,6 @@ private:
 	void CleanupPlayer();
 	void InitLevel();
 	void CleanupGround();
-	//void InitPickups();
 	void CleanupPickups();
 };
 

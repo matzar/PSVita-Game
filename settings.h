@@ -92,21 +92,12 @@ private:
 
 	bool display_d_pad = true;
 
-	// lerp move variables
-	//gef::Vector4 sprite_lerp_;
-	//gef::Vector4 menu_box_sprite_end_position_to_lerp_;
-	//gef::Vector4 left_d_pad_sprite_end_position_to_lerp_;
-	//gef::Vector4 right_d_pad_sprite_end_position_to_lerp_;
 	// menu text vectors
 	gef::Vector4 camera_text_position_;
 	gef::Vector4 difficulty_text_position_;
 	gef::Vector4 back_text_position_;
 
 	void SonyController(const gef::SonyController* controller);
-#ifdef _WIN32
-	void KeyboardController(float fps);
-#endif // !_WIN32
-	void ProcessTouchInput(); // TODO delete if not needed
 
 	void InitFont();
 	void CleanFont();

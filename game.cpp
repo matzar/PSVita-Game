@@ -18,12 +18,9 @@
 #include <input/input_manager.h>
 #include <input/sony_controller_input_manager.h>
 #include <audio/audio_manager.h>
-// std headers
-#include <typeinfo>	 // for 'typeid'
 // extra headers
 #include "load_texture.h"
 #include "primitive_builder.h"
-//#include "contact_filter.h"
 // my headers
 #include "contact_listener.h"
 #include "free_camera.h"
@@ -35,12 +32,6 @@
 #include "pickup.h"
 // box2D headers
 #include <box2d/Box2D.h>
-
-#ifdef _WIN32
-// only on windows platforms
-#include <platform/d3d11/input/keyboard_d3d11.h>
-#include <platform/d3d11/input/touch_input_manager_d3d11.h>
-#endif 
 
 Game::Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, unsigned* difficulty_count) :
 	platform_(platform),
@@ -306,42 +297,11 @@ void Game::InitLevel()
 	}
 } // !InitLevel
 
-//void Game::InitPickups()
-//{
-//	// create a new scene object and read in the data from the file
-//	// no meshes or materials are created yet
-//	// we're not making any assumptions about what the data may be loaded in for
-//	model_scene_ = new gef::Scene();
-//	model_scene_->ReadSceneFromFile(platform_, "triceratop.scn");
-//
-//	// we do want to render the data stored in the scene file so lets create the materials from the material data present in the scene file
-//	model_scene_->CreateMaterials(platform_);
-//
-//	// now check to see if there is any mesh data in the file, if so lets create a mesh from it
-//	if (model_scene_->meshes.size() > 0)
-//		mesh_ = model_scene_->CreateMesh(platform_, model_scene_->meshes.front());
-//
-//	b2Vec2 start_position(0.0f, 1.0f);
-//
-//	//for (auto ground : ground_)
-//	for (int i = 0; i < 3; ++i)
-//	{
-//		pickups_.push_back(new Pickup());
-//		pickups_.at(i)->InitPickup(primitive_builder_, world_, start_position, 0.2f, mesh_, PICKUP, PLAYER | GROUND, 1, PICKUP);
-//
-//		start_position.x += 3.0f;
-//	}
-//} // !InitPickups
-
 void Game::GameInit()
 {
 
 	// initialise input manager
 	input_manager_ = gef::InputManager::Create(platform_);
-
-	// make sure if there is a panel to detect touch input, then activate it
-	//if (input_manager_ && input_manager_->touch_manager() && (input_manager_->touch_manager()->max_num_panels() > 0))
-	//	input_manager_->touch_manager()->EnablePanel(0);
 
 	// initlalise sprite renderer
 	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
@@ -423,63 +383,6 @@ void Game::GameRelease()
 	pickups_.~vector();
 	ground_.~vector();
 } // !GameRelease
-
-#ifdef _WIN32 
-// Only on windows platforms
-void Game::KeyboardController(Camera* camera, float frame_time)
-{
-	// if there is a keyboard, check the arrow keys to control the direction of the character
-	gef::Keyboard* keyboard = input_manager_->keyboard();
-	if (keyboard)
-	{
-		//const gef::KeyboardD3D11* keyboard_d3d11 = (const gef::KeyboardD3D11*)keyboard;
-		float camera_speed = 10.0f;
-
-		// keyboard input
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_W))
-			camera->MoveForward(frame_time * camera_speed);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_S))
-			camera->MoveBackwards(frame_time * camera_speed);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_A))
-			camera->MoveSideLeft(frame_time * camera_speed);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_D))
-			camera->MoveSideRight(frame_time * camera_speed);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_UP))
-			camera->AddPitch(camera_speed * camera_speed, frame_time);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_DOWN))
-			camera->subtractPitch(camera_speed * camera_speed, frame_time);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
-			camera->subtractYaw(camera_speed * camera_speed, frame_time);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_RIGHT))
-			camera->AddYaw(camera_speed * camera_speed, frame_time);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_R) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD8))
-			camera->MoveUp(frame_time * camera_speed);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_F) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD2))
-			camera->MoveDown(frame_time * camera_speed);
-	} // keyboard
-
-	  // mouse input
-	const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
-	if (touch_input)
-	{
-		// initialise the mouse position
-		gef::Vector2 mouse_position(0.0f, 0.0f); // left upper corner of the window
-
-												 // get a pointer to the d3d11 implementation of the TouchInputManager
-		const gef::TouchInputManagerD3D11* touch_input_d3d11 = (const gef::TouchInputManagerD3D11*)touch_input;
-
-		// get the mouse position
-		mouse_position = touch_input_d3d11->mouse_position();
-
-		if (touch_input_d3d11->is_button_down(0))
-		{
-			//SetCursorPos(480, 272);	
-		}
-
-		//gef::DebugOut("Mouse position x, y: %f %f\n", mouse_position.x, mouse_position.y);
-	} // touch_input (mouse)
-}
-#endif // !_WIN32
 
 void Game::SonyController(const gef::SonyController* controller)
 {
@@ -638,13 +541,8 @@ void Game::GameUpdate(float frame_time)
 
 		camera_->CameraController(frame_time, controller);
 		player_->PlayerController(controller);
+
 		SonyController(controller);
-
-
-#ifdef _WIN32 // Only on windows platforms
-		// if there is a keyboard, check the arrow keys to control the direction of the character
-		KeyboardController(camera_, frame_time);
-#endif // !_WIN32
 	} // !input_manager_
 
 	UpdateSimulation(frame_time);
