@@ -268,13 +268,29 @@ void Game::InitLevel()
 	float32 texture_ground_x = 3.0f;
 	b2Vec2 start_position(0.0f, 0.0f);
 
-	//int j = 0;
-
 	for (int i = 0; i < 20; ++i)
 	{
 		ground_.push_back( new Ground());
 		pickups_.push_back(new Pickup());
-		if (i % 2 == 0) // RED GROUND
+
+		if (i == 19) // GOLD GROUND
+		{
+			start_position.x -= interval / 2.0f + 0.5f;
+			ground_.at(i)->InitGround(
+				primitive_builder_,                   // primitive builder
+				world_, 							  // world
+				start_position, 		              // position
+				gef::Vector4(texture_ground_x / 2.0f, 0.5f, 0.5f), 	  // ground half dimensions
+				GROUND, 							  // I am...
+				PLAYER | PICKUP, 					  // ..and I collide with
+				1, 									  // group index (objects with the same positive index collide with each other)
+				GROUND, 							  // type
+				GOLD);							      // colour
+
+			start_position.x += (texture_ground_x + interval);
+		}
+
+		else if (i % 2 == 0) // RED GROUND
 		{
 			if (i % 4 == 0)
 				start_position.y += 2.0f;
@@ -322,6 +338,7 @@ void Game::InitLevel()
 				1, 									  // group index (objects with the same positive index collide with each other)
 				GROUND, 							  // type
 				NO_COL);							  // colour
+
 			start_position.x += (texture_ground_x + interval);
 		}
 		else // BLUE GROUND
@@ -355,6 +372,7 @@ void Game::InitLevel()
 				1, 									  // group index (objects with the same positive index collide with each other)
 				GROUND, 							  // type
 				BLUE);								  // colour
+
 			start_position.x += (colour_ground_x + interval);
 		}
 	}
@@ -689,6 +707,8 @@ void Game::GameRender()
 				renderer_3d_->set_override_material(&primitive_builder_->red_material());
 			else if (ground->GetGameObjectColour() == BLUE)
 				renderer_3d_->set_override_material(&primitive_builder_->blue_material());
+			else if (ground->GetGameObjectColour() == GOLD)
+				renderer_3d_->set_override_material(texture_material_);
 			else
 				renderer_3d_->set_override_material(texture_material_);
 			// draw texture
