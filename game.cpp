@@ -461,10 +461,7 @@ void Game::SonyController(const gef::SonyController* controller)
 			menu_box_sprite_.position().y() > (resume_text_position_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (resume_text_position_.y() + sprite_height))
 		{
-			(*camera_count_)++;
-
-			if ((*camera_count_) >= 3)
-				(*camera_count_) = 0;
+			pause_ = !pause_;
 		}
 		// MENU BUTTON press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
