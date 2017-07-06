@@ -104,9 +104,6 @@ private:
 #ifdef _WIN32
 	void KeyboardController(float fps);
 #endif // _WIN32
-	void InitFont();
-	void CleanUpFont();
-	void DrawHUD();
 	void ProcessTouchInput(); // TODO delete if not needed
 
 	void InitFont();

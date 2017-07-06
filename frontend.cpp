@@ -107,10 +107,36 @@ void Frontend::InitTextures()
 	cross_button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
 	playstation_left_d_pad_ = CreateTextureFromPNG("playstation-left-d-pad.png", platform_);
 	playstation_right_d_pad_ = CreateTextureFromPNG("playstation-right-d-pad.png", platform_);
+	// initialize title texture
+	title_texture_ = CreateTextureFromPNG("frontend_instructions.png", platform_);
+	// initialize instructions page 1
+	instructions_texture_1 = CreateTextureFromPNG("playstation-circle-dark-icon.png", platform_);
+	instructions_texture_2 = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
+	instructions_texture_3 = CreateTextureFromPNG("playstation-circle-dark-icon.png", platform_);
+	instructions_texture_4 = CreateTextureFromPNG("playstation-square-dark-icon.png", platform_);
+	instructions_texture_5 = CreateTextureFromPNG("playstation-triangle-dark-icon.png", platform_);
 } // !InitTextures
 
 void Frontend::CleanTextures()
 {
+	delete title_texture_;
+	title_texture_ = nullptr;
+
+	delete instructions_texture_1;
+	instructions_texture_1 = nullptr;
+
+	delete instructions_texture_2;
+	instructions_texture_2 = nullptr;
+
+	delete instructions_texture_3;
+	instructions_texture_3 = nullptr;
+
+	delete instructions_texture_4;
+	instructions_texture_4 = nullptr;
+
+	delete instructions_texture_5;
+	instructions_texture_5 = nullptr;
+
 	// icon textures
 	delete cross_button_icon_;
 	cross_button_icon_ = nullptr;
@@ -120,16 +146,6 @@ void Frontend::CleanTextures()
 
 	delete playstation_right_d_pad_;
 	playstation_right_d_pad_ = nullptr;
-
-	// camera illustrations textures
-	delete camera_1_texture_;
-	camera_1_texture_ = nullptr;
-
-	delete camera_2_texture_;
-	camera_2_texture_ = nullptr;
-
-	delete camera_3_texture_;
-	camera_3_texture_ = nullptr;
 } // !CleanTextures
 
 void Frontend::InitSprites()
@@ -147,11 +163,13 @@ void Frontend::InitSprites()
 	right_d_pad_sprite_.set_texture(playstation_right_d_pad_);
 	right_d_pad_sprite_.set_width(sprite_height);
 	right_d_pad_sprite_.set_height(sprite_height);
-	// menu box sprite
+
+	// sprite
 	menu_box_sprite_.set_position(platform_.width() * 0.5f, platform_.height() * 0.5f + sprite_height * 1.5f, 0.0f);
 	menu_box_sprite_.set_width(sprite_width_);
 	menu_box_sprite_.set_height(sprite_height);
 
+	//sprite_end_position_to_lerp_ = menu_box_sprite_.position();
 	sprite_init_position_y_ = menu_box_sprite_.position().y();
 } // !InitSprites
 
@@ -166,11 +184,11 @@ void Frontend::InitText()
 	// menu text vectors init
 	float height_correction = 2.0f;
 	// set "START" vector
-	camera_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
+	start_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
 	// set "SETTINGS" vector
-	difficulty_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
-	// set "BACK" vector
-	back_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
+	settings_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
+	// set "INSTRUCTIONS" vector
+	instructions_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
 } // InitText()
 
 void Frontend::InitAudio()
@@ -211,55 +229,19 @@ void Frontend::FrontendInit()
 	// initialise input manager
 	input_manager_ = gef::InputManager::Create(platform_);
 
-	// make sure if there is a panel to detect touch input, then activate it
-	if (input_manager_ && input_manager_->touch_manager() && (input_manager_->touch_manager()->max_num_panels() > 0))
-		input_manager_->touch_manager()->EnablePanel(0);
-
-	
-
-	// initlalise sprite renderer
-	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
-
-	// left d-pad sprite
-	left_d_pad_sprite_.set_position(platform_.width() * 0.5f - sprite_width_, platform_.height() * 0.5f + sprite_height * 1.5f, 0.0f);
-	left_d_pad_sprite_.set_texture(playstation_left_d_pad_);
-	left_d_pad_sprite_.set_width(sprite_height);
-	left_d_pad_sprite_.set_height(sprite_height);
-	// right d-pad sprite			
-	right_d_pad_sprite_.set_position(platform_.width() * 0.5f + sprite_width_, platform_.height() * 0.5f + sprite_height * 1.5f, 0.0f);
-	right_d_pad_sprite_.set_texture(playstation_right_d_pad_);
-	right_d_pad_sprite_.set_width(sprite_height);
-	right_d_pad_sprite_.set_height(sprite_height);
-
-	// sprite
-	menu_box_sprite_.set_position(platform_.width() * 0.5f, platform_.height() * 0.5f + sprite_height * 1.5f, 0.0f);
-	menu_box_sprite_.set_width(sprite_width_);
-	menu_box_sprite_.set_height(sprite_height);
-
-	//sprite_end_position_to_lerp_ = menu_box_sprite_.position();
-	sprite_init_position_y_ = menu_box_sprite_.position().y();
-
-	// menu text vectors init
-	float height_correction = 2.0f;
-	// set "START" vector
-	start_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
-	// set "SETTINGS" vector
-	settings_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
-	// set "INSTRUCTIONS" vector
-	instructions_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
-
-	InitAudio();
-
-	// initialize title texture
-	title_texture_ = CreateTextureFromPNG("frontend_instructions.png", platform_);
-	// initialize instructions page 1
-	instructions_texture_1 = CreateTextureFromPNG("playstation-circle-dark-icon.png", platform_);
-	instructions_texture_2 = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
-	instructions_texture_3 = CreateTextureFromPNG("playstation-circle-dark-icon.png", platform_);
-	instructions_texture_4 = CreateTextureFromPNG("playstation-square-dark-icon.png", platform_);
-	instructions_texture_5 = CreateTextureFromPNG("playstation-triangle-dark-icon.png", platform_);
+	//// make sure if there is a panel to detect touch input, then activate it
+	//if (input_manager_ && input_manager_->touch_manager() && (input_manager_->touch_manager()->max_num_panels() > 0))
+	//	input_manager_->touch_manager()->EnablePanel(0);
 
 	InitFont();
+
+	InitTextures();
+
+	InitSprites();
+
+	InitText();
+
+	InitAudio();
 } // !FrontendInit
 
 void Frontend::FrontendRelease()
@@ -267,50 +249,13 @@ void Frontend::FrontendRelease()
 	delete input_manager_;
 	input_manager_ = nullptr;
 
-	delete sprite_renderer_;
-	sprite_renderer_ = nullptr;
+	CleanSprites();
 
-	if (audio_manager_)
-	{
-		audio_manager_->StopMusic();
-		audio_manager_->UnloadAllSamples();
-		sfx_id_ = -1;
-		sfx_voice_id_ = -1;
+	CleanAudio();
 
-		delete audio_manager_;
-		audio_manager_ = nullptr;
-	}
+	CleanTextures();
 
-
-	delete title_texture_;
-	title_texture_ = nullptr;
-
-	delete instructions_texture_1;
-	instructions_texture_1 = nullptr;
-
-	delete instructions_texture_2;
-	instructions_texture_2 = nullptr;
-
-	delete instructions_texture_3;
-	instructions_texture_3 = nullptr;
-
-	delete instructions_texture_4;
-	instructions_texture_4 = nullptr;
-
-	delete instructions_texture_5;
-	instructions_texture_5 = nullptr;
-
-	// icon textures
-	delete cross_button_icon_;
-	cross_button_icon_ = nullptr;
-
-	delete playstation_left_d_pad_;
-	playstation_left_d_pad_ = nullptr;
-
-	delete playstation_right_d_pad_;
-	playstation_right_d_pad_ = nullptr;
-
-	CleanUpFont();
+	CleanFont();
 } // !FrontendRelease
 
 void Frontend::SonyController(const gef::SonyController* controller)
