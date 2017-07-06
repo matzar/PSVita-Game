@@ -24,11 +24,5 @@ public:
 	Ground* current_ground_;
 };
 
-//#ifdef _WIN32
-//__declspec(selectany) std::set<Pickup*> dying_pickups_scheduled_for_removal_;
-//#else
-//__attribute__((weak)) std::set<Pickup*> dying_pickups_scheduled_for_removal_;
-//#endif // _WIN32
-
 #endif // !_CONTACT_LISTENER_H
 
