@@ -222,15 +222,6 @@ void Settings::SonyController(const gef::SonyController* controller)
 {
 	if (controller)
 	{
-		// record where to move sprite
-		/*float left_horizontal_input = controller->left_stick_x_axis();
-		float left_vertical_input = controller->left_stick_y_axis();
-
-		float right_horizontal_input = controller->right_stick_x_axis();
-		float right_vertical_input = controller->right_stick_y_axis();*/
-
-		//if (left_vertical_input < 0) up = true;
-
 		// D-pad up
 		if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
 			sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)

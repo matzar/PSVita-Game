@@ -54,6 +54,7 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count
 	model_scene_(nullptr),
 	mesh_(nullptr),
 	quit_(false),
+	pause_(true),
 	fps_(0),
 	pickup_sfx_id_(-1),
 	sfx_voice_id_(-1),
@@ -439,24 +440,76 @@ void Game::SonyController(const gef::SonyController* controller)
 {
 	if (controller)
 	{
+		// D-pad up
+		if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
+			sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
+		{
+			// lerp menu box sprite
+			gef::Vector4 menu_box_sprite_end_position_to_lerp;
+			menu_box_sprite_end_position_to_lerp.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - sprite_height * 2.0f, 0.0);
+
+			gef::Vector4 menu_box_sprite_lerp;
+			menu_box_sprite_.set_position(menu_box_sprite_lerp.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp, 1.0));
+		}
+		// D-pad down
+		if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
+			sprite_init_position_y_ + sprite_height * 4.0f >= menu_box_sprite_.position().y() + sprite_height * 2.0f)
+		{
+			// lerp menu box sprite
+			gef::Vector4 menu_box_sprite_end_position_to_lerp;
+			menu_box_sprite_end_position_to_lerp.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 2.0f, 0.0);
+
+			gef::Vector4 menu_box_sprite_lerp;
+			menu_box_sprite_.set_position(menu_box_sprite_lerp.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp, 1.0));
+		}
+		// CAMERA CROSS press
+		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
+			menu_box_sprite_.position().y() > (camera_text_position_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (camera_text_position_.y() + sprite_height))
+		{
+			(*camera_count_)++;
+
+			if ((*camera_count_) >= 3)
+				(*camera_count_) = 0;
+		}
+		// DIFFICULTY press
+		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
+			menu_box_sprite_.position().y() > (difficulty_text_position_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (difficulty_text_position_.y() + sprite_height))
+		{
+			(*difficulty_count_)++;
+
+			if ((*difficulty_count_) >= 2)
+				(*difficulty_count_) = 0;
+		}
+		// BACK press
+		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
+			menu_box_sprite_.position().y() > (back_text_position_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (back_text_position_.y() + sprite_height))
+		{
+			// update the current state of the game state machine
+			// get the value that the gamestate points to and change it
+			(*gamestate_) = FRONTEND;
+		}
+		// START press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_START)
 		{
 			// update the current state of the game state machine
 			// get the value that the gamestate points to and change it
 			(*gamestate_) = FRONTEND; 
 		}
-
-		if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
-		{
-			quit_ = true;
-		}
-
+		// TRIANGLE press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_TRIANGLE)
 		{
 			(*camera_count_)++;
 
 			if ((*camera_count_) >= 3)
 				(*camera_count_) = 0;
+		}
+		// hide pause menu
+		if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
+		{
+			pause_ != pause_;
 		}
 	} 
 } // !SonyController
@@ -597,6 +650,8 @@ void Game::GameUpdate(float frame_time)
 	} // !input_manager_
 
 	UpdateSimulation(frame_time);
+
+	gef::DebugOut("pause_: %d\n", pause_);
 } // !GameUpdate
 
 void Game::GameRender()
@@ -662,6 +717,39 @@ void Game::GameRender()
 	// start drawing sprites, but don't clear the frame buffer
 	sprite_renderer_->Begin(false);
 	{
+		if (pause_)
+		{
+			// render "CAMERA1" text
+			font_->RenderText(
+				sprite_renderer_,
+				gef::Vector4(camera_text_position_.x(), camera_text_position_.y(), -0.9f),
+				1.0f,
+				0xffffffff,
+				gef::TJ_CENTRE,
+				"CAMERA 1");
+			
+
+			font_->RenderText(
+				sprite_renderer_,
+				gef::Vector4(difficulty_text_position_.x(), difficulty_text_position_.y(), -0.9f),
+				1.0f,
+				0xffffffff,
+				gef::TJ_CENTRE,
+				"DIFFIC EASY");
+
+			// render "BACK" text
+			font_->RenderText(
+				sprite_renderer_,
+				gef::Vector4(back_text_position_.x(), back_text_position_.y(), -0.9f),
+				1.0f,
+				0xffffffff,
+				gef::TJ_CENTRE,
+				"BACK");
+
+			// render menu box sprite
+			sprite_renderer_->DrawSprite(menu_box_sprite_);
+		}
+
 		DrawHUD();
 	}
 	sprite_renderer_->End();

@@ -116,6 +116,9 @@ private:
 
 	// quit
 	bool quit_;
+	// pause
+	bool pause_;
+
 	// FPS
 	float fps_;
 	// audio variables

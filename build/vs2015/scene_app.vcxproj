@@ -248,6 +248,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\camera.h" />
+    <ClInclude Include="..\..\camera_enum.h" />
     <ClInclude Include="..\..\colour_type_enum.h" />
     <ClInclude Include="..\..\contact_filter.h" />
     <ClInclude Include="..\..\contact_listener.h" />
@@ -265,7 +266,6 @@
     <ClInclude Include="..\..\primitive_builder.h" />
     <ClInclude Include="..\..\scene_app.h" />
     <ClInclude Include="..\..\settings.h" />
-    <ClInclude Include="camera_enum.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

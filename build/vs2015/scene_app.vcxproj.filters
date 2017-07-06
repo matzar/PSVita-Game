@@ -113,13 +113,13 @@
     <ClInclude Include="..\..\pickup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="camera_enum.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\settings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\difficulty_enum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\camera_enum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
