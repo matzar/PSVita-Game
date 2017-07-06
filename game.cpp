@@ -54,7 +54,7 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count
 	model_scene_(nullptr),
 	mesh_(nullptr),
 	quit_(false),
-	pause_(true),
+	pause_(false),
 	sprite_width_(190.0f),
 	sprite_height(38.0f),
 	fps_(0),
@@ -86,8 +86,6 @@ void Game::DrawHUD()
 {
 	if (font_)
 	{
-		// display frame rate
-		//font_->RenderText(sprite_renderer_, gef::Vector4(850.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f", fps_);
 		font_->RenderText(sprite_renderer_, gef::Vector4(10.0f, 5.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "PICKUP: %d", pickups_count_);
 	}
 } // !DrawHUD
@@ -129,11 +127,9 @@ void Game::InitText()
 	// menu text vectors init
 	float height_correction = 2.0f;
 	// set "START" vector
-	camera_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
+	resume_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
 	// set "SETTINGS" vector
-	difficulty_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
-	// set "BACK" vector
-	back_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
+	menu_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
 } // InitText()
 
 void Game::InitAudio()
@@ -209,10 +205,6 @@ void Game::InitWorld()
 	contact_listener_ = new ContactListener();
 	// possible to pass custom ContactListener class becuase it has inherited from b2ContactListener class
 	world_->SetContactListener(contact_listener_);
-
-	// contact filter
-	//contact_filter_ = new ContactFilter();
-	//world_->SetContactFilter(contact_filter_);
 } // !InitWorld
 
 void Game::CleanWorld()
@@ -464,35 +456,26 @@ void Game::SonyController(const gef::SonyController* controller)
 			gef::Vector4 menu_box_sprite_lerp;
 			menu_box_sprite_.set_position(menu_box_sprite_lerp.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp, 1.0));
 		}
-		// CAMERA CROSS press
+		// RESUME button press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			menu_box_sprite_.position().y() > (camera_text_position_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (camera_text_position_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (resume_text_position_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (resume_text_position_.y() + sprite_height))
 		{
 			(*camera_count_)++;
 
 			if ((*camera_count_) >= 3)
 				(*camera_count_) = 0;
 		}
-		// DIFFICULTY press
+		// MENU BUTTON press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			menu_box_sprite_.position().y() > (difficulty_text_position_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (difficulty_text_position_.y() + sprite_height))
-		{
-			(*difficulty_count_)++;
-
-			if ((*difficulty_count_) >= 2)
-				(*difficulty_count_) = 0;
-		}
-		// BACK press
-		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			menu_box_sprite_.position().y() > (back_text_position_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (back_text_position_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (menu_text_position_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_position_.y() + sprite_height))
 		{
 			// update the current state of the game state machine
 			// get the value that the gamestate points to and change it
 			(*gamestate_) = FRONTEND;
 		}
+
 		// START press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_START)
 		{
@@ -518,8 +501,6 @@ void Game::SonyController(const gef::SonyController* controller)
 
 void Game::UpdatePickups()
 {
-	// TODO
-	//if (!(contact_listener_->dying_pickups_scheduled_for_removal_.empty()))
 	//process list for deletion
 	std::set<Pickup*>::iterator it = contact_listener_->dying_pickups_scheduled_for_removal_.begin();
 	std::set<Pickup*>::iterator end = contact_listener_->dying_pickups_scheduled_for_removal_.end();
@@ -527,9 +508,6 @@ void Game::UpdatePickups()
 	{
 
 		Pickup* dying_pickup = *it;
-		// TODO delete - gef::DebugOut("it* = %s\n", typeid(*it).name());
-		// TODO delete - gef::DebugOut("it = %s\n", typeid(it).name());
-		// TODO delete - gef::DebugOut("Pickup* = %s\n", typeid(dying_pickup).name());
 
 		//delete pickup... physics body is destroyed here
 		delete dying_pickup;
@@ -598,9 +576,6 @@ void Game::UpdateSimulation(float frame_time)
 			if (contact_listener_->current_ground_->GetGameObjectColour() != player_->GetGameObjectColour())
 			{
 				player_->DeadPlayer();
-				// update the current state for the game state machine
-				// get the value that the gamestate points to and change it
-				//(*gamestate_) = FRONTEND;
 			}
 		}
 	}
@@ -610,9 +585,6 @@ void Game::UpdateSimulation(float frame_time)
 	if (player_->GetBody()->GetPosition().y < -10.f)
 	{
 		player_->DeadPlayer();
-		// update the current state for the game state machine
-		// get the value that the gamestate points to and change it
-		//(*gamestate_) = FRONTEND;
 	}
 
 	// set camera to follow the player
@@ -707,11 +679,7 @@ void Game::GameRender()
 		// draw pickups
 		for (auto pickup : pickups_)
 		{
-			// set texture
-			//renderer_3d_->set_override_material(&texture_material_);
 			renderer_3d_->DrawMesh(*pickup);
-			// unmount texture
-			//renderer_3d_->set_override_material(nullptr);
 		}
 	}
 	renderer_3d_->End();
@@ -734,7 +702,7 @@ void Game::GameRender()
 			// render "RESUME" text
 			font_->RenderText(
 				sprite_renderer_,
-				gef::Vector4(camera_text_position_.x(), camera_text_position_.y(), -0.9f),
+				gef::Vector4(resume_text_position_.x(), resume_text_position_.y(), -0.9f),
 				1.0f,
 				0xffffffff,
 				gef::TJ_CENTRE,
@@ -743,20 +711,11 @@ void Game::GameRender()
 			// render "MENU" text
 			font_->RenderText(
 				sprite_renderer_,
-				gef::Vector4(difficulty_text_position_.x(), difficulty_text_position_.y(), -0.9f),
+				gef::Vector4(menu_text_position_.x(), menu_text_position_.y(), -0.9f),
 				1.0f,
 				0xffffffff,
 				gef::TJ_CENTRE,
 				"MENU");
-
-			// render "BACK" text
-			font_->RenderText(
-				sprite_renderer_,
-				gef::Vector4(back_text_position_.x(), back_text_position_.y(), -0.9f),
-				1.0f,
-				0xffffffff,
-				gef::TJ_CENTRE,
-				"BACK");
 
 			// render menu box sprite
 			sprite_renderer_->DrawSprite(menu_box_sprite_);
