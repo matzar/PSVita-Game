@@ -128,10 +128,13 @@ void Game::InitText()
 {
 	// menu text vectors init
 	float height_correction = 2.0f;
+
 	// set "RESUME" vector
 	resume_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
+	// set "RESTART" vector
+	restart_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
 	// set "MENU" vector
-	menu_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
+	menu_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
 } // InitText()
 
 void Game::InitAudio()
@@ -467,7 +470,15 @@ void Game::SonyController(const gef::SonyController* controller)
 			{
 				pause_ = !pause_;
 			}
-			// MENU BUTTON press
+			// RESTART BUTTON press
+			if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
+				menu_box_sprite_.position().y() > (restart_text_position_.y() - sprite_height * 0.5f) &&
+				menu_box_sprite_.position().y() < (restart_text_position_.y() + sprite_height))
+			{
+				player_->ReloadPlayer();
+				pause_ = false;
+			}
+			// MENU press
 			if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
 				menu_box_sprite_.position().y() > (menu_text_position_.y() - sprite_height * 0.5f) &&
 				menu_box_sprite_.position().y() < (menu_text_position_.y() + sprite_height))
@@ -578,8 +589,7 @@ void Game::UpdateSimulation(float frame_time)
 			if (contact_listener_->current_ground_->GetGameObjectColour() != player_->GetGameObjectColour())
 			{
 				player_->DeadPlayer();
-				player_->ReloadPlayer();
-				//pause_ = true;
+				pause_ = true;
 			}
 		}
 	}
@@ -659,7 +669,7 @@ void Game::GameRender()
 	{
 		// draw player
 		// set texture
-		if (player_->PlayerIsRed())
+		if (player_->GetGameObjectColour() == RED)
 			renderer_3d_->set_override_material(&primitive_builder_->red_material());
 		else
 			renderer_3d_->set_override_material(&primitive_builder_->blue_material());
@@ -716,6 +726,15 @@ void Game::GameRender()
 				gef::TJ_CENTRE,
 				"RESUME");
 			
+			// render "RESTART" text
+			font_->RenderText(
+				sprite_renderer_,
+				gef::Vector4(restart_text_position_.x(), restart_text_position_.y(), -0.9f),
+				1.0f,
+				0xffffffff,
+				gef::TJ_CENTRE,
+				"RESTART");
+
 			// render "MENU" text
 			font_->RenderText(
 				sprite_renderer_,

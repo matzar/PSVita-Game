@@ -40,7 +40,6 @@ public:
 	void ReloadPlayer();
 
 	int IsContacting() const { return num_contacts_; }
-	bool PlayerIsRed() const { return red_; }
 	bool IsAlive() const { return alive_; }
 	//b2Body* GetPlayerBody() { return player_body_; }
 private:
