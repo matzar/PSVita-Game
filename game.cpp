@@ -85,7 +85,7 @@ void Game::DrawHUD()
 	if (font_)
 	{
 		// display frame rate
-		font_->RenderText(sprite_renderer_, gef::Vector4(850.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f", fps_);
+		//font_->RenderText(sprite_renderer_, gef::Vector4(850.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f", fps_);
 		font_->RenderText(sprite_renderer_, gef::Vector4(10.0f, 5.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "PICKUP: %d", pickups_count_);
 	}
 } // !DrawHUD
@@ -507,9 +507,9 @@ void Game::SonyController(const gef::SonyController* controller)
 				(*camera_count_) = 0;
 		}
 		// hide pause menu
-		if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
+		if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
 		{
-			pause_ != pause_;
+			pause_ = !pause_;
 		}
 	} 
 } // !SonyController
@@ -719,23 +719,33 @@ void Game::GameRender()
 	{
 		if (pause_)
 		{
-			// render "CAMERA1" text
+
+			// display frame rate
+			font_->RenderText(sprite_renderer_, 
+				gef::Vector4(850.0f, 510.0f, -0.9f), 
+				1.0f, 
+				0xffffffff, 
+				gef::TJ_LEFT, 
+				"FPS: %.1f", 
+				fps_);
+
+			// render "RESUME" text
 			font_->RenderText(
 				sprite_renderer_,
 				gef::Vector4(camera_text_position_.x(), camera_text_position_.y(), -0.9f),
 				1.0f,
 				0xffffffff,
 				gef::TJ_CENTRE,
-				"CAMERA 1");
+				"RESUME");
 			
-
+			// render "MENU" text
 			font_->RenderText(
 				sprite_renderer_,
 				gef::Vector4(difficulty_text_position_.x(), difficulty_text_position_.y(), -0.9f),
 				1.0f,
 				0xffffffff,
 				gef::TJ_CENTRE,
-				"DIFFIC EASY");
+				"MENU");
 
 			// render "BACK" text
 			font_->RenderText(
@@ -748,7 +758,7 @@ void Game::GameRender()
 
 			// render menu box sprite
 			sprite_renderer_->DrawSprite(menu_box_sprite_);
-		}
+		} // !pause_
 
 		DrawHUD();
 	}
