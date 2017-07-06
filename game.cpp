@@ -89,28 +89,11 @@ void Game::DrawHUD()
 	}
 } // !DrawHUD
 
-void Game::SetupLights()
-{
-	// grab the data for the default shader used for rendering 3D geometry
-	gef::Default3DShaderData& default_shader_data = renderer_3d_->default_shader_data();
-
-	// set the ambient light
-	default_shader_data.set_ambient_light_colour(gef::Colour(0.25f, 0.25f, 0.25f, 1.0f));
-
-	// add a point light that is almost white, but with a blue tinge
-	// the position of the light is set far away so it acts light a directional light
-	gef::PointLight default_point_light;
-	default_point_light.set_colour(gef::Colour(0.7f, 0.7f, 1.0f, 1.0f));
-	default_point_light.set_position(gef::Vector4(-500.0f, 400.0f, 700.0f));
-	default_shader_data.AddPointLight(default_point_light);
-} // !SetupLights
-
 void Game::InitTextures()
 {
 	texture_ = CreateTextureFromPNG("nauticalTile_160.png", platform_);
 	texture_material_ = new gef::Material();
 	texture_material_->set_texture(texture_);
-
 } // !InitTextures
 
 void Game::CleanTextures()
@@ -118,6 +101,37 @@ void Game::CleanTextures()
 	delete texture_;
 	texture_ = nullptr;
 } // !ClenupTextures
+
+void Game::InitSprites()
+{
+	// initlalise sprite renderer
+	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
+
+	// menu box sprite
+	menu_box_sprite_.set_position(platform_.width() * 0.5f, platform_.height() * 0.5f + sprite_height * 1.5f, 0.0f);
+	menu_box_sprite_.set_width(sprite_width_);
+	menu_box_sprite_.set_height(sprite_height);
+
+	sprite_init_position_y_ = menu_box_sprite_.position().y();
+} // !InitSprites
+
+void Game::CleanSprites()
+{
+	delete sprite_renderer_;
+	sprite_renderer_ = nullptr;
+} // !CleanSprites
+
+void Game::InitText()
+{
+	// menu text vectors init
+	float height_correction = 2.0f;
+	// set "START" vector
+	camera_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
+	// set "SETTINGS" vector
+	difficulty_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
+	// set "BACK" vector
+	back_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
+} // InitText()
 
 void Game::InitAudio()
 {
@@ -137,6 +151,36 @@ void Game::InitAudio()
 		audio_manager_->PlayMusic();
 	}
 } // !InitAudio
+
+void Game::CleanAudio()
+{
+	if (audio_manager_)
+	{
+		audio_manager_->StopMusic();
+		audio_manager_->UnloadAllSamples();
+		pickup_sfx_id_ = -1;
+		sfx_voice_id_ = -1;
+
+		delete audio_manager_;
+		audio_manager_ = nullptr;
+	}
+} // !CleanAudio
+
+void Game::SetupLights()
+{
+	// grab the data for the default shader used for rendering 3D geometry
+	gef::Default3DShaderData& default_shader_data = renderer_3d_->default_shader_data();
+
+	// set the ambient light
+	default_shader_data.set_ambient_light_colour(gef::Colour(0.25f, 0.25f, 0.25f, 1.0f));
+
+	// add a point light that is almost white, but with a blue tinge
+	// the position of the light is set far away so it acts light a directional light
+	gef::PointLight default_point_light;
+	default_point_light.set_colour(gef::Colour(0.7f, 0.7f, 1.0f, 1.0f));
+	default_point_light.set_position(gef::Vector4(-500.0f, 400.0f, 700.0f));
+	default_shader_data.AddPointLight(default_point_light);
+} // !SetupLights
 
 void Game::InitCamera()
 {
