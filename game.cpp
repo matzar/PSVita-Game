@@ -708,7 +708,7 @@ void Game::GameRender()
 			else if (ground->GetGameObjectColour() == BLUE)
 				renderer_3d_->set_override_material(&primitive_builder_->blue_material());
 			else if (ground->GetGameObjectColour() == GOLD)
-				renderer_3d_->set_override_material(texture_material_);
+				renderer_3d_->set_override_material(&primitive_builder_->yellow_material());
 			else
 				renderer_3d_->set_override_material(texture_material_);
 			// draw texture
