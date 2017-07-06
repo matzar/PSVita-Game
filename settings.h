@@ -117,6 +117,9 @@ private:
 
 	void InitTextures();
 	void CleanTextures();
+
+	void InitText();
+	void CleanText();
 };
 
 #endif // !_SETTINGS_H

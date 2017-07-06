@@ -97,25 +97,6 @@ void Settings::DrawHUD()
 	} // !font_
 } // !DrawHUD
 
-void Settings::InitAudio()
-{
-	// audio manager
-	audio_manager_ = gef::AudioManager::Create();
-
-	// load audio assets
-	if (audio_manager_)
-	{
-		// load a sound effect
-		sfx_voice_id_ = audio_manager_->LoadSample("box_collected.wav", platform_);
-
-		// load in music
-		audio_manager_->LoadMusic("music.wav", platform_);
-
-		// play music
-		audio_manager_->PlayMusic();
-	}
-} // !InitAudio
-
 void Settings::InitTextures()
 {
 	// initialise button icon
@@ -184,6 +165,37 @@ void Settings::CleanSprites()
 
 } // !CleanSprites
 
+void Settings::InitText()
+{
+	// menu text vectors init
+	float height_correction = 2.0f;
+	// set "START" vector
+	camera_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
+	// set "SETTINGS" vector
+	difficulty_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
+	// set "BACK" vector
+	back_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
+} // InitText()
+
+void Settings::InitAudio()
+{
+	// audio manager
+	audio_manager_ = gef::AudioManager::Create();
+
+	// load audio assets
+	if (audio_manager_)
+	{
+		// load a sound effect
+		sfx_voice_id_ = audio_manager_->LoadSample("box_collected.wav", platform_);
+
+		// load in music
+		audio_manager_->LoadMusic("music.wav", platform_);
+
+		// play music
+		audio_manager_->PlayMusic();
+	}
+} // !InitAudio
+
 void Settings::SettingsInit()
 {
 	// initialise input manager
@@ -197,14 +209,7 @@ void Settings::SettingsInit()
 
 	InitSprites();
 	
-	// menu text vectors init
-	float height_correction = 2.0f;
-	// set "START" vector
-	camera_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
-	// set "SETTINGS" vector
-	difficulty_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
-	// set "BACK" vector
-	back_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
+	InitText();
 
 	InitAudio();
 
