@@ -55,6 +55,8 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count
 	mesh_(nullptr),
 	quit_(false),
 	pause_(true),
+	sprite_width_(190.0f),
+	sprite_height(38.0f),
 	fps_(0),
 	pickup_sfx_id_(-1),
 	sfx_voice_id_(-1),
