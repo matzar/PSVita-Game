@@ -370,22 +370,23 @@ void Game::GameInit()
 	// initialise input manager
 	input_manager_ = gef::InputManager::Create(platform_);
 
-	// initlalise sprite renderer
-	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
-
 	// create the renderer for draw 3D geometry
 	renderer_3d_ = gef::Renderer3D::Create(platform_);
 
 	// initialise primitive builder to make 3D geometry creation easier
 	primitive_builder_ = new PrimitiveBuilder(platform_);
 
-	InitAudio();
+	SetupLights();
 
 	InitFont();
 
-	SetupLights();
-
 	InitTextures();
+
+	InitSprites();
+
+	InitText();
+
+	InitAudio();
 
 	InitCamera();
 
