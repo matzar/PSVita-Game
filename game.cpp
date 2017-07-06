@@ -476,6 +476,7 @@ void Game::SonyController(const gef::SonyController* controller)
 				menu_box_sprite_.position().y() < (restart_text_position_.y() + sprite_height))
 			{
 				player_->ReloadPlayer();
+				pickups_count_ = 0;
 				pause_ = false;
 			}
 			// MENU press

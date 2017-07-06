@@ -142,6 +142,12 @@ void Player::DeadPlayer()
 void Player::ReloadPlayer()
 {
 	body_->SetTransform(b2Vec2(-4.0f, 4.0f), 0.0f);
+
+	// in case player falls into the nether reset y velocity
+	b2Vec2 vel = GetBody()->GetLinearVelocity();
+	vel.y = 0.0f;
+	GetBody()->SetLinearVelocity(vel);
+
 	alive_ = true;
 	this->SetGameObjectColour(RED);
 }
