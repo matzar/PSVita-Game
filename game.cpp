@@ -57,6 +57,8 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count
 	pause_(false),
 	sprite_width_(190.0f),
 	sprite_height(38.0f),
+	player_init_x_(-4.0f),
+	player_init_y_(4.0f),
 	fps_(0),
 	pickup_sfx_id_(-1),
 	sfx_voice_id_(-1),
@@ -126,9 +128,9 @@ void Game::InitText()
 {
 	// menu text vectors init
 	float height_correction = 2.0f;
-	// set "START" vector
+	// set "RESUME" vector
 	resume_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
-	// set "SETTINGS" vector
+	// set "MENU" vector
 	menu_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
 } // InitText()
 
@@ -235,8 +237,8 @@ void Game::InitPlayer()
 
 	// create Player player_ class
 	player_ = new Player(&x_velocity, &y_velocity);
-	player_->InitPlayer(primitive_builder_, world_, b2Vec2(-4.0f, 4.0f), 0.5f, PLAYER, GROUND | PICKUP, 1, PLAYER, RED);
-} // !InitPlayer
+	player_->InitPlayer(primitive_builder_, world_, b2Vec2(player_init_x_, player_init_y_), 0.5f, PLAYER, GROUND | PICKUP, 1, PLAYER, RED);
+} // !InitPlayer										   
 
 void Game::CleanPlayer()
 {
@@ -576,15 +578,17 @@ void Game::UpdateSimulation(float frame_time)
 			if (contact_listener_->current_ground_->GetGameObjectColour() != player_->GetGameObjectColour())
 			{
 				player_->DeadPlayer();
+				pause_ = true;
 			}
 		}
 	}
 
 	UpdatePickups();
 
-	if (player_->GetBody()->GetPosition().y < -10.f)
+	if (player_->GetBody()->GetPosition().y < -8.5f) // TODO if not working check here
 	{
 		player_->DeadPlayer();
+		pause_ = true;
 	}
 
 	// set camera to follow the player

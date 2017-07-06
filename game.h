@@ -106,6 +106,8 @@ private:
 
 	// player
 	Player* player_;
+	float32 player_init_x_;
+	float32 player_init_y_;
 
 	// pickup
 	std::vector<Pickup*> pickups_;
