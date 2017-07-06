@@ -434,44 +434,47 @@ void Game::SonyController(const gef::SonyController* controller)
 {
 	if (controller)
 	{
-		// D-pad up
-		if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
-			sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
+		if (pause_)
 		{
-			// lerp menu box sprite
-			gef::Vector4 menu_box_sprite_end_position_to_lerp;
-			menu_box_sprite_end_position_to_lerp.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - sprite_height * 2.0f, 0.0);
+			// D-pad up
+			if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
+				sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
+			{
+				// lerp menu box sprite
+				gef::Vector4 menu_box_sprite_end_position_to_lerp;
+				menu_box_sprite_end_position_to_lerp.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - sprite_height * 2.0f, 0.0);
 
-			gef::Vector4 menu_box_sprite_lerp;
-			menu_box_sprite_.set_position(menu_box_sprite_lerp.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp, 1.0));
-		}
-		// D-pad down
-		if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
-			sprite_init_position_y_ + sprite_height * 4.0f >= menu_box_sprite_.position().y() + sprite_height * 2.0f)
-		{
-			// lerp menu box sprite
-			gef::Vector4 menu_box_sprite_end_position_to_lerp;
-			menu_box_sprite_end_position_to_lerp.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 2.0f, 0.0);
+				gef::Vector4 menu_box_sprite_lerp;
+				menu_box_sprite_.set_position(menu_box_sprite_lerp.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp, 1.0));
+			}
+			// D-pad down
+			if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
+				sprite_init_position_y_ + sprite_height * 4.0f >= menu_box_sprite_.position().y() + sprite_height * 2.0f)
+			{
+				// lerp menu box sprite
+				gef::Vector4 menu_box_sprite_end_position_to_lerp;
+				menu_box_sprite_end_position_to_lerp.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 2.0f, 0.0);
 
-			gef::Vector4 menu_box_sprite_lerp;
-			menu_box_sprite_.set_position(menu_box_sprite_lerp.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp, 1.0));
-		}
-		// RESUME button press
-		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			menu_box_sprite_.position().y() > (resume_text_position_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (resume_text_position_.y() + sprite_height))
-		{
-			pause_ = !pause_;
-		}
-		// MENU BUTTON press
-		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			menu_box_sprite_.position().y() > (menu_text_position_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (menu_text_position_.y() + sprite_height))
-		{
-			// update the current state of the game state machine
-			// get the value that the gamestate points to and change it
-			(*gamestate_) = FRONTEND;
-		}
+				gef::Vector4 menu_box_sprite_lerp;
+				menu_box_sprite_.set_position(menu_box_sprite_lerp.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp, 1.0));
+			}
+			// RESUME button press
+			if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
+				menu_box_sprite_.position().y() > (resume_text_position_.y() - sprite_height * 0.5f) &&
+				menu_box_sprite_.position().y() < (resume_text_position_.y() + sprite_height))
+			{
+				pause_ = !pause_;
+			}
+			// MENU BUTTON press
+			if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
+				menu_box_sprite_.position().y() > (menu_text_position_.y() - sprite_height * 0.5f) &&
+				menu_box_sprite_.position().y() < (menu_text_position_.y() + sprite_height))
+			{
+				// update the current state of the game state machine
+				// get the value that the gamestate points to and change it
+				(*gamestate_) = FRONTEND;
+			}
+		} // !pause_
 
 		// START press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_START)
@@ -615,14 +618,17 @@ void Game::GameUpdate(float frame_time)
 		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
 
 		camera_->CameraController(frame_time, controller);
-		player_->PlayerController(controller);
+
+		if (!pause_)
+			player_->PlayerController(controller);
 
 		SonyController(controller);
 	} // !input_manager_
 
-	UpdateSimulation(frame_time);
-
-	gef::DebugOut("pause_: %d\n", pause_);
+	if (!pause_)
+	{
+		UpdateSimulation(frame_time);
+	}
 } // !GameUpdate
 
 void Game::GameRender()
