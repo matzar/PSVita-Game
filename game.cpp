@@ -184,35 +184,6 @@ void Game::CleanWorld()
 	world_ = nullptr;
 } // CleanWorld
 
-void Game::InitPlayer()
-{
-	// set difficulty
-	switch (*difficulty_count_)
-	{
-		case EASY:
-		{
-			x_velocity = 5.0f;
-			y_velocity = 7.5f;
-		} // !EASY
-		break;
-
-		case HARD:
-		{
-			x_velocity = 7.0f;
-			y_velocity = 5.5f;
-		} // !HARD
-		break;
-	} // !difficulty_count_
-
-	// create Player player_ class
-	player_ = new Player(&x_velocity, &y_velocity);
-	player_->InitPlayer(primitive_builder_, world_, b2Vec2(player_init_x_, player_init_y_), 0.5f, PLAYER, GROUND | PICKUP, 1, PLAYER, RED);
-} // !InitPlayer										   
-
-void Game::CleanPlayer()
-{
-} // !CleanPlayer
-
 void Game::InitLevel()
 {
 	// create a new scene object and read in the data from the file
@@ -348,6 +319,38 @@ void Game::CleanLevel()
 {
 } // !CleanLevel
 
+void Game::InitPlayer()
+{
+	// set difficulty
+	switch (*difficulty_count_)
+	{
+	case EASY:
+	{
+		x_velocity = 5.0f;
+		y_velocity = 7.5f;
+	} // !EASY
+	break;
+
+	case HARD:
+	{
+		x_velocity = 7.0f;
+		y_velocity = 5.5f;
+	} // !HARD
+	break;
+	} // !difficulty_count_
+
+	  // create Player player_ class
+	player_ = new Player(&x_velocity, &y_velocity);
+	if (ground_.at(0)->GetGameObjectColour() == RED)
+		player_->InitPlayer(primitive_builder_, world_, b2Vec2(player_init_x_, player_init_y_), 0.5f, PLAYER, GROUND | PICKUP, 1, PLAYER, RED);
+	else
+		player_->InitPlayer(primitive_builder_, world_, b2Vec2(player_init_x_, player_init_y_), 0.5f, PLAYER, GROUND | PICKUP, 1, PLAYER, BLUE);
+} // !InitPlayer										   
+
+void Game::CleanPlayer()
+{
+} // !CleanPlayer
+
 void Game::InitAudio()
 {
 	// load audio assets
@@ -401,9 +404,9 @@ void Game::GameInit()
 
 	InitWorld();
 
-	InitPlayer();
-
 	InitLevel();
+
+	InitPlayer();
 
 	InitAudio();
 } // !GameInit
@@ -571,6 +574,7 @@ void Game::UpdatePickups()
 		{
 			audio_manager_->PlaySample(pickup_sfx_id_);
 		}*/
+		// play pickup sound
 		if (audio_manager_)
 		{
 			if (pickup_sfx_id_ != -1)
