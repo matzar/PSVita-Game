@@ -88,7 +88,7 @@ private:
 	bool display_d_pad = true;
 
 	// menu text vectors
-	gef::Vector4 start_text_position_;
+	gef::Vector4 menu_text_1_;
 	gef::Vector4 settings_text_position_;
 	gef::Vector4 instructions_text_position_;
 	

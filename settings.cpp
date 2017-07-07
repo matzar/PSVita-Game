@@ -148,11 +148,11 @@ void Settings::InitText()
 	// menu text vectors init
 	float height_correction = 2.0f;
 	// set "START" vector
-	camera_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
+	menu_text_1_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
 	// set "SETTINGS" vector
-	difficulty_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
+	menu_text_2_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
 	// set "BACK" vector
-	back_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
+	menu_text_3_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
 } // InitText()
 
 void Settings::InitAudio()
@@ -276,8 +276,8 @@ void Settings::SonyController(const gef::SonyController* controller)
 
 		// CAMERA CROSS press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			menu_box_sprite_.position().y() > (camera_text_position_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (camera_text_position_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (menu_text_1_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_1_.y() + sprite_height))
 		{
 			(*camera_count_)++;
 
@@ -286,16 +286,16 @@ void Settings::SonyController(const gef::SonyController* controller)
 		}
 		// CAMERA - D-pad left
 		if (controller->buttons_pressed() & gef_SONY_CTRL_LEFT &&
-			menu_box_sprite_.position().y() > (camera_text_position_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (camera_text_position_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (menu_text_1_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_1_.y() + sprite_height))
 		{
 			if ((*camera_count_) > 0)
 				(*camera_count_)--;
 		}
 		// CAMERA - D-pad right
 		if (controller->buttons_pressed() & gef_SONY_CTRL_RIGHT &&
-			menu_box_sprite_.position().y() > (camera_text_position_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (camera_text_position_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (menu_text_1_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_1_.y() + sprite_height))
 		{
 
 			if ((*camera_count_) < 2)
@@ -303,8 +303,8 @@ void Settings::SonyController(const gef::SonyController* controller)
 		}
 		// DIFFICULTY press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			menu_box_sprite_.position().y() > (difficulty_text_position_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (difficulty_text_position_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (menu_text_2_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_2_.y() + sprite_height))
 		{
 			(*difficulty_count_)++;
 
@@ -313,32 +313,32 @@ void Settings::SonyController(const gef::SonyController* controller)
 		}
 		// DIFFICULTY left d-pad
 		if (controller->buttons_pressed() & gef_SONY_CTRL_LEFT &&
-			menu_box_sprite_.position().y() > (difficulty_text_position_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (difficulty_text_position_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (menu_text_2_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_2_.y() + sprite_height))
 		{
 			if ((*difficulty_count_) > 0)
 				(*difficulty_count_)--;
 		}
 		// DIFFICULTY right d-pad
 		if (controller->buttons_pressed() & gef_SONY_CTRL_RIGHT &&
-			menu_box_sprite_.position().y() > (difficulty_text_position_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (difficulty_text_position_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (menu_text_2_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_2_.y() + sprite_height))
 		{
 			if ((*difficulty_count_) < 1)
 				(*difficulty_count_)++;
 		}
 		// BACK press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			menu_box_sprite_.position().y() > (back_text_position_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (back_text_position_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
 		{
 			// update the current state of the game state machine
 			// get the value that the gamestate points to and change it
 			(*gamestate_) = FRONTEND; 
 		}
 		// hide d-pad
-		if (menu_box_sprite_.position().y() > (back_text_position_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (back_text_position_.y() + sprite_height))
+		if (menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
 		{
 			display_d_pad = false;
 		}
@@ -390,7 +390,7 @@ void Settings::SettingsRender()
 				// render CAM1 picture
 				gef::Sprite camera_1;
 				camera_1.set_texture(camera_1_texture_);
-				camera_1.set_position(gef::Vector4(camera_text_position_.x(), camera_text_position_.y() - sprite_height * 4.0f, -0.99f));
+				camera_1.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				camera_1.set_height(platform_.height() * 0.5f);
 				camera_1.set_width(platform_.width() * 0.5f);
 				sprite_renderer_->DrawSprite(camera_1);
@@ -398,7 +398,7 @@ void Settings::SettingsRender()
 				// render "CAMERA1" text
 				font_->RenderText(
 					sprite_renderer_,
-					gef::Vector4(camera_text_position_.x(), camera_text_position_.y(), -0.99f),
+					gef::Vector4(menu_text_1_.x(), menu_text_1_.y(), -0.99f),
 					1.0f,
 					0xffffffff,
 					gef::TJ_CENTRE,
@@ -411,7 +411,7 @@ void Settings::SettingsRender()
 				// render CAM2 picture
 				gef::Sprite camera_2;
 				camera_2.set_texture(camera_2_texture_);
-				camera_2.set_position(gef::Vector4(camera_text_position_.x(), camera_text_position_.y() - sprite_height * 4.0f, -0.99f));
+				camera_2.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				camera_2.set_height(platform_.height() * 0.5f);
 				camera_2.set_width(platform_.width() * 0.5f);
 				sprite_renderer_->DrawSprite(camera_2);
@@ -419,7 +419,7 @@ void Settings::SettingsRender()
 				// render "CAMERA 2" text
 				font_->RenderText(
 					sprite_renderer_,
-					gef::Vector4(camera_text_position_.x(), camera_text_position_.y(), -0.99f),
+					gef::Vector4(menu_text_1_.x(), menu_text_1_.y(), -0.99f),
 					1.0f,
 					0xffffffff,
 					gef::TJ_CENTRE,
@@ -432,7 +432,7 @@ void Settings::SettingsRender()
 				// render CAM3 picture
 				gef::Sprite camera_3;
 				camera_3.set_texture(camera_3_texture_);
-				camera_3.set_position(gef::Vector4(camera_text_position_.x(), camera_text_position_.y() - sprite_height * 4.0f, -0.99f));
+				camera_3.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				camera_3.set_height(platform_.height() * 0.5f);
 				camera_3.set_width(platform_.width() * 0.5f);
 				sprite_renderer_->DrawSprite(camera_3);
@@ -440,7 +440,7 @@ void Settings::SettingsRender()
 				// render "CAMERA 3" text
 				font_->RenderText(
 					sprite_renderer_,
-					gef::Vector4(camera_text_position_.x(), camera_text_position_.y(), -0.99f),
+					gef::Vector4(menu_text_1_.x(), menu_text_1_.y(), -0.99f),
 					1.0f,
 					0xffffffff,
 					gef::TJ_CENTRE,
@@ -456,7 +456,7 @@ void Settings::SettingsRender()
 			{
 				font_->RenderText(
 					sprite_renderer_,
-					gef::Vector4(difficulty_text_position_.x(), difficulty_text_position_.y(), -0.99f),
+					gef::Vector4(menu_text_2_.x(), menu_text_2_.y(), -0.99f),
 					1.0f,
 					0xffffffff,
 					gef::TJ_CENTRE,
@@ -468,7 +468,7 @@ void Settings::SettingsRender()
 			{
 				font_->RenderText(
 					sprite_renderer_,
-					gef::Vector4(difficulty_text_position_.x(), difficulty_text_position_.y(), -0.99f),
+					gef::Vector4(menu_text_2_.x(), menu_text_2_.y(), -0.99f),
 					1.0f,
 					0xffffffff,
 					gef::TJ_CENTRE,
@@ -480,7 +480,7 @@ void Settings::SettingsRender()
 		// render "BACK" text
 		font_->RenderText(
 			sprite_renderer_,
-			gef::Vector4(back_text_position_.x(), back_text_position_.y(), -0.99f),
+			gef::Vector4(menu_text_3_.x(), menu_text_3_.y(), -0.99f),
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,

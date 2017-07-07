@@ -161,7 +161,7 @@ void Frontend::InitText()
 	// menu text vectors init
 	float height_correction = 2.0f;
 	// set "START" vector
-	start_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
+	menu_text_1_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
 	// set "SETTINGS" vector
 	settings_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
 	// set "INSTRUCTIONS" vector
@@ -299,8 +299,8 @@ void Frontend::SonyController(const gef::SonyController* controller)
 
 		// START press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			menu_box_sprite_.position().y() > (start_text_position_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (start_text_position_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (menu_text_1_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_1_.y() + sprite_height))
 		{
 			// update the current state of the game state machine
 			// get the value that the gamestate points to and change it
@@ -393,7 +393,7 @@ void Frontend::FrontendRender()
 		// render "START" text
 		font_->RenderText(
 			sprite_renderer_,
-			gef::Vector4(start_text_position_.x(), start_text_position_.y(), -0.99f),
+			gef::Vector4(menu_text_1_.x(), menu_text_1_.y(), -0.99f),
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
@@ -426,7 +426,7 @@ void Frontend::FrontendRender()
 			{
 				gef::Sprite instructions_page_1;
 				instructions_page_1.set_texture(instructions_texture_1);
-				instructions_page_1.set_position(gef::Vector4(start_text_position_.x(), start_text_position_.y() - sprite_height * 4.0f, -0.99f));
+				instructions_page_1.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				instructions_page_1.set_height(platform_.height() * 0.5f);
 				instructions_page_1.set_width(platform_.width() * 0.5f);
 				sprite_renderer_->DrawSprite(instructions_page_1);
@@ -437,7 +437,7 @@ void Frontend::FrontendRender()
 			{
 				gef::Sprite instructions_page_2;
 				instructions_page_2.set_texture(instructions_texture_2);
-				instructions_page_2.set_position(gef::Vector4(start_text_position_.x(), start_text_position_.y() - sprite_height * 4.0f, -0.99f));
+				instructions_page_2.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				instructions_page_2.set_height(platform_.height() * 0.5f);
 				instructions_page_2.set_width(platform_.width() * 0.5f);
 				sprite_renderer_->DrawSprite(instructions_page_2);
@@ -448,7 +448,7 @@ void Frontend::FrontendRender()
 			{
 				gef::Sprite instructions_page_3;
 				instructions_page_3.set_texture(instructions_texture_3);
-				instructions_page_3.set_position(gef::Vector4(start_text_position_.x(), start_text_position_.y() - sprite_height * 4.0f, -0.99f));
+				instructions_page_3.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				instructions_page_3.set_height(platform_.height() * 0.5f);
 				instructions_page_3.set_width(platform_.width() * 0.5f);
 				sprite_renderer_->DrawSprite(instructions_page_3);
@@ -459,7 +459,7 @@ void Frontend::FrontendRender()
 			{
 				gef::Sprite instructions_page_4;
 				instructions_page_4.set_texture(instructions_texture_4);
-				instructions_page_4.set_position(gef::Vector4(start_text_position_.x(), start_text_position_.y() - sprite_height * 4.0f, -0.99f));
+				instructions_page_4.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				instructions_page_4.set_height(platform_.height() * 0.5f);
 				instructions_page_4.set_width(platform_.width() * 0.5f);
 				sprite_renderer_->DrawSprite(instructions_page_4);
@@ -470,7 +470,7 @@ void Frontend::FrontendRender()
 			{
 				gef::Sprite instructions_page_5;
 				instructions_page_5.set_texture(instructions_texture_5);
-				instructions_page_5.set_position(gef::Vector4(start_text_position_.x(), start_text_position_.y() - sprite_height * 4.0f, -0.99f));
+				instructions_page_5.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				instructions_page_5.set_height(platform_.height() * 0.5f);
 				instructions_page_5.set_width(platform_.width() * 0.5f);
 				sprite_renderer_->DrawSprite(instructions_page_5);
@@ -482,7 +482,7 @@ void Frontend::FrontendRender()
 		{
 			gef::Sprite title;
 			title.set_texture(title_texture_);
-			title.set_position(gef::Vector4(start_text_position_.x(), start_text_position_.y() - sprite_height * 4.0f, -0.99f));
+			title.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 			title.set_height(platform_.height() * 0.5f);
 			title.set_width(platform_.width() * 0.5f);
 			sprite_renderer_->DrawSprite(title);

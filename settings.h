@@ -88,9 +88,9 @@ private:
 	bool display_d_pad = true;
 
 	// menu text vectors
-	gef::Vector4 camera_text_position_;
-	gef::Vector4 difficulty_text_position_;
-	gef::Vector4 back_text_position_;
+	gef::Vector4 menu_text_1_;
+	gef::Vector4 menu_text_2_;
+	gef::Vector4 menu_text_3_;
 
 	// private member functions
 	void SonyController(const gef::SonyController* controller);
