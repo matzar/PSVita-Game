@@ -188,15 +188,15 @@ void Frontend::InitAudio()
 
 void Frontend::CleanAudio()
 {
+	//sfx_id_ = -1;
+	//sfx_voice_id_ = -1;
+	//audio_manager_->StopMusic();
 	/*if (audio_manager_)
 	{
 		audio_manager_->StopMusic();
 		audio_manager_->UnloadAllSamples();
 		sfx_id_ = -1;
 		sfx_voice_id_ = -1;
-
-		delete audio_manager_;
-		audio_manager_ = nullptr;
 	}*/
 } // !CleanAudio
 

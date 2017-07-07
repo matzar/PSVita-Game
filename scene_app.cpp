@@ -18,9 +18,26 @@ SceneApp::SceneApp(gef::Platform& platform) :
 {
 } // !SceneApp
 
-void SceneApp::Init()
+void SceneApp::InitAudio()
 {
 	audio_manager_ = gef::AudioManager::Create();
+} // !InitAudio
+
+void SceneApp::CleanAudio()
+{
+	if (audio_manager_)
+	{
+		audio_manager_->StopMusic();
+		audio_manager_->UnloadAllSamples();
+
+		delete audio_manager_;
+		audio_manager_ = nullptr;
+	}
+} // !ClenaAudio
+
+void SceneApp::Init()
+{
+	InitAudio();
 	// initialise gamestate_
 	gamestate_ = FRONTEND;
 } // !Init

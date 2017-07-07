@@ -351,9 +351,6 @@ void Game::CleanLevel()
 
 void Game::InitAudio()
 {
-	// audio manager
-	//audio_manager_ = gef::AudioManager::Create();
-
 	// load audio assets
 	if (audio_manager_)
 	{
@@ -370,16 +367,13 @@ void Game::InitAudio()
 
 void Game::CleanAudio()
 {
-	/*if (audio_manager_)
+	if (audio_manager_)
 	{
-		audio_manager_->StopMusic();
-		audio_manager_->UnloadAllSamples();
+		//audio_manager_->StopMusic();
+		//audio_manager_->UnloadAllSamples();
 		pickup_sfx_id_ = -1;
 		sfx_voice_id_ = -1;
-
-		delete audio_manager_;
-		audio_manager_ = nullptr;
-	}*/
+	}
 } // !CleanAudio
 
 void Game::GameInit()

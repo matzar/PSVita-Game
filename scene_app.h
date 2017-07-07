@@ -48,6 +48,9 @@ private:
 	Frontend* frontend_;
 	Settings* settings_;
 	Game* game_;
+
+	void InitAudio();
+	void CleanAudio();
 }; // !SceneApp
 
 #endif // !_SCENE_APP_H
