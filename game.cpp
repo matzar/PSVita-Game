@@ -55,7 +55,7 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count
 	model_scene_(nullptr),
 	mesh_(nullptr),
 	quit_(false),
-	pause_(false),
+	pause_(true),
 	sprite_width_(190.0f),
 	sprite_height(38.0f),
 	player_init_x_(-4.0f),
@@ -212,7 +212,8 @@ void Game::InitLevel()
 		ground_.push_back( new Ground());
 		pickups_.push_back(new Pickup());
 
-		if (i == numer_of_grounds - 1) // GOLD GROUND
+		// GOLD GROUND
+		if (i == numer_of_grounds - 1)
 		{
 			start_position.x -= interval / 2.0f + 0.5f;
 			ground_.at(i)->InitGround(
@@ -228,9 +229,10 @@ void Game::InitLevel()
 
 			start_position.x += (texture_ground_x + interval);
 		}
-
-		else if (i % 2 == 0) // RED GROUND
+		// RED GROUND
+		else if (i % 2 == 0) 
 		{
+			// change height of the ground
 			if (i % 4 == 0)
 				start_position.y += 2.0f;
 			else
@@ -259,12 +261,13 @@ void Game::InitLevel()
 				PLAYER | PICKUP,                      // ..and I collide with
 				1,                                    // group index (objects with the same positive index collide with each other)
 				GROUND,                               // type
-				RED);                                 // colour
+				BLUE);                                 // colour
 
 			start_position.x += (colour_ground_x + interval);
 
 		}
-		else if (i % 3 == 0) // TEXTURED GROUND
+		// TEXTURED GROUND
+		else if (i % 3 == 0)
 		{
 			start_position.x -= interval / 2.0f + 0.5f;
 			ground_.at(i)->InitGround(
@@ -282,6 +285,7 @@ void Game::InitLevel()
 		}
 		else // BLUE GROUND
 		{
+			// change height of the ground
 			if (i % 6 == 0)
 				start_position.y += 2.0f;
 			else
@@ -310,7 +314,7 @@ void Game::InitLevel()
 				PLAYER | PICKUP, 					  // ..and I collide with
 				1, 									  // group index (objects with the same positive index collide with each other)
 				GROUND, 							  // type
-				BLUE);								  // colour
+				RED);								  // colour
 
 			start_position.x += (colour_ground_x + interval);
 		}
