@@ -205,12 +205,14 @@ void Game::InitLevel()
 	float32 texture_ground_x = 3.0f;
 	b2Vec2 start_position(0.0f, 0.0f);
 
-	for (int i = 0; i < 20; ++i)
+	unsigned numer_of_grounds = 20;
+
+	for (int i = 0; i < numer_of_grounds; ++i)
 	{
 		ground_.push_back( new Ground());
 		pickups_.push_back(new Pickup());
 
-		if (i == 19) // GOLD GROUND
+		if (i == numer_of_grounds - 1) // GOLD GROUND
 		{
 			start_position.x -= interval / 2.0f + 0.5f;
 			ground_.at(i)->InitGround(
@@ -495,12 +497,12 @@ void Game::SonyController(const gef::SonyController* controller)
 				menu_box_sprite_.position().y() > (menu_text_2_.y() - sprite_height * 0.5f) &&
 				menu_box_sprite_.position().y() < (menu_text_2_.y() + sprite_height))
 			{
-				player_->ReloadPlayer();
-				
 				if (ground_.at(0)->GetGameObjectColour() == RED)
 					player_->SetGameObjectColour(RED);
 				else
 					player_->SetGameObjectColour(BLUE);
+
+				player_->ReloadPlayer();
 
 				pickups_count_ = 0;
 				pause_ = false;
