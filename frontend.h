@@ -25,7 +25,7 @@ enum GAMESTATE;
 class Frontend
 {
 public:
-	Frontend(gef::Platform& platform, GAMESTATE* gamestate);
+	Frontend(gef::Platform& platform, GAMESTATE* gamestate, gef::AudioManager* audio_manager);
 	~Frontend();
 
 	void FrontendInit();

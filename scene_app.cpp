@@ -5,6 +5,9 @@
 #include "camera_enum.h"
 #include "difficulty_enum.h"
 
+// gef headers
+#include <audio/audio_manager.h>
+
 SceneApp::SceneApp(gef::Platform& platform) :
 	Application(platform),
 	camera_count_(CAM1),
@@ -17,6 +20,7 @@ SceneApp::SceneApp(gef::Platform& platform) :
 
 void SceneApp::Init()
 {
+	audio_manager_ = gef::AudioManager::Create();
 	// initialise gamestate_
 	gamestate_ = FRONTEND;
 } // !Init
@@ -60,7 +64,7 @@ bool SceneApp::Update(float frame_time)
 				// reference to the platform object is passed
 				// Frontend class has 'GAMESTATE* gamestate' pointer
 				// adress of gamestate_ is passed to the class and assigned to the GAMESTATE pointer
-				frontend_ = new Frontend(platform_, &gamestate_);
+				frontend_ = new Frontend(platform_, &gamestate_, audio_manager_);
 				frontend_->FrontendInit();
 
 				// going to the FRONTEND state possible only from the GAME state...
@@ -140,7 +144,7 @@ bool SceneApp::Update(float frame_time)
 				// reference to the platform object is passed
 				// Game class has 'GAMESTATE* gamestate' pointer
 				// adress of gamestate_ is passed to the class and assigned to the GAMESTATE pointer
-				game_ = new Game(platform_, &gamestate_, &camera_count_, &difficulty_count_);
+				game_ = new Game(platform_, &gamestate_, &camera_count_, &difficulty_count_, audio_manager_);
 				game_->GameInit();
 
 				// going to the GAME state possible only from the FRONTEND state

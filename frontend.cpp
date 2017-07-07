@@ -6,7 +6,6 @@
 #include <graphics/font.h>
 
 #include <graphics/sprite_renderer.h>
-#include <graphics/sprite.h>
 
 #include <input/input_manager.h>
 #include <input/sony_controller_input_manager.h>
@@ -20,12 +19,12 @@
 // my headers
 #include "game_state_enum.h"
 
-Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate) :
+Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate, gef::AudioManager* audio_manager) :
 	platform_(platform),
 	gamestate_(gamestate),
 	input_manager_(nullptr),
 	sprite_renderer_(nullptr),
-	audio_manager_(nullptr),
+	audio_manager_(audio_manager),
 	title_texture_(nullptr),
 	instructions_texture_1(nullptr),
 	instructions_texture_2(nullptr),
@@ -171,7 +170,7 @@ void Frontend::InitText()
 void Frontend::InitAudio()
 {
 	// audio manager
-	audio_manager_ = gef::AudioManager::Create();
+	//audio_manager_ = gef::AudioManager::Create();
 
 	// load audio assets
 	if (audio_manager_)
@@ -189,7 +188,7 @@ void Frontend::InitAudio()
 
 void Frontend::CleanAudio()
 {
-	if (audio_manager_)
+	/*if (audio_manager_)
 	{
 		audio_manager_->StopMusic();
 		audio_manager_->UnloadAllSamples();
@@ -198,7 +197,7 @@ void Frontend::CleanAudio()
 
 		delete audio_manager_;
 		audio_manager_ = nullptr;
-	}
+	}*/
 } // !CleanAudio
 
 void Frontend::FrontendInit()
@@ -367,8 +366,8 @@ void Frontend::SonyController(const gef::SonyController* controller)
 				/*audio_manager_->StopPlayingSampleVoice(sfx_voice_id_);
 				sfx_voice_id_ = -1;*/
 			}
-		}
-	} // !audio_manager_
+		} // !audio_manager_
+	} 
 } // !SonyController
 
 void Frontend::FrontendUpdate(float frame_time)

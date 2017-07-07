@@ -16,6 +16,7 @@ namespace gef
 	class Font;
 	class InputManager;
 	class Renderer3D;
+	class AudioManager;
 } // !gef
 // My class forward declarations
 class Frontend;
@@ -40,6 +41,8 @@ private:
 
 	// difficulty
 	unsigned difficulty_count_;
+
+	gef::AudioManager* audio_manager_;
 
 	// classes pointers
 	Frontend* frontend_;

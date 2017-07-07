@@ -17,6 +17,7 @@
 
 #include <input/input_manager.h>
 #include <input/sony_controller_input_manager.h>
+
 #include <audio/audio_manager.h>
 // extra headers
 #include "load_texture.h"
@@ -33,7 +34,7 @@
 // box2D headers
 #include <box2d/Box2D.h>
 
-Game::Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, unsigned* difficulty_count) :
+Game::Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, unsigned* difficulty_count, gef::AudioManager* audio_manager) :
 	platform_(platform),
 	gamestate_(gamestate),
 	camera_count_(camera_count),
@@ -44,7 +45,7 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count
 	texture_(nullptr),
 	sprite_renderer_(nullptr),
 	input_manager_(nullptr),
-	audio_manager_(nullptr),
+	audio_manager_(audio_manager),
 	renderer_3d_(nullptr),
 	primitive_builder_(nullptr),
 	camera_(nullptr),
@@ -136,40 +137,6 @@ void Game::InitText()
 	// set "MENU" vector
 	menu_text_3_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
 } // InitText()
-
-void Game::InitAudio()
-{
-	// audio manager
-	audio_manager_ = gef::AudioManager::Create();
-
-	// load audio assets
-	if (audio_manager_)
-	{
-		// load a sound effect
-		pickup_sfx_id_ = audio_manager_->LoadSample("box_collected.wav", platform_);
-
-		// load in music
-		audio_manager_->LoadMusic("music.wav", platform_);
-
-		// play music
-		audio_manager_->PlayMusic();
-	}
-} // !InitAudio
-
-void Game::CleanAudio()
-{
-	// unload audio resources
-	if (audio_manager_)
-	{
-		audio_manager_->StopMusic();
-		audio_manager_->UnloadAllSamples();
-		pickup_sfx_id_ = -1;
-		sfx_voice_id_ = -1;
-
-		delete audio_manager_;
-		audio_manager_ = nullptr;
-	}
-} // !CleanAudio
 
 void Game::SetupLights()
 {
@@ -382,6 +349,39 @@ void Game::CleanLevel()
 {
 } // !CleanLevel
 
+void Game::InitAudio()
+{
+	// audio manager
+	//audio_manager_ = gef::AudioManager::Create();
+
+	// load audio assets
+	if (audio_manager_)
+	{
+		// load a sound effect
+		sfx_voice_id_ = audio_manager_->LoadSample("box_collected.wav", platform_);
+
+		// load in music
+		audio_manager_->LoadMusic("music.wav", platform_);
+
+		// play music
+		audio_manager_->PlayMusic();
+	}
+} // !InitAudio
+
+void Game::CleanAudio()
+{
+	/*if (audio_manager_)
+	{
+		audio_manager_->StopMusic();
+		audio_manager_->UnloadAllSamples();
+		pickup_sfx_id_ = -1;
+		sfx_voice_id_ = -1;
+
+		delete audio_manager_;
+		audio_manager_ = nullptr;
+	}*/
+} // !CleanAudio
+
 void Game::GameInit()
 {
 
@@ -404,8 +404,6 @@ void Game::GameInit()
 
 	InitText();
 
-	InitAudio();
-
 	InitCamera();
 
 	InitWorld();
@@ -413,6 +411,8 @@ void Game::GameInit()
 	InitPlayer();
 
 	InitLevel();
+
+	InitAudio();
 } // !GameInit
 
 void Game::GameRelease()
@@ -516,6 +516,43 @@ void Game::SonyController(const gef::SonyController* controller)
 		//	(*gamestate_) = FRONTEND; 
 		//}
 
+		//if (audio_manager_)
+		//{
+		//	// CIRCLE press
+		//	if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
+		//	{
+		//		//if (audio_manager_)
+		//		//{
+		//		//	if (pickup_sfx_id_ != -1)
+		//		//	{
+		//		//		int sfx_voice_id_ = audio_manager_->PlaySample(pickup_sfx_id_);
+
+		//		//		gef::VolumeInfo volume_info;
+		//		//		volume_info.volume = 0.5f;
+		//		//		volume_info.pan = -1.0f;
+
+		//		//		audio_manager_->SetSampleVoiceVolumeInfo(sfx_voice_id_, volume_info);
+
+		//		//		audio_manager_->SetSamplePitch(sfx_voice_id_, 1.5f);
+
+		//		//		audio_manager_->PlaySample(sfx_voice_id_);
+		//		//	} // !pickup_sfx_id
+		//		//} // !audio_manager_
+
+		//		audio_manager_->PlaySample(sfx_voice_id_);
+		//	}
+		//}
+		// trigger a sound effect
+		if (audio_manager_)
+		{
+			if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
+			{
+				audio_manager_->PlaySample(sfx_voice_id_);
+				/*audio_manager_->StopPlayingSampleVoice(sfx_voice_id_);
+				sfx_voice_id_ = -1;*/
+			}
+		} // !audio_manager_
+
 		// TRIANGLE press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_TRIANGLE)
 		{
@@ -551,29 +588,6 @@ void Game::UpdatePickups()
 			pickups_.erase(it);
 
 		pickups_count_++;
-
-		if (audio_manager_)
-		{
-			if (pickup_sfx_id_ != -1)
-			{
-				// for two or more sounds make it the id local
-				//{
-				//	int voice_id  = audio_manager_->PlaySample(pickup_sfx_id_);
-				//}
-
-				int sfx_voice_id_ = audio_manager_->PlaySample(pickup_sfx_id_);
-
-				gef::VolumeInfo volume_info;
-				volume_info.volume = 0.5f;
-				volume_info.pan = -1.0f;
-
-				audio_manager_->SetSampleVoiceVolumeInfo(sfx_voice_id_, volume_info);
-
-				audio_manager_->SetSamplePitch(sfx_voice_id_, 1.5f);
-
-				audio_manager_->PlaySample(sfx_voice_id_);
-			} // !pickup_sfx_id
-		} // !audio_manager_
 	}
 
 	//clear this list for next time

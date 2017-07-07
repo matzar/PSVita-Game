@@ -3,7 +3,7 @@
 
 // gef headers
 #include <system/application.h>
-#include "graphics/sprite.h"
+#include <graphics/sprite.h>
 // std headers
 #include <vector>
 #include <box2d/Box2D.h>
@@ -46,7 +46,7 @@ class b2ContactFilter;
 class Game
 {
 public:
-	Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, unsigned* difficulty_count);
+	Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, unsigned* difficulty_count, gef::AudioManager* audio_manager);
 	~Game();
 
 	void GameInit();
@@ -163,9 +163,6 @@ private:
 
 	void InitText();
 
-	void InitAudio();
-	void CleanAudio();
-
 	// setup scene
 	void SetupLights();
 
@@ -180,6 +177,9 @@ private:
 
 	void InitLevel();
 	void CleanLevel();
+
+	void InitAudio();
+	void CleanAudio();
 };
 
 #endif // !_GAME_H
