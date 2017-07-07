@@ -342,9 +342,15 @@ void Game::InitPlayer()
 	  // create Player player_ class
 	player_ = new Player(&x_velocity, &y_velocity);
 	if (ground_.at(0)->GetGameObjectColour() == RED)
+	{
 		player_->InitPlayer(primitive_builder_, world_, b2Vec2(player_init_x_, player_init_y_), 0.5f, PLAYER, GROUND | PICKUP, 1, PLAYER, RED);
+		player_->RedPlayer(true);
+	}
 	else
+	{
 		player_->InitPlayer(primitive_builder_, world_, b2Vec2(player_init_x_, player_init_y_), 0.5f, PLAYER, GROUND | PICKUP, 1, PLAYER, BLUE);
+		player_->RedPlayer(false);
+	}
 } // !InitPlayer										   
 
 void Game::CleanPlayer()
@@ -490,6 +496,12 @@ void Game::SonyController(const gef::SonyController* controller)
 				menu_box_sprite_.position().y() < (menu_text_2_.y() + sprite_height))
 			{
 				player_->ReloadPlayer();
+				
+				if (ground_.at(0)->GetGameObjectColour() == RED)
+					player_->SetGameObjectColour(RED);
+				else
+					player_->SetGameObjectColour(BLUE);
+
 				pickups_count_ = 0;
 				pause_ = false;
 			}

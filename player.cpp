@@ -150,8 +150,10 @@ void Player::ReloadPlayer()
 
 	alive_ = true;
 
-	this->SetGameObjectColour(RED);
-	red_ = true;
+	if (this->GetGameObjectColour() == RED)
+		RedPlayer(true);
+	else
+		RedPlayer(false);
 }
 
 
