@@ -125,7 +125,6 @@ private:
 	float fps_;
 	// audio variables
 	int pickup_sfx_id_;
-	int sfx_voice_id_;
 	// pickups count
 	uint16 pickups_count_;
 

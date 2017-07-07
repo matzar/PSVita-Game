@@ -40,7 +40,6 @@ Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate, gef::AudioMana
 	sprite_width_(190.0f),
 	sprite_height(38.0f),
 	sfx_voice_id_(-1),
-	sfx_id_(-1),
 	fps_(0)
 {
 }
@@ -191,13 +190,13 @@ void Frontend::CleanAudio()
 	//sfx_id_ = -1;
 	//sfx_voice_id_ = -1;
 	//audio_manager_->StopMusic();
-	/*if (audio_manager_)
+	// TODO
+	if (audio_manager_)
 	{
-		audio_manager_->StopMusic();
-		audio_manager_->UnloadAllSamples();
-		sfx_id_ = -1;
+		//audio_manager_->StopMusic();
+		//audio_manager_->UnloadAllSamples();
 		sfx_voice_id_ = -1;
-	}*/
+	}
 } // !CleanAudio
 
 void Frontend::FrontendInit()
@@ -358,13 +357,12 @@ void Frontend::SonyController(const gef::SonyController* controller)
 			quit_ = true;
 		}
 		// trigger a sound effect
+		// TODO use this sample
 		if (audio_manager_)
 		{
 			if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
 			{
 				audio_manager_->PlaySample(sfx_voice_id_);
-				/*audio_manager_->StopPlayingSampleVoice(sfx_voice_id_);
-				sfx_voice_id_ = -1;*/
 			}
 		} // !audio_manager_
 	} 

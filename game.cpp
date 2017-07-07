@@ -62,7 +62,6 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count
 	player_init_y_(4.0f),
 	fps_(0),
 	pickup_sfx_id_(-1),
-	sfx_voice_id_(-1),
 	pickups_count_(0)
 {
 	ground_.reserve(5);
@@ -355,7 +354,7 @@ void Game::InitAudio()
 	if (audio_manager_)
 	{
 		// load a sound effect
-		sfx_voice_id_ = audio_manager_->LoadSample("box_collected.wav", platform_);
+		pickup_sfx_id_ = audio_manager_->LoadSample("box_collected.wav", platform_);
 
 		// load in music
 		audio_manager_->LoadMusic("music.wav", platform_);
@@ -369,10 +368,10 @@ void Game::CleanAudio()
 {
 	if (audio_manager_)
 	{
+		// TODO
 		//audio_manager_->StopMusic();
 		//audio_manager_->UnloadAllSamples();
 		pickup_sfx_id_ = -1;
-		sfx_voice_id_ = -1;
 	}
 } // !CleanAudio
 
@@ -541,9 +540,7 @@ void Game::SonyController(const gef::SonyController* controller)
 		{
 			if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
 			{
-				audio_manager_->PlaySample(sfx_voice_id_);
-				/*audio_manager_->StopPlayingSampleVoice(sfx_voice_id_);
-				sfx_voice_id_ = -1;*/
+				audio_manager_->PlaySample(pickup_sfx_id_);
 			}
 		} // !audio_manager_
 
@@ -570,6 +567,7 @@ void Game::UpdatePickups()
 	std::set<Pickup*>::iterator end = contact_listener_->dying_pickups_scheduled_for_removal_.end();
 	for (; it != end; ++it)
 	{
+		audio_manager_->PlaySample(pickup_sfx_id_);
 
 		Pickup* dying_pickup = *it;
 
@@ -675,7 +673,7 @@ void Game::GameUpdate(float frame_time)
 		SonyController(controller);
 	} // !input_manager_
 
-	gef::DebugOut("player colour: %d\n", player_->GetGameObjectColour());
+	/*gef::DebugOut("player colour: %d\n", player_->GetGameObjectColour());*/
 } // !GameUpdate
 
 void Game::GameRender()
