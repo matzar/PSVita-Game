@@ -130,11 +130,11 @@ void Game::InitText()
 	float height_correction = 2.0f;
 
 	// set "RESUME" vector
-	resume_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
+	menu_text_1_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
 	// set "RESTART" vector
-	restart_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
+	menu_text_2_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
 	// set "MENU" vector
-	menu_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
+	menu_text_3_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
 } // InitText()
 
 void Game::InitAudio()
@@ -483,15 +483,15 @@ void Game::SonyController(const gef::SonyController* controller)
 			}
 			// RESUME button press
 			if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-				menu_box_sprite_.position().y() > (resume_text_position_.y() - sprite_height * 0.5f) &&
-				menu_box_sprite_.position().y() < (resume_text_position_.y() + sprite_height))
+				menu_box_sprite_.position().y() > (menu_text_1_.y() - sprite_height * 0.5f) &&
+				menu_box_sprite_.position().y() < (menu_text_1_.y() + sprite_height))
 			{
 				pause_ = !pause_;
 			}
 			// RESTART BUTTON press
 			if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-				menu_box_sprite_.position().y() > (restart_text_position_.y() - sprite_height * 0.5f) &&
-				menu_box_sprite_.position().y() < (restart_text_position_.y() + sprite_height))
+				menu_box_sprite_.position().y() > (menu_text_2_.y() - sprite_height * 0.5f) &&
+				menu_box_sprite_.position().y() < (menu_text_2_.y() + sprite_height))
 			{
 				player_->ReloadPlayer();
 				pickups_count_ = 0;
@@ -499,8 +499,8 @@ void Game::SonyController(const gef::SonyController* controller)
 			}
 			// MENU press
 			if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-				menu_box_sprite_.position().y() > (menu_text_position_.y() - sprite_height * 0.5f) &&
-				menu_box_sprite_.position().y() < (menu_text_position_.y() + sprite_height))
+				menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+				menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
 			{
 				// update the current state of the game state machine
 				// get the value that the gamestate points to and change it
@@ -508,13 +508,14 @@ void Game::SonyController(const gef::SonyController* controller)
 			}
 		} // !pause_
 
-		// START press
-		if (controller->buttons_pressed() & gef_SONY_CTRL_START)
-		{
-			// update the current state of the game state machine
-			// get the value that the gamestate points to and change it
-			(*gamestate_) = FRONTEND; 
-		}
+		//// TODO delete START press
+		//if (controller->buttons_pressed() & gef_SONY_CTRL_START)
+		//{
+		//	// update the current state of the game state machine
+		//	// get the value that the gamestate points to and change it
+		//	(*gamestate_) = FRONTEND; 
+		//}
+
 		// TRIANGLE press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_TRIANGLE)
 		{
@@ -745,7 +746,7 @@ void Game::GameRender()
 			// render "RESUME" text
 			font_->RenderText(
 				sprite_renderer_,
-				gef::Vector4(resume_text_position_.x(), resume_text_position_.y(), -0.9f),
+				gef::Vector4(menu_text_1_.x(), menu_text_1_.y(), -0.9f),
 				1.0f,
 				0xffffffff,
 				gef::TJ_CENTRE,
@@ -754,7 +755,7 @@ void Game::GameRender()
 			// render "RESTART" text
 			font_->RenderText(
 				sprite_renderer_,
-				gef::Vector4(restart_text_position_.x(), restart_text_position_.y(), -0.9f),
+				gef::Vector4(menu_text_2_.x(), menu_text_2_.y(), -0.9f),
 				1.0f,
 				0xffffffff,
 				gef::TJ_CENTRE,
@@ -763,7 +764,7 @@ void Game::GameRender()
 			// render "MENU" text
 			font_->RenderText(
 				sprite_renderer_,
-				gef::Vector4(menu_text_position_.x(), menu_text_position_.y(), -0.9f),
+				gef::Vector4(menu_text_3_.x(), menu_text_3_.y(), -0.9f),
 				1.0f,
 				0xffffffff,
 				gef::TJ_CENTRE,

@@ -141,9 +141,9 @@ private:
 	float sprite_init_position_y_;
 
 	// menu text vectors
-	gef::Vector4 resume_text_position_;
-	gef::Vector4 restart_text_position_;
-	gef::Vector4 menu_text_position_;
+	gef::Vector4 menu_text_1_;
+	gef::Vector4 menu_text_2_;
+	gef::Vector4 menu_text_3_;
 
 	// private member functions
 	void SonyController(const gef::SonyController* controller);

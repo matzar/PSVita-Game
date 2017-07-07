@@ -163,9 +163,9 @@ void Frontend::InitText()
 	// set "START" vector
 	menu_text_1_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
 	// set "SETTINGS" vector
-	settings_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
+	menu_text_2_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
 	// set "INSTRUCTIONS" vector
-	instructions_text_position_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
+	menu_text_3_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
 } // InitText()
 
 void Frontend::InitAudio()
@@ -308,8 +308,8 @@ void Frontend::SonyController(const gef::SonyController* controller)
 		}
 		// SETTINGS press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			menu_box_sprite_.position().y() > (settings_text_position_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (settings_text_position_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (menu_text_2_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_2_.y() + sprite_height))
 		{
 			// update the current state of the game state machine
 			// get the value that the gamestate points to and change it
@@ -317,8 +317,8 @@ void Frontend::SonyController(const gef::SonyController* controller)
 		}
 		// INSTRUCTIONS press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			menu_box_sprite_.position().y() > (instructions_text_position_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (instructions_text_position_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
 		{
 			instructions_page_++;
 
@@ -327,23 +327,23 @@ void Frontend::SonyController(const gef::SonyController* controller)
 		}
 		// INSTRUCTIONS left d-pad
 		if (controller->buttons_pressed() & gef_SONY_CTRL_LEFT &&
-			menu_box_sprite_.position().y() > (instructions_text_position_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (instructions_text_position_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
 		{
 			if (instructions_page_ > 0)
 				instructions_page_--;
 		}
 		// INSTRUCTIONS right d-pad
 		if (controller->buttons_pressed() & gef_SONY_CTRL_RIGHT &&
-			menu_box_sprite_.position().y() > (instructions_text_position_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (instructions_text_position_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
 		{
 			if (instructions_page_ < 4)
 				instructions_page_++;
 		}
 		// hide d-pad
-		if (menu_box_sprite_.position().y() > (instructions_text_position_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (instructions_text_position_.y() + sprite_height))
+		if (menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
 		{
 			display_d_pad = true;
 			display_instrucitons_ = true;
@@ -402,7 +402,7 @@ void Frontend::FrontendRender()
 		// render "SETTINGS" text
 		font_->RenderText(
 			sprite_renderer_,
-			gef::Vector4(settings_text_position_.x(), settings_text_position_.y(), -0.99f),
+			gef::Vector4(menu_text_2_.x(), menu_text_2_.y(), -0.99f),
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
@@ -411,7 +411,7 @@ void Frontend::FrontendRender()
 		// render "INSTRUCTIONS" text
 		font_->RenderText(
 			sprite_renderer_,
-			gef::Vector4(instructions_text_position_.x(), instructions_text_position_.y(), -0.99f),
+			gef::Vector4(menu_text_3_.x(), menu_text_3_.y(), -0.99f),
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,

@@ -89,8 +89,8 @@ private:
 
 	// menu text vectors
 	gef::Vector4 menu_text_1_;
-	gef::Vector4 settings_text_position_;
-	gef::Vector4 instructions_text_position_;
+	gef::Vector4 menu_text_2_;
+	gef::Vector4 menu_text_3_;
 	
 	// private member functions
 	void SonyController(const gef::SonyController* controller);
