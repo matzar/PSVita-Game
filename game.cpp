@@ -567,7 +567,27 @@ void Game::UpdatePickups()
 	std::set<Pickup*>::iterator end = contact_listener_->dying_pickups_scheduled_for_removal_.end();
 	for (; it != end; ++it)
 	{
-		audio_manager_->PlaySample(pickup_sfx_id_);
+		/*if (audio_manager_)
+		{
+			audio_manager_->PlaySample(pickup_sfx_id_);
+		}*/
+		if (audio_manager_)
+		{
+			if (pickup_sfx_id_ != -1)
+			{
+				int sfx_voice_id_ = audio_manager_->PlaySample(pickup_sfx_id_);
+
+				gef::VolumeInfo volume_info;
+				volume_info.volume = 0.5f;
+				volume_info.pan = -1.0f;
+
+				audio_manager_->SetSampleVoiceVolumeInfo(sfx_voice_id_, volume_info);
+
+				audio_manager_->SetSamplePitch(sfx_voice_id_, 1.5f);
+
+				audio_manager_->PlaySample(sfx_voice_id_);
+			} // !pickup_sfx_id
+		} // !audio_manager_
 
 		Pickup* dying_pickup = *it;
 
