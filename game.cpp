@@ -323,7 +323,98 @@ void Game::InitLevel()
 
 void Game::CleanLevel()
 {
+
 } // !CleanLevel
+
+void Game::InitPickups()
+{
+	// will be used for grounds intervals
+	float interval = 3.0f;
+	float32 colour_ground_x = 5.0f;
+	float32 texture_ground_x = 3.0f;
+	b2Vec2 start_position(0.0f, 0.0f);
+
+	unsigned numer_of_grounds = 5;
+
+	for (int i = 0; i < numer_of_grounds; ++i)
+	{
+		pickups_.push_back(new Pickup());
+
+		// RED GROUND
+		if (i % 2 == 0)
+		{
+			// change height of the ground
+			if (i % 4 == 0)
+				start_position.y += 2.0f;
+			else
+				start_position.y = 0.0f;
+
+			b2Vec2 pickup_start_position = start_position;
+			pickup_start_position.y += 1.0f;
+
+			pickups_.at(i)->InitPickup(
+				primitive_builder_,
+				world_,
+				pickup_start_position,
+				0.2f,
+				mesh_,
+				PICKUP,
+				PLAYER | GROUND,
+				1,
+				PICKUP);
+
+			start_position.x += (colour_ground_x + interval);
+		}
+		// TEXTURED GROUND
+		else if (i % 3 == 0)
+		{
+			start_position.x -= interval / 2.0f + 0.5f;
+			ground_.at(i)->InitGround(
+				primitive_builder_,                   // primitive builder
+				world_, 							  // world
+				start_position, 		              // position
+				gef::Vector4(texture_ground_x / 2.0f, 0.5f, 0.5f), 	  // ground half dimensions
+				GROUND, 							  // I am...
+				PLAYER | PICKUP, 					  // ..and I collide with
+				1, 									  // group index (objects with the same positive index collide with each other)
+				GROUND, 							  // type
+				NO_COL);							  // colour
+
+			start_position.x += (texture_ground_x + interval);
+		}
+		else // BLUE GROUND
+		{
+			// change height of the ground
+			if (i % 6 == 0)
+				start_position.y += 2.0f;
+			else
+				start_position.y = 0.0f;
+
+			b2Vec2 pickup_start_position = start_position;
+			pickup_start_position.y += 1.0f;
+
+			pickups_.at(i)->InitPickup(
+				primitive_builder_,
+				world_,
+				pickup_start_position,
+				0.2f,
+				mesh_,
+				PICKUP,
+				PLAYER | GROUND,
+				1,
+				PICKUP);
+
+			start_position.x += (colour_ground_x + interval);
+		}
+	}
+} // !InitPickups
+
+void Game::CleanPickups()
+{
+
+} // !CleanPickups
+
+
 
 void Game::InitPlayer()
 {
@@ -508,6 +599,9 @@ void Game::SonyController(const gef::SonyController* controller)
 
 				player_->ReloadPlayer();
 
+				// CleanPickups
+				// InitPickups
+
 				pickups_count_ = 0;
 				pause_ = false;
 			}
@@ -522,49 +616,6 @@ void Game::SonyController(const gef::SonyController* controller)
 			}
 		} // !pause_
 
-		//// TODO delete START press
-		//if (controller->buttons_pressed() & gef_SONY_CTRL_START)
-		//{
-		//	// update the current state of the game state machine
-		//	// get the value that the gamestate points to and change it
-		//	(*gamestate_) = FRONTEND; 
-		//}
-
-		//if (audio_manager_)
-		//{
-		//	// CIRCLE press
-		//	if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
-		//	{
-		//		//if (audio_manager_)
-		//		//{
-		//		//	if (pickup_sfx_id_ != -1)
-		//		//	{
-		//		//		int sfx_voice_id_ = audio_manager_->PlaySample(pickup_sfx_id_);
-
-		//		//		gef::VolumeInfo volume_info;
-		//		//		volume_info.volume = 0.5f;
-		//		//		volume_info.pan = -1.0f;
-
-		//		//		audio_manager_->SetSampleVoiceVolumeInfo(sfx_voice_id_, volume_info);
-
-		//		//		audio_manager_->SetSamplePitch(sfx_voice_id_, 1.5f);
-
-		//		//		audio_manager_->PlaySample(sfx_voice_id_);
-		//		//	} // !pickup_sfx_id
-		//		//} // !audio_manager_
-
-		//		audio_manager_->PlaySample(sfx_voice_id_);
-		//	}
-		//}
-		// trigger a sound effect
-		if (audio_manager_)
-		{
-			if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
-			{
-				audio_manager_->PlaySample(pickup_sfx_id_);
-			}
-		} // !audio_manager_
-
 		// TRIANGLE press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_TRIANGLE)
 		{
@@ -573,7 +624,7 @@ void Game::SonyController(const gef::SonyController* controller)
 			if ((*camera_count_) >= 3)
 				(*camera_count_) = 0;
 		}
-		// hide pause menu
+		// toggle pause menu
 		if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
 		{
 			pause_ = !pause_;

@@ -177,6 +177,9 @@ private:
 	void InitLevel();
 	void CleanLevel();
 
+	void InitPickups();
+	void CleanPickups();
+
 	void InitAudio();
 	void CleanAudio();
 };

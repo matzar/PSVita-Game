@@ -8,6 +8,7 @@ Pickup::Pickup()
 Pickup::~Pickup()
 {
 	this->GetBody()->GetWorld()->DestroyBody(this->GetBody());
+	//this->GetBody()->SetActive(false);
 }
 
 void Pickup::InitPickup(
