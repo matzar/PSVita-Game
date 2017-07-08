@@ -205,7 +205,7 @@ void Game::InitLevel()
 	float32 texture_ground_x = 3.0f;
 	b2Vec2 start_position(0.0f, 0.0f);
 
-	unsigned numer_of_grounds = 20;
+	unsigned numer_of_grounds = 5;
 
 	for (int i = 0; i < numer_of_grounds; ++i)
 	{
@@ -651,12 +651,18 @@ void Game::UpdateSimulation(float frame_time)
 	if (player_->IsContacting() > 0)
 	{
 		// is current ground set
-		if (contact_listener_->current_ground_)
+		if (contact_listener_)
 		{
-			// if current ground is different colour than the player - game over
+			// if current ground is gold - player wins
+			if (contact_listener_->current_ground_->GetGameObjectColour() == GOLD)
+			{
+				pause_ = true;
+				return;
+			}
+			// if current ground is different colour than the player - player loses
 			if (contact_listener_->current_ground_->GetGameObjectColour() != player_->GetGameObjectColour())
 			{
-				player_->DeadPlayer();
+				player_->SetAlive(false);
 				pause_ = true;
 			}
 		}
@@ -666,7 +672,7 @@ void Game::UpdateSimulation(float frame_time)
 
 	if (player_->GetBody()->GetPosition().y < -8.5f) // TODO if not working check here
 	{
-		player_->DeadPlayer();
+		player_->SetAlive(false);
 		pause_ = true;
 	}
 
@@ -791,6 +797,17 @@ void Game::GameRender()
 					0xffffffff,
 					gef::TJ_CENTRE,
 					"YOU WIN");
+			}
+			if (!player_->Alive())
+			{
+				// render "RESUME" text
+				font_->RenderText(
+					sprite_renderer_,
+					gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - 100.0f, -0.9f),
+					1.0f,
+					0xffffffff,
+					gef::TJ_CENTRE,
+					"YOU LOSE");
 			}
 
 			// display frame rate

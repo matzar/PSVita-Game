@@ -82,8 +82,8 @@ void ContactListener::BeginContact(b2Contact * contact)
 				if (current_ground_->GetGameObjectColour() == GOLD)
 				{
 					player->SetWin(true);
-					gef::DebugOut("current ground colour: %d\n", current_ground_->GetGameObjectColour());
-					gef::DebugOut("Player Win: %d\n", player->Win());
+					// TODO gef::DebugOut("current ground colour: %d\n", current_ground_->GetGameObjectColour());
+					//gef::DebugOut("Player Win: %d\n", player->Win());
 				}
 			}
 			// check if player is colliding with a pickup

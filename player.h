@@ -29,15 +29,14 @@ public:
 		uint16 group_index,
 		OBJECT_TYPE type,
 		OBJECT_COLOUR colour);
-
-	void DecrementHealth();
 	
-	void PlayerController(const gef::SonyController* controller);
-	void StartContact();
-	void EndContact();
-	void RestartJump();
-	void DeadPlayer();
 	void ReloadPlayer();
+	void PlayerController(const gef::SonyController* controller);
+	inline void StartContact() { num_contacts_++; }
+	inline void EndContact() { num_contacts_--; }
+	inline void RestartJump() { jump_ = true; }
+	inline void SetAlive(bool alive) { alive_ = alive; }
+	inline const bool Alive() { return alive_; }
 	inline void SetWin(bool win) { win_ = win; }
 	inline const bool Win() { return win_; }
 

@@ -8,6 +8,7 @@ Player::Player(float32* x_velocity, float32* y_velocity) :
 	p_y_velocity(y_velocity),	// 7.5
 	jump_(false),
 	alive_(true),
+	win_(false),
 	red_(true),
 	num_contacts_(0)
 {
@@ -73,12 +74,6 @@ void Player::InitPlayer(
 	GetBody()->SetUserData(this);
 }
 
-void Player::DecrementHealth()
-{
-	//gef::DebugOut("Player has taken damage.\n");
-	jump_ = true;
-}
-
 void Player::PlayerController(const gef::SonyController * controller)
 {
 	if (alive_)
@@ -119,26 +114,6 @@ void Player::PlayerController(const gef::SonyController * controller)
 	}
 }
 
-void Player::StartContact()
-{
-	num_contacts_++;
-}
-
-void Player::EndContact()
-{
-	num_contacts_--;
-}
-
-void Player::RestartJump()
-{
-	jump_ = true;
-}
-
-void Player::DeadPlayer()
-{
-	alive_ = false;
-}
-
 void Player::ReloadPlayer()
 {
 	body_->SetTransform(b2Vec2(-4.0f, 4.0f), 0.0f);
@@ -148,8 +123,8 @@ void Player::ReloadPlayer()
 	vel.y = 0.0f;
 	GetBody()->SetLinearVelocity(vel);
 
-	alive_ = true;
-	win_ = false;
+	SetAlive(true);
+	SetWin(false);
 
 	if (this->GetGameObjectColour() == RED)
 		RedPlayer(true);
