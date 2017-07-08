@@ -378,20 +378,9 @@ void Game::InitPickups()
 
 			start_position.x += (colour_ground_x + interval);
 		}
-		// TEXTURED GROUND
 		else if (i % 3 == 0)
 		{
 			start_position.x -= interval / 2.0f + 0.5f;
-			ground_.at(i)->InitGround(
-				primitive_builder_,                   // primitive builder
-				world_, 							  // world
-				start_position, 		              // position
-				gef::Vector4(texture_ground_x / 2.0f, 0.5f, 0.5f), 	  // ground half dimensions
-				GROUND, 							  // I am...
-				PLAYER | PICKUP, 					  // ..and I collide with
-				1, 									  // group index (objects with the same positive index collide with each other)
-				GROUND, 							  // type
-				NO_COL);							  // colour
 
 			start_position.x += (texture_ground_x + interval);
 		}
