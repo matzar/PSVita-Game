@@ -781,6 +781,17 @@ void Game::GameRender()
 	{
 		if (pause_)
 		{
+			if (player_->Win())
+			{
+				// render "RESUME" text
+				font_->RenderText(
+					sprite_renderer_,
+					gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - 100.0f, -0.9f),
+					1.0f,
+					0xffffffff,
+					gef::TJ_CENTRE,
+					"YOU WIN");
+			}
 
 			// display frame rate
 			font_->RenderText(sprite_renderer_, 

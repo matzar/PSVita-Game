@@ -38,12 +38,12 @@ public:
 	void RestartJump();
 	void DeadPlayer();
 	void ReloadPlayer();
-	void Win();
+	inline void SetWin(bool win) { win_ = win; }
+	inline const bool Win() { return win_; }
 
 	int IsContacting() const { return num_contacts_; }
 	bool IsAlive() const { return alive_; }
 	void RedPlayer(bool red) { red_ = red; }
-	inline const bool GetWin() { return win_; }
 	//b2Body* GetPlayerBody() { return player_body_; }
 private:
 	// player box 2d variables

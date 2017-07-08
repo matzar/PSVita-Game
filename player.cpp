@@ -149,16 +149,12 @@ void Player::ReloadPlayer()
 	GetBody()->SetLinearVelocity(vel);
 
 	alive_ = true;
+	win_ = false;
 
 	if (this->GetGameObjectColour() == RED)
 		RedPlayer(true);
 	else
 		RedPlayer(false);
-}
-
-void Player::Win()
-{
-	win_ = true;
 }
 
 
