@@ -156,4 +156,9 @@ void Player::ReloadPlayer()
 		RedPlayer(false);
 }
 
+void Player::Win()
+{
+	win_ = true;
+}
+
 
