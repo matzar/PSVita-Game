@@ -79,10 +79,6 @@ void ContactListener::BeginContact(b2Contact * contact)
 				player->StartContact();
 				current_ground_ = (Ground*)(game_object);
 			}
-		}
-
-		if (game_object)
-		{
 			// check if player is colliding with a pickup
 			if (game_object->GetGameObjectType() == PICKUP)
 			{
@@ -91,9 +87,6 @@ void ContactListener::BeginContact(b2Contact * contact)
 
 				//gef::DebugOut("Pick this shit up!\n");
 			}
-		}
-		if (game_object)
-		{
 			// check if player is of the same colour as the ground
 			if (player->GetGameObjectColour() == game_object->GetGameObjectColour() && game_object->GetGameObjectType() == GROUND)
 			{
