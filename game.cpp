@@ -410,7 +410,20 @@ void Game::InitPickups()
 
 void Game::CleanPickups()
 {
+	//process list for deletion
+	//std::vector<Pickup*>::iterator it = pickups_.begin();
+	//std::vector<Pickup*>::iterator end = pickups_.end();
+	//for (; it != end; ++it)
+	//{
+	//	//Pickup* dying_pickup = *it;
 
+	//	//delete pickup... physics body is destroyed here
+	//	//(*it)->GetBody()->GetWorld()->DestroyBody((*it)->GetBody());;
+	//	if (it != pickups_.end())
+	//	{
+	//		pickups_.erase(it);
+	//	}
+	//}
 } // !CleanPickups
 
 
@@ -600,8 +613,8 @@ void Game::SonyController(const gef::SonyController* controller)
 
 				player_->ReloadPlayer();
 
-				// CleanPickups
-				// InitPickups
+				CleanPickups();
+				InitPickups();
 
 				pickups_count_ = 0;
 				pause_ = false;
@@ -671,9 +684,12 @@ void Game::UpdatePickups()
 		//... and remove it from main list of pickups
 		std::vector<Pickup*>::iterator it = std::find(pickups_.begin(), pickups_.end(), dying_pickup);
 		if (it != pickups_.end())
+		{
 			pickups_.erase(it);
+			pickups_.shrink_to_fit();
+			pickups_count_++;
+		}
 
-		pickups_count_++;
 	}
 
 	//clear this list for next time
