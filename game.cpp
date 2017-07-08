@@ -62,7 +62,8 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count
 	player_init_y_(4.0f),
 	fps_(0),
 	pickup_sfx_id_(-1),
-	pickups_count_(0)
+	pickups_count_(0),
+	number_of_grounds_(10)
 {
 	ground_.reserve(5);
 	pickups_.reserve(3);
@@ -205,15 +206,13 @@ void Game::InitLevel()
 	float32 texture_ground_x = 3.0f;
 	b2Vec2 start_position(0.0f, 0.0f);
 
-	unsigned numer_of_grounds = 5;
-
-	for (int i = 0; i < numer_of_grounds; ++i)
+	for (int i = 0; i < number_of_grounds_; ++i)
 	{
 		ground_.push_back( new Ground());
 		//pickups_.push_back(new Pickup());
 
 		// GOLD GROUND
-		if (i == numer_of_grounds - 1)
+		if (i == number_of_grounds_ - 1)
 		{
 			start_position.x -= interval / 2.0f + 0.5f;
 			ground_.at(i)->InitGround(
@@ -347,9 +346,7 @@ void Game::InitPickups()
 	float32 texture_ground_x = 3.0f;
 	b2Vec2 start_position(0.0f, 0.0f);
 
-	unsigned numer_of_grounds = 5;
-
-	for (int i = 0; i < numer_of_grounds; ++i)
+	for (int i = 0; i < number_of_grounds_ - 1; ++i)
 	{
 		pickups_.push_back(new Pickup());
 

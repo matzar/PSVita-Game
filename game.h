@@ -120,13 +120,14 @@ private:
 	bool quit_;
 	// pause
 	bool pause_;
-
 	// FPS
 	float fps_;
 	// audio variables
 	int pickup_sfx_id_;
 	// pickups count
 	uint16 pickups_count_;
+	// number of grounds
+	uint16 number_of_grounds_;
 
 	uint16 catA;
 	uint16 maskA;
