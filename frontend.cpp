@@ -181,9 +181,6 @@ void Frontend::FrontendInit()
 
 void Frontend::FrontendRelease()
 {
-	delete input_manager_;
-	input_manager_ = nullptr;
-
 	CleanSprites();
 
 	CleanTextures();

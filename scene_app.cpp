@@ -9,7 +9,6 @@
 #include <audio/audio_manager.h>
 
 #include <input/input_manager.h>
-#include <input/sony_controller_input_manager.h>
 
 SceneApp::SceneApp(gef::Platform& platform) :
 	Application(platform),
@@ -84,6 +83,11 @@ void SceneApp::CleanUp()
 		delete game_;
 		game_ = nullptr;
 	}
+
+	delete input_manager_;
+	input_manager_ = nullptr;
+
+	CleanAudio();
 } // !CleanUp
 
 bool SceneApp::Update(float frame_time)
@@ -138,7 +142,7 @@ bool SceneApp::Update(float frame_time)
 				// reference to the platform object is passed
 				// Settings class has 'GAMESTATE* gamestate' pointer
 				// adress of gamestate_ is passed to the class and assigned to the GAMESTATE pointer
-				settings_ = new Settings(platform_, &gamestate_, &camera_count_, &difficulty_count_, &number_of_grounds_);
+				settings_ = new Settings(platform_, input_manager_, &gamestate_, &camera_count_, &difficulty_count_, &number_of_grounds_);
 				settings_->SettingsInit();
 
 				// going to the SETTINGS state possible only from the FRONTEND state

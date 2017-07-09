@@ -20,13 +20,13 @@
 #include "camera_enum.h"
 #include "difficulty_enum.h"
 
-Settings::Settings(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, unsigned* difficulty_count, unsigned* number_of_grounds) :
+Settings::Settings(gef::Platform& platform, gef::InputManager* input_manager, GAMESTATE* gamestate, unsigned* camera_count, unsigned* difficulty_count, unsigned* number_of_grounds) :
 	platform_(platform),
+	input_manager_(input_manager),
 	gamestate_(gamestate),
 	camera_count_(camera_count),
 	difficulty_count_(difficulty_count),
 	number_of_grounds_(number_of_grounds),
-	input_manager_(nullptr),
 	sprite_renderer_(nullptr),
 	cross_button_icon_(nullptr),
 	playstation_left_d_pad_(nullptr),
@@ -157,9 +157,6 @@ void Settings::InitText()
 
 void Settings::SettingsInit()
 {
-	// initialise input manager
-	input_manager_ = gef::InputManager::Create(platform_);
-
 	InitFont();
 
 	InitTextures();
@@ -171,9 +168,6 @@ void Settings::SettingsInit()
 
 void Settings::SettingsRelease()
 {
-	delete input_manager_;
-	input_manager_ = nullptr;
-
 	CleanFont();
 
 	CleanTextures();
