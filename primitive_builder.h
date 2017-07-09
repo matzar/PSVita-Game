@@ -80,8 +80,8 @@ public:
 
 	/// @brief Get the yellow material.
 	/// @return The reference to the yellow material.
-	inline const gef::Material& yellow_material() const {
-		return yellow_material_;
+	inline const gef::Material& seledine_material() const {
+		return seledine_material_;
 	}
 
 protected:
@@ -93,7 +93,7 @@ protected:
 	gef::Material red_material_;
 	gef::Material blue_material_;
 	gef::Material green_material_;
-	gef::Material yellow_material_;
+	gef::Material seledine_material_;
 };
 
 #endif // _PRIMITIVE_BUILDER_H
