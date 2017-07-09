@@ -191,10 +191,6 @@ private:
 	void InitLevel();
 
 	void InitPlayer();
-
-	// future improvement
-	void InitPickups();
-	void CleanPickups();
 };
 
 #endif // !_GAME_H
