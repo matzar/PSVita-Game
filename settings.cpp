@@ -76,18 +76,18 @@ void Settings::DrawHUD()
 void Settings::InitTextures()
 {
 	// initialise button icon
-	cross_button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
+	cross_button_icon_ = CreateTextureFromPNG("png/playstation-cross-dark-icon.png", platform_);
 	// initialise left d-pad icon
-	playstation_left_d_pad_ = CreateTextureFromPNG("playstation-left-d-pad.png", platform_);
+	playstation_left_d_pad_ = CreateTextureFromPNG("png/playstation-left-d-pad.png", platform_);
 	// initialise right d-pad icon
-	playstation_right_d_pad_ = CreateTextureFromPNG("playstation-right-d-pad.png", platform_);
+	playstation_right_d_pad_ = CreateTextureFromPNG("png/playstation-right-d-pad.png", platform_);
 
 	// initialise camera's 1 texture to show its perspective
-	camera_1_texture_ = CreateTextureFromPNG("CAM1.png", platform_);
+	camera_1_texture_ = CreateTextureFromPNG("png/CAM1.png", platform_);
 	// initialise camera's 2 texture to show its perspective
-	camera_2_texture_ = CreateTextureFromPNG("CAM2.png", platform_);
+	camera_2_texture_ = CreateTextureFromPNG("png/CAM2.png", platform_);
 	// initialise camera's 3 texture to show its perspective
-	camera_3_texture_ = CreateTextureFromPNG("CAM3.png", platform_);
+	camera_3_texture_ = CreateTextureFromPNG("png/CAM3.png", platform_);
 } // !InitTextures
 
 void Settings::CleanTextures()

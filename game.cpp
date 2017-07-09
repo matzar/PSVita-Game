@@ -121,11 +121,11 @@ void Game::DrawHUD()
 
 void Game::InitTextures()
 {
-	brown_texture_ = CreateTextureFromPNG("nauticalTile_160.png", platform_);
+	brown_texture_ = CreateTextureFromPNG("png/nauticalTile_160.png", platform_);
 	brown_texture_material_ = new gef::Material();
 	brown_texture_material_->set_texture(brown_texture_);
 
-	finish_texture_ = CreateTextureFromPNG("finish_line.png", platform_);
+	finish_texture_ = CreateTextureFromPNG("png/finish_line.png", platform_);
 	finish_ground_texture_material_ = new gef::Material();
 	finish_ground_texture_material_->set_texture(finish_texture_);
 } // !InitTextures

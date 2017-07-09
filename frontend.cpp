@@ -77,17 +77,17 @@ void Frontend::DrawHUD()
 void Frontend::InitTextures()
 {
 	// initialise button icon
-	cross_button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
-	playstation_left_d_pad_ = CreateTextureFromPNG("playstation-left-d-pad.png", platform_);
-	playstation_right_d_pad_ = CreateTextureFromPNG("playstation-right-d-pad.png", platform_);
+	cross_button_icon_ = CreateTextureFromPNG("png/playstation-cross-dark-icon.png", platform_);
+	playstation_left_d_pad_ = CreateTextureFromPNG("png/playstation-left-d-pad.png", platform_);
+	playstation_right_d_pad_ = CreateTextureFromPNG("png/playstation-right-d-pad.png", platform_);
 	// initialize title texture
-	title_texture_ = CreateTextureFromPNG("frontend_instructions.png", platform_);
+	title_texture_ = CreateTextureFromPNG("png/frontend_instructions.png", platform_);
 	// initialize instructions page 1
-	instructions_texture_1 = CreateTextureFromPNG("playstation-circle-dark-icon.png", platform_);
-	instructions_texture_2 = CreateTextureFromPNG("playstation-cross-dark-icon.png", platform_);
-	instructions_texture_3 = CreateTextureFromPNG("playstation-circle-dark-icon.png", platform_);
-	instructions_texture_4 = CreateTextureFromPNG("playstation-square-dark-icon.png", platform_);
-	instructions_texture_5 = CreateTextureFromPNG("playstation-triangle-dark-icon.png", platform_);
+	instructions_texture_1 = CreateTextureFromPNG("png/playstation-circle-dark-icon.png", platform_);
+	instructions_texture_2 = CreateTextureFromPNG("png/playstation-cross-dark-icon.png", platform_);
+	instructions_texture_3 = CreateTextureFromPNG("png/playstation-circle-dark-icon.png", platform_);
+	instructions_texture_4 = CreateTextureFromPNG("png/playstation-square-dark-icon.png", platform_);
+	instructions_texture_5 = CreateTextureFromPNG("png/playstation-triangle-dark-icon.png", platform_);
 } // !InitTextures
 
 void Frontend::CleanTextures()

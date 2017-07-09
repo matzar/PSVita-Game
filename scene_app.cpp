@@ -50,10 +50,12 @@ void SceneApp::CleanAudio()
 
 void SceneApp::Init()
 {
+	// initialize input manager
 	input_manager_ = gef::InputManager::Create(platform_);
 
-	// initialize audio only on PSVita
+	// only on PSVita
 #ifndef _WIN32
+	// initialize audio 
 	InitAudio();
 #endif // _WIN32
 
@@ -87,11 +89,13 @@ void SceneApp::CleanUp()
 		game_ = nullptr;
 	}
 
+	// clean up input manager
 	delete input_manager_;
 	input_manager_ = nullptr;
 
-	// clean up audio only on PSVita
+	// only on PSVita
 #ifndef _WIN32
+	// clean up audio
 	CleanAudio();
 #endif // _WIN32
 } // !CleanUp

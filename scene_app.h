@@ -4,18 +4,12 @@
 // gef headers
 #include <system/application.h>
 // my headers
-// TODO delete
-#include "free_camera.h"
 #include "game_state_enum.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
 {
-	class Platform;
-	class SpriteRenderer;
-	class Font;
 	class InputManager;
-	class Renderer3D;
 	class AudioManager;
 } // !gef
 // My class forward declarations
