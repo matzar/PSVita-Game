@@ -17,10 +17,10 @@
 // my headers
 #include "game_state_enum.h"
 
-Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate) :
+Frontend::Frontend(gef::Platform& platform, gef::InputManager* input_manager, GAMESTATE* gamestate) :
 	platform_(platform),
 	gamestate_(gamestate),
-	input_manager_(nullptr),
+	input_manager_(input_manager),
 	sprite_renderer_(nullptr),
 	title_texture_(nullptr),
 	instructions_texture_1(nullptr),
@@ -168,7 +168,7 @@ void Frontend::InitText()
 void Frontend::FrontendInit()
 {
 	// initialise input manager
-	input_manager_ = gef::InputManager::Create(platform_);
+	//input_manager_ = gef::InputManager::Create(platform_);
 
 	InitFont();
 

@@ -8,8 +8,13 @@
 // gef headers
 #include <audio/audio_manager.h>
 
+#include <input/input_manager.h>
+#include <input/sony_controller_input_manager.h>
+
 SceneApp::SceneApp(gef::Platform& platform) :
 	Application(platform),
+	input_manager_(nullptr),
+	audio_manager_(nullptr),
 	camera_count_(CAM1),
 	difficulty_count_(EASY),
 	number_of_grounds_(10),
@@ -47,6 +52,8 @@ void SceneApp::CleanAudio()
 
 void SceneApp::Init()
 {
+	input_manager_ = gef::InputManager::Create(platform_);
+
 	InitAudio();
 	// initialise gamestate_
 	gamestate_ = FRONTEND;
@@ -91,7 +98,7 @@ bool SceneApp::Update(float frame_time)
 				// reference to the platform object is passed
 				// Frontend class has 'GAMESTATE* gamestate' pointer
 				// adress of gamestate_ is passed to the class and assigned to the GAMESTATE pointer
-				frontend_ = new Frontend(platform_, &gamestate_);
+				frontend_ = new Frontend(platform_, input_manager_, &gamestate_);
 				frontend_->FrontendInit();
 
 				// going to the FRONTEND state possible only from the GAME state...

@@ -44,6 +44,10 @@ private:
 	// number of grounds in the level
 	unsigned number_of_grounds_;
 
+	// input manager
+	gef::InputManager* input_manager_;
+
+	// audio manager
 	gef::AudioManager* audio_manager_;
 	// audio variables
 	int pickup_sfx_id_;
