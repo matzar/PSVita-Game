@@ -187,18 +187,18 @@ void Game::CleanWorld()
 
 void Game::InitLevel()
 {
-	//// create a new scene object and read in the data from the file
-	//// no meshes or materials are created yet
-	//// we're not making any assumptions about what the data may be loaded in for
-	//model_scene_ = new gef::Scene();
-	//model_scene_->ReadSceneFromFile(platform_, "triceratop.scn");
+	// create a new scene object and read in the data from the file
+	// no meshes or materials are created yet
+	// we're not making any assumptions about what the data may be loaded in for
+	model_scene_ = new gef::Scene();
+	model_scene_->ReadSceneFromFile(platform_, "triceratop.scn");
 
-	//// we do want to render the data stored in the scene file so lets create the materials from the material data present in the scene file
-	//model_scene_->CreateMaterials(platform_);
+	// we do want to render the data stored in the scene file so lets create the materials from the material data present in the scene file
+	model_scene_->CreateMaterials(platform_);
 
-	//// now check to see if there is any mesh data in the file, if so lets create a mesh from it
-	//if (model_scene_->meshes.size() > 0)
-	//	mesh_ = model_scene_->CreateMesh(platform_, model_scene_->meshes.front());
+	// now check to see if there is any mesh data in the file, if so lets create a mesh from it
+	if (model_scene_->meshes.size() > 0)
+		mesh_ = model_scene_->CreateMesh(platform_, model_scene_->meshes.front());
 
 	// will be used for grounds intervals
 	float interval = 3.0f;
@@ -209,7 +209,7 @@ void Game::InitLevel()
 	for (int i = 0; i < number_of_grounds_; ++i)
 	{
 		ground_.push_back( new Ground());
-		//pickups_.push_back(new Pickup());
+		pickups_.push_back(new Pickup());
 
 		// GOLD GROUND
 		if (i == number_of_grounds_ - 1)
@@ -240,7 +240,7 @@ void Game::InitLevel()
 			b2Vec2 pickup_start_position = start_position;
 			pickup_start_position.y += 1.0f;
 
-			/*pickups_.at(i)->InitPickup(
+			pickups_.at(i)->InitPickup(
 				primitive_builder_, 
 				world_, 
 				pickup_start_position, 
@@ -249,7 +249,7 @@ void Game::InitLevel()
 				PICKUP, 
 				PLAYER | GROUND, 
 				1, 
-				PICKUP);*/
+				PICKUP);
 
 			ground_.at(i)->InitGround(
 				primitive_builder_,                   // primitive builder
@@ -293,7 +293,7 @@ void Game::InitLevel()
 			b2Vec2 pickup_start_position = start_position;
 			pickup_start_position.y += 1.0f;
 
-			/*pickups_.at(i)->InitPickup(
+			pickups_.at(i)->InitPickup(
 				primitive_builder_,
 				world_,
 				pickup_start_position,
@@ -302,7 +302,7 @@ void Game::InitLevel()
 				PICKUP,
 				PLAYER | GROUND,
 				1,
-				PICKUP);*/
+				PICKUP);
 
 			ground_.at(i)->InitGround(
 				primitive_builder_,                   // primitive builder
@@ -320,113 +320,93 @@ void Game::InitLevel()
 	}
 } // !InitLevel
 
-void Game::CleanLevel()
-{
-
-} // !CleanLevel
-
+// future improvemnt - initialize and clean pickups during the runtime
 void Game::InitPickups()
 {
-	// create a new scene object and read in the data from the file
-	// no meshes or materials are created yet
-	// we're not making any assumptions about what the data may be loaded in for
-	model_scene_ = new gef::Scene();
-	model_scene_->ReadSceneFromFile(platform_, "triceratop.scn");
+	//// create a new scene object and read in the data from the file
+	//// no meshes or materials are created yet
+	//// we're not making any assumptions about what the data may be loaded in for
+	//model_scene_ = new gef::Scene();
+	//model_scene_->ReadSceneFromFile(platform_, "triceratop.scn");
 
-	// we do want to render the data stored in the scene file so lets create the materials from the material data present in the scene file
-	model_scene_->CreateMaterials(platform_);
+	//// we do want to render the data stored in the scene file so lets create the materials from the material data present in the scene file
+	//model_scene_->CreateMaterials(platform_);
 
-	// now check to see if there is any mesh data in the file, if so lets create a mesh from it
-	if (model_scene_->meshes.size() > 0)
-		mesh_ = model_scene_->CreateMesh(platform_, model_scene_->meshes.front());
+	//// now check to see if there is any mesh data in the file, if so lets create a mesh from it
+	//if (model_scene_->meshes.size() > 0)
+	//	mesh_ = model_scene_->CreateMesh(platform_, model_scene_->meshes.front());
 
-	// will be used for grounds intervals
-	float interval = 3.0f;
-	float32 colour_ground_x = 5.0f;
-	float32 texture_ground_x = 3.0f;
-	b2Vec2 start_position(0.0f, 0.0f);
+	//// will be used for grounds intervals
+	//float interval = 3.0f;
+	//float32 colour_ground_x = 5.0f;
+	//float32 texture_ground_x = 3.0f;
+	//b2Vec2 start_position(0.0f, 0.0f);
 
-	for (int i = 0; i < number_of_grounds_ - 1; ++i)
-	{
-		pickups_.push_back(new Pickup());
-
-		// RED GROUND
-		if (i % 2 == 0)
-		{
-			// change height of the ground
-			if (i % 4 == 0)
-				start_position.y += 2.0f;
-			else
-				start_position.y = 0.0f;
-
-			b2Vec2 pickup_start_position = start_position;
-			pickup_start_position.y += 1.0f;
-
-			pickups_.at(i)->InitPickup(
-				primitive_builder_,
-				world_,
-				pickup_start_position,
-				0.2f,
-				mesh_,
-				PICKUP,
-				PLAYER | GROUND,
-				1,
-				PICKUP);
-
-			start_position.x += (colour_ground_x + interval);
-		}
-		else if (i % 3 == 0)
-		{
-			start_position.x -= interval / 2.0f + 0.5f;
-
-			start_position.x += (texture_ground_x + interval);
-		}
-		else // BLUE GROUND
-		{
-			// change height of the ground
-			if (i % 6 == 0)
-				start_position.y += 2.0f;
-			else
-				start_position.y = 0.0f;
-
-			b2Vec2 pickup_start_position = start_position;
-			pickup_start_position.y += 1.0f;
-
-			pickups_.at(i)->InitPickup(
-				primitive_builder_,
-				world_,
-				pickup_start_position,
-				0.2f,
-				mesh_,
-				PICKUP,
-				PLAYER | GROUND,
-				1,
-				PICKUP);
-
-			start_position.x += (colour_ground_x + interval);
-		}
-	}
-} // !InitPickups
-
-void Game::CleanPickups()
-{
-	//process list for deletion
-	//std::vector<Pickup*>::iterator it = pickups_.begin();
-	//std::vector<Pickup*>::iterator end = pickups_.end();
-	//for (; it != end; ++it)
+	//for (int i = 0; i < number_of_grounds_ - 1; ++i)
 	//{
-	//	//Pickup* dying_pickup = *it;
+	//	pickups_.push_back(new Pickup());
 
-	//	//delete pickup... physics body is destroyed here
-	//	//(*it)->GetBody()->GetWorld()->DestroyBody((*it)->GetBody());;
-	//	if (it != pickups_.end())
+	//	// RED GROUND
+	//	if (i % 2 == 0)
 	//	{
-	//		pickups_.erase(it);
+	//		// change height of the ground
+	//		if (i % 4 == 0)
+	//			start_position.y += 2.0f;
+	//		else
+	//			start_position.y = 0.0f;
+
+	//		b2Vec2 pickup_start_position = start_position;
+	//		pickup_start_position.y += 1.0f;
+
+	//		pickups_.at(i)->InitPickup(
+	//			primitive_builder_,
+	//			world_,
+	//			pickup_start_position,
+	//			0.2f,
+	//			mesh_,
+	//			PICKUP,
+	//			PLAYER | GROUND,
+	//			1,
+	//			PICKUP);
+
+	//		start_position.x += (colour_ground_x + interval);
+	//	}
+	//	else if (i % 3 == 0)
+	//	{
+	//		start_position.x -= interval / 2.0f + 0.5f;
+
+	//		start_position.x += (texture_ground_x + interval);
+	//	}
+	//	else // BLUE GROUND
+	//	{
+	//		// change height of the ground
+	//		if (i % 6 == 0)
+	//			start_position.y += 2.0f;
+	//		else
+	//			start_position.y = 0.0f;
+
+	//		b2Vec2 pickup_start_position = start_position;
+	//		pickup_start_position.y += 1.0f;
+
+	//		pickups_.at(i)->InitPickup(
+	//			primitive_builder_,
+	//			world_,
+	//			pickup_start_position,
+	//			0.2f,
+	//			mesh_,
+	//			PICKUP,
+	//			PLAYER | GROUND,
+	//			1,
+	//			PICKUP);
+
+	//		start_position.x += (colour_ground_x + interval);
 	//	}
 	//}
+} // !InitPickups
+// future improvemnt - initialize and clean pickups during the runtime
+void Game::CleanPickups()
+{
 } // !CleanPickups
-
-
 
 void Game::InitPlayer()
 {
@@ -461,10 +441,6 @@ void Game::InitPlayer()
 		player_->RedPlayer(false);
 	}
 } // !InitPlayer										   
-
-void Game::CleanPlayer()
-{
-} // !CleanPlayer
 
 void Game::InitAudio()
 {
@@ -520,8 +496,6 @@ void Game::GameInit()
 	InitWorld();
 
 	InitLevel();
-
-	InitPickups();
 
 	InitPlayer();
 
@@ -606,18 +580,15 @@ void Game::SonyController(const gef::SonyController* controller)
 				menu_box_sprite_.position().y() > (menu_text_2_.y() - sprite_height * 0.5f) &&
 				menu_box_sprite_.position().y() < (menu_text_2_.y() + sprite_height))
 			{
-				/*if (ground_.at(0)->GetGameObjectColour() == RED)
-					player_->SetGameObjectColour(RED);
-				else
-					player_->SetGameObjectColour(BLUE);
-
+				/* Reload funciton for future improvement
 				player_->ReloadPlayer();
 
 				CleanPickups();
 				InitPickups();
 
 				pickups_count_ = 0;
-				pause_ = false;*/
+				pause_ = false;
+				*/
 				GameRelease();
 				GameInit();
 			}
@@ -688,7 +659,6 @@ void Game::UpdatePickups()
 		if (it != pickups_.end())
 		{
 			pickups_.erase(it);
-			pickups_.shrink_to_fit();
 			pickups_count_++;
 		}
 

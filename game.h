@@ -173,10 +173,8 @@ private:
 	void CleanWorld();
 
 	void InitPlayer();
-	void CleanPlayer();
 
 	void InitLevel();
-	void CleanLevel();
 
 	void InitPickups();
 	void CleanPickups();
