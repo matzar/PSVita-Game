@@ -10,8 +10,6 @@
 #include <input/input_manager.h>
 #include <input/sony_controller_input_manager.h>
 
-#include <audio/audio_manager.h>
-
 #include <maths/vector2.h>
 #include <maths/vector4.h>
 // extra headers
@@ -19,12 +17,11 @@
 // my headers
 #include "game_state_enum.h"
 
-Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate, gef::AudioManager* audio_manager) :
+Frontend::Frontend(gef::Platform& platform, GAMESTATE* gamestate) :
 	platform_(platform),
 	gamestate_(gamestate),
 	input_manager_(nullptr),
 	sprite_renderer_(nullptr),
-	audio_manager_(audio_manager),
 	title_texture_(nullptr),
 	instructions_texture_1(nullptr),
 	instructions_texture_2(nullptr),
@@ -168,39 +165,6 @@ void Frontend::InitText()
 	menu_text_4_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 4.0f + height_correction, -0.99f);
 } // InitText()
 
-void Frontend::InitAudio()
-{
-	// audio manager
-	//audio_manager_ = gef::AudioManager::Create();
-
-	// load audio assets
-	if (audio_manager_)
-	{
-		// load a sound effect
-		sfx_voice_id_ = audio_manager_->LoadSample("box_collected.wav", platform_);
-
-		// load in music
-		audio_manager_->LoadMusic("music.wav", platform_);
-
-		// play music
-		audio_manager_->PlayMusic();
-	}
-} // !InitAudio
-
-void Frontend::CleanAudio()
-{
-	//sfx_id_ = -1;
-	//sfx_voice_id_ = -1;
-	//audio_manager_->StopMusic();
-	// TODO
-	if (audio_manager_)
-	{
-		//audio_manager_->StopMusic();
-		//audio_manager_->UnloadAllSamples();
-		sfx_voice_id_ = -1;
-	}
-} // !CleanAudio
-
 void Frontend::FrontendInit()
 {
 	// initialise input manager
@@ -213,8 +177,6 @@ void Frontend::FrontendInit()
 	InitSprites();
 
 	InitText();
-
-	InitAudio();
 } // !FrontendInit
 
 void Frontend::FrontendRelease()
@@ -223,8 +185,6 @@ void Frontend::FrontendRelease()
 	input_manager_ = nullptr;
 
 	CleanSprites();
-
-	CleanAudio();
 
 	CleanTextures();
 

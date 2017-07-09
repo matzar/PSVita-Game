@@ -11,8 +11,6 @@
 #include <input/input_manager.h>
 #include <input/sony_controller_input_manager.h>
 
-#include <audio/audio_manager.h>
-
 #include <maths/vector2.h>
 #include <maths/vector4.h>
 // extra headers
@@ -30,7 +28,6 @@ Settings::Settings(gef::Platform& platform, GAMESTATE* gamestate, unsigned* came
 	number_of_grounds_(number_of_grounds),
 	input_manager_(nullptr),
 	sprite_renderer_(nullptr),
-	audio_manager_(nullptr),
 	cross_button_icon_(nullptr),
 	playstation_left_d_pad_(nullptr),
 	playstation_right_d_pad_(nullptr),
@@ -158,39 +155,6 @@ void Settings::InitText()
 	menu_text_4_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 4.0f + height_correction, -0.99f);
 } // InitText()
 
-void Settings::InitAudio()
-{
-	// audio manager
-	audio_manager_ = gef::AudioManager::Create();
-
-	// load audio assets
-	if (audio_manager_)
-	{
-		// load a sound effect
-		sfx_voice_id_ = audio_manager_->LoadSample("box_collected.wav", platform_);
-
-		// load in music
-		audio_manager_->LoadMusic("music.wav", platform_);
-
-		// play music
-		audio_manager_->PlayMusic();
-	}
-} // !InitAudio
-
-void Settings::CleanAudio()
-{
-	if (audio_manager_)
-	{
-		audio_manager_->StopMusic();
-		audio_manager_->UnloadAllSamples();
-		sfx_id_ = -1;
-		sfx_voice_id_ = -1;
-
-		delete audio_manager_;
-		audio_manager_ = nullptr;
-	}
-} // !CleanAudio
-
 void Settings::SettingsInit()
 {
 	// initialise input manager
@@ -203,8 +167,6 @@ void Settings::SettingsInit()
 	InitSprites();
 	
 	InitText();
-
-	InitAudio();
 } // !SettingsInit
 
 void Settings::SettingsRelease()
@@ -217,8 +179,6 @@ void Settings::SettingsRelease()
 	CleanTextures();
 
 	CleanSprites();
-
-	CleanAudio();
 } // !SettingsRelease
 
 void Settings::SonyController(const gef::SonyController* controller)

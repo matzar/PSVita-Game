@@ -460,33 +460,6 @@ void Game::InitPlayer()
 	}
 } // !InitPlayer										   
 
-void Game::InitAudio()
-{
-	// load audio assets
-	if (audio_manager_)
-	{
-		// load a sound effect
-		//pickup_sfx_id_ = audio_manager_->LoadSample("box_collected.wav", platform_);
-
-		// load in music
-		//audio_manager_->LoadMusic("music.wav", platform_);
-
-		// play music
-		//audio_manager_->PlayMusic();
-	}
-} // !InitAudio
-
-void Game::CleanAudio()
-{
-	if (audio_manager_)
-	{
-		// TODO
-		//audio_manager_->StopMusic();
-		//audio_manager_->UnloadAllSamples();
-		//pickup_sfx_id_ = -1;
-	}
-} // !CleanAudio
-
 void Game::GameInit()
 {
 
@@ -516,8 +489,6 @@ void Game::GameInit()
 	InitLevel();
 
 	InitPlayer();
-
-	InitAudio();
 } // !GameInit
 
 void Game::GameRelease()
@@ -554,8 +525,6 @@ void Game::GameRelease()
 	CleanTextures();
 
 	CleanSprites();
-
-	CleanAudio();
 } // !GameRelease
 
 void Game::SonyController(const gef::SonyController* controller)

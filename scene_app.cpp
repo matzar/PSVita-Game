@@ -91,7 +91,7 @@ bool SceneApp::Update(float frame_time)
 				// reference to the platform object is passed
 				// Frontend class has 'GAMESTATE* gamestate' pointer
 				// adress of gamestate_ is passed to the class and assigned to the GAMESTATE pointer
-				frontend_ = new Frontend(platform_, &gamestate_, audio_manager_);
+				frontend_ = new Frontend(platform_, &gamestate_);
 				frontend_->FrontendInit();
 
 				// going to the FRONTEND state possible only from the GAME state...

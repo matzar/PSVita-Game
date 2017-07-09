@@ -11,7 +11,6 @@ namespace gef
 	class Font;
 	class SpriteRenderer;
 	class InputManager;
-	class AudioManager;
 	class Texture;
 	class SonyController;
 	class Sprite;
@@ -25,7 +24,7 @@ enum GAMESTATE;
 class Frontend
 {
 public:
-	Frontend(gef::Platform& platform, GAMESTATE* gamestate, gef::AudioManager* audio_manager);
+	Frontend(gef::Platform& platform, GAMESTATE* gamestate);
 	~Frontend();
 
 	void FrontendInit();
@@ -43,9 +42,6 @@ private:
 
 	// input manager
 	gef::InputManager* input_manager_;
-
-	// audio manager
-	gef::AudioManager* audio_manager_;
 
 	// sprite renderer
 	gef::SpriteRenderer* sprite_renderer_;
@@ -107,9 +103,6 @@ private:
 	void CleanSprites();
 
 	void InitText();
-
-	void InitAudio();
-	void CleanAudio();
 };
 
 #endif // !_FRONTEND_H
