@@ -47,7 +47,8 @@ class Game
 {
 public:
 	Game(gef::Platform& platform, 
-		 gef::AudioManager* audio_manager, 
+		 gef::InputManager* input_manager,
+		 gef::AudioManager* audio_manager,
 		 GAMESTATE* gamestate, 
 		 unsigned* camera_count, 
 		 unsigned* difficulty_count, 

@@ -35,13 +35,16 @@
 #include <box2d/Box2D.h>
 
 Game::Game(gef::Platform& platform, 
-	       gef::AudioManager* audio_manager, 
+           gef::InputManager* input_manager,
+	       gef::AudioManager* audio_manager,
 	       GAMESTATE* gamestate, 
 	       unsigned* camera_count, 
 	       unsigned* difficulty_count, 
 	       unsigned* number_of_grounds,
 	       int* pickup_sfx_id) :
 	platform_(platform),
+	input_manager_(input_manager),
+	audio_manager_(audio_manager),
 	gamestate_(gamestate),
 	camera_count_(camera_count),
 	difficulty_count_(difficulty_count),
@@ -55,8 +58,6 @@ Game::Game(gef::Platform& platform,
 	finish_texture_(nullptr),
 	finish_ground_texture_material_(nullptr),
 	sprite_renderer_(nullptr),
-	input_manager_(nullptr),
-	audio_manager_(audio_manager),
 	renderer_3d_(nullptr),
 	primitive_builder_(nullptr),
 	camera_(nullptr),
@@ -462,10 +463,6 @@ void Game::InitPlayer()
 
 void Game::GameInit()
 {
-
-	// initialise input manager
-	input_manager_ = gef::InputManager::Create(platform_);
-
 	// create the renderer for draw 3D geometry
 	renderer_3d_ = gef::Renderer3D::Create(platform_);
 
@@ -493,9 +490,6 @@ void Game::GameInit()
 
 void Game::GameRelease()
 {
-	delete  input_manager_;
-	input_manager_ = nullptr;
-
 	delete renderer_3d_;
 	renderer_3d_ = nullptr;
 
