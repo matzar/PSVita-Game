@@ -31,6 +31,9 @@
 #include "player.h"
 #include "ground.h"
 #include "pickup.h"
+// std headers
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
 // box2D headers
 #include <box2d/Box2D.h>
 
@@ -217,7 +220,10 @@ void Game::InitLevel()
 	//if (model_scene_->meshes.size() > 0)
 	//	mesh_ = model_scene_->CreateMesh(platform_, model_scene_->meshes.front());
 
-	
+	// initialize random seed
+	srand(time(NULL));
+
+	int start_colour = rand() % 2;
 
 	// will be used for grounds intervals
 	float interval = 3.0f;
@@ -270,16 +276,32 @@ void Game::InitLevel()
 				1, 
 				PICKUP);
 
-			ground_.at(i)->InitGround(
-				primitive_builder_,                   // primitive builder
-				world_,                               // world
-				start_position,                       // position
-				gef::Vector4(colour_ground_x / 2.0f, 0.5f, 0.5f),       // ground half dimensions
-				GROUND,                               // I am...
-				PLAYER | PICKUP,                      // ..and I collide with
-				1,                                    // group index (objects with the same positive index collide with each other)
-				GROUND,                               // type
-				BLUE);                                 // colour
+			if (start_colour == 0)
+			{
+				ground_.at(i)->InitGround(
+					primitive_builder_,                   // primitive builder
+					world_,                               // world
+					start_position,                       // position
+					gef::Vector4(colour_ground_x / 2.0f, 0.5f, 0.5f),       // ground half dimensions
+					GROUND,                               // I am...
+					PLAYER | PICKUP,                      // ..and I collide with
+					1,                                    // group index (objects with the same positive index collide with each other)
+					GROUND,                               // type
+					BLUE);                                 // colour
+			}
+			else
+			{
+				ground_.at(i)->InitGround(
+					primitive_builder_,                   // primitive builder
+					world_,                               // world
+					start_position,                       // position
+					gef::Vector4(colour_ground_x / 2.0f, 0.5f, 0.5f),       // ground half dimensions
+					GROUND,                               // I am...
+					PLAYER | PICKUP,                      // ..and I collide with
+					1,                                    // group index (objects with the same positive index collide with each other)
+					GROUND,                               // type
+					RED);
+			}
 
 			start_position.x += (colour_ground_x + interval);
 
@@ -323,16 +345,32 @@ void Game::InitLevel()
 				1,
 				PICKUP);
 
-			ground_.at(i)->InitGround(
-				primitive_builder_,                   // primitive builder
-				world_, 							  // world
-				start_position, 		              // position
-				gef::Vector4(colour_ground_x / 2.0f, 0.5f, 0.5f), 	  // ground half dimensions
-				GROUND, 							  // I am...
-				PLAYER | PICKUP, 					  // ..and I collide with
-				1, 									  // group index (objects with the same positive index collide with each other)
-				GROUND, 							  // type
-				RED);								  // colour
+			if (start_colour == 0)
+			{
+				ground_.at(i)->InitGround(
+					primitive_builder_,                   // primitive builder
+					world_, 							  // world
+					start_position, 		              // position
+					gef::Vector4(colour_ground_x / 2.0f, 0.5f, 0.5f), 	  // ground half dimensions
+					GROUND, 							  // I am...
+					PLAYER | PICKUP, 					  // ..and I collide with
+					1, 									  // group index (objects with the same positive index collide with each other)
+					GROUND, 							  // type
+					RED);								  // colour
+			}
+			else
+			{
+				ground_.at(i)->InitGround(
+					primitive_builder_,                   // primitive builder
+					world_, 							  // world
+					start_position, 		              // position
+					gef::Vector4(colour_ground_x / 2.0f, 0.5f, 0.5f), 	  // ground half dimensions
+					GROUND, 							  // I am...
+					PLAYER | PICKUP, 					  // ..and I collide with
+					1, 									  // group index (objects with the same positive index collide with each other)
+					GROUND, 							  // type
+					BLUE);
+			}
 
 			start_position.x += (colour_ground_x + interval);
 		}
