@@ -921,6 +921,7 @@ void Game::GameUpdate(float frame_time)
 			// must be under the same condition statement 
 			// to keep the simulation consistent between restarts
 			player_->PlayerController(controller);
+			player_->PlayerTouchController(touch_input);
 			UpdateSimulation(frame_time);
 		}
 

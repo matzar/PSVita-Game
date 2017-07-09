@@ -1,4 +1,5 @@
 #include "player.h"
+// gef headers
 #include <system/debug_log.h>
 
 #include <input/touch_input_manager.h>
@@ -11,6 +12,7 @@ Player::Player(float32* x_velocity, float32* y_velocity) :
 	alive_(true),
 	win_(false),
 	red_(true),
+	active_touch_id_(-1),
 	num_contacts_(0)
 {
 }
@@ -115,28 +117,65 @@ void Player::PlayerController(const gef::SonyController * controller)
 	}
 }
 
-void Player::PlayerTouchController(const gef::TouchInputManager * touch_controller)
+void Player::PlayerTouchController(const gef::TouchInputManager * touch_input)
 {
 	if (alive_)
 	{
 		// move the player
-		//b2Vec2 vel = GetBody()->GetLinearVelocity();
-		//vel.x = (*p_x_velocity);
-		//GetBody()->SetLinearVelocity(vel);
+		/*b2Vec2 vel = GetBody()->GetLinearVelocity();
+		vel.x = (*p_x_velocity);
+		GetBody()->SetLinearVelocity(vel);*/
 
-		if (jump_)
+		if (touch_input && (touch_input->max_num_panels() > 0))
 		{
-			if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
-			{
-				b2Vec2 vel = GetBody()->GetLinearVelocity();
-				vel.y = (*p_y_velocity);	//upwards - don't change x velocity
-				GetBody()->SetLinearVelocity(vel);
+			// get the active touches for this panel
+			const gef::TouchContainer& panel_touches = touch_input->touches(0);
 
-				jump_ = false;
+			// go through the touches
+			for (gef::ConstTouchIterator touch = panel_touches.begin(); touch != panel_touches.end(); ++touch)
+			{
+				// if active touch id is -1, then we are not currently processing a touch
+				if (active_touch_id_ == -1)
+				{
+					// check for the start of a new touch
+					if (touch->type == gef::TT_NEW)
+					{
+						active_touch_id_ = touch->id;
+
+						// we're just going to record the position of the touch
+						touch_position_ = touch->position;
+
+						// do any processing for a new touch here
+						if (jump_)
+						{
+							b2Vec2 vel = GetBody()->GetLinearVelocity();
+							vel.y = (*p_y_velocity);	//upwards - don't change x velocity
+							GetBody()->SetLinearVelocity(vel);
+
+							jump_ = false;
+						}
+
+					}
+				}
+				else if (active_touch_id_ == touch->id)
+				{
+					// we are processing touch data with a matching id to the one we are looking for
+					if (touch->type == gef::TT_ACTIVE)
+					{
+
+					}
+					else if (touch->type == gef::TT_RELEASED)
+					{
+						// the touch we are tracking has been released
+						// perform any actions that need to happen when a touch is released here
+
+						// we're not doing anything here apart from resetting the active touch id
+						active_touch_id_ = -1;
+					}
+				}
 			}
 		}
-
-		if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE)
+		/*if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE)
 		{
 			red_ = !red_;
 
@@ -144,7 +183,7 @@ void Player::PlayerTouchController(const gef::TouchInputManager * touch_controll
 				this->SetGameObjectColour(RED);
 			else
 				this->SetGameObjectColour(BLUE);
-		}
+		}*/
 	}
 	else
 	{
