@@ -41,6 +41,8 @@ private:
 
 	// difficulty
 	unsigned difficulty_count_;
+	// number of grounds in the level
+	unsigned number_of_grounds_;
 
 	gef::AudioManager* audio_manager_;
 
