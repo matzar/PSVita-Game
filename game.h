@@ -188,9 +188,6 @@ private:
 
 	void InitPickups();
 	void CleanPickups();
-
-	void InitAudio();
-	void CleanAudio();
 };
 
 #endif // !_GAME_H
