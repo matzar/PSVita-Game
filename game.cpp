@@ -295,6 +295,7 @@ void Game::InitLevel()
 					start_position.y += 2.0f;
 				else
 					start_position.y = 0.0f;
+
 				// use start position to place a pickup
 				b2Vec2 pickup_start_position = start_position;
 				pickup_start_position.y += 1.0f;
@@ -366,6 +367,7 @@ void Game::InitLevel()
 					start_position.y += 2.0f;
 				else
 					start_position.y = 0.0f;
+
 				// use start position to place a pickup
 				b2Vec2 pickup_start_position = start_position;
 				pickup_start_position.y += 1.0f;
@@ -442,7 +444,7 @@ void Game::InitLevel()
 				start_position.x += (texture_ground_x + interval);
 			} // !FINISH GROUND
 
-			  // RED GROUND
+			// RED GROUND
 			else if (i % 2 == 0)
 			{
 				// change height of the ground
@@ -450,6 +452,7 @@ void Game::InitLevel()
 					start_position.y += 2.0f;
 				else
 					start_position.y = 0.0f;
+
 				// use start position to place a pickup
 				b2Vec2 pickup_start_position = start_position;
 				pickup_start_position.y += 1.0f;
@@ -494,7 +497,7 @@ void Game::InitLevel()
 				start_position.x += (colour_ground_x + interval);
 			} // !RED GROUND
 
-			  // TEXTURED GROUND
+			// TEXTURED GROUND
 			else if (i % 3 == 0)
 			{
 				start_position.x -= interval / 2.0f + 0.5f;
@@ -512,7 +515,7 @@ void Game::InitLevel()
 				start_position.x += (texture_ground_x + interval);
 			} // !TEXTURED GROUND
 
-			  // BLUE GROUND
+			// BLUE GROUND
 			else
 			{
 				// change height of the ground
@@ -520,6 +523,7 @@ void Game::InitLevel()
 					start_position.y += 2.0f;
 				else
 					start_position.y = 0.0f;
+
 				// use start position to place a pickup
 				b2Vec2 pickup_start_position = start_position;
 				pickup_start_position.y += 1.0f;
