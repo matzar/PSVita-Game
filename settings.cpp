@@ -493,7 +493,7 @@ void Settings::SettingsRender()
 			break;
 		} // !difficulty_count_
 
-		// render "BACK" text
+		// render "GROUND" text
 		font_->RenderText(
 			sprite_renderer_,
 			gef::Vector4(menu_text_3_.x(), menu_text_3_.y(), -0.99f),

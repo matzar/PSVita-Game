@@ -157,13 +157,15 @@ void Frontend::CleanSprites()
 void Frontend::InitText()
 {
 	// menu text vectors init
-	float height_correction = 2.0f;
+	float height_correction = 3.0f;
 	// set "START" vector
 	menu_text_1_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
 	// set "SETTINGS" vector
-	menu_text_2_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
-	// set "INSTRUCTIONS" vector
-	menu_text_3_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
+	menu_text_2_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.0 * sprite_height + height_correction, -0.99f);
+	// set "BACK" vector
+	menu_text_3_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 2.5f + height_correction, -0.99f);
+	// set "BACK" vector
+	menu_text_4_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 4.0f + height_correction, -0.99f);
 } // InitText()
 
 void Frontend::InitAudio()
@@ -233,63 +235,53 @@ void Frontend::SonyController(const gef::SonyController* controller)
 {
 	if (controller)
 	{
-		// record where to move sprite
-		float left_horizontal_input = controller->left_stick_x_axis();
-		float left_vertical_input = controller->left_stick_y_axis();
-
-		float right_horizontal_input = controller->right_stick_x_axis();
-		float right_vertical_input = controller->right_stick_y_axis();
-
-		//if (left_vertical_input < 0) up = true;
-
-		// left stick up
-		if (controller->buttons_pressed() & gef_SONY_CTRL_UP && 
-			sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
+		// D-pad up
+		if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
+			sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 1.5f)
 		{
 			// lerp menu box sprite
 			gef::Vector4 menu_box_sprite_end_position_to_lerp;
-			menu_box_sprite_end_position_to_lerp.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - sprite_height * 2.0f, 0.0);
+			menu_box_sprite_end_position_to_lerp.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - sprite_height * 1.5f, 0.0);
 
 			gef::Vector4 menu_box_sprite_lerp;
 			menu_box_sprite_.set_position(menu_box_sprite_lerp.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp, 1.0));
 
 			// lerp left d-pad sprite
 			gef::Vector4 left_d_pad_end_position_to_lerp;
-			left_d_pad_end_position_to_lerp.set_value(platform_.width() * 0.5f - sprite_width_, left_d_pad_sprite_.position().y() - sprite_height * 2.0f, 0.0);
+			left_d_pad_end_position_to_lerp.set_value(platform_.width() * 0.5f - sprite_width_, left_d_pad_sprite_.position().y() - sprite_height * 1.5f, 0.0);
 
 			gef::Vector4 left_d_pad_sprite_lerp;
 			left_d_pad_sprite_.set_position(left_d_pad_sprite_lerp.LerpReturnVector(left_d_pad_sprite_.position(), left_d_pad_end_position_to_lerp, 1.0));
 
 			// right right d-pad sprite
 			gef::Vector4 right_d_pad_end_position_to_lerp;
-			right_d_pad_end_position_to_lerp.set_value(platform_.width() * 0.5f + sprite_width_, right_d_pad_sprite_.position().y() - sprite_height * 2.0f, 0.0);
+			right_d_pad_end_position_to_lerp.set_value(platform_.width() * 0.5f + sprite_width_, right_d_pad_sprite_.position().y() - sprite_height * 1.5f, 0.0);
 
 			gef::Vector4 right_d_pad_sprite_lerp;
 			right_d_pad_sprite_.set_position(right_d_pad_sprite_lerp.LerpReturnVector(right_d_pad_sprite_.position(), right_d_pad_end_position_to_lerp, 1.0));
-
 		}
 
-		// left stick down
+		// D-pad down
 		if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
-			sprite_init_position_y_ + sprite_height * 4.0f >= menu_box_sprite_.position().y() + sprite_height * 2.0f)
+			sprite_init_position_y_ + sprite_height * 5.0f >= menu_box_sprite_.position().y() + sprite_height * 1.5f)
 		{
 			// lerp menu box sprite
 			gef::Vector4 menu_box_sprite_end_position_to_lerp;
-			menu_box_sprite_end_position_to_lerp.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 2.0f, 0.0);
+			menu_box_sprite_end_position_to_lerp.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 1.5f, 0.0);
 
 			gef::Vector4 menu_box_sprite_lerp;
 			menu_box_sprite_.set_position(menu_box_sprite_lerp.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp, 1.0));
 
 			// lerp left d-pad sprite
 			gef::Vector4 left_d_pad_end_position_to_lerp;
-			left_d_pad_end_position_to_lerp.set_value(platform_.width() * 0.5f - sprite_width_, left_d_pad_sprite_.position().y() + sprite_height * 2.0f, 0.0);
+			left_d_pad_end_position_to_lerp.set_value(platform_.width() * 0.5f - sprite_width_, left_d_pad_sprite_.position().y() + sprite_height * 1.5f, 0.0);
 
 			gef::Vector4 left_d_pad_sprite_lerp;
 			left_d_pad_sprite_.set_position(left_d_pad_sprite_lerp.LerpReturnVector(left_d_pad_sprite_.position(), left_d_pad_end_position_to_lerp, 1.0));
 
 			// right right d-pad sprite
 			gef::Vector4 right_d_pad_end_position_to_lerp;
-			right_d_pad_end_position_to_lerp.set_value(platform_.width() * 0.5f + sprite_width_, right_d_pad_sprite_.position().y() + sprite_height * 2.0f, 0.0);
+			right_d_pad_end_position_to_lerp.set_value(platform_.width() * 0.5f + sprite_width_, right_d_pad_sprite_.position().y() + sprite_height * 1.5f, 0.0);
 
 			gef::Vector4 right_d_pad_sprite_lerp;
 			right_d_pad_sprite_.set_position(right_d_pad_sprite_lerp.LerpReturnVector(right_d_pad_sprite_.position(), right_d_pad_end_position_to_lerp, 1.0));
@@ -339,7 +331,15 @@ void Frontend::SonyController(const gef::SonyController* controller)
 			if (instructions_page_ < 4)
 				instructions_page_++;
 		}
-		// hide d-pad
+		// QUIT press
+		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
+			menu_box_sprite_.position().y() > (menu_text_4_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_4_.y() + sprite_height))
+		{
+
+			quit_ = true;
+		}
+		// toggle d-pad and instrucitons display
 		if (menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
 		{
@@ -351,20 +351,6 @@ void Frontend::SonyController(const gef::SonyController* controller)
 			display_d_pad = false;
 			display_instrucitons_ = false;
 		}
-		// TODO delete
-		if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
-		{
-			quit_ = true;
-		}
-		// trigger a sound effect
-		// TODO use this sample
-		if (audio_manager_)
-		{
-			if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
-			{
-				audio_manager_->PlaySample(sfx_voice_id_);
-			}
-		} // !audio_manager_
 	} 
 } // !SonyController
 
@@ -413,6 +399,15 @@ void Frontend::FrontendRender()
 			0xffffffff,
 			gef::TJ_CENTRE,
 			"INSTRUCTIONS");
+
+		// render "QUIT" text
+		font_->RenderText(
+			sprite_renderer_,
+			gef::Vector4(menu_text_4_.x(), menu_text_4_.y(), -0.99f),
+			1.0f,
+			0xffffffff,
+			gef::TJ_CENTRE,
+			"QUIT");
 
 		// Render title picture
 		if (display_instrucitons_)
