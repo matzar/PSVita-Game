@@ -704,6 +704,7 @@ void Game::UpdateSimulation(float frame_time)
 		gef::Vector4 camera_start_position;
 		gef::Vector4 update_yaw_pitch_roll_vector;
 		gef::Vector4 update_position_vector;
+		float lerp_speed = 0.2f;
 
 		switch ((*camera_count_))
 		{
@@ -713,9 +714,9 @@ void Game::UpdateSimulation(float frame_time)
 			// get camera's initial position
 			camera_start_position.set_value(camera_->GetPositionVector().x(), camera_->GetPositionVector().y(), camera_->GetPositionVector().z());
 			// lerp from intitial yaw, pitch and roll to a new position
-			update_yaw_pitch_roll_vector.Lerp(camera_start_yaw_pitch_roll, gef::Vector4(63.4f, -8.6f, 0.0f), 0.5f);
+			update_yaw_pitch_roll_vector.Lerp(camera_start_yaw_pitch_roll, gef::Vector4(63.4f, -8.6f, 0.0f), lerp_speed);
 			// lerp from intitial position to a new position
-			update_position_vector.Lerp(camera_start_position, gef::Vector4(player_->GetBody()->GetPosition().x - 9.3f, 3.3f, 7.3f), 0.5f);
+			update_position_vector.Lerp(camera_start_position, gef::Vector4(player_->GetBody()->GetPosition().x - 9.3f, 3.3f, 7.3f), lerp_speed);
 			// update camera's position
 			camera_->SetCameraPosition(update_yaw_pitch_roll_vector.x(), update_yaw_pitch_roll_vector.y(), update_yaw_pitch_roll_vector.z(), update_position_vector);
 			break;
@@ -726,9 +727,9 @@ void Game::UpdateSimulation(float frame_time)
 			// get camera's initial position
 			camera_start_position.set_value(camera_->GetPositionVector().x(), camera_->GetPositionVector().y(), camera_->GetPositionVector().z());
 			// lerp from intitial yaw, pitch and roll to a new position
-			update_yaw_pitch_roll_vector.Lerp(camera_start_yaw_pitch_roll, gef::Vector4(73.6f, -13.6f, 0.0f), 0.5f);
+			update_yaw_pitch_roll_vector.Lerp(camera_start_yaw_pitch_roll, gef::Vector4(73.6f, -13.6f, 0.0f), lerp_speed);
 			// lerp from intitial position to a new position
-			update_position_vector.Lerp(camera_start_position, gef::Vector4(player_->GetBody()->GetPosition().x - 9.8f, 6.1f, 8.7f), 0.5f);
+			update_position_vector.Lerp(camera_start_position, gef::Vector4(player_->GetBody()->GetPosition().x - 9.8f, 6.1f, 8.7f), lerp_speed);
 			// update camera's position
 			camera_->SetCameraPosition(update_yaw_pitch_roll_vector.x(), update_yaw_pitch_roll_vector.y(), update_yaw_pitch_roll_vector.z(), update_position_vector);
 			//camera_->SetCameraPosition(73.6f, -13.6f, 0.0f, gef::Vector4(player_->GetBody()->GetPosition().x - 9.8f, 6.1f, 8.7f));
@@ -740,9 +741,9 @@ void Game::UpdateSimulation(float frame_time)
 			// get camera's initial position
 			camera_start_position.set_value(camera_->GetPositionVector().x(), camera_->GetPositionVector().y(), camera_->GetPositionVector().z());
 			// lerp from intitial yaw, pitch and roll to a new position
-			update_yaw_pitch_roll_vector.Lerp(camera_start_yaw_pitch_roll, gef::Vector4(126.7f, -13.6f, 0.0f), 0.5f);
+			update_yaw_pitch_roll_vector.Lerp(camera_start_yaw_pitch_roll, gef::Vector4(126.7f, -13.6f, 0.0f), lerp_speed);
 			// lerp from intitial position to a new position
-			update_position_vector.Lerp(camera_start_position, gef::Vector4(player_->GetBody()->GetPosition().x - 5.9f, 4.0f, -8.8f), 0.5f);
+			update_position_vector.Lerp(camera_start_position, gef::Vector4(player_->GetBody()->GetPosition().x - 5.9f, 4.0f, -8.8f), lerp_speed);
 			// update camera's position
 			camera_->SetCameraPosition(update_yaw_pitch_roll_vector.x(), update_yaw_pitch_roll_vector.y(), update_yaw_pitch_roll_vector.z(), update_position_vector);
 			//camera_->SetCameraPosition(126.7f, -13.6f, 0.0f, gef::Vector4(player_->GetBody()->GetPosition().x -5.9f, 4.0f, -8.8f));
