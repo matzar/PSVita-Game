@@ -708,14 +708,15 @@ void Game::UpdateSimulation(float frame_time)
 		switch ((*camera_count_))
 		{
 		case CAM1:
+			// get camera's initial yaw, pitch and roll
 			camera_start_yaw_pitch_roll.set_value(camera_->GetYaw(), camera_->GetPitch(), camera_->GetRoll());
-			
+			// get camera's initial position
 			camera_start_position.set_value(camera_->GetPositionVector().x(), camera_->GetPositionVector().y(), camera_->GetPositionVector().z());
-
+			// lerp from intitial yaw, pitch and roll to a new position
 			update_yaw_pitch_roll_vector.Lerp(camera_start_yaw_pitch_roll, gef::Vector4(63.4f, -8.6f, 0.0f), 0.5f);
-
+			// lerp from intitial position to a new position
 			update_position_vector.Lerp(camera_start_position, gef::Vector4(player_->GetBody()->GetPosition().x - 9.3f, 3.3f, 7.3f), 0.5f);
-
+			// update camera's position
 			camera_->SetCameraPosition(update_yaw_pitch_roll_vector.x(), update_yaw_pitch_roll_vector.y(), update_yaw_pitch_roll_vector.z(), update_position_vector);
 			break;
 
