@@ -612,7 +612,7 @@ void Game::SonyController(const gef::SonyController* controller)
 			{
 				GameRelease();
 				GameInit();
-				
+		
 				// future improvement - reload function
 				/* 
 				player_->ReloadPlayer();
