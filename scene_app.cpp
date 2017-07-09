@@ -7,7 +7,6 @@
 
 // gef headers
 #include <audio/audio_manager.h>
-
 #include <input/input_manager.h>
 
 SceneApp::SceneApp(gef::Platform& platform) :
@@ -53,8 +52,12 @@ void SceneApp::Init()
 {
 	input_manager_ = gef::InputManager::Create(platform_);
 
+	// initialize audio only on PSVita
+#ifndef _WIN32
 	InitAudio();
-	// initialise gamestate_
+#endif // _WIN32
+
+	// initialize gamestate_
 	gamestate_ = FRONTEND;
 } // !Init
 
@@ -87,7 +90,10 @@ void SceneApp::CleanUp()
 	delete input_manager_;
 	input_manager_ = nullptr;
 
+	// clean up audio only on PSVita
+#ifndef _WIN32
 	CleanAudio();
+#endif // _WIN32
 } // !CleanUp
 
 bool SceneApp::Update(float frame_time)
@@ -154,13 +160,6 @@ bool SceneApp::Update(float frame_time)
 					delete frontend_;
 					frontend_ = nullptr;
 				}
-				//if (game_)
-				//{
-				//	// delete game
-				//	game_->GameRelease();
-				//	delete game_;
-				//	game_ = nullptr;
-				//}
 			}
 
 			// settings update function
@@ -193,13 +192,6 @@ bool SceneApp::Update(float frame_time)
 					delete frontend_;
 					frontend_ = nullptr;
 				}
-				//if (settings_)
-				//{
-				//	// delete settings
-				//	settings_->SettingsRelease();
-				//	delete settings_;
-				//	settings_ = nullptr;
-				//}
 			}
 			// game update function
 			game_->GameUpdate(frame_time);
