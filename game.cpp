@@ -205,22 +205,34 @@ void Game::CleanWorld()
 	world_ = nullptr;
 } // CleanWorld
 
+// loaded models can be used for creating pickups' meshes
+void Game::InitModels()
+{
+	// create a new scene object and read in the data from the file
+	// no meshes or materials are created yet
+	// we're not making any assumptions about what the data may be loaded in for
+	model_scene_ = new gef::Scene();
+	model_scene_->ReadSceneFromFile(platform_, "triceratop.scn");
+
+	// we do want to render the data stored in the scene file so lets create the materials from the material data present in the scene file
+	model_scene_->CreateMaterials(platform_);
+
+	// now check to see if there is any mesh data in the file, if so lets create a mesh from it
+	if (model_scene_->meshes.size() > 0)
+		mesh_ = model_scene_->CreateMesh(platform_, model_scene_->meshes.front());
+} // !InitModels
+
+void Game::CleanModels()
+{
+	delete model_scene_;
+	model_scene_ = nullptr;
+
+	delete mesh_;
+	mesh_ = nullptr;
+} // !CleanModels
+
 void Game::InitLevel()
 {
-	/// model loading can be used for creating pickups' meshes
-	//// create a new scene object and read in the data from the file
-	//// no meshes or materials are created yet
-	//// we're not making any assumptions about what the data may be loaded in for
-	//model_scene_ = new gef::Scene();
-	//model_scene_->ReadSceneFromFile(platform_, "triceratop.scn");
-
-	//// we do want to render the data stored in the scene file so lets create the materials from the material data present in the scene file
-	//model_scene_->CreateMaterials(platform_);
-
-	//// now check to see if there is any mesh data in the file, if so lets create a mesh from it
-	//if (model_scene_->meshes.size() > 0)
-	//	mesh_ = model_scene_->CreateMesh(platform_, model_scene_->meshes.front());
-
 	// initialize random seed
 	srand(time(NULL));
 	// random start colour
@@ -382,7 +394,7 @@ void Game::InitLevel()
 	}
 } // !InitLevel
 
-// future improvemnt - initialize and clean pickups during the runtime
+// future improvemnt - initialize and clean pickups during the runtime without destroying the b2World
 void Game::InitPickups()
 {
 	//// create a new scene object and read in the data from the file
@@ -465,7 +477,7 @@ void Game::InitPickups()
 	//	}
 	//}
 } // !InitPickups
-// future improvemnt - initialize and clean pickups during the runtime
+// future improvemnt - initialize and clean pickups during the runtime without destroying the b2World
 void Game::CleanPickups()
 {
 } // !CleanPickups
@@ -546,16 +558,10 @@ void Game::GameRelease()
 	// contact listener part of the world as well, no need to explicitly delete either
 	CleanWorld();
 
-	CleanCamera();
-
-	delete model_scene_;
-	model_scene_ = nullptr;
-
-	delete mesh_;
-	mesh_ = nullptr;
-
 	pickups_.~vector();
 	ground_.~vector();
+
+	CleanCamera();
 
 	CleanFont();
 

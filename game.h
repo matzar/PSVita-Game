@@ -123,7 +123,7 @@ private:
 	// pickup
 	std::vector<Pickup*> pickups_;
 
-	// model
+	// model loading
 	gef::Scene* model_scene_;
 	gef::Mesh* mesh_;
 
@@ -183,10 +183,14 @@ private:
 	void InitWorld();
 	void CleanWorld();
 
-	void InitPlayer();
+	void InitModels();
+	void CleanModels();
 
 	void InitLevel();
 
+	void InitPlayer();
+
+	// future improvement
 	void InitPickups();
 	void CleanPickups();
 };
