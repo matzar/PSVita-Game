@@ -699,9 +699,11 @@ void Game::SonyController(const gef::SonyController* controller)
 				menu_box_sprite_.position().y() > (menu_text_2_.y() - sprite_height * 0.5f) &&
 				menu_box_sprite_.position().y() < (menu_text_2_.y() + sprite_height))
 			{
+				pickups_count_ = 0;
+
 				GameRelease();
 				GameInit();
-		
+				
 				// future improvement - reload function
 				/* 
 				player_->ReloadPlayer();
