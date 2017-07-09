@@ -218,7 +218,7 @@ void Game::CleanWorld()
 	world_ = nullptr;
 } // CleanWorld
 
-// loaded models can be used for creating pickups' meshes
+ // loaded models can be used for creating pickups' meshes
 void Game::InitModels()
 {
 	// create a new scene object and read in the data from the file
@@ -253,6 +253,7 @@ void Game::InitLevel()
 
 	// will be used for grounds intervals
 	float interval = 3.0f;
+	float pickup_radius = 0.2f;
 	float32 colour_ground_x = 5.0f;
 	float32 texture_ground_x = 3.0f;
 	b2Vec2 start_position(0.0f, 0.0f);
@@ -302,12 +303,12 @@ void Game::InitLevel()
 					primitive_builder_,                                       // primitive builder
 					world_, 												  // world
 					pickup_start_position, 									  // position
-					0.2f, 													  // ground half dimensions
-					mesh_, 													  // I am...
-					PICKUP, 												  // ..and I collide with
-					PLAYER | GROUND, 										  // group index (objects with the same positive index collide with each other)
-					1, 														  // type
-					PICKUP);												  // colour
+					pickup_radius, 											  // pickup radius
+					mesh_, 													  // model mesh
+					PICKUP, 												  // I am...
+					PLAYER | GROUND, 										  // ..and I collide with
+					1, 														  // group index (objects with the same positive index collide with each other)
+					PICKUP);												  // type
 
 				if (start_colour == 0)
 				{
@@ -371,14 +372,14 @@ void Game::InitLevel()
 
 				pickups_.at(i)->InitPickup(
 					primitive_builder_,                                       // primitive builder
-					world_,													  // world
-					pickup_start_position,									  // position
-					0.2f,													  // ground half dimensions
-					mesh_,													  // I am...
-					PICKUP,													  // ..and I collide with
-					PLAYER | GROUND,										  // group index (objects with the same positive index collide with each other)
-					1,														  // type
-					PICKUP);												  // colour
+					world_, 												  // world
+					pickup_start_position, 									  // position
+					pickup_radius, 											  // pickup radius
+					mesh_, 													  // model mesh
+					PICKUP, 												  // I am...
+					PLAYER | GROUND, 										  // ..and I collide with
+					1, 														  // group index (objects with the same positive index collide with each other)
+					PICKUP);												  // type
 
 				if (start_colour == 0)
 				{
@@ -457,7 +458,7 @@ void Game::InitLevel()
 					primitive_builder_,                     // primitive builder
 					world_,									// world
 					pickup_start_position,					// position
-					0.2f,									// ground half dimensions						
+					pickup_radius,							// pickup radius					
 					PICKUP,									// I am...			
 					PLAYER | GROUND,						// ..and I collide with			
 					1,										// group index (objects with the same positive index collide with each other)			
@@ -527,7 +528,7 @@ void Game::InitLevel()
 					primitive_builder_,                     // primitive builder
 					world_,									// world
 					pickup_start_position,					// position
-					0.2f,									// ground half dimensions						
+					pickup_radius,							// pickup radius					
 					PICKUP,									// I am...			
 					PLAYER | GROUND,						// ..and I collide with			
 					1,										// group index (objects with the same positive index collide with each other)			
