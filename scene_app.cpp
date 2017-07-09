@@ -8,6 +8,7 @@
 // gef headers
 #include <audio/audio_manager.h>
 #include <input/input_manager.h>
+#include <input/touch_input_manager.h>
 
 SceneApp::SceneApp(gef::Platform& platform) :
 	Application(platform),
@@ -52,6 +53,10 @@ void SceneApp::Init()
 {
 	// initialize input manager
 	input_manager_ = gef::InputManager::Create(platform_);
+
+	// make sure if there is a panel to detect touch input, then activate it
+	if (input_manager_ && input_manager_->touch_manager() && (input_manager_->touch_manager()->max_num_panels() > 0))
+		input_manager_->touch_manager()->EnablePanel(0);
 
 	// only on PSVita
 #ifndef _WIN32

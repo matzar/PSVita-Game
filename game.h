@@ -15,6 +15,7 @@ namespace gef
 	class Font;
 	class SpriteRenderer;
 	class InputManager;
+	class TouchInputManager;
 	class AudioManager;
 	class Renderer3D;
 	class Mesh;

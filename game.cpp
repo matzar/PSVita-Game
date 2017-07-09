@@ -16,6 +16,7 @@
 #include <maths/vector2.h>
 
 #include <input/input_manager.h>
+#include <input/touch_input_manager.h>
 #include <input/sony_controller_input_manager.h>
 
 #include <audio/audio_manager.h>
@@ -908,6 +909,8 @@ void Game::GameUpdate(float frame_time)
 
 		// get controller input data and read controller data for controler 0
 		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
+		// get touch input
+		const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
 
 		camera_->CameraController(frame_time, controller);
 

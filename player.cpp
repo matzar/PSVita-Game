@@ -1,7 +1,8 @@
 #include "player.h"
 #include <system/debug_log.h>
 
-#include "input/sony_controller_input_manager.h"
+#include <input/touch_input_manager.h>
+#include <input/sony_controller_input_manager.h>
 
 Player::Player(float32* x_velocity, float32* y_velocity) :
 	p_x_velocity(x_velocity), // 5.0
@@ -83,6 +84,46 @@ void Player::PlayerController(const gef::SonyController * controller)
 		vel.x = (*p_x_velocity);
 		GetBody()->SetLinearVelocity(vel);
 		
+		if (jump_)
+		{
+			if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)
+			{
+				b2Vec2 vel = GetBody()->GetLinearVelocity();
+				vel.y = (*p_y_velocity);	//upwards - don't change x velocity
+				GetBody()->SetLinearVelocity(vel);
+
+				jump_ = false;
+			}
+		}
+
+		if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE)
+		{
+			red_ = !red_;
+
+			if (red_)
+				this->SetGameObjectColour(RED);
+			else
+				this->SetGameObjectColour(BLUE);
+		}
+	}
+	else
+	{
+		// stop the player
+		b2Vec2 vel = GetBody()->GetLinearVelocity();
+		vel.x = 0.0f;
+		GetBody()->SetLinearVelocity(vel);
+	}
+}
+
+void Player::PlayerTouchController(const gef::TouchInputManager * touch_controller)
+{
+	if (alive_)
+	{
+		// move the player
+		//b2Vec2 vel = GetBody()->GetLinearVelocity();
+		//vel.x = (*p_x_velocity);
+		//GetBody()->SetLinearVelocity(vel);
+
 		if (jump_)
 		{
 			if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS)

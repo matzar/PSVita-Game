@@ -8,6 +8,7 @@
 namespace gef
 {
 	class SonyController;
+	class TouchInputManager;
 }
 
 class PrimitiveBuilder;
@@ -32,6 +33,7 @@ public:
 	
 	void ReloadPlayer();
 	void PlayerController(const gef::SonyController* controller);
+	void PlayerTouchController(const gef::TouchInputManager* touch_controller);
 	inline void StartContact() { num_contacts_++; }
 	inline void EndContact() { num_contacts_--; }
 	inline void RestartJump() { jump_ = true; }
