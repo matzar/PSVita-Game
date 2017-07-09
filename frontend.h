@@ -57,7 +57,10 @@ private:
 	unsigned instructions_page_;
 	bool display_instrucitons_;
 
+	// quit
 	bool quit_;
+	// toggle fps display
+	bool dev_;
 
 	// title texture
 	gef::Texture* title_texture_;

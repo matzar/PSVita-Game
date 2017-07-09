@@ -33,6 +33,7 @@ Frontend::Frontend(gef::Platform& platform, gef::InputManager* input_manager, GA
 	playstation_right_d_pad_(nullptr),
 	display_instrucitons_(nullptr),
 	quit_(false),
+	dev_(false),
 	instructions_page_(0),
 	sprite_width_(190.0f),
 	sprite_height(38.0f),
@@ -296,6 +297,11 @@ void Frontend::SonyController(const gef::SonyController* controller)
 
 			quit_ = true;
 		}
+		// toggle fps display
+		if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
+		{
+			dev_ = !dev_;
+		}
 		// toggle d-pad and instrucitons display
 		if (menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
@@ -446,8 +452,11 @@ void Frontend::FrontendRender()
 			sprite_renderer_->DrawSprite(left_d_pad_sprite_);
 			sprite_renderer_->DrawSprite(right_d_pad_sprite_);
 		}
-
-		DrawHUD();
+		// display fps if dev mode on
+		if (dev_)
+		{
+			DrawHUD();
+		}
 	}
 	sprite_renderer_->End();
 } // !FrontendRender

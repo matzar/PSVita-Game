@@ -131,6 +131,8 @@ private:
 	bool quit_;
 	// pause
 	bool pause_;
+	// toggle fps display
+	bool dev_;
 	// FPS
 	float fps_;
 	// audio variables

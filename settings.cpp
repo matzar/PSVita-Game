@@ -32,6 +32,7 @@ Settings::Settings(gef::Platform& platform, gef::InputManager* input_manager, GA
 	playstation_left_d_pad_(nullptr),
 	playstation_right_d_pad_(nullptr),
 	quit_(false),
+	dev_(false),
 	sprite_width_(190.0f),
 	sprite_height(38.0f),
 	sfx_voice_id_(-1),
@@ -321,6 +322,11 @@ void Settings::SonyController(const gef::SonyController* controller)
 			// get the value that the gamestate points to and change it
 			(*gamestate_) = FRONTEND; 
 		}
+		// toggle fps display
+		if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
+		{
+			dev_ = !dev_;
+		}
 		// d-pad display
 		if (menu_box_sprite_.position().y() > (menu_text_4_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (menu_text_4_.y() + sprite_height))
@@ -476,7 +482,11 @@ void Settings::SettingsRender()
 			sprite_renderer_->DrawSprite(right_d_pad_sprite_);
 		}
 
-		DrawHUD();
+		// display fps if dev mode on
+		if (dev_)
+		{
+			DrawHUD();
+		}
 	}
 	sprite_renderer_->End();
 } // !SettingsRender

@@ -71,6 +71,7 @@ Game::Game(gef::Platform& platform,
 	mesh_(nullptr),
 	quit_(false),
 	pause_(true),
+	dev_(false),
 	sprite_width_(190.0f),
 	sprite_height(38.0f),
 	player_init_x_(-4.0f),
@@ -103,6 +104,18 @@ void Game::DrawHUD()
 	if (font_)
 	{
 		font_->RenderText(sprite_renderer_, gef::Vector4(10.0f, 5.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "PICKUP: %d", pickups_count_);
+		// if dev mode on...
+		if (dev_)
+		{
+			// ...display frame rate
+			font_->RenderText(sprite_renderer_,
+				gef::Vector4(850.0f, 510.0f, -0.9f),
+				1.0f,
+				0xffffffff,
+				gef::TJ_LEFT,
+				"FPS: %.1f",
+				fps_);
+		}
 	}
 } // !DrawHUD
 
@@ -648,6 +661,11 @@ void Game::SonyController(const gef::SonyController* controller)
 		{
 			pause_ = !pause_;
 		}
+		// toggle fps display
+		if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
+		{
+			dev_ = !dev_;
+		}
 	} 
 } // !SonyController
 
@@ -916,15 +934,6 @@ void Game::GameRender()
 					gef::TJ_CENTRE,
 					"YOU LOSE");
 			}
-
-			// display frame rate
-			font_->RenderText(sprite_renderer_, 
-				gef::Vector4(850.0f, 510.0f, -0.9f), 
-				1.0f, 
-				0xffffffff, 
-				gef::TJ_LEFT, 
-				"FPS: %.1f", 
-				fps_);
 
 			// render "RESUME" text
 			font_->RenderText(

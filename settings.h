@@ -72,7 +72,10 @@ private:
 	int sfx_id_;
 	int sfx_voice_id_;
 
+	// quit
 	bool quit_;
+	// toggle fps display
+	bool dev_;
 
 	// menu box sprite
 	gef::Sprite menu_box_sprite_;
