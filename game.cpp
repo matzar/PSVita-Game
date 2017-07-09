@@ -606,7 +606,7 @@ void Game::SonyController(const gef::SonyController* controller)
 				menu_box_sprite_.position().y() > (menu_text_2_.y() - sprite_height * 0.5f) &&
 				menu_box_sprite_.position().y() < (menu_text_2_.y() + sprite_height))
 			{
-				if (ground_.at(0)->GetGameObjectColour() == RED)
+				/*if (ground_.at(0)->GetGameObjectColour() == RED)
 					player_->SetGameObjectColour(RED);
 				else
 					player_->SetGameObjectColour(BLUE);
@@ -617,7 +617,9 @@ void Game::SonyController(const gef::SonyController* controller)
 				InitPickups();
 
 				pickups_count_ = 0;
-				pause_ = false;
+				pause_ = false;*/
+				GameRelease();
+				GameInit();
 			}
 			// MENU press
 			if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
