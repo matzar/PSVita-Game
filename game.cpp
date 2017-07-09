@@ -42,7 +42,10 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count
 	x_velocity(5.0f), // initialize by default to EASY
 	y_velocity(7.5f), // initialize by default to EASY
 	font_(nullptr),
-	texture_(nullptr),
+	brown_texture_(nullptr),
+	brown_texture_material_(nullptr),
+	finish_texture_(nullptr),
+	finish_ground_texture_material_(nullptr),
 	sprite_renderer_(nullptr),
 	input_manager_(nullptr),
 	audio_manager_(audio_manager),
@@ -63,7 +66,7 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count
 	fps_(0),
 	pickup_sfx_id_(-1),
 	pickups_count_(0),
-	number_of_grounds_(30)
+	number_of_grounds_(5)
 {
 	ground_.reserve(5);
 	pickups_.reserve(3);
@@ -95,15 +98,22 @@ void Game::DrawHUD()
 
 void Game::InitTextures()
 {
-	texture_ = CreateTextureFromPNG("nauticalTile_160.png", platform_);
-	texture_material_ = new gef::Material();
-	texture_material_->set_texture(texture_);
+	brown_texture_ = CreateTextureFromPNG("nauticalTile_160.png", platform_);
+	brown_texture_material_ = new gef::Material();
+	brown_texture_material_->set_texture(brown_texture_);
+
+	finish_texture_ = CreateTextureFromPNG("finish_line.png", platform_);
+	finish_ground_texture_material_ = new gef::Material();
+	finish_ground_texture_material_->set_texture(finish_texture_);
 } // !InitTextures
 
 void Game::CleanTextures()
 {
-	delete texture_;
-	texture_ = nullptr;
+	delete brown_texture_;
+	brown_texture_ = nullptr;
+
+	delete finish_texture_;
+	finish_texture_ = nullptr;
 } // !ClenupTextures
 
 void Game::InitSprites()
@@ -213,7 +223,7 @@ void Game::InitLevel()
 		ground_.push_back( new Ground());
 		pickups_.push_back(new Pickup());
 
-		// GOLD GROUND
+		// FINISH GROUND
 		if (i == number_of_grounds_ - 1)
 		{
 			start_position.x -= interval / 2.0f + 0.5f;
@@ -226,7 +236,7 @@ void Game::InitLevel()
 				PLAYER | PICKUP, 					  // ..and I collide with
 				1, 									  // group index (objects with the same positive index collide with each other)
 				GROUND, 							  // type
-				GOLD);							      // colour
+				FINISH);							      // colour
 
 			start_position.x += (texture_ground_x + interval);
 		}
@@ -695,8 +705,8 @@ void Game::UpdateSimulation(float frame_time)
 		// is current ground set
 		if (contact_listener_)
 		{
-			// if current ground is gold - player wins
-			if (contact_listener_->current_ground_->GetGameObjectColour() == GOLD)
+			// if current ground is finish - player wins
+			if (contact_listener_->current_ground_->GetGameObjectColour() == FINISH)
 			{
 				pause_ = true;
 				return;
@@ -806,10 +816,10 @@ void Game::GameRender()
 				renderer_3d_->set_override_material(&primitive_builder_->red_material());
 			else if (ground->GetGameObjectColour() == BLUE)
 				renderer_3d_->set_override_material(&primitive_builder_->blue_material());
-			else if (ground->GetGameObjectColour() == GOLD)
-				renderer_3d_->set_override_material(&primitive_builder_->yellow_material());
+			else if (ground->GetGameObjectColour() == FINISH)
+				renderer_3d_->set_override_material(finish_ground_texture_material_);
 			else
-				renderer_3d_->set_override_material(texture_material_);
+				renderer_3d_->set_override_material(brown_texture_material_);
 			// draw texture
 			renderer_3d_->DrawMesh(*ground);
 			// unmount texture

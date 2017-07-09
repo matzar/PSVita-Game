@@ -79,7 +79,7 @@ void ContactListener::BeginContact(b2Contact * contact)
 				player->StartContact();
 				current_ground_ = (Ground*)(game_object);
 
-				if (current_ground_->GetGameObjectColour() == GOLD)
+				if (current_ground_->GetGameObjectColour() == FINISH)
 				{
 					player->SetWin(true);
 					// TODO gef::DebugOut("current ground colour: %d\n", current_ground_->GetGameObjectColour());

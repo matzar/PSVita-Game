@@ -74,10 +74,14 @@ private:
 	// font
 	gef::Font* font_;
 
-	// textures
-	gef::Texture* texture_;
-	// textures' materials
-	gef::Material* texture_material_;
+	// brown ground texture
+	gef::Texture* brown_texture_;
+	// brown ground texture material
+	gef::Material* brown_texture_material_;
+	// finish ground texture
+	gef::Texture* finish_texture_;
+	// finish ground texture material
+	gef::Material* finish_ground_texture_material_;
 
 	// sprite renderer
 	gef::SpriteRenderer* sprite_renderer_;
