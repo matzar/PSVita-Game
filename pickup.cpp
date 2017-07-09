@@ -23,9 +23,10 @@ void Pickup::InitPickup(
 	OBJECT_TYPE type)
 {
 	// setup the mesh for the pickup
-	set_mesh(mesh);
-	//set_mesh(primitive_builder->CreateSphereMesh(radius, 10, 10, gef::Vector4(0.0f, 0.0f, 0.0f), (gef::Material*)(&primitive_builder->blue_material())));
-	//set_mesh(primitive_builder->GetDefaultSphereMesh());
+	// set from a model
+	//set_mesh(mesh);
+	// set from the primitive builder
+	set_mesh(primitive_builder->CreateSphereMesh(radius, 10, 10, gef::Vector4(0.0f, 0.0f, 0.0f), (gef::Material*)(&primitive_builder->yellow_material())));
 
 	// create a physics body for the pickup
 	b2BodyDef pickup_body_def;

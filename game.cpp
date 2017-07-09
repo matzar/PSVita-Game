@@ -63,7 +63,7 @@ Game::Game(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count
 	fps_(0),
 	pickup_sfx_id_(-1),
 	pickups_count_(0),
-	number_of_grounds_(10)
+	number_of_grounds_(30)
 {
 	ground_.reserve(5);
 	pickups_.reserve(3);
@@ -187,18 +187,20 @@ void Game::CleanWorld()
 
 void Game::InitLevel()
 {
-	// create a new scene object and read in the data from the file
-	// no meshes or materials are created yet
-	// we're not making any assumptions about what the data may be loaded in for
-	model_scene_ = new gef::Scene();
-	model_scene_->ReadSceneFromFile(platform_, "triceratop.scn");
+	//// create a new scene object and read in the data from the file
+	//// no meshes or materials are created yet
+	//// we're not making any assumptions about what the data may be loaded in for
+	//model_scene_ = new gef::Scene();
+	//model_scene_->ReadSceneFromFile(platform_, "triceratop.scn");
 
-	// we do want to render the data stored in the scene file so lets create the materials from the material data present in the scene file
-	model_scene_->CreateMaterials(platform_);
+	//// we do want to render the data stored in the scene file so lets create the materials from the material data present in the scene file
+	//model_scene_->CreateMaterials(platform_);
 
-	// now check to see if there is any mesh data in the file, if so lets create a mesh from it
-	if (model_scene_->meshes.size() > 0)
-		mesh_ = model_scene_->CreateMesh(platform_, model_scene_->meshes.front());
+	//// now check to see if there is any mesh data in the file, if so lets create a mesh from it
+	//if (model_scene_->meshes.size() > 0)
+	//	mesh_ = model_scene_->CreateMesh(platform_, model_scene_->meshes.front());
+
+	
 
 	// will be used for grounds intervals
 	float interval = 3.0f;
