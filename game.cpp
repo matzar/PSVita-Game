@@ -997,7 +997,7 @@ void Game::GameRender()
 					1.0f,
 					0xffffffff,
 					gef::TJ_CENTRE,
-					"YOU WIN");
+					"YOU WIN!");
 			}
 			if (!player_->Alive())
 			{
@@ -1008,7 +1008,7 @@ void Game::GameRender()
 					1.0f,
 					0xffffffff,
 					gef::TJ_CENTRE,
-					"YOU LOSE");
+					"YOU LOSE!");
 			}
 
 			// render "RESUME" text

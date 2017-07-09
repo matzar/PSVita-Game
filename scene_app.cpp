@@ -29,7 +29,7 @@ void SceneApp::InitAudio()
 
 	pickup_sfx_id_ = audio_manager_->LoadSample("audio/box_collected.wav", platform_);
 
-	audio_manager_->LoadMusic("audio/music.wav", platform_);
+	audio_manager_->LoadMusic("audio/SPACE_IS_COOL.wav", platform_);
 
 	audio_manager_->PlayMusic();
 } // !InitAudio
