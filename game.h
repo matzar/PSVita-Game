@@ -46,7 +46,13 @@ class b2ContactFilter;
 class Game
 {
 public:
-	Game(gef::Platform& platform, gef::AudioManager* audio_manager, GAMESTATE* gamestate, unsigned* camera_count, unsigned* difficulty_count, unsigned* number_of_grounds);
+	Game(gef::Platform& platform, 
+		 gef::AudioManager* audio_manager, 
+		 GAMESTATE* gamestate, 
+		 unsigned* camera_count, 
+		 unsigned* difficulty_count, 
+		 unsigned* number_of_grounds, 
+		 int* pickup_sfx_id_);
 	~Game();
 
 	void GameInit();
@@ -127,7 +133,7 @@ private:
 	// FPS
 	float fps_;
 	// audio variables
-	int pickup_sfx_id_;
+	int* pickup_sfx_id_;
 	// pickups count
 	uint16 pickups_count_;
 	// number of grounds

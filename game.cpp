@@ -34,11 +34,19 @@
 // box2D headers
 #include <box2d/Box2D.h>
 
-Game::Game(gef::Platform& platform, gef::AudioManager* audio_manager, GAMESTATE* gamestate, unsigned* camera_count, unsigned* difficulty_count, unsigned* number_of_grounds) :
+Game::Game(gef::Platform& platform, 
+	       gef::AudioManager* audio_manager, 
+	       GAMESTATE* gamestate, 
+	       unsigned* camera_count, 
+	       unsigned* difficulty_count, 
+	       unsigned* number_of_grounds,
+	       int* pickup_sfx_id) :
 	platform_(platform),
 	gamestate_(gamestate),
 	camera_count_(camera_count),
 	difficulty_count_(difficulty_count),
+	number_of_grounds_(number_of_grounds),
+	pickup_sfx_id_(pickup_sfx_id),
 	x_velocity(5.0f), // initialize by default to EASY
 	y_velocity(7.5f), // initialize by default to EASY
 	font_(nullptr),
@@ -64,9 +72,7 @@ Game::Game(gef::Platform& platform, gef::AudioManager* audio_manager, GAMESTATE*
 	player_init_x_(-4.0f),
 	player_init_y_(4.0f),
 	fps_(0),
-	pickup_sfx_id_(-1),
-	pickups_count_(0),
-	number_of_grounds_(number_of_grounds)
+	pickups_count_(0)
 {
 	ground_.reserve(5);
 	pickups_.reserve(3);
@@ -460,13 +466,13 @@ void Game::InitAudio()
 	if (audio_manager_)
 	{
 		// load a sound effect
-		pickup_sfx_id_ = audio_manager_->LoadSample("box_collected.wav", platform_);
+		//pickup_sfx_id_ = audio_manager_->LoadSample("box_collected.wav", platform_);
 
 		// load in music
-		audio_manager_->LoadMusic("music.wav", platform_);
+		//audio_manager_->LoadMusic("music.wav", platform_);
 
 		// play music
-		audio_manager_->PlayMusic();
+		//audio_manager_->PlayMusic();
 	}
 } // !InitAudio
 
@@ -477,7 +483,7 @@ void Game::CleanAudio()
 		// TODO
 		//audio_manager_->StopMusic();
 		//audio_manager_->UnloadAllSamples();
-		pickup_sfx_id_ = -1;
+		//pickup_sfx_id_ = -1;
 	}
 } // !CleanAudio
 
@@ -645,9 +651,9 @@ void Game::UpdatePickups()
 		// play pickup sound
 		if (audio_manager_)
 		{
-			if (pickup_sfx_id_ != -1)
+			if ((*pickup_sfx_id_) != -1)
 			{
-				int sfx_voice_id_ = audio_manager_->PlaySample(pickup_sfx_id_);
+				int sfx_voice_id_ = audio_manager_->PlaySample(*pickup_sfx_id_);
 
 				gef::VolumeInfo volume_info;
 				volume_info.volume = 0.5f;

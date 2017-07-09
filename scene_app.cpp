@@ -13,6 +13,7 @@ SceneApp::SceneApp(gef::Platform& platform) :
 	camera_count_(CAM1),
 	difficulty_count_(EASY),
 	number_of_grounds_(10),
+	pickup_sfx_id_(-1),
 	frontend_(nullptr),
 	settings_(nullptr),
 	game_(nullptr)
@@ -22,6 +23,12 @@ SceneApp::SceneApp(gef::Platform& platform) :
 void SceneApp::InitAudio()
 {
 	audio_manager_ = gef::AudioManager::Create();
+
+	pickup_sfx_id_ = audio_manager_->LoadSample("box_collected.wav", platform_);
+
+	audio_manager_->LoadMusic("music.wav", platform_);
+
+	audio_manager_->PlayMusic();
 } // !InitAudio
 
 void SceneApp::CleanAudio()
@@ -30,6 +37,8 @@ void SceneApp::CleanAudio()
 	{
 		audio_manager_->StopMusic();
 		audio_manager_->UnloadAllSamples();
+
+		pickup_sfx_id_ = -1;
 
 		delete audio_manager_;
 		audio_manager_ = nullptr;
@@ -162,7 +171,7 @@ bool SceneApp::Update(float frame_time)
 				// reference to the platform object is passed
 				// Game class has 'GAMESTATE* gamestate' pointer
 				// adress of gamestate_ is passed to the class and assigned to the GAMESTATE pointer
-				game_ = new Game(platform_, audio_manager_, &gamestate_, &camera_count_, &difficulty_count_, &number_of_grounds_);
+				game_ = new Game(platform_, audio_manager_, &gamestate_, &camera_count_, &difficulty_count_, &number_of_grounds_, &pickup_sfx_id_);
 				game_->GameInit();
 
 				// going to the GAME state possible only from the FRONTEND state

@@ -45,6 +45,8 @@ private:
 	unsigned number_of_grounds_;
 
 	gef::AudioManager* audio_manager_;
+	// audio variables
+	int pickup_sfx_id_;
 
 	// classes pointers
 	Frontend* frontend_;
