@@ -142,11 +142,6 @@ private:
 	// number of grounds
 	unsigned* number_of_grounds_;
 
-	uint16 catA;
-	uint16 maskA;
-	uint16 catB;
-	uint16 maskB;
-
 	// menu box sprite
 	gef::Sprite menu_box_sprite_;
 	float sprite_width_;

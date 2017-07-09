@@ -27,9 +27,9 @@ void SceneApp::InitAudio()
 {
 	audio_manager_ = gef::AudioManager::Create();
 
-	pickup_sfx_id_ = audio_manager_->LoadSample("box_collected.wav", platform_);
+	pickup_sfx_id_ = audio_manager_->LoadSample("audio/box_collected.wav", platform_);
 
-	audio_manager_->LoadMusic("music.wav", platform_);
+	audio_manager_->LoadMusic("audio/music.wav", platform_);
 
 	audio_manager_->PlayMusic();
 } // !InitAudio
