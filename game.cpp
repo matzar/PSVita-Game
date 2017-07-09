@@ -257,152 +257,311 @@ void Game::InitLevel()
 	float32 texture_ground_x = 3.0f;
 	b2Vec2 start_position(0.0f, 0.0f);
 
-	// procedural level generation
-	for (int i = 0; i < (*number_of_grounds_); ++i)
+	// if pickup models were loaded -->
+	if (mesh_)
 	{
-		// create new ground
-		ground_.push_back(new Ground());
-		// create new pickup
-		pickups_.push_back(new Pickup());
-
-		// FINISH GROUND
-		if (i == (*number_of_grounds_) - 1)
+		// procedural level generation
+		for (int i = 0; i < (*number_of_grounds_); ++i)
 		{
-			start_position.x -= interval / 2.0f + 0.5f;
-			ground_.at(i)->InitGround(
-				primitive_builder_,                                 // primitive builder
-				world_, 							                // world
-				start_position, 		                            // position
-				gef::Vector4(texture_ground_x / 2.0f, 0.5f, 0.5f), 	// ground half dimensions
-				GROUND, 							                // I am...
-				PLAYER | PICKUP, 					                // ..and I collide with
-				1, 									                // group index (objects with the same positive index collide with each other)
-				GROUND, 							                // type
-				FINISH);							                // colour
+			// create new ground
+			ground_.push_back(new Ground());
+			// create new pickup
+			pickups_.push_back(new Pickup());
 
-			start_position.x += (texture_ground_x + interval);
-		}
-		// RED GROUND
-		else if (i % 2 == 0) 
-		{
-			// change height of the ground
-			if (i % 4 == 0)
-				start_position.y += 2.0f;
-			else
-				start_position.y = 0.0f;
-
-			b2Vec2 pickup_start_position = start_position;
-			pickup_start_position.y += 1.0f;
-
-			pickups_.at(i)->InitPickup(
-				primitive_builder_,                                       // primitive builder
-				world_, 												  // world
-				pickup_start_position, 									  // position
-				0.2f, 													  // ground half dimensions
-				mesh_, 													  // I am...
-				PICKUP, 												  // ..and I collide with
-				PLAYER | GROUND, 										  // group index (objects with the same positive index collide with each other)
-				1, 														  // type
-				PICKUP);												  // colour
-
-			if (start_colour == 0)
+			// FINISH GROUND
+			if (i == (*number_of_grounds_) - 1)
 			{
+				start_position.x -= interval / 2.0f + 0.5f;
 				ground_.at(i)->InitGround(
-					primitive_builder_,                                   // primitive builder
-					world_,                                               // world
-					start_position,                                       // position
-					gef::Vector4(colour_ground_x / 2.0f, 0.5f, 0.5f),     // ground half dimensions
-					GROUND,                                               // I am...
-					PLAYER | PICKUP,                                      // ..and I collide with
-					1,                                                    // group index (objects with the same positive index collide with each other)
-					GROUND,                                               // type
-					BLUE);                                                // colour
-			}
-			else
+					primitive_builder_,                                 // primitive builder
+					world_, 							                // world
+					start_position, 		                            // position
+					gef::Vector4(texture_ground_x / 2.0f, 0.5f, 0.5f), 	// ground half dimensions
+					GROUND, 							                // I am...
+					PLAYER | PICKUP, 					                // ..and I collide with
+					1, 									                // group index (objects with the same positive index collide with each other)
+					GROUND, 							                // type
+					FINISH);							                // colour
+
+				start_position.x += (texture_ground_x + interval);
+			} // !FINISH GROUND
+
+			// RED GROUND
+			else if (i % 2 == 0)
 			{
-				ground_.at(i)->InitGround(
-					primitive_builder_,                                   // primitive builder
-					world_,                                               // world
-					start_position,                                       // position
-					gef::Vector4(colour_ground_x / 2.0f, 0.5f, 0.5f),     // ground half dimensions
-					GROUND,                                               // I am...
-					PLAYER | PICKUP,                                      // ..and I collide with
-					1,                                                    // group index (objects with the same positive index collide with each other)
-					GROUND,                                               // type
-					RED);                                                 // colour
-			}
+				// change height of the ground
+				if (i % 4 == 0)
+					start_position.y += 2.0f;
+				else
+					start_position.y = 0.0f;
 
-			start_position.x += (colour_ground_x + interval);
+				b2Vec2 pickup_start_position = start_position;
+				pickup_start_position.y += 1.0f;
 
-		}
-		// TEXTURED GROUND
-		else if (i % 3 == 0)
-		{
-			start_position.x -= interval / 2.0f + 0.5f;
-			ground_.at(i)->InitGround(
-				primitive_builder_,                                       // primitive builder
-				world_, 							                      // world
-				start_position, 		                                  // position
-				gef::Vector4(texture_ground_x / 2.0f, 0.5f, 0.5f), 	      // ground half dimensions
-				GROUND, 							                      // I am...
-				PLAYER | PICKUP, 					                      // ..and I collide with
-				1, 									                      // group index (objects with the same positive index collide with each other)
-				GROUND, 							                      // type
-				NO_COL);							                      // colour
+				pickups_.at(i)->InitPickup(
+					primitive_builder_,                                       // primitive builder
+					world_, 												  // world
+					pickup_start_position, 									  // position
+					0.2f, 													  // ground half dimensions
+					mesh_, 													  // I am...
+					PICKUP, 												  // ..and I collide with
+					PLAYER | GROUND, 										  // group index (objects with the same positive index collide with each other)
+					1, 														  // type
+					PICKUP);												  // colour
 
-			start_position.x += (texture_ground_x + interval);
-		}
-		// BLUE GROUND
-		else 
-		{
-			// change height of the ground
-			if (i % 6 == 0)
-				start_position.y += 2.0f;
-			else
-				start_position.y = 0.0f;
-			
-			b2Vec2 pickup_start_position = start_position;
-			pickup_start_position.y += 1.0f;
+				if (start_colour == 0)
+				{
+					ground_.at(i)->InitGround(
+						primitive_builder_,                                   // primitive builder
+						world_,                                               // world
+						start_position,                                       // position
+						gef::Vector4(colour_ground_x / 2.0f, 0.5f, 0.5f),     // ground half dimensions
+						GROUND,                                               // I am...
+						PLAYER | PICKUP,                                      // ..and I collide with
+						1,                                                    // group index (objects with the same positive index collide with each other)
+						GROUND,                                               // type
+						BLUE);                                                // colour
+				}
+				else
+				{
+					ground_.at(i)->InitGround(
+						primitive_builder_,                                   // primitive builder
+						world_,                                               // world
+						start_position,                                       // position
+						gef::Vector4(colour_ground_x / 2.0f, 0.5f, 0.5f),     // ground half dimensions
+						GROUND,                                               // I am...
+						PLAYER | PICKUP,                                      // ..and I collide with
+						1,                                                    // group index (objects with the same positive index collide with each other)
+						GROUND,                                               // type
+						RED);                                                 // colour
+				}
 
-			pickups_.at(i)->InitPickup(
-				primitive_builder_,                                       // primitive builder
-				world_,													  // world
-				pickup_start_position,									  // position
-				0.2f,													  // ground half dimensions
-				mesh_,													  // I am...
-				PICKUP,													  // ..and I collide with
-				PLAYER | GROUND,										  // group index (objects with the same positive index collide with each other)
-				1,														  // type
-				PICKUP);												  // colour
+				start_position.x += (colour_ground_x + interval);
+			} // !RED GROUND
 
-			if (start_colour == 0)
+			// TEXTURED GROUND
+			else if (i % 3 == 0)
 			{
+				start_position.x -= interval / 2.0f + 0.5f;
 				ground_.at(i)->InitGround(
-					primitive_builder_,                                   // primitive builder
-					world_, 							                  // world
-					start_position, 		                              // position
-					gef::Vector4(colour_ground_x / 2.0f, 0.5f, 0.5f), 	  // ground half dimensions
-					GROUND, 							                  // I am...
-					PLAYER | PICKUP, 					                  // ..and I collide with
-					1, 									                  // group index (objects with the same positive index collide with each other)
-					GROUND, 							                  // type
-					RED);								                  // colour
-			}
+					primitive_builder_,                                       // primitive builder
+					world_, 							                      // world
+					start_position, 		                                  // position
+					gef::Vector4(texture_ground_x / 2.0f, 0.5f, 0.5f), 	      // ground half dimensions
+					GROUND, 							                      // I am...
+					PLAYER | PICKUP, 					                      // ..and I collide with
+					1, 									                      // group index (objects with the same positive index collide with each other)
+					GROUND, 							                      // type
+					NO_COL);							                      // colour
+
+				start_position.x += (texture_ground_x + interval);
+			} // !TEXTURED GROUND
+
+			// BLUE GROUND
 			else
 			{
-				ground_.at(i)->InitGround(
-					primitive_builder_,                                   // primitive builder
-					world_, 							                  // world
-					start_position, 		                              // position
-					gef::Vector4(colour_ground_x / 2.0f, 0.5f, 0.5f), 	  // ground half dimensions
-					GROUND, 							                  // I am...
-					PLAYER | PICKUP, 					                  // ..and I collide with
-					1, 									                  // group index (objects with the same positive index collide with each other)
-					GROUND, 							                  // type
-					BLUE);                                                // colour
-			}
+				// change height of the ground
+				if (i % 6 == 0)
+					start_position.y += 2.0f;
+				else
+					start_position.y = 0.0f;
 
-			start_position.x += (colour_ground_x + interval);
+				b2Vec2 pickup_start_position = start_position;
+				pickup_start_position.y += 1.0f;
+
+				pickups_.at(i)->InitPickup(
+					primitive_builder_,                                       // primitive builder
+					world_,													  // world
+					pickup_start_position,									  // position
+					0.2f,													  // ground half dimensions
+					mesh_,													  // I am...
+					PICKUP,													  // ..and I collide with
+					PLAYER | GROUND,										  // group index (objects with the same positive index collide with each other)
+					1,														  // type
+					PICKUP);												  // colour
+
+				if (start_colour == 0)
+				{
+					ground_.at(i)->InitGround(
+						primitive_builder_,                                   // primitive builder
+						world_, 							                  // world
+						start_position, 		                              // position
+						gef::Vector4(colour_ground_x / 2.0f, 0.5f, 0.5f), 	  // ground half dimensions
+						GROUND, 							                  // I am...
+						PLAYER | PICKUP, 					                  // ..and I collide with
+						1, 									                  // group index (objects with the same positive index collide with each other)
+						GROUND, 							                  // type
+						RED);								                  // colour
+				}
+				else
+				{
+					ground_.at(i)->InitGround(
+						primitive_builder_,                                   // primitive builder
+						world_, 							                  // world
+						start_position, 		                              // position
+						gef::Vector4(colour_ground_x / 2.0f, 0.5f, 0.5f), 	  // ground half dimensions
+						GROUND, 							                  // I am...
+						PLAYER | PICKUP, 					                  // ..and I collide with
+						1, 									                  // group index (objects with the same positive index collide with each other)
+						GROUND, 							                  // type
+						BLUE);                                                // colour
+				}
+
+				start_position.x += (colour_ground_x + interval);
+			} // !BLUE GROUND
+		} 
+	} // !mesh_
+
+	// --> if no pickup models were loaded
+	else
+	{
+		// procedural level generation
+		for (int i = 0; i < (*number_of_grounds_); ++i)
+		{
+			// create new ground
+			ground_.push_back(new Ground());
+			// create new pickup
+			pickups_.push_back(new Pickup());
+
+			// FINISH GROUND
+			if (i == (*number_of_grounds_) - 1)
+			{
+				start_position.x -= interval / 2.0f + 0.5f;
+				ground_.at(i)->InitGround(
+					primitive_builder_,                                 // primitive builder
+					world_, 							                // world
+					start_position, 		                            // position
+					gef::Vector4(texture_ground_x / 2.0f, 0.5f, 0.5f), 	// ground half dimensions
+					GROUND, 							                // I am...
+					PLAYER | PICKUP, 					                // ..and I collide with
+					1, 									                // group index (objects with the same positive index collide with each other)
+					GROUND, 							                // type
+					FINISH);							                // colour
+
+				start_position.x += (texture_ground_x + interval);
+			} // !FINISH GROUND
+
+			  // RED GROUND
+			else if (i % 2 == 0)
+			{
+				// change height of the ground
+				if (i % 4 == 0)
+					start_position.y += 2.0f;
+				else
+					start_position.y = 0.0f;
+
+				b2Vec2 pickup_start_position = start_position;
+				pickup_start_position.y += 1.0f;
+
+				pickups_.at(i)->InitPickup(
+					primitive_builder_,                     // primitive builder
+					world_,									// world
+					pickup_start_position,					// position
+					0.2f,									// ground half dimensions						
+					PICKUP,									// I am...			
+					PLAYER | GROUND,						// ..and I collide with			
+					1,										// group index (objects with the same positive index collide with each other)			
+					PICKUP);								// type			
+
+				if (start_colour == 0)
+				{
+					ground_.at(i)->InitGround(
+						primitive_builder_,                                   // primitive builder
+						world_,                                               // world
+						start_position,                                       // position
+						gef::Vector4(colour_ground_x / 2.0f, 0.5f, 0.5f),     // ground half dimensions
+						GROUND,                                               // I am...
+						PLAYER | PICKUP,                                      // ..and I collide with
+						1,                                                    // group index (objects with the same positive index collide with each other)
+						GROUND,                                               // type
+						BLUE);                                                // colour
+				}
+				else
+				{
+					ground_.at(i)->InitGround(
+						primitive_builder_,                                   // primitive builder
+						world_,                                               // world
+						start_position,                                       // position
+						gef::Vector4(colour_ground_x / 2.0f, 0.5f, 0.5f),     // ground half dimensions
+						GROUND,                                               // I am...
+						PLAYER | PICKUP,                                      // ..and I collide with
+						1,                                                    // group index (objects with the same positive index collide with each other)
+						GROUND,                                               // type
+						RED);                                                 // colour
+				}
+
+				start_position.x += (colour_ground_x + interval);
+			} // !RED GROUND
+
+			  // TEXTURED GROUND
+			else if (i % 3 == 0)
+			{
+				start_position.x -= interval / 2.0f + 0.5f;
+				ground_.at(i)->InitGround(
+					primitive_builder_,                                       // primitive builder
+					world_, 							                      // world
+					start_position, 		                                  // position
+					gef::Vector4(texture_ground_x / 2.0f, 0.5f, 0.5f), 	      // ground half dimensions
+					GROUND, 							                      // I am...
+					PLAYER | PICKUP, 					                      // ..and I collide with
+					1, 									                      // group index (objects with the same positive index collide with each other)
+					GROUND, 							                      // type
+					NO_COL);							                      // colour
+
+				start_position.x += (texture_ground_x + interval);
+			} // !TEXTURED GROUND
+
+			  // BLUE GROUND
+			else
+			{
+				// change height of the ground
+				if (i % 6 == 0)
+					start_position.y += 2.0f;
+				else
+					start_position.y = 0.0f;
+
+				b2Vec2 pickup_start_position = start_position;
+				pickup_start_position.y += 1.0f;
+
+				pickups_.at(i)->InitPickup(
+					primitive_builder_,                     // primitive builder
+					world_,									// world
+					pickup_start_position,					// position
+					0.2f,									// ground half dimensions						
+					PICKUP,									// I am...			
+					PLAYER | GROUND,						// ..and I collide with			
+					1,										// group index (objects with the same positive index collide with each other)			
+					PICKUP);								// type			
+
+				if (start_colour == 0)
+				{
+					ground_.at(i)->InitGround(
+						primitive_builder_,                                   // primitive builder
+						world_, 							                  // world
+						start_position, 		                              // position
+						gef::Vector4(colour_ground_x / 2.0f, 0.5f, 0.5f), 	  // ground half dimensions
+						GROUND, 							                  // I am...
+						PLAYER | PICKUP, 					                  // ..and I collide with
+						1, 									                  // group index (objects with the same positive index collide with each other)
+						GROUND, 							                  // type
+						RED);								                  // colour
+				}
+				else
+				{
+					ground_.at(i)->InitGround(
+						primitive_builder_,                                   // primitive builder
+						world_, 							                  // world
+						start_position, 		                              // position
+						gef::Vector4(colour_ground_x / 2.0f, 0.5f, 0.5f), 	  // ground half dimensions
+						GROUND, 							                  // I am...
+						PLAYER | PICKUP, 					                  // ..and I collide with
+						1, 									                  // group index (objects with the same positive index collide with each other)
+						GROUND, 							                  // type
+						BLUE);                                                // colour
+				}
+
+				start_position.x += (colour_ground_x + interval);
+			} // !BLUE GROUND
 		}
 	}
 } // !InitLevel
