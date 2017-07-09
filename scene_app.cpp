@@ -12,6 +12,7 @@ SceneApp::SceneApp(gef::Platform& platform) :
 	Application(platform),
 	camera_count_(CAM1),
 	difficulty_count_(EASY),
+	number_of_grounds_(10),
 	frontend_(nullptr),
 	settings_(nullptr),
 	game_(nullptr)
@@ -121,7 +122,7 @@ bool SceneApp::Update(float frame_time)
 				// reference to the platform object is passed
 				// Settings class has 'GAMESTATE* gamestate' pointer
 				// adress of gamestate_ is passed to the class and assigned to the GAMESTATE pointer
-				settings_ = new Settings(platform_, &gamestate_, &camera_count_, &difficulty_count_);
+				settings_ = new Settings(platform_, &gamestate_, &camera_count_, &difficulty_count_, &number_of_grounds_);
 				settings_->SettingsInit();
 
 				// going to the SETTINGS state possible only from the FRONTEND state
@@ -161,7 +162,7 @@ bool SceneApp::Update(float frame_time)
 				// reference to the platform object is passed
 				// Game class has 'GAMESTATE* gamestate' pointer
 				// adress of gamestate_ is passed to the class and assigned to the GAMESTATE pointer
-				game_ = new Game(platform_, audio_manager_, &gamestate_, &camera_count_, &difficulty_count_, );
+				game_ = new Game(platform_, audio_manager_, &gamestate_, &camera_count_, &difficulty_count_, &number_of_grounds_);
 				game_->GameInit();
 
 				// going to the GAME state possible only from the FRONTEND state

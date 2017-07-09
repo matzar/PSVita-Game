@@ -22,11 +22,12 @@
 #include "camera_enum.h"
 #include "difficulty_enum.h"
 
-Settings::Settings(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, unsigned* difficulty_count) :
+Settings::Settings(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, unsigned* difficulty_count, unsigned* number_of_grounds) :
 	platform_(platform),
 	gamestate_(gamestate),
 	camera_count_(camera_count),
 	difficulty_count_(difficulty_count),
+	number_of_grounds_(number_of_grounds),
 	input_manager_(nullptr),
 	sprite_renderer_(nullptr),
 	audio_manager_(nullptr),
@@ -281,8 +282,6 @@ void Settings::SonyController(const gef::SonyController* controller)
 			menu_box_sprite_.position().y() > (menu_text_1_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (menu_text_1_.y() + sprite_height))
 		{
-			display_d_pad = true;
-
 			(*camera_count_)++;
 
 			if ((*camera_count_) >= 3)
@@ -310,8 +309,6 @@ void Settings::SonyController(const gef::SonyController* controller)
 			menu_box_sprite_.position().y() > (menu_text_2_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (menu_text_2_.y() + sprite_height))
 		{
-			display_d_pad = true;
-
 			(*difficulty_count_)++;
 
 			if ((*difficulty_count_) >= 2)
@@ -339,28 +336,26 @@ void Settings::SonyController(const gef::SonyController* controller)
 			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
 		{
-			display_d_pad = true;
+			(*number_of_grounds_) += 10;
 
-			(*difficulty_count_)++;
-
-			if ((*difficulty_count_) >= 2)
-				(*difficulty_count_) = 0;
+			if ((*number_of_grounds_) >= 40)
+				(*number_of_grounds_) = 10;
 		}
 		// GROUND left d-pad
 		if (controller->buttons_pressed() & gef_SONY_CTRL_LEFT &&
 			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
 		{
-			if ((*difficulty_count_) > 0)
-				(*difficulty_count_)--;
+			if ((*number_of_grounds_) > 10)
+				(*number_of_grounds_) -= 10;
 		}
 		// GROUND right d-pad
 		if (controller->buttons_pressed() & gef_SONY_CTRL_RIGHT &&
 			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
 		{
-			if ((*difficulty_count_) < 1)
-				(*difficulty_count_)++;
+			if ((*number_of_grounds_) < 30)
+				(*number_of_grounds_) += 10;
 		}
 		
 		// BACK press
@@ -368,10 +363,19 @@ void Settings::SonyController(const gef::SonyController* controller)
 			menu_box_sprite_.position().y() > (menu_text_4_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (menu_text_4_.y() + sprite_height))
 		{
-			display_d_pad = false;
 			// update the current state of the game state machine
 			// get the value that the gamestate points to and change it
 			(*gamestate_) = FRONTEND; 
+		}
+		// d-pad display
+		if (menu_box_sprite_.position().y() > (menu_text_4_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_4_.y() + sprite_height))
+		{
+			display_d_pad = false;
+		}
+		else
+		{
+			display_d_pad = true;
 		}
 	}
 } // !SonyController
@@ -496,7 +500,8 @@ void Settings::SettingsRender()
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
-			"GROUNDS 10");
+			"GROUNDS %d",
+			(*number_of_grounds_));
 
 		// render "BACK" text
 		font_->RenderText(

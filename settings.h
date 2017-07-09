@@ -25,7 +25,7 @@ enum GAMESTATE;
 class Settings
 {
 public:
-	Settings(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, unsigned* difficulty_count);
+	Settings(gef::Platform& platform, GAMESTATE* gamestate, unsigned* camera_count, unsigned* difficulty_count, unsigned* number_of_grounds);
 	~Settings();
 
 	void SettingsInit();
@@ -46,6 +46,8 @@ private:
 
 	// difficulty
 	unsigned* difficulty_count_;
+	// number of grounds
+	unsigned* number_of_grounds_;
 
 	// input manager
 	gef::InputManager* input_manager_;
