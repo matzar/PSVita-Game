@@ -146,7 +146,7 @@ void Settings::CleanSprites()
 void Settings::InitText()
 {
 	// menu text vectors init
-	float height_correction = 2.0f;
+	float height_correction = 3.0f;
 	// set "START" vector
 	menu_text_1_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
 	// set "SETTINGS" vector
@@ -281,6 +281,8 @@ void Settings::SonyController(const gef::SonyController* controller)
 			menu_box_sprite_.position().y() > (menu_text_1_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (menu_text_1_.y() + sprite_height))
 		{
+			display_d_pad = true;
+
 			(*camera_count_)++;
 
 			if ((*camera_count_) >= 3)
@@ -308,6 +310,8 @@ void Settings::SonyController(const gef::SonyController* controller)
 			menu_box_sprite_.position().y() > (menu_text_2_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (menu_text_2_.y() + sprite_height))
 		{
+			display_d_pad = true;
+
 			(*difficulty_count_)++;
 
 			if ((*difficulty_count_) >= 2)
@@ -329,41 +333,47 @@ void Settings::SonyController(const gef::SonyController* controller)
 			if ((*difficulty_count_) < 1)
 				(*difficulty_count_)++;
 		}
-		// BACK press
+
+		// GROUND press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
 			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
 		{
+			display_d_pad = true;
+
+			(*difficulty_count_)++;
+
+			if ((*difficulty_count_) >= 2)
+				(*difficulty_count_) = 0;
+		}
+		// GROUND left d-pad
+		if (controller->buttons_pressed() & gef_SONY_CTRL_LEFT &&
+			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
+		{
+			if ((*difficulty_count_) > 0)
+				(*difficulty_count_)--;
+		}
+		// GROUND right d-pad
+		if (controller->buttons_pressed() & gef_SONY_CTRL_RIGHT &&
+			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
+		{
+			if ((*difficulty_count_) < 1)
+				(*difficulty_count_)++;
+		}
+		
+		// BACK press
+		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
+			menu_box_sprite_.position().y() > (menu_text_4_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_4_.y() + sprite_height))
+		{
+			display_d_pad = false;
 			// update the current state of the game state machine
 			// get the value that the gamestate points to and change it
 			(*gamestate_) = FRONTEND; 
 		}
-		// hide d-pad
-		if (menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
-		{
-			display_d_pad = false;
-		}
-		else
-		{
-			display_d_pad = true;
-		}
-		// TODO delete
-		if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
-		{
-			quit_ = true;
-		}
-		// trigger a sound effect
-		if (audio_manager_)
-		{
-			if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
-			{
-				audio_manager_->PlaySample(sfx_voice_id_);
-				/*audio_manager_->StopPlayingSampleVoice(sfx_voice_id_);
-				sfx_voice_id_ = -1;*/
-			}
-		}
-	} // !audio_manager_
+	}
 } // !SonyController
 
 void Settings::SettingsUpdate(float frame_time)
@@ -486,7 +496,7 @@ void Settings::SettingsRender()
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
-			"BACK");
+			"GROUNDS 10");
 
 		// render "BACK" text
 		font_->RenderText(
@@ -495,7 +505,7 @@ void Settings::SettingsRender()
 			1.0f,
 			0xffffffff,
 			gef::TJ_CENTRE,
-			"GROUNDS 10");
+			"BACK");
 
 		// render menu box sprite
 		sprite_renderer_->DrawSprite(menu_box_sprite_);
