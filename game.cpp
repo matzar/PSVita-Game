@@ -283,7 +283,7 @@ void Game::InitLevel()
 					1, 									                // group index (objects with the same positive index collide with each other)
 					GROUND, 							                // type
 					FINISH);							                // colour
-
+				// update start position
 				start_position.x += (texture_ground_x + interval);
 			} // !FINISH GROUND
 
@@ -295,7 +295,7 @@ void Game::InitLevel()
 					start_position.y += 2.0f;
 				else
 					start_position.y = 0.0f;
-
+				// use start position to place a pickup
 				b2Vec2 pickup_start_position = start_position;
 				pickup_start_position.y += 1.0f;
 
@@ -336,7 +336,7 @@ void Game::InitLevel()
 						GROUND,                                               // type
 						RED);                                                 // colour
 				}
-
+				// update start position
 				start_position.x += (colour_ground_x + interval);
 			} // !RED GROUND
 
@@ -354,7 +354,7 @@ void Game::InitLevel()
 					1, 									                      // group index (objects with the same positive index collide with each other)
 					GROUND, 							                      // type
 					NO_COL);							                      // colour
-
+				// update start position
 				start_position.x += (texture_ground_x + interval);
 			} // !TEXTURED GROUND
 
@@ -366,7 +366,7 @@ void Game::InitLevel()
 					start_position.y += 2.0f;
 				else
 					start_position.y = 0.0f;
-
+				// use start position to place a pickup
 				b2Vec2 pickup_start_position = start_position;
 				pickup_start_position.y += 1.0f;
 
@@ -407,7 +407,7 @@ void Game::InitLevel()
 						GROUND, 							                  // type
 						BLUE);                                                // colour
 				}
-
+				// update start position
 				start_position.x += (colour_ground_x + interval);
 			} // !BLUE GROUND
 		} 
@@ -438,7 +438,7 @@ void Game::InitLevel()
 					1, 									                // group index (objects with the same positive index collide with each other)
 					GROUND, 							                // type
 					FINISH);							                // colour
-
+				// update start position
 				start_position.x += (texture_ground_x + interval);
 			} // !FINISH GROUND
 
@@ -450,7 +450,7 @@ void Game::InitLevel()
 					start_position.y += 2.0f;
 				else
 					start_position.y = 0.0f;
-
+				// use start position to place a pickup
 				b2Vec2 pickup_start_position = start_position;
 				pickup_start_position.y += 1.0f;
 
@@ -490,7 +490,7 @@ void Game::InitLevel()
 						GROUND,                                               // type
 						RED);                                                 // colour
 				}
-
+				// update start position
 				start_position.x += (colour_ground_x + interval);
 			} // !RED GROUND
 
@@ -508,7 +508,7 @@ void Game::InitLevel()
 					1, 									                      // group index (objects with the same positive index collide with each other)
 					GROUND, 							                      // type
 					NO_COL);							                      // colour
-
+				// update start position
 				start_position.x += (texture_ground_x + interval);
 			} // !TEXTURED GROUND
 
@@ -520,7 +520,7 @@ void Game::InitLevel()
 					start_position.y += 2.0f;
 				else
 					start_position.y = 0.0f;
-
+				// use start position to place a pickup
 				b2Vec2 pickup_start_position = start_position;
 				pickup_start_position.y += 1.0f;
 
@@ -560,7 +560,7 @@ void Game::InitLevel()
 						GROUND, 							                  // type
 						BLUE);                                                // colour
 				}
-
+				// update start position
 				start_position.x += (colour_ground_x + interval);
 			} // !BLUE GROUND
 		}
