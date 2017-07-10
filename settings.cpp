@@ -333,6 +333,8 @@ void Settings::TouchController(const gef::TouchInputManager* touch_input)
 			}
 		}
 	}
+	// reset active touch (it doesn't get fully reset in RELEASE)
+	active_touch_id_ = -1;
 } // !TouchController
 
 void Settings::SonyController(const gef::SonyController* controller)

@@ -866,6 +866,8 @@ void Game::TouchController(const gef::TouchInputManager * touch_input)
 			}
 		}
 	}
+	// reset active touch (it doesn't get fully reset in RELEASE)
+	active_touch_id_ = -1;
 } // !TouchController
 
 void Game::UpdatePickups()
@@ -1044,8 +1046,9 @@ void Game::GameUpdate(float frame_time)
 			player_->PlayerController(controller);
 			UpdateSimulation(frame_time);
 		}
-
 	} // !input_manager_
+
+	gef::DebugOut("active_touch_id_: %d\n", active_touch_id_);
 } // !GameUpdate
 
 void Game::GameRender()
