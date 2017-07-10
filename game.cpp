@@ -671,22 +671,24 @@ void Game::SonyController(const gef::SonyController* controller)
 				sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
 			{
 				// lerp menu box sprite
-				gef::Vector4 menu_box_sprite_end_position_to_lerp;
-				menu_box_sprite_end_position_to_lerp.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - sprite_height * 2.0f, 0.0);
-
-				gef::Vector4 menu_box_sprite_lerp;
-				menu_box_sprite_.set_position(menu_box_sprite_lerp.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp, 1.0));
+				// get sprites current position
+				gef::Vector4 sprite_current_position = menu_box_sprite_.position();
+				// lerp from current position to a new position
+				gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() - sprite_height * 2.0f, 0.0f);
+				lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
+				menu_box_sprite_.set_position(lerp_vector);
 			}
 			// D-pad down
 			if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
 				sprite_init_position_y_ + sprite_height * 4.0f >= menu_box_sprite_.position().y() + sprite_height * 2.0f)
 			{
 				// lerp menu box sprite
-				gef::Vector4 menu_box_sprite_end_position_to_lerp;
-				menu_box_sprite_end_position_to_lerp.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 2.0f, 0.0);
-
-				gef::Vector4 menu_box_sprite_lerp;
-				menu_box_sprite_.set_position(menu_box_sprite_lerp.LerpReturnVector(menu_box_sprite_.position(), menu_box_sprite_end_position_to_lerp, 1.0));
+				// get sprites current position
+				gef::Vector4 sprite_current_position = menu_box_sprite_.position();
+				// lerp from current position to a new position
+				gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() + sprite_height * 2.0f, 0.0f);
+				lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
+				menu_box_sprite_.set_position(lerp_vector);
 			}
 			// RESUME button press
 			if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
