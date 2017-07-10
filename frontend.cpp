@@ -215,15 +215,22 @@ void Frontend::SonyController(const gef::SonyController* controller)
 			// lerp from current position to a new position
 			gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() - sprite_height * 1.5f, 0.0f);
 			lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
-			// update sprites position
 			menu_box_sprite_.set_position(lerp_vector);
 
+			// gef left d-pad sprite current position
+			gef::Vector4 left_d_pad_current_position = left_d_pad_sprite_.position();
+			// lerp left d-pad from current position to a new position
+			gef::Vector4 left_lerp_vector(left_d_pad_sprite_.position().x(), left_d_pad_sprite_.position().y() - sprite_height * 1.5f, 0.0f);
+			left_lerp_vector.Lerp(left_d_pad_current_position, left_lerp_vector,1.0f);
+			// update sprites position
+			left_d_pad_sprite_.set_position(left_lerp_vector);
+			
 			// lerp left d-pad sprite
-			gef::Vector4 left_d_pad_end_position_to_lerp;
+			/*gef::Vector4 left_d_pad_end_position_to_lerp;
 			left_d_pad_end_position_to_lerp.set_value(platform_.width() * 0.5f - sprite_width_, left_d_pad_sprite_.position().y() - sprite_height * 1.5f, 0.0);
 
 			gef::Vector4 left_d_pad_sprite_lerp;
-			left_d_pad_sprite_.set_position(left_d_pad_sprite_lerp.LerpReturnVector(left_d_pad_sprite_.position(), left_d_pad_end_position_to_lerp, 1.0));
+			left_d_pad_sprite_.set_position(left_d_pad_sprite_lerp.LerpReturnVector(left_d_pad_sprite_.position(), left_d_pad_end_position_to_lerp, 1.0));*/
 
 			// right right d-pad sprite
 			gef::Vector4 right_d_pad_end_position_to_lerp;
