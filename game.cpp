@@ -1046,8 +1046,6 @@ void Game::GameUpdate(float frame_time)
 		}
 
 	} // !input_manager_
-
-	gef::DebugOut("active_touch_id_: %d\n", active_touch_id_);
 } // !GameUpdate
 
 void Game::GameRender()

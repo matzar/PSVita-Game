@@ -253,7 +253,7 @@ void Frontend::MenuTouchInput()
 	}
 
 	// QUIT press
-	if (touch_position_.y >(menu_text_4_.y() - sprite_height * 0.5f) &&
+	if (touch_position_.y > (menu_text_4_.y() - sprite_height * 0.5f) &&
 		touch_position_.y < (menu_text_4_.y() + sprite_height) &&
 		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
 		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))

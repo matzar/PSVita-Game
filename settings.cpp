@@ -183,43 +183,100 @@ void Settings::MenuTouchInput()
 	// CAMERA press
 	if (touch_position_.y > (menu_text_1_.y() - sprite_height * 0.5f) &&
 		touch_position_.y < (menu_text_1_.y() + sprite_height) &&
-		touch_position_.x >(platform_.width() / 2 - sprite_width_ / 2) &&
+		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
 		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
 	{
 		(*camera_count_)++;
 
 		if ((*camera_count_) >= 3)
 			(*camera_count_) = 0;
+
+		// move down menu box sprite
+		menu_box_sprite_.set_position(
+			platform_.width() / 2.0f,
+			menu_text_1_.y() + sprite_height * 0.5f - 3.0f,
+			0.0f);
+
+		// move down left d-pad sprite
+		left_d_pad_sprite_.set_position(
+			left_d_pad_sprite_.position().x(),
+			menu_text_1_.y() + sprite_height * 0.5f - 3.0f,
+			0.0f);
+
+
+		// lerp down right d-pad sprite
+		right_d_pad_sprite_.set_position(
+			right_d_pad_sprite_.position().x(),
+			menu_text_1_.y() + sprite_height * 0.5f - 3.0f,
+			0.0f);
 	}
 
 	// DIFFICULTY press
-	if (touch_position_.y >(menu_text_2_.y() - sprite_height * 0.5f) &&
+	if (touch_position_.y > (menu_text_2_.y() - sprite_height * 0.5f) &&
 		touch_position_.y < (menu_text_2_.y() + sprite_height) &&
-		touch_position_.x >(platform_.width() / 2 - sprite_width_ / 2) &&
+		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
 		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
 	{
 		(*difficulty_count_)++;
 
 		if ((*difficulty_count_) >= 2)
 			(*difficulty_count_) = 0;
+
+		// move down menu box sprite
+		menu_box_sprite_.set_position(
+			platform_.width() / 2.0f,
+			menu_text_2_.y() + sprite_height * 0.5f - 3.0f,
+			0.0f);
+
+		// move down left d-pad sprite
+		left_d_pad_sprite_.set_position(
+			left_d_pad_sprite_.position().x(),
+			menu_text_2_.y() + sprite_height * 0.5f - 3.0f,
+			0.0f);
+
+
+		// lerp down right d-pad sprite
+		right_d_pad_sprite_.set_position(
+			right_d_pad_sprite_.position().x(),
+			menu_text_2_.y() + sprite_height * 0.5f - 3.0f,
+			0.0f);
 	}
 
 	// GROUNDS press
-	if (touch_position_.y >(menu_text_3_.y() - sprite_height * 0.5f) &&
+	if (touch_position_.y > (menu_text_3_.y() - sprite_height * 0.5f) &&
 		touch_position_.y < (menu_text_3_.y() + sprite_height) &&
-		touch_position_.x >(platform_.width() / 2 - sprite_width_ / 2) &&
+		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
 		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
 	{
 		(*number_of_grounds_) += 10;
 
 		if ((*number_of_grounds_) >= 40)
 			(*number_of_grounds_) = 10;
+
+		// move down menu box sprite
+		menu_box_sprite_.set_position(
+			platform_.width() / 2.0f,
+			menu_text_3_.y() + sprite_height * 0.5f - 3.0f,
+			0.0f);
+
+		// move down left d-pad sprite
+		left_d_pad_sprite_.set_position(
+			left_d_pad_sprite_.position().x(),
+			menu_text_3_.y() + sprite_height * 0.5f - 3.0f,
+			0.0f);
+
+
+		// lerp down right d-pad sprite
+		right_d_pad_sprite_.set_position(
+			right_d_pad_sprite_.position().x(),
+			menu_text_3_.y() + sprite_height * 0.5f - 3.0f,
+			0.0f);
 	}
 
 	// BACK press
-	if (touch_position_.y >(menu_text_4_.y() - sprite_height * 0.5f) &&
+	if (touch_position_.y > (menu_text_4_.y() - sprite_height * 0.5f) &&
 		touch_position_.y < (menu_text_4_.y() + sprite_height) &&
-		touch_position_.x >(platform_.width() / 2 - sprite_width_ / 2) &&
+		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
 		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
 	{
 		// update the current state of the game state machine
