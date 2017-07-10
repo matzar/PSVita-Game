@@ -78,7 +78,8 @@ Game::Game(gef::Platform& platform,
 	player_init_x_(-4.0f),
 	player_init_y_(4.0f),
 	fps_(0),
-	pickups_count_(0)
+	pickups_count_(0),
+	active_touch_id_(-1)
 {
 	ground_.reserve(5);
 	pickups_.reserve(3);
@@ -750,6 +751,80 @@ void Game::SonyController(const gef::SonyController* controller)
 	} 
 } // !SonyController
 
+void Game::TouchController(const gef::TouchInputManager * touch_input)
+{
+
+	if (touch_input && (touch_input->max_num_panels() > 0))
+	{
+		// get the active touches for this panel
+		const gef::TouchContainer& panel_touches = touch_input->touches(0);
+
+		// go through the touches
+		for (gef::ConstTouchIterator touch = panel_touches.begin(); touch != panel_touches.end(); ++touch)
+		{
+			// if active touch id is -1, then we are not currently processing a touch
+			if (active_touch_id_ == -1)
+			{
+				// check for the start of a new touch
+				if (touch->type == gef::TT_NEW)
+				{
+					active_touch_id_ = touch->id;
+
+					// we're just going to record the position of the touch
+					touch_position_ = touch->position;
+
+					// do any processing for a new touch here
+
+					// tap on the right side of the screen - jump
+					//if (touch_position_.x > 480.0f) // 480 is half of PSVita's screen in the x direction
+					//{
+					//	if (alive_)
+					//	{
+					//		if (jump_)
+					//		{
+					//			b2Vec2 vel = GetBody()->GetLinearVelocity();
+					//			vel.y = (*p_y_velocity);	//upwards - don't change x velocity
+					//			GetBody()->SetLinearVelocity(vel);
+
+					//			jump_ = false;
+					//		}
+					//	}
+					//}
+					// tap on the left side of the screen - change colour
+					//if (touch_position_.x < 480.0f) // 480 is half of PSVita's screen in the x direction
+					//{
+					//	if (alive_)
+					//	{
+					//		red_ = !red_;
+
+					//		if (red_)
+					//			this->SetGameObjectColour(RED);
+					//		else
+					//			this->SetGameObjectColour(BLUE);
+					//	}
+					//}
+				}
+			}
+			else if (active_touch_id_ == touch->id)
+			{
+				// we are processing touch data with a matching id to the one we are looking for
+				if (touch->type == gef::TT_ACTIVE)
+				{
+
+				}
+				else if (touch->type == gef::TT_RELEASED)
+				{
+					// the touch we are tracking has been released
+					// perform any actions that need to happen when a touch is released here
+
+					// we're not doing anything here apart from resetting the active touch id
+					active_touch_id_ = -1;
+				}
+			}
+		}
+	}
+} // !TouchController
+
 void Game::UpdatePickups()
 {
 	//process list for deletion
@@ -923,7 +998,7 @@ void Game::GameUpdate(float frame_time)
 			// must be under the same condition statement 
 			// to keep the simulation consistent between restarts
 			player_->PlayerController(controller);
-			player_->PlayerTouchController(touch_input);
+			player_->PlayerTouchController(touch_input, active_touch_id_, touch_position_);
 			UpdateSimulation(frame_time);
 		}
 

@@ -156,6 +156,9 @@ private:
 
 	// private member functions
 	void SonyController(const gef::SonyController* controller);
+	void TouchController(const gef::TouchInputManager* touch_input);
+	Int32 active_touch_id_;
+	gef::Vector2 touch_position_;
 
 	void UpdatePickups();
 	void UpdateSimulation(float frame_time);

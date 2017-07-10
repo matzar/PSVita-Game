@@ -117,7 +117,7 @@ void Player::PlayerController(const gef::SonyController * controller)
 	}
 }
 
-void Player::PlayerTouchController(const gef::TouchInputManager * touch_input)
+void Player::PlayerTouchController(const gef::TouchInputManager * touch_input, Int32 active_touch_id_, gef::Vector2 touch_position_)
 {
 	
 	if (touch_input && (touch_input->max_num_panels() > 0))
