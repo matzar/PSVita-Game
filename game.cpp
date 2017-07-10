@@ -756,8 +756,8 @@ void Game::SonyController(const gef::SonyController* controller)
 
 void Game::MenuTouchInput(gef::Vector2 touch_position_)
 {
-	//// D-pad up
-	//if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
+	// D-pad up
+	//if (touch_position_
 	//	sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
 	//{
 	//	// lerp menu box sprite
@@ -769,7 +769,7 @@ void Game::MenuTouchInput(gef::Vector2 touch_position_)
 	//	menu_box_sprite_.set_position(lerp_vector);
 	//}
 	//// D-pad down
-	//if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
+	//if (
 	//	sprite_init_position_y_ + sprite_height * 4.0f >= menu_box_sprite_.position().y() + sprite_height * 2.0f)
 	//{
 	//	// lerp menu box sprite
@@ -780,51 +780,32 @@ void Game::MenuTouchInput(gef::Vector2 touch_position_)
 	//	lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
 	//	menu_box_sprite_.set_position(lerp_vector);
 	//}
-	//// RESUME button press
-	//if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-	//	menu_box_sprite_.position().y() > (menu_text_1_.y() - sprite_height * 0.5f) &&
-	//	menu_box_sprite_.position().y() < (menu_text_1_.y() + sprite_height))
-	//{
-	//	pause_ = !pause_;
-	//}
-	//// RESTART BUTTON press
-	//if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-	//	menu_box_sprite_.position().y() > (menu_text_2_.y() - sprite_height * 0.5f) &&
-	//	menu_box_sprite_.position().y() < (menu_text_2_.y() + sprite_height))
-	//{
-	//	pickups_count_ = 0;
+	// RESUME button press
+	if (
+		touch_position_.y > (menu_text_1_.y() - sprite_height * 0.5f) &&
+		touch_position_.y < (menu_text_1_.y() + sprite_height))
+	{
+		pause_ = !pause_;
+	}
+	// RESTART BUTTON press
+	if (
+		touch_position_.y > (menu_text_2_.y() - sprite_height * 0.5f) &&
+		touch_position_.y < (menu_text_2_.y() + sprite_height))
+	{
+		pickups_count_ = 0;
 
-	//	GameRelease();
-	//	GameInit();
-	//}
-	//// MENU press
-	//if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-	//	menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
-	//	menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
-	//{
-	//	// update the current state of the game state machine
-	//	// get the value that the gamestate points to and change it
-	//	(*gamestate_) = FRONTEND;
-	//}
-
-	//// TRIANGLE press
-	//if (controller->buttons_pressed() & gef_SONY_CTRL_TRIANGLE)
-	//{
-	//	(*camera_count_)++;
-
-	//	if ((*camera_count_) >= 3)
-	//		(*camera_count_) = 0;
-	//}
-	//// toggle pause menu
-	//if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
-	//{
-	//	pause_ = !pause_;
-	//}
-	//// toggle fps display
-	//if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
-	//{
-	//	dev_ = !dev_;
-	//}
+		GameRelease();
+		GameInit();
+	}
+	// MENU press
+	if (
+		touch_position_.y > (menu_text_3_.y() - sprite_height * 0.5f) &&
+		touch_position_.y < (menu_text_3_.y() + sprite_height))
+	{
+		// update the current state of the game state machine
+		// get the value that the gamestate points to and change it
+		(*gamestate_) = FRONTEND;
+	}
 }
 
 void Game::TouchController(const gef::TouchInputManager * touch_input)
@@ -855,7 +836,7 @@ void Game::TouchController(const gef::TouchInputManager * touch_input)
 					}
 					else
 					{
-						//MenuTouchInput(touch_position_);
+						MenuTouchInput(touch_position_);
 					}
 				}
 			}
@@ -865,6 +846,8 @@ void Game::TouchController(const gef::TouchInputManager * touch_input)
 				if (touch->type == gef::TT_ACTIVE)
 				{
 					// update an active touch here
+					// do any processing for a new touch here
+					
 
 					// we're just going to record the position of the touch
 					touch_position_ = touch->position;
