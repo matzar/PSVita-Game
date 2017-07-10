@@ -704,6 +704,7 @@ void Game::SonyController(const gef::SonyController* controller)
 				menu_box_sprite_.position().y() < (menu_text_2_.y() + sprite_height))
 			{
 				pickups_count_ = 0;
+				//active_touch_id_ = -1;
 
 				GameRelease();
 				GameInit();
@@ -756,7 +757,7 @@ void Game::SonyController(const gef::SonyController* controller)
 
 void Game::MenuTouchInput(gef::Vector2 touch_position_)
 {
-	// D-pad up
+	//// D-pad up
 	//if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
 	//	sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
 	//{
@@ -796,17 +797,6 @@ void Game::MenuTouchInput(gef::Vector2 touch_position_)
 
 	//	GameRelease();
 	//	GameInit();
-
-	//	// future improvement - reload function
-	//	/*
-	//	player_->ReloadPlayer();
-
-	//	CleanPickups();
-	//	InitPickups();
-
-	//	pickups_count_ = 0;
-	//	pause_ = false;
-	//	*/
 	//}
 	//// MENU press
 	//if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
@@ -817,26 +807,25 @@ void Game::MenuTouchInput(gef::Vector2 touch_position_)
 	//	// get the value that the gamestate points to and change it
 	//	(*gamestate_) = FRONTEND;
 	//}
-//} // !pause_
-//
-//  // TRIANGLE press
-//if (controller->buttons_pressed() & gef_SONY_CTRL_TRIANGLE)
-//{
-//	(*camera_count_)++;
-//
-//	if ((*camera_count_) >= 3)
-//		(*camera_count_) = 0;
-//}
-//// toggle pause menu
-//if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
-//{
-//	pause_ = !pause_;
-//}
-//// toggle fps display
-//if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
-//{
-//	dev_ = !dev_;
-//}
+
+	//// TRIANGLE press
+	//if (controller->buttons_pressed() & gef_SONY_CTRL_TRIANGLE)
+	//{
+	//	(*camera_count_)++;
+
+	//	if ((*camera_count_) >= 3)
+	//		(*camera_count_) = 0;
+	//}
+	//// toggle pause menu
+	//if (controller->buttons_pressed() & gef_SONY_CTRL_SELECT)
+	//{
+	//	pause_ = !pause_;
+	//}
+	//// toggle fps display
+	//if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
+	//{
+	//	dev_ = !dev_;
+	//}
 }
 
 void Game::TouchController(const gef::TouchInputManager * touch_input)
@@ -876,6 +865,10 @@ void Game::TouchController(const gef::TouchInputManager * touch_input)
 				// we are processing touch data with a matching id to the one we are looking for
 				if (touch->type == gef::TT_ACTIVE)
 				{
+					// update an active touch here
+
+					// we're just going to record the position of the touch
+					touch_position_ = touch->position;
 
 				}
 				else if (touch->type == gef::TT_RELEASED)
@@ -889,6 +882,55 @@ void Game::TouchController(const gef::TouchInputManager * touch_input)
 			}
 		}
 	}
+
+	//if (touch_input && (touch_input->max_num_panels() > 0))
+	//{
+	//	// get the active touches for this panel
+	//	const gef::TouchContainer& panel_touches = touch_input->touches(0);
+
+	//	// go through the touches
+	//	for (gef::ConstTouchIterator touch = panel_touches.begin(); touch != panel_touches.end(); ++touch)
+	//	{
+	//		// if active touch id is -1, then we are not currently processing a touch
+	//		if (active_touch_id_ == -1)
+	//		{
+	//			// check for the start of a new touch
+	//			if (touch->type == gef::TT_NEW)
+	//			{
+	//				active_touch_id_ = touch->id;
+
+	//				// we're just going to record the position of the touch
+	//				touch_position_ = touch->position;
+
+	//				// do any processing for a new touch here
+	//				if (!pause_)
+	//				{
+	//					player_->PlayerTouchController(touch_position_);
+	//				}
+	//				else
+	//				{
+	//					//MenuTouchInput(touch_position_);
+	//				}
+	//			}
+	//		}
+	//		else if (active_touch_id_ == touch->id)
+	//		{
+	//			// we are processing touch data with a matching id to the one we are looking for
+	//			if (touch->type == gef::TT_ACTIVE)
+	//			{
+
+	//			}
+	//			else if (touch->type == gef::TT_RELEASED)
+	//			{
+	//				// the touch we are tracking has been released
+	//				// perform any actions that need to happen when a touch is released here
+
+	//				// we're not doing anything here apart from resetting the active touch id
+	//				active_touch_id_ = -1;
+	//			}
+	//		}
+	//	}
+	//}
 } // !TouchController
 
 void Game::UpdatePickups()
@@ -1071,7 +1113,7 @@ void Game::GameUpdate(float frame_time)
 		SonyController(controller);
 	} // !input_manager_
 
-	/*gef::DebugOut("player colour: %d\n", player_->GetGameObjectColour());*/
+	gef::DebugOut("active_touch_id_: %d\n", active_touch_id_);
 } // !GameUpdate
 
 void Game::GameRender()
