@@ -146,6 +146,9 @@ void Player::PlayerTouchController(const gef::TouchInputManager * touch_input)
 						touch_position_ = touch->position;
 
 						// do any processing for a new touch here
+
+						// if touch position is on the right part of the screen 
+						if ()
 						if (jump_)
 						{
 							b2Vec2 vel = GetBody()->GetLinearVelocity();
@@ -153,6 +156,17 @@ void Player::PlayerTouchController(const gef::TouchInputManager * touch_input)
 							GetBody()->SetLinearVelocity(vel);
 
 							jump_ = false;
+						}
+						
+						// if touch position os on the left part of the screen
+						if ()
+						{
+						red_ = !red_;
+
+						if (red_)
+						this->SetGameObjectColour(RED);
+						else
+						this->SetGameObjectColour(BLUE);
 						}
 
 					}
@@ -175,23 +189,14 @@ void Player::PlayerTouchController(const gef::TouchInputManager * touch_input)
 				}
 			}
 		}
-		/*if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE)
-		{
-			red_ = !red_;
-
-			if (red_)
-				this->SetGameObjectColour(RED);
-			else
-				this->SetGameObjectColour(BLUE);
-		}*/
 	}
-	else
-	{
-		// stop the player
-		b2Vec2 vel = GetBody()->GetLinearVelocity();
-		vel.x = 0.0f;
-		GetBody()->SetLinearVelocity(vel);
-	}
+	//else
+	//{
+	//	// stop the player
+	//	b2Vec2 vel = GetBody()->GetLinearVelocity();
+	//	vel.x = 0.0f;
+	//	GetBody()->SetLinearVelocity(vel);
+	//}
 }
 
 void Player::ReloadPlayer()
