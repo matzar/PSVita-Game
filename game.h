@@ -132,6 +132,10 @@ private:
 	bool quit_;
 	// pause
 	bool pause_;
+	float32 pause_button_y_;
+	float32 pause_button_x_;
+	gef::Texture* pause_texture_;
+	gef::Material* pause_texture_material_;
 	// toggle fps display
 	bool dev_;
 	// FPS

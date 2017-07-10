@@ -72,6 +72,10 @@ Game::Game(gef::Platform& platform,
 	mesh_(nullptr),
 	quit_(false),
 	pause_(true),
+	pause_button_x_(930.0f),
+	pause_button_y_(25.0f),
+	pause_texture_(nullptr),
+	pause_texture_material_(nullptr),
 	dev_(false),
 	sprite_width_(190.0f),
 	sprite_height(38.0f),
@@ -118,6 +122,13 @@ void Game::DrawHUD()
 				"FPS: %.1f",
 				fps_);
 		}
+
+		gef::Sprite title;
+		title.set_texture(pause_texture_);
+		title.set_position(gef::Vector4(pause_button_x_, pause_button_y_, -0.99f));
+		title.set_height(38.0f);
+		title.set_width(38.0f);
+		sprite_renderer_->DrawSprite(title);
 	}
 } // !DrawHUD
 
@@ -130,6 +141,10 @@ void Game::InitTextures()
 	finish_texture_ = CreateTextureFromPNG("png/finish_line.png", platform_);
 	finish_ground_texture_material_ = new gef::Material();
 	finish_ground_texture_material_->set_texture(finish_texture_);
+
+	pause_texture_ = CreateTextureFromPNG("png/pause_button.png", platform_);
+	pause_texture_material_ = new gef::Material();
+	pause_texture_material_->set_texture(pause_texture_);
 } // !InitTextures
 
 void Game::CleanTextures()
@@ -139,6 +154,9 @@ void Game::CleanTextures()
 
 	delete finish_texture_;
 	finish_texture_ = nullptr;
+
+	delete pause_texture_;
+	pause_texture_ = nullptr;
 } // !ClenupTextures
 
 void Game::InitSprites()
@@ -671,25 +689,21 @@ void Game::SonyController(const gef::SonyController* controller)
 			if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
 				sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
 			{
-				// lerp menu box sprite
-				// get sprites current position
-				gef::Vector4 sprite_current_position = menu_box_sprite_.position();
-				// lerp from current position to a new position
-				gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() - sprite_height * 2.0f, 0.0f);
-				lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
-				menu_box_sprite_.set_position(lerp_vector);
+				// move down menu box sprite
+				menu_box_sprite_.set_position(
+					menu_box_sprite_.position().x(),
+					menu_box_sprite_.position().y() - sprite_height * 2.0f,
+					0.0f);
 			}
 			// D-pad down
 			if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
 				sprite_init_position_y_ + sprite_height * 4.0f >= menu_box_sprite_.position().y() + sprite_height * 2.0f)
 			{
-				// lerp menu box sprite
-				// get sprites current position
-				gef::Vector4 sprite_current_position = menu_box_sprite_.position();
-				// lerp from current position to a new position
-				gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() + sprite_height * 2.0f, 0.0f);
-				lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
-				menu_box_sprite_.set_position(lerp_vector);
+				// move down menu box sprite
+				menu_box_sprite_.set_position(
+					menu_box_sprite_.position().x(),
+					menu_box_sprite_.position().y() + sprite_height * 2.0f,
+					0.0f);
 			}
 			// RESUME button press
 			if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
@@ -756,36 +770,39 @@ void Game::SonyController(const gef::SonyController* controller)
 
 void Game::MenuTouchInput()
 {
-	// D-pad up
-	if (touch_position_.y < menu_box_sprite_.position().y())
-		//sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
-	{
-		// lerp menu box sprite
-		// get sprites current position
-		gef::Vector4 sprite_current_position = menu_box_sprite_.position();
-		// lerp from current position to a new position
-		gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() - sprite_height * 2.0f, 0.0f);
-		//lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
-		menu_box_sprite_.set_position(lerp_vector);
-	}
-	// D-pad down
-	if (touch_position_.y > menu_box_sprite_.position().y())
-		//sprite_init_position_y_ + sprite_height * 4.0f >= menu_box_sprite_.position().y() + sprite_height * 2.0f)
-	{
-		// lerp menu box sprite
-		// get sprites current position
-		gef::Vector4 sprite_current_position = menu_box_sprite_.position();
-		// lerp from current position to a new position
-		gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() + sprite_height * 2.0f, 0.0f);
-		//lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
-		menu_box_sprite_.set_position(lerp_vector);
-	}
+	//// D-pad up
+	//if (touch_position_.y < menu_box_sprite_.position().y())
+	//	//sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
+	//{
+	//	// lerp menu box sprite
+	//	// get sprites current position
+	//	gef::Vector4 sprite_current_position = menu_box_sprite_.position();
+	//	// lerp from current position to a new position
+	//	gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() - sprite_height * 2.0f, 0.0f);
+	//	//lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
+	//	menu_box_sprite_.set_position(lerp_vector);
+	//}
+	//// D-pad down
+	//if (touch_position_.y > menu_box_sprite_.position().y())
+	//	//sprite_init_position_y_ + sprite_height * 4.0f >= menu_box_sprite_.position().y() + sprite_height * 2.0f)
+	//{
+	//	// lerp menu box sprite
+	//	// get sprites current position
+	//	gef::Vector4 sprite_current_position = menu_box_sprite_.position();
+	//	// lerp from current position to a new position
+	//	gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() + sprite_height * 2.0f, 0.0f);
+	//	//lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
+	//	menu_box_sprite_.set_position(lerp_vector);
+	//}
+
+
 
 	// RESUME button press
 	if (touch_position_.y > (menu_text_1_.y() - sprite_height * 0.5f) &&
 		touch_position_.y < (menu_text_1_.y() + sprite_height) &&
 		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
-		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
+		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2) ||
+		touch_position_.x > pause_button_x_ - 30.0f && touch_position_.y < pause_button_y_ + 30.0f)
 	{
 		pause_ = !pause_;
 	}

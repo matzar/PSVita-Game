@@ -184,64 +184,48 @@ void Settings::SonyController(const gef::SonyController* controller)
 		if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
 			sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 1.5f)
 		{
-			// lerp menu box sprite
-			// get sprites current position
-			gef::Vector4 sprite_current_position = menu_box_sprite_.position();
-			// lerp from current position to a new position
-			gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() - sprite_height * 1.5f, 0.0f);
-			lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
-			menu_box_sprite_.set_position(lerp_vector);
+			// move down menu box sprite
+			menu_box_sprite_.set_position(
+				menu_box_sprite_.position().x(),
+				menu_box_sprite_.position().y() - sprite_height * 1.5f,
+				0.0f);
 
-			// lerp left d-pad sprite
-			// gef left d-pad sprite current position
-			gef::Vector4 left_d_pad_current_position = left_d_pad_sprite_.position();
-			// lerp left d-pad from current position to a new position
-			gef::Vector4 left_lerp_vector(left_d_pad_sprite_.position().x(), left_d_pad_sprite_.position().y() - sprite_height * 1.5f, 0.0f);
-			left_lerp_vector.Lerp(left_d_pad_current_position, left_lerp_vector, 1.0f);
-			// update sprites position
-			left_d_pad_sprite_.set_position(left_lerp_vector);
+			// move down left d-pad sprite
+			left_d_pad_sprite_.set_position(
+				left_d_pad_sprite_.position().x(),
+				left_d_pad_sprite_.position().y() - sprite_height * 1.5f,
+				0.0f);
 
 
-			// lerp right d-pad sprite
-			// gef left d-pad sprite current position
-			gef::Vector4 right_d_pad_current_position = right_d_pad_sprite_.position();
-			// lerp left d-pad from current position to a new position
-			gef::Vector4 right_lerp_vector(right_d_pad_sprite_.position().x(), right_d_pad_sprite_.position().y() - sprite_height * 1.5f, 0.0f);
-			right_lerp_vector.Lerp(right_d_pad_current_position, right_lerp_vector, 1.0f);
-			// update sprites position
-			right_d_pad_sprite_.set_position(right_lerp_vector);
+			// lerp down right d-pad sprite
+			right_d_pad_sprite_.set_position(
+				right_d_pad_sprite_.position().x(),
+				right_d_pad_sprite_.position().y() - sprite_height * 1.5f,
+				0.0f);
 		}
 
 		// D-pad down
 		if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
 			sprite_init_position_y_ + sprite_height * 5.0f >= menu_box_sprite_.position().y() + sprite_height * 1.5f)
 		{
-			// lerp menu box sprite
-			// get sprites current position
-			gef::Vector4 sprite_current_position = menu_box_sprite_.position();
-			// lerp from current position to a new position
-			gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() + sprite_height * 1.5f, 0.0f);
-			lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
-			menu_box_sprite_.set_position(lerp_vector);
+			// move down menu box sprite
+			menu_box_sprite_.set_position(
+				menu_box_sprite_.position().x(),
+				menu_box_sprite_.position().y() + sprite_height * 1.5f,
+				0.0f);
 
-			// lerp left d-pad sprite
-			// gef left d-pad sprite current position
-			gef::Vector4 left_d_pad_current_position = left_d_pad_sprite_.position();
-			// lerp left d-pad from current position to a new position
-			gef::Vector4 left_lerp_vector(left_d_pad_sprite_.position().x(), left_d_pad_sprite_.position().y() + sprite_height * 1.5f, 0.0f);
-			left_lerp_vector.Lerp(left_d_pad_current_position, left_lerp_vector, 1.0f);
-			// update sprites position
-			left_d_pad_sprite_.set_position(left_lerp_vector);
+			// move down left d-pad sprite
+			left_d_pad_sprite_.set_position(
+				left_d_pad_sprite_.position().x(),
+				left_d_pad_sprite_.position().y() + sprite_height * 1.5f,
+				0.0f);
 
 
-			// lerp right d-pad sprite
-			// gef left d-pad sprite current position
-			gef::Vector4 right_d_pad_current_position = right_d_pad_sprite_.position();
-			// lerp left d-pad from current position to a new position
-			gef::Vector4 right_lerp_vector(right_d_pad_sprite_.position().x(), right_d_pad_sprite_.position().y() + sprite_height * 1.5f, 0.0f);
-			right_lerp_vector.Lerp(right_d_pad_current_position, right_lerp_vector, 1.0f);
-			// update sprites position
-			right_d_pad_sprite_.set_position(right_lerp_vector);
+			// lerp down right d-pad sprite
+			right_d_pad_sprite_.set_position(
+				right_d_pad_sprite_.position().x(),
+				right_d_pad_sprite_.position().y() + sprite_height * 1.5f,
+				0.0f);
 		}
 
 		// CAMERA CROSS press
