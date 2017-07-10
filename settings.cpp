@@ -28,7 +28,6 @@ Settings::Settings(gef::Platform& platform, gef::InputManager* input_manager, GA
 	difficulty_count_(difficulty_count),
 	number_of_grounds_(number_of_grounds),
 	sprite_renderer_(nullptr),
-	cross_button_icon_(nullptr),
 	playstation_left_d_pad_(nullptr),
 	playstation_right_d_pad_(nullptr),
 	quit_(false),
@@ -76,8 +75,6 @@ void Settings::DrawHUD()
 
 void Settings::InitTextures()
 {
-	// initialise button icon
-	cross_button_icon_ = CreateTextureFromPNG("png/playstation-cross-dark-icon.png", platform_);
 	// initialise left d-pad icon
 	playstation_left_d_pad_ = CreateTextureFromPNG("png/playstation-left-d-pad.png", platform_);
 	// initialise right d-pad icon
@@ -94,9 +91,6 @@ void Settings::InitTextures()
 void Settings::CleanTextures()
 {
 	// icon textures
-	delete cross_button_icon_;
-	cross_button_icon_ = nullptr;
-
 	delete playstation_left_d_pad_;
 	playstation_left_d_pad_ = nullptr;
 

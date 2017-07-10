@@ -28,7 +28,7 @@ Frontend::Frontend(gef::Platform& platform, gef::InputManager* input_manager, GA
 	instructions_texture_3(nullptr),
 	instructions_texture_4(nullptr),
 	instructions_texture_5(nullptr),
-	cross_button_icon_(nullptr),
+	instructions_texture_6(nullptr),
 	playstation_left_d_pad_(nullptr),
 	playstation_right_d_pad_(nullptr),
 	display_instrucitons_(nullptr),
@@ -79,7 +79,6 @@ void Frontend::DrawHUD()
 void Frontend::InitTextures()
 {
 	// initialise button icon
-	cross_button_icon_ = CreateTextureFromPNG("png/playstation-cross-dark-icon.png", platform_);
 	playstation_left_d_pad_ = CreateTextureFromPNG("png/playstation-left-d-pad.png", platform_);
 	playstation_right_d_pad_ = CreateTextureFromPNG("png/playstation-right-d-pad.png", platform_);
 	// initialize title texture
@@ -90,6 +89,7 @@ void Frontend::InitTextures()
 	instructions_texture_3 = CreateTextureFromPNG("png/instructions_3.png", platform_);
 	instructions_texture_4 = CreateTextureFromPNG("png/instructions_4.png", platform_);
 	instructions_texture_5 = CreateTextureFromPNG("png/instructions_5.png", platform_);
+	instructions_texture_6 = CreateTextureFromPNG("png/instructions_6.png", platform_);
 } // !InitTextures
 
 void Frontend::CleanTextures()
@@ -112,10 +112,10 @@ void Frontend::CleanTextures()
 	delete instructions_texture_5;
 	instructions_texture_5 = nullptr;
 
-	// icon textures
-	delete cross_button_icon_;
-	cross_button_icon_ = nullptr;
+	delete instructions_texture_6;
+	instructions_texture_6 = nullptr;
 
+	// icon textures
 	delete playstation_left_d_pad_;
 	playstation_left_d_pad_ = nullptr;
 
@@ -246,7 +246,7 @@ void Frontend::MenuTouchInput()
 		{
 			instructions_page_++;
 
-			if (instructions_page_ >= 5)
+			if (instructions_page_ >= 6)
 				instructions_page_ = 0;
 		}
 	}
@@ -390,7 +390,7 @@ void Frontend::SonyController(const gef::SonyController* controller)
 		{
 			instructions_page_++;
 
-			if (instructions_page_ >= 5)
+			if (instructions_page_ >= 6)
 				instructions_page_ = 0;
 		}
 		// INSTRUCTIONS left d-pad
@@ -406,7 +406,7 @@ void Frontend::SonyController(const gef::SonyController* controller)
 			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
 		{
-			if (instructions_page_ < 4)
+			if (instructions_page_ < 5)
 				instructions_page_++;
 		}
 		// QUIT press
@@ -552,6 +552,17 @@ void Frontend::FrontendRender()
 				instructions_page_5.set_height(platform_.height() * 0.5f);
 				instructions_page_5.set_width(platform_.width() * 0.5f);
 				sprite_renderer_->DrawSprite(instructions_page_5);
+			} //
+			break;
+
+			case 5 :
+			{
+				gef::Sprite instructions_page_6;
+				instructions_page_6.set_texture(instructions_texture_6);
+				instructions_page_6.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
+				instructions_page_6.set_height(platform_.height() * 0.5f);
+				instructions_page_6.set_width(platform_.width() * 0.5f);
+				sprite_renderer_->DrawSprite(instructions_page_6);
 			} //
 			break;
 			} // !display_instructions_

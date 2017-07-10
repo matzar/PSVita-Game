@@ -56,7 +56,6 @@ private:
 	gef::SpriteRenderer* sprite_renderer_;
 
 	// icons textures
-	gef::Texture* cross_button_icon_;
 	gef::Texture* playstation_left_d_pad_;
 	gef::Texture* playstation_right_d_pad_;
 
