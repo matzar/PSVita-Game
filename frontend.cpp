@@ -35,6 +35,7 @@ Frontend::Frontend(gef::Platform& platform, gef::InputManager* input_manager, GA
 	display_instrucitons_(nullptr),
 	quit_(false),
 	dev_(false),
+	display_d_pad(true),
 	instructions_page_(0),
 	sprite_width_(190.0f),
 	sprite_height(38.0f),
@@ -268,29 +269,34 @@ void Frontend::MenuTouchInput()
 		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
 		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
 	{
-		// move down menu box sprite
-		menu_box_sprite_.set_position(
-			platform_.width() / 2.0f,
-			menu_text_3_.y() + sprite_height * 0.5f - 3.0f,
-			0.0f);
+		if (!display_d_pad) // prevent from incrementing 'instructions_page_' before displaying the first page
+		{
+			// move down menu box sprite
+			menu_box_sprite_.set_position(
+				platform_.width() / 2.0f,
+				menu_text_3_.y() + sprite_height * 0.5f - 3.0f,
+				0.0f);
 
-		// move down left d-pad sprite
-		left_d_pad_sprite_.set_position(
-			left_d_pad_sprite_.position().x(),
-			menu_text_3_.y() + sprite_height * 0.5f - 3.0f,
-			0.0f);
+			// move down left d-pad sprite
+			left_d_pad_sprite_.set_position(
+				left_d_pad_sprite_.position().x(),
+				menu_text_3_.y() + sprite_height * 0.5f - 3.0f,
+				0.0f);
 
 
-		// lerp down right d-pad sprite
-		right_d_pad_sprite_.set_position(
-			right_d_pad_sprite_.position().x(),
-			menu_text_3_.y() + sprite_height * 0.5f - 3.0f,
-			0.0f);
+			// lerp down right d-pad sprite
+			right_d_pad_sprite_.set_position(
+				right_d_pad_sprite_.position().x(),
+				menu_text_3_.y() + sprite_height * 0.5f - 3.0f,
+				0.0f);
+		}
+		else
+		{
+			instructions_page_++;
 
-		instructions_page_++;
-
-		if (instructions_page_ <= 4)
-			instructions_page_ = 0;
+			if (instructions_page_ >= 5)
+				instructions_page_ = 0;
+		}
 	}
 
 	// QUIT press
@@ -325,12 +331,6 @@ void Frontend::TouchController(const gef::TouchInputManager* touch_input)
 					touch_position_ = touch->position;
 
 					MenuTouchInput();
-
-					//gef::DebugOut("touch position: %f, %f \n", touch_position_.x, touch_position_.y);
-					//gef::DebugOut("menu_box_sprite_.position().y() %f > (menu_text_4_.y() - sprite_height * 0.5f) %f\n", );
-					//gef::DebugOut("	menu_box_sprite_.position().y() %f < (menu_text_4_.y() + sprite_height) %f\n", );
-					//gef::DebugOut("touch_position_.x %f > (menu_text_4_.y() - sprite_height * 0.5f): %f\n", touch_position_.x, menu_text_4_.y() - sprite_height * 0.5f);
-					//gef::DebugOut("touch_position_.x %f < (menu_text_4_.y() + sprite_height): %f\n", touch_position_.x, menu_text_4_.y() + sprite_height);
 				}
 			}
 			else if (active_touch_id_ == touch->id)
@@ -436,7 +436,7 @@ void Frontend::SonyController(const gef::SonyController* controller)
 		{
 			instructions_page_++;
 
-			if (instructions_page_ <= 4)
+			if (instructions_page_ >= 5)
 				instructions_page_ = 0;
 		}
 		// INSTRUCTIONS left d-pad

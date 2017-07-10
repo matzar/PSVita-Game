@@ -85,7 +85,7 @@ private:
 	gef::Sprite left_d_pad_sprite_;
 	gef::Sprite right_d_pad_sprite_;
 
-	bool display_d_pad = true;
+	bool display_d_pad;
 
 	// menu text vectors
 	gef::Vector4 menu_text_1_;
