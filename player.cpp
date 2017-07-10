@@ -148,27 +148,27 @@ void Player::PlayerTouchController(const gef::TouchInputManager * touch_input)
 						// do any processing for a new touch here
 
 						// if touch position is on the right part of the screen 
-						if ()
-						if (jump_)
+						if (touch_position_.x > 480.0f) // 480 is half of PSVita's screen in the x direction
 						{
-							b2Vec2 vel = GetBody()->GetLinearVelocity();
-							vel.y = (*p_y_velocity);	//upwards - don't change x velocity
-							GetBody()->SetLinearVelocity(vel);
+							if (jump_)
+							{
+								b2Vec2 vel = GetBody()->GetLinearVelocity();
+								vel.y = (*p_y_velocity);	//upwards - don't change x velocity
+								GetBody()->SetLinearVelocity(vel);
 
-							jump_ = false;
+								jump_ = false;
+							}
 						}
-						
 						// if touch position os on the left part of the screen
-						if ()
+						if (touch_position_.x < 480.0f) // 480 is half of PSVita's screen in the x direction
 						{
-						red_ = !red_;
+							red_ = !red_;
 
-						if (red_)
-						this->SetGameObjectColour(RED);
-						else
-						this->SetGameObjectColour(BLUE);
+							if (red_)
+							this->SetGameObjectColour(RED);
+							else
+							this->SetGameObjectColour(BLUE);
 						}
-
 					}
 				}
 				else if (active_touch_id_ == touch->id)
