@@ -754,64 +754,62 @@ void Game::SonyController(const gef::SonyController* controller)
 	} 
 } // !SonyController
 
-void Game::MenuTouchInput(gef::Vector2 touch_position_)
+void Game::MenuTouchInput()
 {
 	// D-pad up
-	//if (touch_position_
-	//	sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
-	//{
-	//	// lerp menu box sprite
-	//	// get sprites current position
-	//	gef::Vector4 sprite_current_position = menu_box_sprite_.position();
-	//	// lerp from current position to a new position
-	//	gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() - sprite_height * 2.0f, 0.0f);
-	//	lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
-	//	menu_box_sprite_.set_position(lerp_vector);
-	//}
-	//// D-pad down
-	//if (
-	//	sprite_init_position_y_ + sprite_height * 4.0f >= menu_box_sprite_.position().y() + sprite_height * 2.0f)
-	//{
-	//	// lerp menu box sprite
-	//	// get sprites current position
-	//	gef::Vector4 sprite_current_position = menu_box_sprite_.position();
-	//	// lerp from current position to a new position
-	//	gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() + sprite_height * 2.0f, 0.0f);
-	//	lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
-	//	menu_box_sprite_.set_position(lerp_vector);
-	//}
+	if (touch_position_.y < menu_box_sprite_.position().y())
+		//sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
+	{
+		// lerp menu box sprite
+		// get sprites current position
+		gef::Vector4 sprite_current_position = menu_box_sprite_.position();
+		// lerp from current position to a new position
+		gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() - sprite_height * 2.0f, 0.0f);
+		lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
+		menu_box_sprite_.set_position(lerp_vector);
+	}
+	// D-pad down
+	if (touch_position_.y > menu_box_sprite_.position().y())
+		//sprite_init_position_y_ + sprite_height * 4.0f >= menu_box_sprite_.position().y() + sprite_height * 2.0f)
+	{
+		// lerp menu box sprite
+		// get sprites current position
+		gef::Vector4 sprite_current_position = menu_box_sprite_.position();
+		// lerp from current position to a new position
+		gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() + sprite_height * 2.0f, 0.0f);
+		lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
+		menu_box_sprite_.set_position(lerp_vector);
+	}
+
 	// RESUME button press
-	if (
-		touch_position_.y > (menu_text_1_.y() - sprite_height * 0.5f) &&
+	if (touch_position_.y > (menu_text_1_.y() - sprite_height * 0.5f) &&
 		touch_position_.y < (menu_text_1_.y() + sprite_height) &&
 		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
 		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
 	{
 		pause_ = !pause_;
-		gef::DebugOut("resume touch\n");
 	}
+
 	// RESTART BUTTON press
-	if (
-		touch_position_.y > (menu_text_2_.y() - sprite_height * 0.5f) &&
+	if (touch_position_.y > (menu_text_2_.y() - sprite_height * 0.5f) &&
 		touch_position_.y < (menu_text_2_.y() + sprite_height) &&
 		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
 		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
 	{
 		pickups_count_ = 0;
-		gef::DebugOut("restart touch\n");
+		
 		GameRelease();
 		GameInit();
 	}
+
 	// MENU press
-	if (
-		touch_position_.y > (menu_text_3_.y() - sprite_height * 0.5f) &&
+	if (touch_position_.y > (menu_text_3_.y() - sprite_height * 0.5f) &&
 		touch_position_.y < (menu_text_3_.y() + sprite_height) &&
 		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
 		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
 	{
 		// update the current state of the game state machine
 		// get the value that the gamestate points to and change it
-		gef::DebugOut("menu touch\n");
 		(*gamestate_) = FRONTEND;
 	}
 }
@@ -844,7 +842,7 @@ void Game::TouchController(const gef::TouchInputManager * touch_input)
 					}
 					else
 					{
-						MenuTouchInput(touch_position_);
+						MenuTouchInput();
 					}
 				}
 			}
