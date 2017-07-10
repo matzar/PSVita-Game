@@ -16,6 +16,7 @@
 #include "load_texture.h"
 // my headers
 #include "game_state_enum.h"
+#include "instructions_enum.h"
 
 Frontend::Frontend(gef::Platform& platform, gef::InputManager* input_manager, GAMESTATE* gamestate) :
 	platform_(platform),
@@ -500,69 +501,69 @@ void Frontend::FrontendRender()
 		{
 			switch (instructions_page_)
 			{ 
-			case 0 :
+			case INSTRUCTIONS_1 :
 			{
-				gef::Sprite instructions_page_1;
-				instructions_page_1.set_texture(instructions_texture_1);
-				instructions_page_1.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
-				instructions_page_1.set_height(platform_.height() * 0.5f);
-				instructions_page_1.set_width(platform_.width() * 0.5f);
-				sprite_renderer_->DrawSprite(instructions_page_1);
+				gef::Sprite instructions_1;
+				instructions_1.set_texture(instructions_texture_1);
+				instructions_1.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
+				instructions_1.set_height(platform_.height() * 0.5f);
+				instructions_1.set_width(platform_.width() * 0.5f);
+				sprite_renderer_->DrawSprite(instructions_1);
 			} //
 			break;
 
-			case 1 :
+			case INSTRUCTIONS_2 :
 			{
-				gef::Sprite instructions_page_2;
-				instructions_page_2.set_texture(instructions_texture_2);
-				instructions_page_2.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
-				instructions_page_2.set_height(platform_.height() * 0.5f);
-				instructions_page_2.set_width(platform_.width() * 0.5f);
-				sprite_renderer_->DrawSprite(instructions_page_2);
+				gef::Sprite instructions_2;
+				instructions_2.set_texture(instructions_texture_2);
+				instructions_2.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
+				instructions_2.set_height(platform_.height() * 0.5f);
+				instructions_2.set_width(platform_.width() * 0.5f);
+				sprite_renderer_->DrawSprite(instructions_2);
 			} //
 			break;
 
-			case 2 :
+			case INSTRUCTIONS_3 :
 			{
-				gef::Sprite instructions_page_3;
-				instructions_page_3.set_texture(instructions_texture_3);
-				instructions_page_3.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
-				instructions_page_3.set_height(platform_.height() * 0.5f);
-				instructions_page_3.set_width(platform_.width() * 0.5f);
-				sprite_renderer_->DrawSprite(instructions_page_3);
+				gef::Sprite instructions_3;
+				instructions_3.set_texture(instructions_texture_3);
+				instructions_3.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
+				instructions_3.set_height(platform_.height() * 0.5f);
+				instructions_3.set_width(platform_.width() * 0.5f);
+				sprite_renderer_->DrawSprite(instructions_3);
 			} //
 			break;
 
-			case 3 :
+			case INSTRUCTIONS_4 :
 			{
-				gef::Sprite instructions_page_4;
-				instructions_page_4.set_texture(instructions_texture_4);
-				instructions_page_4.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
-				instructions_page_4.set_height(platform_.height() * 0.5f);
-				instructions_page_4.set_width(platform_.width() * 0.5f);
-				sprite_renderer_->DrawSprite(instructions_page_4);
+				gef::Sprite instructions_4;
+				instructions_4.set_texture(instructions_texture_4);
+				instructions_4.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
+				instructions_4.set_height(platform_.height() * 0.5f);
+				instructions_4.set_width(platform_.width() * 0.5f);
+				sprite_renderer_->DrawSprite(instructions_4);
 			} //
 			break;
 
-			case 4 :
+			case INSTRUCTIONS_5 :
 			{
-				gef::Sprite instructions_page_5;
-				instructions_page_5.set_texture(instructions_texture_5);
-				instructions_page_5.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
-				instructions_page_5.set_height(platform_.height() * 0.5f);
-				instructions_page_5.set_width(platform_.width() * 0.5f);
-				sprite_renderer_->DrawSprite(instructions_page_5);
+				gef::Sprite instructions_5;
+				instructions_5.set_texture(instructions_texture_5);
+				instructions_5.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
+				instructions_5.set_height(platform_.height() * 0.5f);
+				instructions_5.set_width(platform_.width() * 0.5f);
+				sprite_renderer_->DrawSprite(instructions_5);
 			} //
 			break;
 
-			case 5 :
+			case INSTRUCTIONS_6 :
 			{
-				gef::Sprite instructions_page_6;
-				instructions_page_6.set_texture(instructions_texture_6);
-				instructions_page_6.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
-				instructions_page_6.set_height(platform_.height() * 0.5f);
-				instructions_page_6.set_width(platform_.width() * 0.5f);
-				sprite_renderer_->DrawSprite(instructions_page_6);
+				gef::Sprite instructions_6;
+				instructions_6.set_texture(instructions_texture_6);
+				instructions_6.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
+				instructions_6.set_height(platform_.height() * 0.5f);
+				instructions_6.set_width(platform_.width() * 0.5f);
+				sprite_renderer_->DrawSprite(instructions_6);
 			} //
 			break;
 			} // !display_instructions_
