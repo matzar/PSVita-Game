@@ -231,11 +231,11 @@ void Frontend::SonyController(const gef::SonyController* controller)
 		{
 			// lerp menu box sprite
 			// get sprites current position
-			gef::Vector4 sprite_current_position = menu_box_sprite_.position();
+			//gef::Vector4 sprite_current_position = menu_box_sprite_.position();
 			// lerp from current position to a new position
-			gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() + sprite_height * 1.5f, 0.0f);
-			lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
-			menu_box_sprite_.set_position(lerp_vector);
+			//gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() + sprite_height * 1.5f, 0.0f);
+			//lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
+			menu_box_sprite_.set_position(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 1.5f, 0.0f);
 
 			// lerp left d-pad sprite
 			// gef left d-pad sprite current position
