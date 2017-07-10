@@ -119,36 +119,32 @@ void Player::PlayerController(const gef::SonyController * controller)
 
 void Player::PlayerTouchController(const gef::TouchInputManager * touch_input)
 {
-	if (alive_)
+	
+	if (touch_input && (touch_input->max_num_panels() > 0))
 	{
-		// move the player
-		/*b2Vec2 vel = GetBody()->GetLinearVelocity();
-		vel.x = (*p_x_velocity);
-		GetBody()->SetLinearVelocity(vel);*/
+		// get the active touches for this panel
+		const gef::TouchContainer& panel_touches = touch_input->touches(0);
 
-		if (touch_input && (touch_input->max_num_panels() > 0))
+		// go through the touches
+		for (gef::ConstTouchIterator touch = panel_touches.begin(); touch != panel_touches.end(); ++touch)
 		{
-			// get the active touches for this panel
-			const gef::TouchContainer& panel_touches = touch_input->touches(0);
-
-			// go through the touches
-			for (gef::ConstTouchIterator touch = panel_touches.begin(); touch != panel_touches.end(); ++touch)
+			// if active touch id is -1, then we are not currently processing a touch
+			if (active_touch_id_ == -1)
 			{
-				// if active touch id is -1, then we are not currently processing a touch
-				if (active_touch_id_ == -1)
+				// check for the start of a new touch
+				if (touch->type == gef::TT_NEW)
 				{
-					// check for the start of a new touch
-					if (touch->type == gef::TT_NEW)
+					active_touch_id_ = touch->id;
+
+					// we're just going to record the position of the touch
+					touch_position_ = touch->position;
+
+					// do any processing for a new touch here
+
+					// tap on the right side of the screen - jump
+					if (touch_position_.x > 480.0f) // 480 is half of PSVita's screen in the x direction
 					{
-						active_touch_id_ = touch->id;
-
-						// we're just going to record the position of the touch
-						touch_position_ = touch->position;
-
-						// do any processing for a new touch here
-
-						// if touch position is on the right part of the screen 
-						if (touch_position_.x > 480.0f) // 480 is half of PSVita's screen in the x direction
+						if (alive_)
 						{
 							if (jump_)
 							{
@@ -159,46 +155,43 @@ void Player::PlayerTouchController(const gef::TouchInputManager * touch_input)
 								jump_ = false;
 							}
 						}
-						// if touch position os on the left part of the screen
-						if (touch_position_.x < 480.0f) // 480 is half of PSVita's screen in the x direction
+					}
+					// tap on the left side of the screen - change colour
+					if (touch_position_.x < 480.0f) // 480 is half of PSVita's screen in the x direction
+					{
+						if (alive_)
 						{
 							red_ = !red_;
 
 							if (red_)
-							this->SetGameObjectColour(RED);
+								this->SetGameObjectColour(RED);
 							else
-							this->SetGameObjectColour(BLUE);
+								this->SetGameObjectColour(BLUE);
 						}
 					}
 				}
-				else if (active_touch_id_ == touch->id)
+			}
+			else if (active_touch_id_ == touch->id)
+			{
+				// we are processing touch data with a matching id to the one we are looking for
+				if (touch->type == gef::TT_ACTIVE)
 				{
-					// we are processing touch data with a matching id to the one we are looking for
-					if (touch->type == gef::TT_ACTIVE)
-					{
 
-					}
-					else if (touch->type == gef::TT_RELEASED)
-					{
-						// the touch we are tracking has been released
-						// perform any actions that need to happen when a touch is released here
+				}
+				else if (touch->type == gef::TT_RELEASED)
+				{
+					// the touch we are tracking has been released
+					// perform any actions that need to happen when a touch is released here
 
-						// we're not doing anything here apart from resetting the active touch id
-						active_touch_id_ = -1;
-					}
+					// we're not doing anything here apart from resetting the active touch id
+					active_touch_id_ = -1;
 				}
 			}
 		}
 	}
-	//else
-	//{
-	//	// stop the player
-	//	b2Vec2 vel = GetBody()->GetLinearVelocity();
-	//	vel.x = 0.0f;
-	//	GetBody()->SetLinearVelocity(vel);
-	//}
 }
 
+// future improvement
 void Player::ReloadPlayer()
 {
 	body_->SetTransform(b2Vec2(-4.0f, 4.0f), 0.0f);
