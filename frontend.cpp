@@ -30,6 +30,7 @@ Frontend::Frontend(gef::Platform& platform, gef::InputManager* input_manager, GA
 	instructions_texture_4(nullptr),
 	instructions_texture_5(nullptr),
 	instructions_texture_6(nullptr),
+	instructions_texture_7(nullptr),
 	playstation_left_d_pad_(nullptr),
 	playstation_right_d_pad_(nullptr),
 	display_instrucitons_(nullptr),
@@ -91,6 +92,7 @@ void Frontend::InitTextures()
 	instructions_texture_4 = CreateTextureFromPNG("png/instructions_4.png", platform_);
 	instructions_texture_5 = CreateTextureFromPNG("png/instructions_5.png", platform_);
 	instructions_texture_6 = CreateTextureFromPNG("png/instructions_6.png", platform_);
+	instructions_texture_7 = CreateTextureFromPNG("png/instructions_7.png", platform_);
 } // !InitTextures
 
 void Frontend::CleanTextures()
@@ -115,6 +117,9 @@ void Frontend::CleanTextures()
 
 	delete instructions_texture_6;
 	instructions_texture_6 = nullptr;
+
+	delete instructions_texture_7;
+	instructions_texture_7 = nullptr;
 
 	// icon textures
 	delete playstation_left_d_pad_;
@@ -247,7 +252,7 @@ void Frontend::MenuTouchInput()
 		{
 			instructions_page_++;
 
-			if (instructions_page_ >= 6)
+			if (instructions_page_ >= 7)
 				instructions_page_ = 0;
 		}
 	}
@@ -391,7 +396,7 @@ void Frontend::SonyController(const gef::SonyController* controller)
 		{
 			instructions_page_++;
 
-			if (instructions_page_ >= 6)
+			if (instructions_page_ >= 7)
 				instructions_page_ = 0;
 		}
 		// INSTRUCTIONS left d-pad
@@ -407,7 +412,7 @@ void Frontend::SonyController(const gef::SonyController* controller)
 			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
 		{
-			if (instructions_page_ < 5)
+			if (instructions_page_ < 6)
 				instructions_page_++;
 		}
 		// QUIT press
@@ -564,6 +569,17 @@ void Frontend::FrontendRender()
 				instructions_6.set_height(platform_.height() * 0.5f);
 				instructions_6.set_width(platform_.width() * 0.5f);
 				sprite_renderer_->DrawSprite(instructions_6);
+			} //
+			break;
+
+			case INSTRUCTIONS_7:
+			{
+				gef::Sprite instructions_7;
+				instructions_7.set_texture(instructions_texture_7);
+				instructions_7.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
+				instructions_7.set_height(platform_.height() * 0.5f);
+				instructions_7.set_width(platform_.width() * 0.5f);
+				sprite_renderer_->DrawSprite(instructions_7);
 			} //
 			break;
 			} // !display_instructions_

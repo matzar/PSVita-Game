@@ -72,6 +72,7 @@ private:
 	gef::Texture* instructions_texture_4;
 	gef::Texture* instructions_texture_5;
 	gef::Texture* instructions_texture_6;
+	gef::Texture* instructions_texture_7;
 	// icons textures
 	gef::Texture* playstation_left_d_pad_;
 	gef::Texture* playstation_right_d_pad_;
