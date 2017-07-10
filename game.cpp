@@ -770,6 +770,9 @@ void Game::SonyController(const gef::SonyController* controller)
 
 void Game::MenuTouchInput()
 {
+	// there's no need for moving the menu box sprite because in this case 
+	// because the functions get called quicker than the sprite moves
+
 	//// D-pad up
 	//if (touch_position_.y < menu_box_sprite_.position().y())
 	//	//sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
@@ -794,15 +797,13 @@ void Game::MenuTouchInput()
 	//	//lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
 	//	menu_box_sprite_.set_position(lerp_vector);
 	//}
-
-
+	
 
 	// RESUME button press
 	if (touch_position_.y > (menu_text_1_.y() - sprite_height * 0.5f) &&
 		touch_position_.y < (menu_text_1_.y() + sprite_height) &&
 		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
-		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2) ||
-		touch_position_.x > pause_button_x_ - 30.0f && touch_position_.y < pause_button_y_ + 30.0f)
+		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
 	{
 		pause_ = !pause_;
 	}
@@ -852,6 +853,10 @@ void Game::TouchController(const gef::TouchInputManager * touch_input)
 					// we're just going to record the position of the touch
 					touch_position_ = touch->position;
 
+					if (touch_position_.x > pause_button_x_ - 30.0f && touch_position_.y < pause_button_y_ + 30.0f)
+					{
+						pause_ = !pause_;
+					}
 					// do any processing for a new touch here
 					if (!pause_)
 					{
