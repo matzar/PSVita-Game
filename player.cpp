@@ -1,7 +1,5 @@
 #include "player.h"
 // gef headers
-#include <system/debug_log.h>
-
 #include <input/touch_input_manager.h>
 #include <input/sony_controller_input_manager.h>
 

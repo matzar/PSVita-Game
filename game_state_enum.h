@@ -9,10 +9,11 @@ enum GAMESTATE
 	GAME
 }; // GAMESTATE
 
-// Windows global variable
+// how to use global gamestate variable on...
+// Windows and...
 //__declspec(selectany) GAMESTATE gamestate;
 
-// PSVita global variable
+// ...PSVita
 //__attribute__((weak)) GAMESTATE gamestate;
 
 #endif // !_GAME_STATE_ENUM_H

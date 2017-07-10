@@ -18,7 +18,7 @@ public:
 
 	void Update();
 	void SetCameraPosition(const float& yaw, const float& pitch, const float& roll, const gef::Vector4& position);
-	void DisplayCameraPosition() const;
+	//void DisplayCameraPosition() const; // dev function
 
 	inline void MoveForward(const float dt) { position_ += forward_ * dt; Update(); }
 	inline void MoveBackwards(const float dt) { position_ -= forward_ * dt; Update(); }

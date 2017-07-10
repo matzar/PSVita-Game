@@ -48,14 +48,7 @@ public:
 	int IsContacting() const { return num_contacts_; }
 	bool IsAlive() const { return alive_; }
 	void RedPlayer(bool red) { red_ = red; }
-	//b2Body* GetPlayerBody() { return player_body_; }
 private:
-	// player box 2d variables
-	// player body
-	//b2Body* player_body_;
-	// player colour
-	//b2Color colour_;
-
 	// jumping
 	bool jump_;
 

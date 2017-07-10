@@ -1,7 +1,6 @@
 #include "game.h"
 // gef headers
 #include <system/platform.h>
-#include <system/debug_log.h>
 
 #include <graphics/font.h>
 
@@ -211,7 +210,9 @@ void Game::InitCamera()
 {
 	camera_ = new FreeCamera;
 	camera_->Update();
+	/* dev function 
 	camera_->DisplayCameraPosition();
+	*/
 } // !InitCamera
 
 void Game::CleanCamera()
@@ -1047,8 +1048,6 @@ void Game::GameUpdate(float frame_time)
 			UpdateSimulation(frame_time);
 		}
 	} // !input_manager_
-
-	gef::DebugOut("active_touch_id_: %d\n", active_touch_id_);
 } // !GameUpdate
 
 void Game::GameRender()

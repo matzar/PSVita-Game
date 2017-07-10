@@ -73,9 +73,11 @@ void FreeCamera::CameraController(const float frame_time, const gef::SonyControl
 		{
 			MoveDown(frame_time * camera_speed);
 		}
+		/* dev function 
 		if (controller->buttons_pressed() & gef_SONY_CTRL_TOUCH_PAD)
 		{
 			DisplayCameraPosition();
 		}
+		*/
 	}
 }

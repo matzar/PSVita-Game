@@ -1,5 +1,4 @@
 #include "contact_listener.h"
-#include "system\debug_log.h"
 #include "player.h"
 #include "ground.h"
 #include "pickup.h"
@@ -19,25 +18,6 @@ ContactListener::~ContactListener()
 
 void ContactListener::BeginContact(b2Contact * contact)
 {
-	//Player* player = nullptr;
-	//GameObject* game_object = nullptr;
-
-	//GameObject* gameObjectA = nullptr;
-	//GameObject* gameObjectB = nullptr;
-
-	//b2Body* bodyA = contact->GetFixtureA()->GetBody();
-	//b2Body* bodyB = contact->GetFixtureB()->GetBody();
-
-	//gameObjectA = (GameObject*)bodyA->GetUserData();
-	//gameObjectB = (GameObject*)bodyB->GetUserData();
-
-	//if (gameObjectA->type() == PLAYER)
-	//{
-	//	player = (Player*)gameObjectA;
-
-	//}
-
-
 	// pointers for body A and body B
 	Player* player = nullptr;
 	GameObject* game_object = nullptr;
@@ -148,32 +128,5 @@ void ContactListener::EndContact(b2Contact * contact)
 				current_ground_ = (Ground*)(game_object);
 			}
 		}
-		//
-		//if (player->GetGameObjectColour() == game_object->GetGameObjectColour())
-		//{
-		//	// reset jump
-		//	gef::DebugOut("Same colour\n");
-		//}
-		//
-		//if (game_object->GetGameObjectType() == GROUND && player->GetGameObjectColour() != game_object->GetGameObjectColour())
-		//{
-		//	// destroy player
-		//	player->DeadPlayer();
-
-		//	// restart screen
-		//	gef::DebugOut("Different colours\n");
-		//}
-
-		//if (game_object)
-		//{
-		//	//
-		//	if (game_object->GetGameObjectType() == PICKUP)
-		//	{
-		//		// set pickup to not active
-		//		dying_pickups_scheduled_for_removal_.insert(game_object);
-
-		//		gef::DebugOut("Pick this shit up!\n");
-		//	}
-		//}
 	}
 }

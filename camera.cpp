@@ -1,7 +1,6 @@
 #include "camera.h"
 // gef headers
 #include "maths/vector4.h"
-#include <system/debug_log.h>
 // std headers
 #include <math.h>
 
@@ -64,8 +63,10 @@ void Camera::SetCameraPosition(const float& yaw, const float& pitch, const float
 	Update();
 } // !SetCameraPosition
 
+/* dev function
 void Camera::DisplayCameraPosition() const
 {
-	//gef::DebugOut("SetCameraPosition(%.1ff, %.1ff, %.1ff, %.1ff, %.1ff, %.1ff);\n", yaw_, pitch_, roll_, position_.x(), position_.y(), position_.z());
-	/*gef::DebugOut("LookAt: x%.1ff y%.1ff z%.1ff\n Up: x%.1ff y%.1ff z%.1ff\n", look_at_.x(), look_at_.y(), look_at_.z(), up_.x(), up_.y(), up_.z());*/
+	gef::DebugOut("SetCameraPosition(%.1ff, %.1ff, %.1ff, %.1ff, %.1ff, %.1ff);\n", yaw_, pitch_, roll_, position_.x(), position_.y(), position_.z());
+	gef::DebugOut("LookAt: x%.1ff y%.1ff z%.1ff\n Up: x%.1ff y%.1ff z%.1ff\n", look_at_.x(), look_at_.y(), look_at_.z(), up_.x(), up_.y(), up_.z());
 } // !DisplayCameraPosition
+*/

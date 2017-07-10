@@ -1,7 +1,6 @@
 #include "frontend.h"
 // gef headers
 #include <system/platform.h>
-#include <system/debug_log.h>
 
 #include <graphics/font.h>
 

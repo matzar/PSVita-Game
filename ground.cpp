@@ -1,5 +1,4 @@
 #include "ground.h"
-#include <system/debug_log.h>
 
 Ground::Ground()
 {
