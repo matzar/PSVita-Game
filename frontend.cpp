@@ -85,11 +85,11 @@ void Frontend::InitTextures()
 	// initialize title texture
 	title_texture_ = CreateTextureFromPNG("png/frontend_instructions.png", platform_);
 	// initialize instructions page 1
-	instructions_texture_1 = CreateTextureFromPNG("png/playstation-circle-dark-icon.png", platform_);
-	instructions_texture_2 = CreateTextureFromPNG("png/playstation-cross-dark-icon.png", platform_);
-	instructions_texture_3 = CreateTextureFromPNG("png/playstation-circle-dark-icon.png", platform_);
-	instructions_texture_4 = CreateTextureFromPNG("png/playstation-square-dark-icon.png", platform_);
-	instructions_texture_5 = CreateTextureFromPNG("png/playstation-triangle-dark-icon.png", platform_);
+	instructions_texture_1 = CreateTextureFromPNG("png/instructions_1.png", platform_);
+	instructions_texture_2 = CreateTextureFromPNG("png/instructions_2.png", platform_);
+	instructions_texture_3 = CreateTextureFromPNG("png/instructions_3.png", platform_);
+	instructions_texture_4 = CreateTextureFromPNG("png/instructions_4.png", platform_);
+	instructions_texture_5 = CreateTextureFromPNG("png/instructions_5.png", platform_);
 } // !InitTextures
 
 void Frontend::CleanTextures()
