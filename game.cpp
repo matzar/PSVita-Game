@@ -773,32 +773,6 @@ void Game::MenuTouchInput()
 	// there's no need for moving the menu box sprite because in this case 
 	// because the functions get called quicker than the sprite moves
 
-	//// D-pad up
-	//if (touch_position_.y < menu_box_sprite_.position().y())
-	//	//sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
-	//{
-	//	// lerp menu box sprite
-	//	// get sprites current position
-	//	gef::Vector4 sprite_current_position = menu_box_sprite_.position();
-	//	// lerp from current position to a new position
-	//	gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() - sprite_height * 2.0f, 0.0f);
-	//	//lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
-	//	menu_box_sprite_.set_position(lerp_vector);
-	//}
-	//// D-pad down
-	//if (touch_position_.y > menu_box_sprite_.position().y())
-	//	//sprite_init_position_y_ + sprite_height * 4.0f >= menu_box_sprite_.position().y() + sprite_height * 2.0f)
-	//{
-	//	// lerp menu box sprite
-	//	// get sprites current position
-	//	gef::Vector4 sprite_current_position = menu_box_sprite_.position();
-	//	// lerp from current position to a new position
-	//	gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() + sprite_height * 2.0f, 0.0f);
-	//	//lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
-	//	menu_box_sprite_.set_position(lerp_vector);
-	//}
-	
-
 	// RESUME button press
 	if (touch_position_.y > (menu_text_1_.y() - sprite_height * 0.5f) &&
 		touch_position_.y < (menu_text_1_.y() + sprite_height) &&
