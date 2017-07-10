@@ -83,7 +83,7 @@ void Frontend::InitTextures()
 	playstation_left_d_pad_ = CreateTextureFromPNG("png/playstation-left-d-pad.png", platform_);
 	playstation_right_d_pad_ = CreateTextureFromPNG("png/playstation-right-d-pad.png", platform_);
 	// initialize title texture
-	title_texture_ = CreateTextureFromPNG("png/frontend_instructions.png", platform_);
+	title_texture_ = CreateTextureFromPNG("png/title_screen.png", platform_);
 	// initialize instructions page 1
 	instructions_texture_1 = CreateTextureFromPNG("png/instructions_1.png", platform_);
 	instructions_texture_2 = CreateTextureFromPNG("png/instructions_2.png", platform_);
