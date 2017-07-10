@@ -1029,13 +1029,13 @@ void Game::GameUpdate(float frame_time)
 
 		// get controller input data and read controller data for controler 0
 		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
-		// get touch input
-		const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
-
+		SonyController(controller);
 		camera_->CameraController(frame_time, controller);
 
+		// get touch input
+		const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
 		TouchController(touch_input);
-		
+
 		if (!pause_)
 		{
 			// player controller update and simulation update
@@ -1045,7 +1045,6 @@ void Game::GameUpdate(float frame_time)
 			UpdateSimulation(frame_time);
 		}
 
-		SonyController(controller);
 	} // !input_manager_
 
 	gef::DebugOut("active_touch_id_: %d\n", active_touch_id_);

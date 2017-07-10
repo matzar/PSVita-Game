@@ -9,6 +9,7 @@
 #include <graphics/sprite.h>
 
 #include <input/input_manager.h>
+#include <input/touch_input_manager.h>
 #include <input/sony_controller_input_manager.h>
 
 #include <maths/vector2.h>
@@ -37,7 +38,8 @@ Settings::Settings(gef::Platform& platform, gef::InputManager* input_manager, GA
 	sprite_height(38.0f),
 	sfx_voice_id_(-1),
 	sfx_id_(-1),
-	fps_(0)
+	fps_(0),
+	active_touch_id_(-1)
 {
 }
 
@@ -175,6 +177,106 @@ void Settings::SettingsRelease()
 
 	CleanSprites();
 } // !SettingsRelease
+
+void Settings::MenuTouchInput()
+{
+	// CAMERA press
+	if (touch_position_.y > (menu_text_1_.y() - sprite_height * 0.5f) &&
+		touch_position_.y < (menu_text_1_.y() + sprite_height) &&
+		touch_position_.x >(platform_.width() / 2 - sprite_width_ / 2) &&
+		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
+	{
+		(*camera_count_)++;
+
+		if ((*camera_count_) >= 3)
+			(*camera_count_) = 0;
+	}
+
+	// DIFFICULTY press
+	if (touch_position_.y >(menu_text_2_.y() - sprite_height * 0.5f) &&
+		touch_position_.y < (menu_text_2_.y() + sprite_height) &&
+		touch_position_.x >(platform_.width() / 2 - sprite_width_ / 2) &&
+		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
+	{
+		(*difficulty_count_)++;
+
+		if ((*difficulty_count_) >= 2)
+			(*difficulty_count_) = 0;
+	}
+
+	// GROUNDS press
+	if (touch_position_.y >(menu_text_3_.y() - sprite_height * 0.5f) &&
+		touch_position_.y < (menu_text_3_.y() + sprite_height) &&
+		touch_position_.x >(platform_.width() / 2 - sprite_width_ / 2) &&
+		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
+	{
+		(*number_of_grounds_) += 10;
+
+		if ((*number_of_grounds_) >= 40)
+			(*number_of_grounds_) = 10;
+	}
+
+	// BACK press
+	if (touch_position_.y >(menu_text_4_.y() - sprite_height * 0.5f) &&
+		touch_position_.y < (menu_text_4_.y() + sprite_height) &&
+		touch_position_.x >(platform_.width() / 2 - sprite_width_ / 2) &&
+		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
+	{
+		// update the current state of the game state machine
+		// get the value that the gamestate points to and change it
+		(*gamestate_) = FRONTEND;
+	}
+}
+
+void Settings::TouchController(const gef::TouchInputManager* touch_input)
+{
+	if (touch_input && (touch_input->max_num_panels() > 0))
+	{
+		// get the active touches for this panel
+		const gef::TouchContainer& panel_touches = touch_input->touches(0);
+
+		// go through the touches
+		for (gef::ConstTouchIterator touch = panel_touches.begin(); touch != panel_touches.end(); ++touch)
+		{
+			// if active touch id is -1, then we are not currently processing a touch
+			if (active_touch_id_ == -1)
+			{
+				// check for the start of a new touch
+				if (touch->type == gef::TT_NEW)
+				{
+					active_touch_id_ = touch->id;
+
+					// we're just going to record the position of the touch
+					touch_position_ = touch->position;
+
+					MenuTouchInput();
+				}
+			}
+			else if (active_touch_id_ == touch->id)
+			{
+				// we are processing touch data with a matching id to the one we are looking for
+				if (touch->type == gef::TT_ACTIVE)
+				{
+					// update an active touch here
+					// do any processing for a new touch here
+
+
+					// we're just going to record the position of the touch
+					touch_position_ = touch->position;
+
+				}
+				else if (touch->type == gef::TT_RELEASED)
+				{
+					// the touch we are tracking has been released
+					// perform any actions that need to happen when a touch is released here
+
+					// we're not doing anything here apart from resetting the active touch id
+					active_touch_id_ = -1;
+				}
+			}
+		}
+	}
+} // !TouchController
 
 void Settings::SonyController(const gef::SonyController* controller)
 {
@@ -346,8 +448,11 @@ void Settings::SettingsUpdate(float frame_time)
 		input_manager_->Update();
 
 		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
-
 		SonyController(controller);
+
+		// get touch input
+		const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
+		TouchController(touch_input);
 	} // !input_manager_
 } // !SettingsUpdate
 

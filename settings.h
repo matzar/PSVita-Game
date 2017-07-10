@@ -13,6 +13,7 @@ namespace gef
 	class InputManager;
 	class Texture;
 	class SonyController;
+	class TouchInputManager;
 	class Sprite;
 	class Vector2;
 	class Vector4;
@@ -94,8 +95,12 @@ private:
 	gef::Vector4 menu_text_3_;
 	gef::Vector4 menu_text_4_;
 
-	// private member functions
+	// controlls
 	void SonyController(const gef::SonyController* controller);
+	void TouchController(const gef::TouchInputManager* touch_input);
+	void MenuTouchInput();
+	Int32 active_touch_id_;
+	gef::Vector2 touch_position_;
 
 	void InitFont();
 	void CleanFont();

@@ -194,53 +194,6 @@ void Frontend::FrontendRelease()
 
 void Frontend::MenuTouchInput()
 {
-	////// D-pad up
-	//if (touch_position_.y < menu_box_sprite_.position().y())
-	//	//sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
-	//{
-	//	// move down menu box sprite
-	//	menu_box_sprite_.set_position(
-	//		menu_box_sprite_.position().x(),
-	//		menu_box_sprite_.position().y() - sprite_height * 1.5f,
-	//		0.0f);
-
-	//	// move down left d-pad sprite
-	//	left_d_pad_sprite_.set_position(
-	//		left_d_pad_sprite_.position().x(),
-	//		left_d_pad_sprite_.position().y() - sprite_height * 1.5f,
-	//		0.0f);
-
-
-	//	// lerp down right d-pad sprite
-	//	right_d_pad_sprite_.set_position(
-	//		right_d_pad_sprite_.position().x(),
-	//		right_d_pad_sprite_.position().y() - sprite_height * 1.5f,
-	//		0.0f);
-	//}
-	//// D-pad down
-	//if (touch_position_.y > menu_box_sprite_.position().y())
-	//	//sprite_init_position_y_ + sprite_height * 4.0f >= menu_box_sprite_.position().y() + sprite_height * 2.0f)
-	//{
-	//	// move down menu box sprite
-	//	menu_box_sprite_.set_position(
-	//		menu_box_sprite_.position().x(),
-	//		menu_box_sprite_.position().y() + sprite_height * 1.5f,
-	//		0.0f);
-
-	//	// move down left d-pad sprite
-	//	left_d_pad_sprite_.set_position(
-	//		left_d_pad_sprite_.position().x(),
-	//		left_d_pad_sprite_.position().y() + sprite_height * 1.5f,
-	//		0.0f);
-
-
-	//	// lerp down right d-pad sprite
-	//	right_d_pad_sprite_.set_position(
-	//		right_d_pad_sprite_.position().x(),
-	//		right_d_pad_sprite_.position().y() + sprite_height * 1.5f,
-	//		0.0f);
-	//}
-
 	// GAME press
 	if (touch_position_.y > (menu_text_1_.y() - sprite_height * 0.5f) &&
 		touch_position_.y < (menu_text_1_.y() + sprite_height) &&
@@ -493,11 +446,10 @@ void Frontend::FrontendUpdate(float frame_time)
 		input_manager_->Update();
 
 		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
-		// get touch input
-		const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
-
 		SonyController(controller);
 
+		// get touch input
+		const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
 		TouchController(touch_input);
 	} // !input_manager_
 } // !FrontendUpdate

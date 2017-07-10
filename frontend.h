@@ -93,7 +93,7 @@ private:
 	gef::Vector4 menu_text_3_;
 	gef::Vector4 menu_text_4_;
 	
-	// private member functions
+	// controlls
 	void SonyController(const gef::SonyController* controller);
 	void TouchController(const gef::TouchInputManager* touch_input);
 	void MenuTouchInput();
