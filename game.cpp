@@ -783,27 +783,35 @@ void Game::MenuTouchInput(gef::Vector2 touch_position_)
 	// RESUME button press
 	if (
 		touch_position_.y > (menu_text_1_.y() - sprite_height * 0.5f) &&
-		touch_position_.y < (menu_text_1_.y() + sprite_height))
+		touch_position_.y < (menu_text_1_.y() + sprite_height) &&
+		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
+		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
 	{
 		pause_ = !pause_;
+		gef::DebugOut("resume touch\n");
 	}
 	// RESTART BUTTON press
 	if (
 		touch_position_.y > (menu_text_2_.y() - sprite_height * 0.5f) &&
-		touch_position_.y < (menu_text_2_.y() + sprite_height))
+		touch_position_.y < (menu_text_2_.y() + sprite_height) &&
+		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
+		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
 	{
 		pickups_count_ = 0;
-
+		gef::DebugOut("restart touch\n");
 		GameRelease();
 		GameInit();
 	}
 	// MENU press
 	if (
 		touch_position_.y > (menu_text_3_.y() - sprite_height * 0.5f) &&
-		touch_position_.y < (menu_text_3_.y() + sprite_height))
+		touch_position_.y < (menu_text_3_.y() + sprite_height) &&
+		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
+		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
 	{
 		// update the current state of the game state machine
 		// get the value that the gamestate points to and change it
+		gef::DebugOut("menu touch\n");
 		(*gamestate_) = FRONTEND;
 	}
 }
