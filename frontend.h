@@ -13,6 +13,7 @@ namespace gef
 	class InputManager;
 	class Texture;
 	class SonyController;
+	class TouchInputManager;
 	class Sprite;
 	class Vector2;
 	class Vector4;

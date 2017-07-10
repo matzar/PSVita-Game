@@ -193,62 +193,113 @@ void Frontend::FrontendRelease()
 
 void Frontend::MenuTouchInput()
 {
-	// there's no need for moving the menu box sprite because in this case 
-	// because the functions get called quicker than the sprite moves
-
-	//// D-pad up
+	////// D-pad up
 	//if (touch_position_.y < menu_box_sprite_.position().y())
 	//	//sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
 	//{
-	//	// lerp menu box sprite
-	//	// get sprites current position
-	//	gef::Vector4 sprite_current_position = menu_box_sprite_.position();
-	//	// lerp from current position to a new position
-	//	gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() - sprite_height * 2.0f, 0.0f);
-	//	//lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
-	//	menu_box_sprite_.set_position(lerp_vector);
+	//	// move down menu box sprite
+	//	menu_box_sprite_.set_position(
+	//		menu_box_sprite_.position().x(),
+	//		menu_box_sprite_.position().y() - sprite_height * 1.5f,
+	//		0.0f);
+
+	//	// move down left d-pad sprite
+	//	left_d_pad_sprite_.set_position(
+	//		left_d_pad_sprite_.position().x(),
+	//		left_d_pad_sprite_.position().y() - sprite_height * 1.5f,
+	//		0.0f);
+
+
+	//	// lerp down right d-pad sprite
+	//	right_d_pad_sprite_.set_position(
+	//		right_d_pad_sprite_.position().x(),
+	//		right_d_pad_sprite_.position().y() - sprite_height * 1.5f,
+	//		0.0f);
 	//}
 	//// D-pad down
 	//if (touch_position_.y > menu_box_sprite_.position().y())
 	//	//sprite_init_position_y_ + sprite_height * 4.0f >= menu_box_sprite_.position().y() + sprite_height * 2.0f)
 	//{
-	//	// lerp menu box sprite
-	//	// get sprites current position
-	//	gef::Vector4 sprite_current_position = menu_box_sprite_.position();
-	//	// lerp from current position to a new position
-	//	gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() + sprite_height * 2.0f, 0.0f);
-	//	//lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
-	//	menu_box_sprite_.set_position(lerp_vector);
+	//	// move down menu box sprite
+	//	menu_box_sprite_.set_position(
+	//		menu_box_sprite_.position().x(),
+	//		menu_box_sprite_.position().y() + sprite_height * 1.5f,
+	//		0.0f);
+
+	//	// move down left d-pad sprite
+	//	left_d_pad_sprite_.set_position(
+	//		left_d_pad_sprite_.position().x(),
+	//		left_d_pad_sprite_.position().y() + sprite_height * 1.5f,
+	//		0.0f);
+
+
+	//	// lerp down right d-pad sprite
+	//	right_d_pad_sprite_.set_position(
+	//		right_d_pad_sprite_.position().x(),
+	//		right_d_pad_sprite_.position().y() + sprite_height * 1.5f,
+	//		0.0f);
 	//}
 
-
-	// RESUME button press
+	// GAME press
 	if (touch_position_.y > (menu_text_1_.y() - sprite_height * 0.5f) &&
 		touch_position_.y < (menu_text_1_.y() + sprite_height) &&
-		touch_position_.x >(platform_.width() / 2 - sprite_width_ / 2) &&
-		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
-	{
-		
-	}
-
-	// RESTART BUTTON press
-	if (touch_position_.y >(menu_text_2_.y() - sprite_height * 0.5f) &&
-		touch_position_.y < (menu_text_2_.y() + sprite_height) &&
-		touch_position_.x >(platform_.width() / 2 - sprite_width_ / 2) &&
-		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
-	{
-		
-	}
-
-	// MENU press
-	if (touch_position_.y >(menu_text_3_.y() - sprite_height * 0.5f) &&
-		touch_position_.y < (menu_text_3_.y() + sprite_height) &&
-		touch_position_.x >(platform_.width() / 2 - sprite_width_ / 2) &&
+		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
 		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
 	{
 		// update the current state of the game state machine
 		// get the value that the gamestate points to and change it
-		(*gamestate_) = FRONTEND;
+		(*gamestate_) = GAME;
+	}
+
+	// SETTINGS press
+	if (touch_position_.y > (menu_text_2_.y() - sprite_height * 0.5f) &&
+		touch_position_.y < (menu_text_2_.y() + sprite_height) &&
+		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
+		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
+	{
+		// update the current state of the game state machine
+		// get the value that the gamestate points to and change it
+		(*gamestate_) = SETTINGS;
+	}
+
+	// INSTRUCTIONS press
+	if (touch_position_.y > (menu_text_3_.y() - sprite_height * 0.5f) &&
+		touch_position_.y < (menu_text_3_.y() + sprite_height) &&
+		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
+		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
+	{
+		// move down menu box sprite
+		menu_box_sprite_.set_position(
+			platform_.width() / 2.0f,
+			menu_text_3_.y() + sprite_height * 0.5f - 3.0f,
+			0.0f);
+
+		// move down left d-pad sprite
+		left_d_pad_sprite_.set_position(
+			left_d_pad_sprite_.position().x(),
+			menu_text_3_.y() + sprite_height * 0.5f - 3.0f,
+			0.0f);
+
+
+		// lerp down right d-pad sprite
+		right_d_pad_sprite_.set_position(
+			right_d_pad_sprite_.position().x(),
+			menu_text_3_.y() + sprite_height * 0.5f - 3.0f,
+			0.0f);
+
+		instructions_page_++;
+
+		if (instructions_page_ <= 4)
+			instructions_page_ = 0;
+	}
+
+	// QUIT press
+	if (touch_position_.y >(menu_text_4_.y() - sprite_height * 0.5f) &&
+		touch_position_.y < (menu_text_4_.y() + sprite_height) &&
+		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
+		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
+	{
+		quit_ = true;
 	}
 }
 
@@ -273,8 +324,13 @@ void Frontend::TouchController(const gef::TouchInputManager* touch_input)
 					// we're just going to record the position of the touch
 					touch_position_ = touch->position;
 
-					
 					MenuTouchInput();
+
+					//gef::DebugOut("touch position: %f, %f \n", touch_position_.x, touch_position_.y);
+					//gef::DebugOut("menu_box_sprite_.position().y() %f > (menu_text_4_.y() - sprite_height * 0.5f) %f\n", );
+					//gef::DebugOut("	menu_box_sprite_.position().y() %f < (menu_text_4_.y() + sprite_height) %f\n", );
+					//gef::DebugOut("touch_position_.x %f > (menu_text_4_.y() - sprite_height * 0.5f): %f\n", touch_position_.x, menu_text_4_.y() - sprite_height * 0.5f);
+					//gef::DebugOut("touch_position_.x %f < (menu_text_4_.y() + sprite_height): %f\n", touch_position_.x, menu_text_4_.y() + sprite_height);
 				}
 			}
 			else if (active_touch_id_ == touch->id)
