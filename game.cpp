@@ -753,7 +753,6 @@ void Game::SonyController(const gef::SonyController* controller)
 
 void Game::TouchController(const gef::TouchInputManager * touch_input)
 {
-
 	if (touch_input && (touch_input->max_num_panels() > 0))
 	{
 		// get the active touches for this panel
@@ -774,42 +773,10 @@ void Game::TouchController(const gef::TouchInputManager * touch_input)
 					touch_position_ = touch->position;
 
 					// do any processing for a new touch here
-
-					player_->PlayerTouchController();
-
-					// tap on the right side of the screen - jump
-				//	if (touch_position_.x > 480.0f) // 480 is half of PSVita's screen in the x direction
-				//	{
-				//		if (player_->Alive())
-				//		{
-				//			if (player_->Jump())
-				//			{
-				//				b2Vec2 vel = player_->GetBody()->GetLinearVelocity();
-				//				vel.y = (y_velocity);	//upwards - don't change x velocity
-				//				player_->GetBody()->SetLinearVelocity(vel);
-
-				//				jump_ = false;
-				//			}
-				//		}
-				//	}
-				//	// tap on the left side of the screen - change colour
-				//	if (touch_position_.x < 480.0f) // 480 is half of PSVita's screen in the x direction
-				//	{
-				//		if (alive_)
-				//		{
-				//			red_ = !red_;
-
-				//			if (red_)
-				//				this->SetGameObjectColour(RED);
-				//			else
-				//				this->SetGameObjectColour(BLUE);
-				//		}
-				//	}
-				//}
-				//	
-
-
-
+					if (!pause_)
+					{
+						player_->PlayerTouchController(touch_position_);
+					}
 				}
 			}
 			else if (active_touch_id_ == touch->id)
@@ -997,6 +964,7 @@ void Game::GameUpdate(float frame_time)
 		const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
 
 		camera_->CameraController(frame_time, controller);
+
 		TouchController(touch_input);
 		
 		if (!pause_)
@@ -1005,7 +973,6 @@ void Game::GameUpdate(float frame_time)
 			// must be under the same condition statement 
 			// to keep the simulation consistent between restarts
 			player_->PlayerController(controller);
-			//player_->PlayerTouchController(touch_input, active_touch_id_, touch_position_);
 			UpdateSimulation(frame_time);
 		}
 

@@ -35,7 +35,7 @@ public:
 	
 	void ReloadPlayer();
 	void PlayerController(const gef::SonyController* controller);
-	void PlayerTouchController(const gef::TouchInputManager* touch_input, Int32 active_touch_id_, gef::Vector2 touch_position_);
+	void PlayerTouchController(gef::Vector2 touch_position_);
 	inline void StartContact() { num_contacts_++; }
 	inline void EndContact() { num_contacts_--; }
 	inline void RestartJump() { jump_ = true; }
@@ -70,9 +70,6 @@ private:
 
 	// contacting
 	int num_contacts_;
-
-	Int32 active_touch_id_;
-	gef::Vector2 touch_position_;
 
 	// player's x velocity
 	float32* p_x_velocity;
