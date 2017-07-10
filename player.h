@@ -39,6 +39,7 @@ public:
 	inline void StartContact() { num_contacts_++; }
 	inline void EndContact() { num_contacts_--; }
 	inline void RestartJump() { jump_ = true; }
+	inline const bool Jump() { return jump_; }
 	inline void SetAlive(bool alive) { alive_ = alive; }
 	inline const bool Alive() { return alive_; }
 	inline void SetWin(bool win) { win_ = win; }
