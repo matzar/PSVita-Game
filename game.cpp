@@ -72,7 +72,7 @@ Game::Game(gef::Platform& platform,
 	mesh_(nullptr),
 	quit_(false),
 	pause_(true),
-	pause_button_x_(930.0f),
+	pause_button_x_(935.0f),
 	pause_button_y_(25.0f),
 	pause_texture_(nullptr),
 	pause_texture_material_(nullptr),
@@ -853,7 +853,7 @@ void Game::TouchController(const gef::TouchInputManager * touch_input)
 					// we're just going to record the position of the touch
 					touch_position_ = touch->position;
 
-					if (touch_position_.x > pause_button_x_ - 30.0f && touch_position_.y < pause_button_y_ + 30.0f)
+					if (touch_position_.x > pause_button_x_ - 50.0f && touch_position_.y < pause_button_y_ + 50.0f)
 					{
 						pause_ = !pause_;
 					}

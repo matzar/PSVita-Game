@@ -120,7 +120,7 @@ void Player::PlayerTouchController(gef::Vector2 touch_position_)
 {
 	// tap on the right side of the screen - jump
 	if (touch_position_.x > 480.0f && // 480 is half of PSVita's screen in the x direction
-		touch_position_.y > 55.0f)    // prevent jump getting triggered when pressing the pause button
+		touch_position_.y > 100.0f)    // prevent jump getting triggered when pressing the pause button
 	{
 		if (alive_)
 		{
