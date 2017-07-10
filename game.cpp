@@ -765,7 +765,7 @@ void Game::MenuTouchInput()
 		gef::Vector4 sprite_current_position = menu_box_sprite_.position();
 		// lerp from current position to a new position
 		gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() - sprite_height * 2.0f, 0.0f);
-		lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
+		//lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
 		menu_box_sprite_.set_position(lerp_vector);
 	}
 	// D-pad down
@@ -777,7 +777,7 @@ void Game::MenuTouchInput()
 		gef::Vector4 sprite_current_position = menu_box_sprite_.position();
 		// lerp from current position to a new position
 		gef::Vector4 lerp_vector(menu_box_sprite_.position().x(), sprite_current_position.y() + sprite_height * 2.0f, 0.0f);
-		lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
+		//lerp_vector.Lerp(sprite_current_position, lerp_vector, 1.0f);
 		menu_box_sprite_.set_position(lerp_vector);
 	}
 
