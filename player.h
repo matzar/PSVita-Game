@@ -51,6 +51,10 @@ public:
 private:
 	// jumping
 	bool jump_;
+	bool jumping_time_;
+	b2Timer timer_;
+	float32 time_of_button_press_;
+	float32 time_since_button_press_;
 
 	// player alive
 	bool alive_;
@@ -60,8 +64,6 @@ private:
 
 	// player colour
 	bool red_;
-
-	b2Timer timer_;
 
 	// contacting
 	int num_contacts_;

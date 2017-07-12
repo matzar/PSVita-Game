@@ -7,6 +7,7 @@ Player::Player(float32* x_velocity, float32* y_velocity) :
 	p_x_velocity(x_velocity), // 5.0
 	p_y_velocity(y_velocity),	// 7.5
 	jump_(false),
+	jumping_time_(false),
 	alive_(true),
 	win_(false),
 	red_(true),
@@ -102,22 +103,25 @@ void Player::PlayerController(const gef::SonyController * controller)
 		{
 			if (controller->buttons_down() & gef_SONY_CTRL_CROSS)
 			{
-				jumpingTime = true;
+				jumping_time_ = true;
+
 				// Replace with working time fucntion
-				timeOfButtonPress = System.getCurrentTime();
+				timer_.Reset();
+				time_of_button_press_ = timer_.GetMilliseconds();
 			}
 
-			if (jumpingTime) 
+			if (jumping_time_)
 			{
 				b2Vec2 vel = GetBody()->GetLinearVelocity();
 				vel.y = (*p_y_velocity);	//upwards - don't change x velocity
 				GetBody()->SetLinearVelocity(vel);
 
-				timeSinceButtonPressed = System.getCurrentTime() - timeOfButtonPress;
+				timer_.Reset();
+				time_since_button_press_ = timer_.GetMilliseconds() - time_of_button_press_;
 
-				if ((controller->buttons_released() & gef_SONY_CTRL_CROSS) || (timeSinceButtonPressed >= 0.25))
+				if ((controller->buttons_released() & gef_SONY_CTRL_CROSS) || (time_since_button_press_ >= 0.25f))
 				{
-					jumpingTime = false;
+					jumping_time_ = false;
 					jump_ = false;
 				}
 			}
