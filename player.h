@@ -5,6 +5,7 @@
 #include "game_object.h"
 // gef headers
 #include <maths/vector2.h>
+#include <ctime>
 
 // forward gef declarations
 namespace gef
@@ -52,9 +53,8 @@ private:
 	// jumping
 	bool jump_;
 	bool jumping_time_;
-	b2Timer timer_;
-	float32 time_of_button_press_;
-	float32 time_since_button_press_;
+	time_t time_of_button_press_;
+	time_t time_since_button_press_;
 
 	// player alive
 	bool alive_;
