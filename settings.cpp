@@ -142,9 +142,9 @@ void Settings::InitText()
 	// menu text vectors init
 	float height_correction = 3.0f;
 	// set "START" vector
-	menu_text_1_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
+	menu_text_1_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f); // TODO
 	// set "SETTINGS" vector
-	menu_text_2_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.0 * sprite_height + height_correction, -0.99f);
+	menu_text_2_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.0 * sprite_height + height_correction, -0.99f); // TODO float to double
 	// set "BACK" vector
 	menu_text_3_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 2.5f + height_correction, -0.99f);
 	// set "BACK" vector

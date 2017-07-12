@@ -61,8 +61,6 @@ private:
 	// player colour
 	bool red_;
 
-	b2Timer timer_;
-
 	// contacting
 	int num_contacts_;
 
