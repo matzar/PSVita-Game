@@ -268,7 +268,7 @@ void Game::CleanModels()
 void Game::InitLevel()
 {
 	// initialize random seed
-	srand(time(NULL));
+	srand((unsigned)time(NULL));
 	// random start colour
 	int start_colour = rand() % 2;
 
@@ -283,7 +283,7 @@ void Game::InitLevel()
 	if (mesh_)
 	{
 		// procedural level generation
-		for (int i = 0; i < (*number_of_grounds_); ++i)
+		for (unsigned i = 0; i < (*number_of_grounds_); ++i)
 		{
 			// create new ground
 			ground_.push_back(new Ground());
@@ -440,7 +440,7 @@ void Game::InitLevel()
 	else
 	{
 		// procedural level generation
-		for (int i = 0; i < (*number_of_grounds_); ++i)
+		for (unsigned i = 0; i < (*number_of_grounds_); ++i)
 		{
 			// create new ground
 			ground_.push_back(new Ground());
@@ -954,6 +954,7 @@ void Game::UpdateSimulation(float frame_time)
 			// if current ground is different colour than the player - player loses
 			if (contact_listener_->current_ground_->GetGameObjectColour() != player_->GetGameObjectColour())
 			{
+				menu_box_sprite_.set_position(platform_.width() * 0.5f, platform_.height() * 0.5f + sprite_height * 3.5f, 0.0f);
 				player_->SetAlive(false);
 				pause_ = true;
 			}
@@ -962,8 +963,9 @@ void Game::UpdateSimulation(float frame_time)
 
 	UpdatePickups();
 
-	if (player_->GetBody()->GetPosition().y < -8.5f) // TODO if not working check here
+	if (player_->GetBody()->GetPosition().y < -8.5f)
 	{
+		menu_box_sprite_.set_position(platform_.width() * 0.5f, platform_.height() * 0.5f + sprite_height * 3.5f, 0.0f);
 		player_->SetAlive(false);
 		pause_ = true;
 	}
@@ -1003,7 +1005,6 @@ void Game::UpdateSimulation(float frame_time)
 			update_position_vector.Lerp(camera_start_position, gef::Vector4(player_->GetBody()->GetPosition().x - 9.8f, 6.1f, 8.7f), lerp_speed);
 			// update camera's position
 			camera_->SetCameraPosition(update_yaw_pitch_roll_vector.x(), update_yaw_pitch_roll_vector.y(), update_yaw_pitch_roll_vector.z(), update_position_vector);
-			//camera_->SetCameraPosition(73.6f, -13.6f, 0.0f, gef::Vector4(player_->GetBody()->GetPosition().x - 9.8f, 6.1f, 8.7f));
 			break;
 
 		case CAM3:
@@ -1017,7 +1018,6 @@ void Game::UpdateSimulation(float frame_time)
 			update_position_vector.Lerp(camera_start_position, gef::Vector4(player_->GetBody()->GetPosition().x - 5.9f, 4.0f, -8.8f), lerp_speed);
 			// update camera's position
 			camera_->SetCameraPosition(update_yaw_pitch_roll_vector.x(), update_yaw_pitch_roll_vector.y(), update_yaw_pitch_roll_vector.z(), update_position_vector);
-			//camera_->SetCameraPosition(126.7f, -13.6f, 0.0f, gef::Vector4(player_->GetBody()->GetPosition().x -5.9f, 4.0f, -8.8f));
 			break;
 		}
 	}
@@ -1083,7 +1083,7 @@ void Game::GameRender()
 		renderer_3d_->set_override_material(nullptr);
 
 		// draw ground
-		for (auto ground : ground_)
+		for (Ground* ground : ground_)
 		{
 			// set texture
 			if (ground->GetGameObjectColour() == RED)
@@ -1101,7 +1101,7 @@ void Game::GameRender()
 		}
 
 		// draw pickups
-		for (auto pickup : pickups_)
+		for (Pickup* pickup : pickups_)
 		{
 			renderer_3d_->DrawMesh(*pickup);
 		}
@@ -1136,14 +1136,17 @@ void Game::GameRender()
 					"YOU LOSE!");
 			}
 
-			// render "RESUME" text
-			font_->RenderText(
-				sprite_renderer_,
-				gef::Vector4(menu_text_1_.x(), menu_text_1_.y(), -0.9f),
-				1.0f,
-				0xffffffff,
-				gef::TJ_CENTRE,
-				"RESUME");
+			if (player_->Alive())
+			{
+				// render "RESUME" text
+				font_->RenderText(
+					sprite_renderer_,
+					gef::Vector4(menu_text_1_.x(), menu_text_1_.y(), -0.9f),
+					1.0f,
+					0xffffffff,
+					gef::TJ_CENTRE,
+					"RESUME");
+			}
 			
 			// render "RESTART" text
 			font_->RenderText(

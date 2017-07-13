@@ -1,6 +1,7 @@
 #ifndef _COLOUR_TYPE_ENUM_H
 #define _COLOUR_TYPE_ENUM_H
-
+// enum used to set the colour of game objects
+// and to render them in that colour
 enum OBJECT_COLOUR
 {
 	BLUE    = 0x0001,

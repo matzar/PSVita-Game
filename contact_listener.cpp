@@ -62,8 +62,6 @@ void ContactListener::BeginContact(b2Contact * contact)
 				if (current_ground_->GetGameObjectColour() == FINISH)
 				{
 					player->SetWin(true);
-					// TODO gef::DebugOut("current ground colour: %d\n", current_ground_->GetGameObjectColour());
-					//gef::DebugOut("Player Win: %d\n", player->Win());
 				}
 			}
 			// check if player is colliding with a pickup
@@ -71,14 +69,12 @@ void ContactListener::BeginContact(b2Contact * contact)
 			{
 				// schedule pickup for removal
 				dying_pickups_scheduled_for_removal_.insert((Pickup*)(game_object));
-				//gef::DebugOut("Pick it up!\n");
 			}
 			// check if player is of the same colour as the ground
 			if (player->GetGameObjectColour() == game_object->GetGameObjectColour() && game_object->GetGameObjectType() == GROUND)
 			{
 				// reset jump
 				player->RestartJump();
-				//gef::DebugOut("Same colour\n");
 			}
 		}
 	}

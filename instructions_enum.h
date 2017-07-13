@@ -1,7 +1,8 @@
 #ifndef _INSTRUCTIONS_ENUM_H
 #define _INSTRUCTIONS_ENUM_H
-
-enum
+// enum to be used with a switch statement in the frontend
+// to display instructions
+enum INSTRUCTIONS_ENUM
 {
 	INSTRUCTIONS_1,
 	INSTRUCTIONS_2,
