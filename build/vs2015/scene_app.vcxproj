@@ -232,6 +232,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PSVita'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|PSVita'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\menu4.cpp" />
     <ClCompile Include="..\..\pickup.cpp" />
     <ClCompile Include="..\..\player.cpp" />
     <ClCompile Include="..\..\primitive_builder.cpp" />
@@ -261,6 +262,7 @@
     <ClInclude Include="..\..\ground.h" />
     <ClInclude Include="..\..\instructions_enum.h" />
     <ClInclude Include="..\..\load_texture.h" />
+    <ClInclude Include="..\..\menu4.h" />
     <ClInclude Include="..\..\object_type_enum.h" />
     <ClInclude Include="..\..\pickup.h" />
     <ClInclude Include="..\..\player.h" />
