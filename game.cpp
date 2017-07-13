@@ -273,8 +273,8 @@ void Game::InitLevel()
 	int start_colour = rand() % 2;
 
 	// will be used for grounds intervals
-	float interval = 3.0f;
-	float pickup_radius = 0.2f;
+	float32 interval = 3.0f;
+	float32 pickup_radius = 0.2f;
 	float32 colour_ground_x = 5.0f;
 	float32 texture_ground_x = 3.0f;
 	b2Vec2 start_position(0.0f, 0.0f);
@@ -306,7 +306,7 @@ void Game::InitLevel()
 			start_position.x += (texture_ground_x + interval);
 		} // !FINISH GROUND
 
-		// RED GROUND
+		// FIRST COLOUR
 		else if (i % 2 == 0)
 		{
 			// change height of the ground
@@ -374,7 +374,7 @@ void Game::InitLevel()
 			}
 			// update start position
 			start_position.x += (colour_ground_x + interval);
-		} // !RED GROUND
+		} // !FIRST COLOUR
 
 		// TEXTURED GROUND
 		else if (i % 3 == 0)
@@ -394,7 +394,7 @@ void Game::InitLevel()
 			start_position.x += (texture_ground_x + interval);
 		} // !TEXTURED GROUND
 
-		// BLUE GROUND
+		// SECOND COLOUR
 		else
 		{
 			// change height of the ground
@@ -462,7 +462,7 @@ void Game::InitLevel()
 			}
 			// update start position
 			start_position.x += (colour_ground_x + interval);
-		} // !BLUE GROUND
+		} // !SECOND COLOUR
 	} 
 } // !InitLevel
 
