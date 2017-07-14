@@ -93,9 +93,9 @@ private:
 	float height_correction_;
 
 	// controlls
-	void SonyController(const gef::SonyController* controller, gef::Sprite menu_box_sprite, gef::Sprite left_d_pad_sprite, gef::Sprite right_d_pad_spite);
+	void SonyController(const gef::SonyController* controller);
 	void TouchController(const gef::TouchInputManager* touch_input);
-	void MenuTouchInput(gef::Sprite d_pad, ...);
+	void MenuTouchInput();
 	Int32 active_touch_id_;
 	gef::Vector2 touch_position_;
 

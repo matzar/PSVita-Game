@@ -192,7 +192,7 @@ void Menu::MenuRelease()
 	CleanFont();
 } // !MenuRelease
 
-void Menu::MenuTouchInput(gef::Sprite d_pad, ...)
+void Menu::MenuTouchInput()
 {
 	// GAME press
 	if (touch_position_.y > (menu_text_1_.y() - sprite_height * 0.5f) &&
@@ -225,21 +225,21 @@ void Menu::MenuTouchInput(gef::Sprite d_pad, ...)
 		if (!display_d_pad) // prevent from incrementing 'instructions_page_' before displaying the first page
 		{
 			// move down menu box sprite
-			d_pad.set_position(
+			menu_box_sprite_.set_position(
 				platform_.width() / 2.0f,
 				menu_text_3_.y() + sprite_height * 0.5f - 3.0f,
 				0.0f);
 
 			// move down left d-pad sprite
-			d_pad.set_position(
-				d_pad.position().x(),
+			left_d_pad_sprite_.set_position(
+				left_d_pad_sprite_.position().x(),
 				menu_text_3_.y() + sprite_height * 0.5f - 3.0f,
 				0.0f);
 
 
 			// lerp down right d-pad sprite
-			d_pad.set_position(
-				d_pad.position().x(),
+			right_d_pad_sprite_.set_position(
+				right_d_pad_sprite_.position().x(),
 				menu_text_3_.y() + sprite_height * 0.5f - 3.0f,
 				0.0f);
 		}
@@ -283,7 +283,7 @@ void Menu::TouchController(const gef::TouchInputManager* touch_input)
 					// we're just going to record the position of the touch
 					touch_position_ = touch->position;
 
-					MenuTouchInput(menu_box_sprite_, left_d_pad_sprite_, right_d_pad_sprite_);
+					MenuTouchInput();
 				}
 			}
 			else if (active_touch_id_ == touch->id)
@@ -314,62 +314,62 @@ void Menu::TouchController(const gef::TouchInputManager* touch_input)
 	active_touch_id_ = -1;
 } // !TouchController
 
-void Menu::SonyController(const gef::SonyController* controller, gef::Sprite menu_box_sprite, gef::Sprite left_d_pad_sprite, gef::Sprite right_d_pad_spite)
+void Menu::SonyController(const gef::SonyController* controller)
 {
 	if (controller)
 	{
 		// D-pad up
 		if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
-			menu_text_1_.y() <= menu_box_sprite.position().y() - sprite_height)
+			menu_text_1_.y() <= menu_box_sprite_.position().y() - sprite_height)
 		{
 			// move down menu box sprite
-			menu_box_sprite.set_position(
-				menu_box_sprite.position().x(),
-				menu_box_sprite.position().y() - sprite_height * 1.5f,
+			menu_box_sprite_.set_position(
+				menu_box_sprite_.position().x(),
+				menu_box_sprite_.position().y() - sprite_height * 1.5f,
 				0.0f);
 
 			// move down left d-pad sprite
-			left_d_pad_sprite.set_position(
-				left_d_pad_sprite.position().x(),
-				left_d_pad_sprite.position().y() - sprite_height * 1.5f,
+			left_d_pad_sprite_.set_position(
+				left_d_pad_sprite_.position().x(),
+				left_d_pad_sprite_.position().y() - sprite_height * 1.5f,
 				0.0f);
 
 
 			// lerp down right d-pad sprite
-			right_d_pad_sprite.set_position(
-				right_d_pad_sprite.position().x(),
-				right_d_pad_sprite.position().y() - sprite_height * 1.5f,
+			right_d_pad_sprite_.set_position(
+				right_d_pad_sprite_.position().x(),
+				right_d_pad_sprite_.position().y() - sprite_height * 1.5f,
 				0.0f);
 		}
 
 		// D-pad down
 		if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
-			menu_text_4_.y() + sprite_height >= menu_box_sprite.position().y() + sprite_height)
+			menu_text_4_.y() + sprite_height >= menu_box_sprite_.position().y() + sprite_height)
 		{
 			// move down menu box sprite
-			menu_box_sprite.set_position(
-				menu_box_sprite.position().x(),
-				menu_box_sprite.position().y() + sprite_height * 1.5f,
+			menu_box_sprite_.set_position(
+				menu_box_sprite_.position().x(),
+				menu_box_sprite_.position().y() + sprite_height * 1.5f,
 				0.0f);
 
 			// move down left d-pad sprite
-			left_d_pad_sprite.set_position(
-				left_d_pad_sprite.position().x(),
-				left_d_pad_sprite.position().y() + sprite_height * 1.5f,
+			left_d_pad_sprite_.set_position(
+				left_d_pad_sprite_.position().x(),
+				left_d_pad_sprite_.position().y() + sprite_height * 1.5f,
 				0.0f);
 
 
 			// lerp down right d-pad sprite
-			right_d_pad_sprite.set_position(
-				right_d_pad_sprite.position().x(),
-				right_d_pad_sprite.position().y() + sprite_height * 1.5f,
+			right_d_pad_sprite_.set_position(
+				right_d_pad_sprite_.position().x(),
+				right_d_pad_sprite_.position().y() + sprite_height * 1.5f,
 				0.0f);
 		}
 
 		// START press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			menu_box_sprite.position().y() > (menu_text_1_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite.position().y() < (menu_text_1_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (menu_text_1_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_1_.y() + sprite_height))
 		{
 			// update the current state of the game state machine
 			// get the value that the gamestate points to and change it
@@ -377,8 +377,8 @@ void Menu::SonyController(const gef::SonyController* controller, gef::Sprite men
 		}
 		// SETTINGS press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			menu_box_sprite.position().y() > (menu_text_2_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite.position().y() < (menu_text_2_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (menu_text_2_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_2_.y() + sprite_height))
 		{
 			// update the current state of the game state machine
 			// get the value that the gamestate points to and change it
@@ -386,8 +386,8 @@ void Menu::SonyController(const gef::SonyController* controller, gef::Sprite men
 		}
 		// INSTRUCTIONS press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			menu_box_sprite.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite.position().y() < (menu_text_3_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
 		{
 			instructions_page_++;
 
@@ -396,24 +396,24 @@ void Menu::SonyController(const gef::SonyController* controller, gef::Sprite men
 		}
 		// INSTRUCTIONS left d-pad
 		if (controller->buttons_pressed() & gef_SONY_CTRL_LEFT &&
-			menu_box_sprite.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite.position().y() < (menu_text_3_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
 		{
 			if (instructions_page_ > 0)
 				instructions_page_--;
 		}
 		// INSTRUCTIONS right d-pad
 		if (controller->buttons_pressed() & gef_SONY_CTRL_RIGHT &&
-			menu_box_sprite.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite.position().y() < (menu_text_3_.y() + sprite_height))
+			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
 		{
 			if (instructions_page_ < 6)
 				instructions_page_++;
 		}
 		// QUIT press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			menu_box_sprite.position().y() >(menu_text_4_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite.position().y() < (menu_text_4_.y() + sprite_height))
+			menu_box_sprite_.position().y() >(menu_text_4_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_4_.y() + sprite_height))
 		{
 
 			quit_ = true;
@@ -424,8 +424,8 @@ void Menu::SonyController(const gef::SonyController* controller, gef::Sprite men
 			dev_ = !dev_;
 		}
 		// toggle d-pad and instrucitons display
-		if (menu_box_sprite.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite.position().y() < (menu_text_3_.y() + sprite_height))
+		if (menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
 		{
 			display_d_pad = true;
 			display_instrucitons_ = true;
@@ -456,7 +456,7 @@ void Menu::MenuUpdate(float frame_time)
 	} // !input_manager_
 } // !MenuUpdate
 
-void Menu::MenuRender(gef::Sprite menu_box_sprite, gef::Sprite left_d_pad_sprite, gef::Sprite right_d_pad_sprite, gef::Texture* texture, ...)
+void Menu::MenuRender()
 {
 	sprite_renderer_->Begin();
 	{
@@ -504,7 +504,7 @@ void Menu::MenuRender(gef::Sprite menu_box_sprite, gef::Sprite left_d_pad_sprite
 			case INSTRUCTIONS_1:
 			{
 				gef::Sprite instructions_1;
-				instructions_1.set_texture(texture);
+				instructions_1.set_texture(instructions_texture_1);
 				instructions_1.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				instructions_1.set_height(platform_.height() * 0.5f);
 				instructions_1.set_width(platform_.width() * 0.5f);
@@ -515,7 +515,7 @@ void Menu::MenuRender(gef::Sprite menu_box_sprite, gef::Sprite left_d_pad_sprite
 			case INSTRUCTIONS_2:
 			{
 				gef::Sprite instructions_2;
-				instructions_2.set_texture(texture);
+				instructions_2.set_texture(instructions_texture_2);
 				instructions_2.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				instructions_2.set_height(platform_.height() * 0.5f);
 				instructions_2.set_width(platform_.width() * 0.5f);
@@ -526,7 +526,7 @@ void Menu::MenuRender(gef::Sprite menu_box_sprite, gef::Sprite left_d_pad_sprite
 			case INSTRUCTIONS_3:
 			{
 				gef::Sprite instructions_3;
-				instructions_3.set_texture(texture);
+				instructions_3.set_texture(instructions_texture_3);
 				instructions_3.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				instructions_3.set_height(platform_.height() * 0.5f);
 				instructions_3.set_width(platform_.width() * 0.5f);
@@ -537,7 +537,7 @@ void Menu::MenuRender(gef::Sprite menu_box_sprite, gef::Sprite left_d_pad_sprite
 			case INSTRUCTIONS_4:
 			{
 				gef::Sprite instructions_4;
-				instructions_4.set_texture(texture);
+				instructions_4.set_texture(instructions_texture_4);
 				instructions_4.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				instructions_4.set_height(platform_.height() * 0.5f);
 				instructions_4.set_width(platform_.width() * 0.5f);
@@ -548,7 +548,7 @@ void Menu::MenuRender(gef::Sprite menu_box_sprite, gef::Sprite left_d_pad_sprite
 			case INSTRUCTIONS_5:
 			{
 				gef::Sprite instructions_5;
-				instructions_5.set_texture(texture);
+				instructions_5.set_texture(instructions_texture_5);
 				instructions_5.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				instructions_5.set_height(platform_.height() * 0.5f);
 				instructions_5.set_width(platform_.width() * 0.5f);
@@ -559,7 +559,7 @@ void Menu::MenuRender(gef::Sprite menu_box_sprite, gef::Sprite left_d_pad_sprite
 			case INSTRUCTIONS_6:
 			{
 				gef::Sprite instructions_6;
-				instructions_6.set_texture(texture);
+				instructions_6.set_texture(instructions_texture_6);
 				instructions_6.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				instructions_6.set_height(platform_.height() * 0.5f);
 				instructions_6.set_width(platform_.width() * 0.5f);
@@ -570,7 +570,7 @@ void Menu::MenuRender(gef::Sprite menu_box_sprite, gef::Sprite left_d_pad_sprite
 			case INSTRUCTIONS_7:
 			{
 				gef::Sprite instructions_7;
-				instructions_7.set_texture(texture);
+				instructions_7.set_texture(instructions_texture_7);
 				instructions_7.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				instructions_7.set_height(platform_.height() * 0.5f);
 				instructions_7.set_width(platform_.width() * 0.5f);
@@ -582,7 +582,7 @@ void Menu::MenuRender(gef::Sprite menu_box_sprite, gef::Sprite left_d_pad_sprite
 		else
 		{
 			gef::Sprite title;
-			title.set_texture(texture);
+			title.set_texture(title_texture_);
 			title.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 			title.set_height(platform_.height() * 0.5f);
 			title.set_width(platform_.width() * 0.5f);
@@ -596,7 +596,7 @@ void Menu::MenuRender(gef::Sprite menu_box_sprite, gef::Sprite left_d_pad_sprite
 		if (display_d_pad)
 		{
 			sprite_renderer_->DrawSprite(left_d_pad_sprite_);
-			sprite_renderer_->DrawSprite(right_d_pad_sprite);
+			sprite_renderer_->DrawSprite(right_d_pad_sprite_);
 		}
 		// display fps if dev mode on
 		if (dev_)
@@ -606,3 +606,4 @@ void Menu::MenuRender(gef::Sprite menu_box_sprite, gef::Sprite left_d_pad_sprite
 	}
 	sprite_renderer_->End();
 } // !MenuRender
+
