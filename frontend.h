@@ -81,7 +81,7 @@ private:
 	gef::Sprite menu_box_sprite_;
 	float sprite_width_;
 	float sprite_height;
-	float sprite_init_position_y_;
+
 	// d-pad sprites
 	gef::Sprite left_d_pad_sprite_;
 	gef::Sprite right_d_pad_sprite_;

@@ -149,9 +149,6 @@ void Frontend::InitSprites()
 	menu_box_sprite_.set_position(platform_.width() * 0.5f, platform_.height() * 0.5f + sprite_height * 1.5f, 0.0f);
 	menu_box_sprite_.set_width(sprite_width_);
 	menu_box_sprite_.set_height(sprite_height);
-
-	//sprite_end_position_to_lerp_ = menu_box_sprite_.position();
-	sprite_init_position_y_ = menu_box_sprite_.position().y();
 } // !InitSprites
 
 void Frontend::CleanSprites()
