@@ -152,7 +152,6 @@ private:
 	gef::Sprite menu_box_sprite_;
 	float sprite_width_;
 	float sprite_height;
-	float sprite_init_position_y_;
 
 	// menu text vectors
 	gef::Vector4 menu_text_1_;
