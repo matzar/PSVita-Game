@@ -93,6 +93,8 @@ private:
 	gef::Vector4 menu_text_2_;
 	gef::Vector4 menu_text_3_;
 	gef::Vector4 menu_text_4_;
+	// menu text height correction
+	float height_correction_;
 
 	// controlls
 	void SonyController(const gef::SonyController* controller);

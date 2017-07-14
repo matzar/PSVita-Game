@@ -34,6 +34,7 @@ Settings::Settings(gef::Platform& platform, gef::InputManager* input_manager, GA
 	dev_(false),
 	sprite_width_(190.0f),
 	sprite_height(38.0f),
+	height_correction_(3.0f),
 	sfx_voice_id_(-1),
 	sfx_id_(-1),
 	fps_(0),
@@ -137,16 +138,14 @@ void Settings::CleanSprites()
 
 void Settings::InitText()
 {
-	// menu text vectors init
-	float height_correction = 3.0f;
 	// set "START" vector
-	menu_text_1_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
+	menu_text_1_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction_, -0.99f);
 	// set "SETTINGS" vector
-	menu_text_2_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height + height_correction, -0.99f);
+	menu_text_2_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height + height_correction_, -0.99f);
 	// set "BACK" vector
-	menu_text_3_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 2.5f + height_correction, -0.99f);
+	menu_text_3_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 2.5f + height_correction_, -0.99f);
 	// set "BACK" vector
-	menu_text_4_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 4.0f + height_correction, -0.99f);
+	menu_text_4_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 4.0f + height_correction_, -0.99f);
 } // InitText()
 
 void Settings::SettingsInit()
