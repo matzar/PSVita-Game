@@ -651,6 +651,11 @@ void Game::SonyController(const gef::SonyController* controller)
 				// get the value that the gamestate points to and change it
 				(*gamestate_) = FRONTEND;
 			}
+			// toggle fps display during pause
+			if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
+			{
+				dev_ = !dev_;
+			}
 		} // !pause_
 
 		else
@@ -668,7 +673,7 @@ void Game::SonyController(const gef::SonyController* controller)
 			{
 				pause_ = !pause_;
 			}
-			// toggle fps display
+			// toggle fps display during the game
 			if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
 			{
 				dev_ = !dev_;
