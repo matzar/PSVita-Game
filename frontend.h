@@ -21,6 +21,7 @@ namespace gef
 
 // my class forward declarations
 enum GAMESTATE;
+class Menu;
 
 class Frontend
 {
@@ -49,6 +50,9 @@ private:
 
 	// font
 	gef::Font* font_;
+
+	// menu
+	Menu* menu_;
 
 	float fps_;
 

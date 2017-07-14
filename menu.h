@@ -30,7 +30,7 @@ public:
 	void MenuInit();
 	void MenuRelease();
 	void MenuUpdate(float frame_time);
-	void MenuRender(gef::Texture* texture, ...);
+	void MenuRender();
 
 	inline const bool Quit() { return quit_; }
 private:

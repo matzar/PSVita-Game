@@ -15,6 +15,7 @@
 // extra headers
 #include "load_texture.h"
 // my headers
+#include "menu.h"
 #include "game_state_enum.h"
 #include "instructions_enum.h"
 
@@ -42,7 +43,8 @@ Frontend::Frontend(gef::Platform& platform, gef::InputManager* input_manager, GA
 	sprite_height(38.0f),
 	height_correction_(3.0f),
 	fps_(0),
-	active_touch_id_(-1)
+	active_touch_id_(-1),
+	menu_(nullptr)
 {
 }
 
