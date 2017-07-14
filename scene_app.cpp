@@ -53,7 +53,7 @@ void SceneApp::Loading()
 		// display frame rate
 		font_->RenderText(
 			sprite_renderer_,
-			gef::Vector4(480.0f, 275.0f, -0.9f),
+			gef::Vector4(850.0f, 510.0f, -0.9f),
 			1.0f,
 			0xffffffff,
 			gef::TJ_LEFT,
@@ -195,7 +195,9 @@ bool SceneApp::Update(float frame_time)
 		{
 			if (settings_ == nullptr)
 			{
+				sprite_renderer_->Begin();
 				Loading();
+				sprite_renderer_->End();
 				// create settings
 				// reference to the platform object is passed
 				// Settings class has 'GAMESTATE* gamestate' pointer
