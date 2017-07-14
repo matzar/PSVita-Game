@@ -176,7 +176,6 @@ void Frontend::FrontendInit()
 	// initialise input manager
 	//input_manager_ = gef::InputManager::Create(platform_);
 	
-
 	//InitFont();
 
 	InitTextures();
@@ -202,11 +201,14 @@ void Frontend::FrontendInit()
 
 void Frontend::FrontendRelease()
 {
-	CleanSprites();
+	//CleanSprites();
 
-	CleanTextures();
+	//CleanTextures();
 
-	CleanFont();
+	//CleanFont();
+	delete menu_;
+	menu_ = nullptr;
+
 } // !FrontendRelease
 
 void Frontend::MenuTouchInput()
@@ -465,161 +467,165 @@ void Frontend::FrontendUpdate(float frame_time)
 		input_manager_->Update();
 
 		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
-		SonyController(controller);
+		//SonyController(controller);
+		menu_->SonyController(controller);
 
 		// get touch input
 		const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
-		TouchController(touch_input);
+		//TouchController(touch_input);
+		menu_->TouchController(touch_input);
 	} // !input_manager_
 } // !FrontendUpdate
 
 void Frontend::FrontendRender()
 {
-	sprite_renderer_->Begin();
-	{
-		// render "START" text
-		font_->RenderText(
-			sprite_renderer_,
-			gef::Vector4(menu_text_1_.x(), menu_text_1_.y(), -0.99f),
-			1.0f,
-			0xffffffff,
-			gef::TJ_CENTRE,
-			"START");
+	menu_->MenuRender();
 
-		// render "SETTINGS" text
-		font_->RenderText(
-			sprite_renderer_,
-			gef::Vector4(menu_text_2_.x(), menu_text_2_.y(), -0.99f),
-			1.0f,
-			0xffffffff,
-			gef::TJ_CENTRE,
-			"SETTINGS");
+	//sprite_renderer_->Begin();
+	//{
+	//	// render "START" text
+	//	font_->RenderText(
+	//		sprite_renderer_,
+	//		gef::Vector4(menu_text_1_.x(), menu_text_1_.y(), -0.99f),
+	//		1.0f,
+	//		0xffffffff,
+	//		gef::TJ_CENTRE,
+	//		"START");
 
-		// render "INSTRUCTIONS" text
-		font_->RenderText(
-			sprite_renderer_,
-			gef::Vector4(menu_text_3_.x(), menu_text_3_.y(), -0.99f),
-			1.0f,
-			0xffffffff,
-			gef::TJ_CENTRE,
-			"INSTRUCTIONS");
+	//	// render "SETTINGS" text
+	//	font_->RenderText(
+	//		sprite_renderer_,
+	//		gef::Vector4(menu_text_2_.x(), menu_text_2_.y(), -0.99f),
+	//		1.0f,
+	//		0xffffffff,
+	//		gef::TJ_CENTRE,
+	//		"SETTINGS");
 
-		// render "QUIT" text
-		font_->RenderText(
-			sprite_renderer_,
-			gef::Vector4(menu_text_4_.x(), menu_text_4_.y(), -0.99f),
-			1.0f,
-			0xffffffff,
-			gef::TJ_CENTRE,
-			"QUIT");
+	//	// render "INSTRUCTIONS" text
+	//	font_->RenderText(
+	//		sprite_renderer_,
+	//		gef::Vector4(menu_text_3_.x(), menu_text_3_.y(), -0.99f),
+	//		1.0f,
+	//		0xffffffff,
+	//		gef::TJ_CENTRE,
+	//		"INSTRUCTIONS");
 
-		// Render title picture
-		if (display_instrucitons_)
-		{
-			switch (instructions_page_)
-			{ 
-			case INSTRUCTIONS_1 :
-			{
-				gef::Sprite instructions_1;
-				instructions_1.set_texture(instructions_texture_1);
-				instructions_1.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
-				instructions_1.set_height(platform_.height() * 0.5f);
-				instructions_1.set_width(platform_.width() * 0.5f);
-				sprite_renderer_->DrawSprite(instructions_1);
-			} //
-			break;
+	//	// render "QUIT" text
+	//	font_->RenderText(
+	//		sprite_renderer_,
+	//		gef::Vector4(menu_text_4_.x(), menu_text_4_.y(), -0.99f),
+	//		1.0f,
+	//		0xffffffff,
+	//		gef::TJ_CENTRE,
+	//		"QUIT");
 
-			case INSTRUCTIONS_2 :
-			{
-				gef::Sprite instructions_2;
-				instructions_2.set_texture(instructions_texture_2);
-				instructions_2.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
-				instructions_2.set_height(platform_.height() * 0.5f);
-				instructions_2.set_width(platform_.width() * 0.5f);
-				sprite_renderer_->DrawSprite(instructions_2);
-			} //
-			break;
+	//	// Render title picture
+	//	if (display_instrucitons_)
+	//	{
+	//		switch (instructions_page_)
+	//		{ 
+	//		case INSTRUCTIONS_1 :
+	//		{
+	//			gef::Sprite instructions_1;
+	//			instructions_1.set_texture(instructions_texture_1);
+	//			instructions_1.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
+	//			instructions_1.set_height(platform_.height() * 0.5f);
+	//			instructions_1.set_width(platform_.width() * 0.5f);
+	//			sprite_renderer_->DrawSprite(instructions_1);
+	//		} //
+	//		break;
 
-			case INSTRUCTIONS_3 :
-			{
-				gef::Sprite instructions_3;
-				instructions_3.set_texture(instructions_texture_3);
-				instructions_3.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
-				instructions_3.set_height(platform_.height() * 0.5f);
-				instructions_3.set_width(platform_.width() * 0.5f);
-				sprite_renderer_->DrawSprite(instructions_3);
-			} //
-			break;
+	//		case INSTRUCTIONS_2 :
+	//		{
+	//			gef::Sprite instructions_2;
+	//			instructions_2.set_texture(instructions_texture_2);
+	//			instructions_2.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
+	//			instructions_2.set_height(platform_.height() * 0.5f);
+	//			instructions_2.set_width(platform_.width() * 0.5f);
+	//			sprite_renderer_->DrawSprite(instructions_2);
+	//		} //
+	//		break;
 
-			case INSTRUCTIONS_4 :
-			{
-				gef::Sprite instructions_4;
-				instructions_4.set_texture(instructions_texture_4);
-				instructions_4.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
-				instructions_4.set_height(platform_.height() * 0.5f);
-				instructions_4.set_width(platform_.width() * 0.5f);
-				sprite_renderer_->DrawSprite(instructions_4);
-			} //
-			break;
+	//		case INSTRUCTIONS_3 :
+	//		{
+	//			gef::Sprite instructions_3;
+	//			instructions_3.set_texture(instructions_texture_3);
+	//			instructions_3.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
+	//			instructions_3.set_height(platform_.height() * 0.5f);
+	//			instructions_3.set_width(platform_.width() * 0.5f);
+	//			sprite_renderer_->DrawSprite(instructions_3);
+	//		} //
+	//		break;
 
-			case INSTRUCTIONS_5 :
-			{
-				gef::Sprite instructions_5;
-				instructions_5.set_texture(instructions_texture_5);
-				instructions_5.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
-				instructions_5.set_height(platform_.height() * 0.5f);
-				instructions_5.set_width(platform_.width() * 0.5f);
-				sprite_renderer_->DrawSprite(instructions_5);
-			} //
-			break;
+	//		case INSTRUCTIONS_4 :
+	//		{
+	//			gef::Sprite instructions_4;
+	//			instructions_4.set_texture(instructions_texture_4);
+	//			instructions_4.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
+	//			instructions_4.set_height(platform_.height() * 0.5f);
+	//			instructions_4.set_width(platform_.width() * 0.5f);
+	//			sprite_renderer_->DrawSprite(instructions_4);
+	//		} //
+	//		break;
 
-			case INSTRUCTIONS_6 :
-			{
-				gef::Sprite instructions_6;
-				instructions_6.set_texture(instructions_texture_6);
-				instructions_6.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
-				instructions_6.set_height(platform_.height() * 0.5f);
-				instructions_6.set_width(platform_.width() * 0.5f);
-				sprite_renderer_->DrawSprite(instructions_6);
-			} //
-			break;
+	//		case INSTRUCTIONS_5 :
+	//		{
+	//			gef::Sprite instructions_5;
+	//			instructions_5.set_texture(instructions_texture_5);
+	//			instructions_5.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
+	//			instructions_5.set_height(platform_.height() * 0.5f);
+	//			instructions_5.set_width(platform_.width() * 0.5f);
+	//			sprite_renderer_->DrawSprite(instructions_5);
+	//		} //
+	//		break;
 
-			case INSTRUCTIONS_7:
-			{
-				gef::Sprite instructions_7;
-				instructions_7.set_texture(instructions_texture_7);
-				instructions_7.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
-				instructions_7.set_height(platform_.height() * 0.5f);
-				instructions_7.set_width(platform_.width() * 0.5f);
-				sprite_renderer_->DrawSprite(instructions_7);
-			} //
-			break;
-			} // !display_instructions_
-		}
-		else
-		{
-			gef::Sprite title;
-			title.set_texture(title_texture_);
-			title.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
-			title.set_height(platform_.height() * 0.5f);
-			title.set_width(platform_.width() * 0.5f);
-			sprite_renderer_->DrawSprite(title);
-		}
+	//		case INSTRUCTIONS_6 :
+	//		{
+	//			gef::Sprite instructions_6;
+	//			instructions_6.set_texture(instructions_texture_6);
+	//			instructions_6.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
+	//			instructions_6.set_height(platform_.height() * 0.5f);
+	//			instructions_6.set_width(platform_.width() * 0.5f);
+	//			sprite_renderer_->DrawSprite(instructions_6);
+	//		} //
+	//		break;
 
-		// render menu box sprite
-		sprite_renderer_->DrawSprite(menu_box_sprite_);
+	//		case INSTRUCTIONS_7:
+	//		{
+	//			gef::Sprite instructions_7;
+	//			instructions_7.set_texture(instructions_texture_7);
+	//			instructions_7.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
+	//			instructions_7.set_height(platform_.height() * 0.5f);
+	//			instructions_7.set_width(platform_.width() * 0.5f);
+	//			sprite_renderer_->DrawSprite(instructions_7);
+	//		} //
+	//		break;
+	//		} // !display_instructions_
+	//	}
+	//	else
+	//	{
+	//		gef::Sprite title;
+	//		title.set_texture(title_texture_);
+	//		title.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
+	//		title.set_height(platform_.height() * 0.5f);
+	//		title.set_width(platform_.width() * 0.5f);
+	//		sprite_renderer_->DrawSprite(title);
+	//	}
 
-		// render d-pad sprites
-		if (display_d_pad)
-		{
-			sprite_renderer_->DrawSprite(left_d_pad_sprite_);
-			sprite_renderer_->DrawSprite(right_d_pad_sprite_);
-		}
-		// display fps if dev mode on
-		if (dev_)
-		{
-			DrawHUD();
-		}
-	}
-	sprite_renderer_->End();
+	//	// render menu box sprite
+	//	sprite_renderer_->DrawSprite(menu_box_sprite_);
+
+	//	// render d-pad sprites
+	//	if (display_d_pad)
+	//	{
+	//		sprite_renderer_->DrawSprite(left_d_pad_sprite_);
+	//		sprite_renderer_->DrawSprite(right_d_pad_sprite_);
+	//	}
+	//	// display fps if dev mode on
+	//	if (dev_)
+	//	{
+	//		DrawHUD();
+	//	}
+	//}
+	//sprite_renderer_->End();
 } // !FrontendRender

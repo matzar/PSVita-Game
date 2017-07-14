@@ -34,6 +34,9 @@ public:
 	void MenuRelease();
 	void MenuUpdate(float frame_time);
 	void MenuRender();
+	void SonyController(const gef::SonyController* controller);
+	void TouchController(const gef::TouchInputManager* touch_input);
+	void MenuTouchInput();
 
 	inline const bool Quit() { return quit_; }
 private:
@@ -96,9 +99,7 @@ private:
 	float height_correction_;
 
 	// controlls
-	void SonyController(const gef::SonyController* controller);
-	void TouchController(const gef::TouchInputManager* touch_input);
-	void MenuTouchInput();
+
 	Int32 active_touch_id_;
 	gef::Vector2 touch_position_;
 
@@ -106,7 +107,7 @@ private:
 	void CleanFont();
 	void DrawHUD();
 
-	void InitTextures();
+	//void InitTextures();
 	void CleanTextures();
 
 	void InitSprites();

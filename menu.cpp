@@ -181,7 +181,7 @@ void Menu::MenuInit()
 
 	InitFont();
 
-	InitTextures();
+//InitTextures();
 
 	InitSprites();
 
