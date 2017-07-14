@@ -79,6 +79,7 @@ Game::Game(gef::Platform& platform,
 	dev_(false),
 	sprite_width_(190.0f),
 	sprite_height(38.0f),
+	height_correction_(3.0f),
 	player_init_x_(-4.0f),
 	player_init_y_(4.0f),
 	fps_(0),
@@ -178,15 +179,12 @@ void Game::CleanSprites()
 
 void Game::InitText()
 {
-	// menu text vectors init
-	float height_correction = 2.0f;
-
 	// set "RESUME" vector
-	menu_text_1_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction, -0.99f);
+	menu_text_1_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction_, -0.99f);
 	// set "RESTART" vector
-	menu_text_2_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction, -0.99f);
+	menu_text_2_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + 1.5 * sprite_height + height_correction_, -0.99f);
 	// set "MENU" vector
-	menu_text_3_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 3.5f + height_correction, -0.99f);
+	menu_text_3_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 3.5f + height_correction_, -0.99f);
 } // InitText()
 
 void Game::SetupLights()
@@ -865,7 +863,7 @@ void Game::UpdateSimulation(float frame_time)
 				// set the menu box to be in a position of restart button
 				menu_box_sprite_.set_position(
 					platform_.width() * 0.5f,
-					menu_text_2_.y() + sprite_height * 0.5f - 3.0f,
+					menu_text_2_.y() + sprite_height * 0.5f - height_correction_,
 					0.0f);
 
 				resume_ = false;
@@ -877,7 +875,7 @@ void Game::UpdateSimulation(float frame_time)
 			{
 				menu_box_sprite_.set_position(
 					platform_.width() * 0.5f, 
-					menu_text_2_.y() + sprite_height * 0.5f - 3.0f,
+					menu_text_2_.y() + sprite_height * 0.5f - height_correction_,
 					0.0f);
 
 				player_->SetAlive(false);
