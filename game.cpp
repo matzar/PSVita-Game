@@ -69,6 +69,7 @@ Game::Game(gef::Platform& platform,
 	player_(nullptr),
 	model_scene_(nullptr),
 	mesh_(nullptr),
+	resume_(true),
 	quit_(false),
 	pause_(true),
 	pause_button_x_(935.0f),
@@ -564,25 +565,57 @@ void Game::SonyController(const gef::SonyController* controller)
 	{
 		if (pause_)
 		{
-			// D-pad up
-			if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
-				sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
+			// menu box control when the resume button is active
+			if (resume_)
 			{
-				// move down menu box sprite
-				menu_box_sprite_.set_position(
-					menu_box_sprite_.position().x(),
-					menu_box_sprite_.position().y() - sprite_height * 2.0f,
-					0.0f);
+				// D-pad up
+				if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
+					// prevent the menu box from going higher than the top menu text
+					sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 2.0f)
+				{
+					// move down menu box sprite
+					menu_box_sprite_.set_position(
+						menu_box_sprite_.position().x(),
+						menu_box_sprite_.position().y() - sprite_height * 2.0f,
+						0.0f);
+				}
+				// D-pad down
+				if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
+					// prevent the menu box from going lower than the lowest menu text
+					sprite_init_position_y_ + sprite_height * 4.0f >= menu_box_sprite_.position().y() + sprite_height * 2.0f)
+				{
+					// move down menu box sprite
+					menu_box_sprite_.set_position(
+						menu_box_sprite_.position().x(),
+						menu_box_sprite_.position().y() + sprite_height * 2.0f,
+						0.0f);
+				}
 			}
-			// D-pad down
-			if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
-				sprite_init_position_y_ + sprite_height * 4.0f >= menu_box_sprite_.position().y() + sprite_height * 2.0f)
+			// menu box control when the resume button is NOT active
+			else
 			{
-				// move down menu box sprite
-				menu_box_sprite_.set_position(
-					menu_box_sprite_.position().x(),
-					menu_box_sprite_.position().y() + sprite_height * 2.0f,
-					0.0f);
+				// D-pad up
+				if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
+					// prevent the menu box from going higher than the top menu text
+					sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 4.0f)
+				{
+					// move down menu box sprite
+					menu_box_sprite_.set_position(
+						menu_box_sprite_.position().x(),
+						menu_box_sprite_.position().y() - sprite_height * 2.0f,
+						0.0f);
+				}
+				// D-pad down
+				if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
+					// prevent the menu box from going lower than the lowest menu text
+					sprite_init_position_y_ + sprite_height * 4.0f >= menu_box_sprite_.position().y() + sprite_height * 2.0f)
+				{
+					// move down menu box sprite
+					menu_box_sprite_.set_position(
+						menu_box_sprite_.position().x(),
+						menu_box_sprite_.position().y() + sprite_height * 2.0f,
+						0.0f);
+				}
 			}
 			// RESUME button press
 			if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
@@ -597,6 +630,7 @@ void Game::SonyController(const gef::SonyController* controller)
 				menu_box_sprite_.position().y() < (menu_text_2_.y() + sprite_height))
 			{
 				pickups_count_ = 0;
+				resume_ = true;
 
 				GameRelease();
 				GameInit();
@@ -653,7 +687,10 @@ void Game::MenuTouchInput()
 	// because the functions get called quicker than the sprite moves
 
 	// RESUME button press
-	if (touch_position_.y > (menu_text_1_.y() - sprite_height * 0.5f) &&
+	// becasue the resume button can still be touched even without it
+	// being visible a check of the 'resume_' value must be performed
+	if (resume_ &&
+		touch_position_.y > (menu_text_1_.y() - sprite_height * 0.5f) &&
 		touch_position_.y < (menu_text_1_.y() + sprite_height) &&
 		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
 		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
@@ -668,7 +705,8 @@ void Game::MenuTouchInput()
 		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
 	{
 		pickups_count_ = 0;
-		
+		resume_ = true;
+
 		GameRelease();
 		GameInit();
 	}
@@ -826,6 +864,13 @@ void Game::UpdateSimulation(float frame_time)
 			// if current ground is finish - player wins
 			if (contact_listener_->current_ground_->GetGameObjectColour() == FINISH)
 			{
+				// set the menu box to be in a position of restart button
+				menu_box_sprite_.set_position(
+					platform_.width() / 2.0f,
+					menu_text_2_.y() + sprite_height * 0.5f - 3.0f,
+					0.0f);
+
+				resume_ = false;
 				pause_ = true;
 				return;
 			}
@@ -834,6 +879,7 @@ void Game::UpdateSimulation(float frame_time)
 			{
 				menu_box_sprite_.set_position(platform_.width() * 0.5f, platform_.height() * 0.5f + sprite_height * 3.5f, 0.0f);
 				player_->SetAlive(false);
+				resume_ = false;
 				pause_ = true;
 			}
 		}
@@ -845,6 +891,7 @@ void Game::UpdateSimulation(float frame_time)
 	{
 		menu_box_sprite_.set_position(platform_.width() * 0.5f, platform_.height() * 0.5f + sprite_height * 3.5f, 0.0f);
 		player_->SetAlive(false);
+		resume_ = false;
 		pause_ = true;
 	}
 
@@ -1014,7 +1061,7 @@ void Game::GameRender()
 					"YOU LOSE!");
 			}
 
-			if (player_->Alive())
+			if (resume_)
 			{
 				// render "RESUME" text
 				font_->RenderText(

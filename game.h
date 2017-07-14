@@ -128,6 +128,7 @@ private:
 	gef::Scene* model_scene_;
 	gef::Mesh* mesh_;
 
+	bool resume_;
 	// quit
 	bool quit_;
 	// pause
