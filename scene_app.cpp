@@ -9,11 +9,15 @@
 #include <audio/audio_manager.h>
 #include <input/input_manager.h>
 #include <input/touch_input_manager.h>
+#include <graphics/font.h>
+#include <graphics/sprite_renderer.h>
 
 SceneApp::SceneApp(gef::Platform& platform) :
 	Application(platform),
 	input_manager_(nullptr),
 	audio_manager_(nullptr),
+	sprite_renderer_(nullptr),
+	font_(nullptr),
 	camera_count_(CAM1),
 	difficulty_count_(EASY),
 	number_of_grounds_(10),
@@ -23,6 +27,39 @@ SceneApp::SceneApp(gef::Platform& platform) :
 	game_(nullptr)
 {
 } // !SceneApp
+
+void SceneApp::InitFont()
+{
+	// initlalise sprite renderer
+	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
+
+	font_ = new gef::Font(platform_);
+	font_->Load("comic_sans");
+} // !InitFont
+
+void SceneApp::CleanFont()
+{
+	delete sprite_renderer_;
+	sprite_renderer_ = nullptr;
+
+	delete font_;
+	font_ = nullptr;
+} // CleanFont
+
+void SceneApp::Loading()
+{
+	if (font_)
+	{
+		// display frame rate
+		font_->RenderText(
+			sprite_renderer_,
+			gef::Vector4(480.0f, 275.0f, -0.9f),
+			1.0f,
+			0xffffffff,
+			gef::TJ_LEFT,
+			"LOADING...");
+	} // !font_
+} // !Loading
 
 void SceneApp::InitAudio()
 {
@@ -53,6 +90,8 @@ void SceneApp::Init()
 {
 	// initialize input manager
 	input_manager_ = gef::InputManager::Create(platform_);
+
+	InitFont();
 
 	// make sure if there is a panel to detect touch input, then activate it
 	if (input_manager_ && input_manager_->touch_manager() && (input_manager_->touch_manager()->max_num_panels() > 0))
@@ -98,6 +137,8 @@ void SceneApp::CleanUp()
 	delete input_manager_;
 	input_manager_ = nullptr;
 
+	CleanFont();
+
 	// only on PSVita
 #ifndef _WIN32
 	// clean up audio
@@ -113,6 +154,7 @@ bool SceneApp::Update(float frame_time)
 		{
 			if (frontend_ == nullptr) 
 			{
+
 				// create frontend
 				// reference to the platform object is passed
 				// Frontend class has 'GAMESTATE* gamestate' pointer
@@ -153,6 +195,7 @@ bool SceneApp::Update(float frame_time)
 		{
 			if (settings_ == nullptr)
 			{
+				Loading();
 				// create settings
 				// reference to the platform object is passed
 				// Settings class has 'GAMESTATE* gamestate' pointer

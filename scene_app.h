@@ -11,6 +11,8 @@ namespace gef
 {
 	class InputManager;
 	class AudioManager;
+	class SpriteRenderer;
+	class Font;
 } // !gef
 // My class forward declarations
 class Frontend;
@@ -43,6 +45,13 @@ private:
 
 	// audio manager
 	gef::AudioManager* audio_manager_;
+
+	// sprite renderer
+	gef::SpriteRenderer* sprite_renderer_;
+
+	// font
+	gef::Font* font_;
+
 	// audio variables
 	int pickup_sfx_id_;
 
@@ -50,6 +59,11 @@ private:
 	Frontend* frontend_;
 	Settings* settings_;
 	Game* game_;
+
+	void InitFont();
+	void CleanFont();
+
+	void Loading();
 
 	void InitAudio();
 	void CleanAudio();
