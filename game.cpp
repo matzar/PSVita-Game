@@ -864,7 +864,7 @@ void Game::UpdateSimulation(float frame_time)
 			{
 				// set the menu box to be in a position of restart button
 				menu_box_sprite_.set_position(
-					platform_.width() / 2.0f,
+					platform_.width() * 0.5f,
 					menu_text_2_.y() + sprite_height * 0.5f - 3.0f,
 					0.0f);
 
@@ -875,7 +875,11 @@ void Game::UpdateSimulation(float frame_time)
 			// if current ground is different colour than the player - player loses
 			if (contact_listener_->current_ground_->GetGameObjectColour() != player_->GetGameObjectColour())
 			{
-				menu_box_sprite_.set_position(platform_.width() * 0.5f, platform_.height() * 0.5f + sprite_height * 3.5f, 0.0f);
+				menu_box_sprite_.set_position(
+					platform_.width() * 0.5f, 
+					menu_text_2_.y() + sprite_height * 0.5f - 3.0f,
+					0.0f);
+
 				player_->SetAlive(false);
 				resume_ = false;
 				pause_ = true;
