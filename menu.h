@@ -2,6 +2,9 @@
 
 // gef headers
 #include <graphics/sprite.h>
+#include <cstdarg>
+
+
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef

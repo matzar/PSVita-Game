@@ -23,17 +23,6 @@ Menu::Menu(gef::Platform& platform, gef::InputManager* input_manager, GAMESTATE*
 	gamestate_(gamestate),
 	input_manager_(input_manager),
 	sprite_renderer_(nullptr),
-	title_texture_(texture),
-	instructions_texture_1(texture),
-	instructions_texture_2(texture),
-	instructions_texture_3(texture),
-	instructions_texture_4(texture),
-	instructions_texture_5(texture),
-	instructions_texture_6(texture),
-	instructions_texture_7(texture),
-	playstation_left_d_pad_(texture),
-	playstation_right_d_pad_(texture),
-	display_instrucitons_(texture),
 	quit_(false),
 	dev_(false),
 	display_d_pad(true),
@@ -44,6 +33,22 @@ Menu::Menu(gef::Platform& platform, gef::InputManager* input_manager, GAMESTATE*
 	fps_(0),
 	active_touch_id_(-1)
 {
+	va_list arg;
+	va_start(arg, texture);
+
+	title_texture_ = texture;
+	instructions_texture_1 = texture;
+	instructions_texture_2 = texture;
+	instructions_texture_3 = texture;
+	instructions_texture_4 = texture;
+	instructions_texture_5 = texture;
+	instructions_texture_6 = texture;
+	instructions_texture_7 = texture;
+	playstation_left_d_pad_ = texture;
+	playstation_right_d_pad_ = texture;
+	display_instrucitons_ = texture;
+
+	va_end(arg);
 }
 
 Menu::~Menu()

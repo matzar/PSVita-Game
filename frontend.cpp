@@ -175,14 +175,29 @@ void Frontend::FrontendInit()
 {
 	// initialise input manager
 	//input_manager_ = gef::InputManager::Create(platform_);
+	
 
-	InitFont();
+	//InitFont();
 
 	InitTextures();
 
-	InitSprites();
+	menu_ = new Menu(platform_,
+		input_manager_,
+		gamestate_,
+		title_texture_,
+		instructions_texture_1,
+		instructions_texture_2,
+		instructions_texture_3,
+		instructions_texture_4,
+		instructions_texture_5,
+		instructions_texture_6,
+		instructions_texture_7,
+		playstation_left_d_pad_,
+		playstation_right_d_pad_);
 
-	InitText();
+	//InitSprites();
+
+	//InitText();
 } // !FrontendInit
 
 void Frontend::FrontendRelease()
