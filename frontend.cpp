@@ -322,7 +322,6 @@ void Frontend::SonyController(const gef::SonyController* controller)
 	{
 		// D-pad up
 		if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
-			//sprite_init_position_y_ - sprite_height <= menu_box_sprite_.position().y() - sprite_height * 1.5f)
 			menu_text_1_.y() <= menu_box_sprite_.position().y() - sprite_height)
 		{
 			// move down menu box sprite
@@ -347,7 +346,6 @@ void Frontend::SonyController(const gef::SonyController* controller)
 
 		// D-pad down
 		if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
-			//sprite_init_position_y_ + sprite_height * 5.0f >= menu_box_sprite_.position().y() + sprite_height * 1.5f)
 			menu_text_4_.y() + sprite_height >= menu_box_sprite_.position().y() + sprite_height)
 		{
 			// move down menu box sprite
