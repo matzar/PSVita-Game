@@ -1,4 +1,4 @@
-#include "frontend.h"
+#include "menu.h"
 // gef headers
 #include <system/platform.h>
 
@@ -18,7 +18,7 @@
 #include "game_state_enum.h"
 #include "instructions_enum.h"
 
-Frontend::Frontend(gef::Platform& platform, gef::InputManager* input_manager, GAMESTATE* gamestate) :
+Menu::Menu(gef::Platform& platform, gef::InputManager* input_manager, GAMESTATE* gamestate) :
 	platform_(platform),
 	gamestate_(gamestate),
 	input_manager_(input_manager),
@@ -46,23 +46,23 @@ Frontend::Frontend(gef::Platform& platform, gef::InputManager* input_manager, GA
 {
 }
 
-Frontend::~Frontend()
+Menu::~Menu()
 {
 }
 
-void Frontend::InitFont()
+void Menu::InitFont()
 {
 	font_ = new gef::Font(platform_);
 	font_->Load("comic_sans");
 } // !InitFont
 
-void Frontend::CleanFont()
+void Menu::CleanFont()
 {
 	delete font_;
 	font_ = nullptr;
 } // CleanFont
 
-void Frontend::DrawHUD()
+void Menu::DrawHUD()
 {
 	if (font_)
 	{
@@ -78,7 +78,7 @@ void Frontend::DrawHUD()
 	} // !font_
 } // !DrawHUD
 
-void Frontend::InitTextures()
+void Menu::InitTextures()
 {
 	// initialise button icon
 	playstation_left_d_pad_ = CreateTextureFromPNG("png/playstation-left-d-pad.png", platform_);
@@ -95,7 +95,7 @@ void Frontend::InitTextures()
 	instructions_texture_7 = CreateTextureFromPNG("png/instructions_7.png", platform_);
 } // !InitTextures
 
-void Frontend::CleanTextures()
+void Menu::CleanTextures()
 {
 	delete title_texture_;
 	title_texture_ = nullptr;
@@ -129,7 +129,7 @@ void Frontend::CleanTextures()
 	playstation_right_d_pad_ = nullptr;
 } // !CleanTextures
 
-void Frontend::InitSprites()
+void Menu::InitSprites()
 {
 	// initlalise sprite renderer
 	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
@@ -151,13 +151,13 @@ void Frontend::InitSprites()
 	menu_box_sprite_.set_height(sprite_height);
 } // !InitSprites
 
-void Frontend::CleanSprites()
+void Menu::CleanSprites()
 {
 	delete sprite_renderer_;
 	sprite_renderer_ = nullptr;
 } // !CleanSprites
 
-void Frontend::InitText()
+void Menu::InitText()
 {
 	// set "START" vector
 	menu_text_1_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() - 0.5 * sprite_height + height_correction_, -0.99f);
@@ -169,7 +169,7 @@ void Frontend::InitText()
 	menu_text_4_.set_value(menu_box_sprite_.position().x(), menu_box_sprite_.position().y() + sprite_height * 4.0f + height_correction_, -0.99f);
 } // InitText()
 
-void Frontend::FrontendInit()
+void Menu::MenuInit()
 {
 	// initialise input manager
 	//input_manager_ = gef::InputManager::Create(platform_);
@@ -181,23 +181,23 @@ void Frontend::FrontendInit()
 	InitSprites();
 
 	InitText();
-} // !FrontendInit
+} // !MenuInit
 
-void Frontend::FrontendRelease()
+void Menu::MenuRelease()
 {
 	CleanSprites();
 
 	CleanTextures();
 
 	CleanFont();
-} // !FrontendRelease
+} // !MenuRelease
 
-void Frontend::MenuTouchInput()
+void Menu::MenuTouchInput(gef::Sprite d_pad, ...)
 {
 	// GAME press
 	if (touch_position_.y > (menu_text_1_.y() - sprite_height * 0.5f) &&
 		touch_position_.y < (menu_text_1_.y() + sprite_height) &&
-		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
+		touch_position_.x >(platform_.width() / 2 - sprite_width_ / 2) &&
 		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
 	{
 		// update the current state of the game state machine
@@ -206,9 +206,9 @@ void Frontend::MenuTouchInput()
 	}
 
 	// SETTINGS press
-	if (touch_position_.y > (menu_text_2_.y() - sprite_height * 0.5f) &&
+	if (touch_position_.y >(menu_text_2_.y() - sprite_height * 0.5f) &&
 		touch_position_.y < (menu_text_2_.y() + sprite_height) &&
-		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
+		touch_position_.x >(platform_.width() / 2 - sprite_width_ / 2) &&
 		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
 	{
 		// update the current state of the game state machine
@@ -217,29 +217,29 @@ void Frontend::MenuTouchInput()
 	}
 
 	// INSTRUCTIONS press
-	if (touch_position_.y > (menu_text_3_.y() - sprite_height * 0.5f) &&
+	if (touch_position_.y >(menu_text_3_.y() - sprite_height * 0.5f) &&
 		touch_position_.y < (menu_text_3_.y() + sprite_height) &&
-		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
+		touch_position_.x >(platform_.width() / 2 - sprite_width_ / 2) &&
 		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
 	{
 		if (!display_d_pad) // prevent from incrementing 'instructions_page_' before displaying the first page
 		{
 			// move down menu box sprite
-			menu_box_sprite_.set_position(
+			d_pad.set_position(
 				platform_.width() / 2.0f,
 				menu_text_3_.y() + sprite_height * 0.5f - 3.0f,
 				0.0f);
 
 			// move down left d-pad sprite
-			left_d_pad_sprite_.set_position(
-				left_d_pad_sprite_.position().x(),
+			d_pad.set_position(
+				d_pad.position().x(),
 				menu_text_3_.y() + sprite_height * 0.5f - 3.0f,
 				0.0f);
 
 
 			// lerp down right d-pad sprite
-			right_d_pad_sprite_.set_position(
-				right_d_pad_sprite_.position().x(),
+			d_pad.set_position(
+				d_pad.position().x(),
 				menu_text_3_.y() + sprite_height * 0.5f - 3.0f,
 				0.0f);
 		}
@@ -255,14 +255,14 @@ void Frontend::MenuTouchInput()
 	// QUIT press
 	if (touch_position_.y > (menu_text_4_.y() - sprite_height * 0.5f) &&
 		touch_position_.y < (menu_text_4_.y() + sprite_height) &&
-		touch_position_.x > (platform_.width() / 2 - sprite_width_ / 2) &&
+		touch_position_.x >(platform_.width() / 2 - sprite_width_ / 2) &&
 		touch_position_.x < (platform_.width() / 2 + sprite_width_ / 2))
 	{
 		quit_ = true;
 	}
 }
 
-void Frontend::TouchController(const gef::TouchInputManager* touch_input)
+void Menu::TouchController(const gef::TouchInputManager* touch_input)
 {
 	if (touch_input && (touch_input->max_num_panels() > 0))
 	{
@@ -283,7 +283,7 @@ void Frontend::TouchController(const gef::TouchInputManager* touch_input)
 					// we're just going to record the position of the touch
 					touch_position_ = touch->position;
 
-					MenuTouchInput();
+					MenuTouchInput(menu_box_sprite_, left_d_pad_sprite_, right_d_pad_sprite_);
 				}
 			}
 			else if (active_touch_id_ == touch->id)
@@ -314,80 +314,80 @@ void Frontend::TouchController(const gef::TouchInputManager* touch_input)
 	active_touch_id_ = -1;
 } // !TouchController
 
-void Frontend::SonyController(const gef::SonyController* controller)
+void Menu::SonyController(const gef::SonyController* controller, gef::Sprite menu_box_sprite, gef::Sprite left_d_pad_sprite, gef::Sprite right_d_pad_spite)
 {
 	if (controller)
 	{
 		// D-pad up
 		if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
-			menu_text_1_.y() <= menu_box_sprite_.position().y() - sprite_height)
+			menu_text_1_.y() <= menu_box_sprite.position().y() - sprite_height)
 		{
 			// move down menu box sprite
-			menu_box_sprite_.set_position(
-				menu_box_sprite_.position().x(),
-				menu_box_sprite_.position().y() - sprite_height * 1.5f,
+			menu_box_sprite.set_position(
+				menu_box_sprite.position().x(),
+				menu_box_sprite.position().y() - sprite_height * 1.5f,
 				0.0f);
 
 			// move down left d-pad sprite
-			left_d_pad_sprite_.set_position(
-				left_d_pad_sprite_.position().x(),
-				left_d_pad_sprite_.position().y() - sprite_height * 1.5f,
+			left_d_pad_sprite.set_position(
+				left_d_pad_sprite.position().x(),
+				left_d_pad_sprite.position().y() - sprite_height * 1.5f,
 				0.0f);
 
 
 			// lerp down right d-pad sprite
-			right_d_pad_sprite_.set_position(
-				right_d_pad_sprite_.position().x(),
-				right_d_pad_sprite_.position().y() - sprite_height * 1.5f,
+			right_d_pad_sprite.set_position(
+				right_d_pad_sprite.position().x(),
+				right_d_pad_sprite.position().y() - sprite_height * 1.5f,
 				0.0f);
 		}
 
 		// D-pad down
 		if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
-			menu_text_4_.y() + sprite_height >= menu_box_sprite_.position().y() + sprite_height)
+			menu_text_4_.y() + sprite_height >= menu_box_sprite.position().y() + sprite_height)
 		{
 			// move down menu box sprite
-			menu_box_sprite_.set_position(
-				menu_box_sprite_.position().x(), 
-				menu_box_sprite_.position().y() + sprite_height * 1.5f, 
+			menu_box_sprite.set_position(
+				menu_box_sprite.position().x(),
+				menu_box_sprite.position().y() + sprite_height * 1.5f,
 				0.0f);
 
 			// move down left d-pad sprite
-			left_d_pad_sprite_.set_position(
-				left_d_pad_sprite_.position().x(), 
-				left_d_pad_sprite_.position().y() + sprite_height * 1.5f, 
+			left_d_pad_sprite.set_position(
+				left_d_pad_sprite.position().x(),
+				left_d_pad_sprite.position().y() + sprite_height * 1.5f,
 				0.0f);
 
 
 			// lerp down right d-pad sprite
-			right_d_pad_sprite_.set_position(
-				right_d_pad_sprite_.position().x(), 
-				right_d_pad_sprite_.position().y() + sprite_height * 1.5f, 
+			right_d_pad_sprite.set_position(
+				right_d_pad_sprite.position().x(),
+				right_d_pad_sprite.position().y() + sprite_height * 1.5f,
 				0.0f);
 		}
 
 		// START press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			menu_box_sprite_.position().y() > (menu_text_1_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (menu_text_1_.y() + sprite_height))
+			menu_box_sprite.position().y() > (menu_text_1_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite.position().y() < (menu_text_1_.y() + sprite_height))
 		{
 			// update the current state of the game state machine
 			// get the value that the gamestate points to and change it
-			(*gamestate_) = GAME; 
+			(*gamestate_) = GAME;
 		}
 		// SETTINGS press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			menu_box_sprite_.position().y() > (menu_text_2_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (menu_text_2_.y() + sprite_height))
+			menu_box_sprite.position().y() > (menu_text_2_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite.position().y() < (menu_text_2_.y() + sprite_height))
 		{
 			// update the current state of the game state machine
 			// get the value that the gamestate points to and change it
-			(*gamestate_) = SETTINGS; 
+			(*gamestate_) = SETTINGS;
 		}
 		// INSTRUCTIONS press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
+			menu_box_sprite.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite.position().y() < (menu_text_3_.y() + sprite_height))
 		{
 			instructions_page_++;
 
@@ -396,24 +396,24 @@ void Frontend::SonyController(const gef::SonyController* controller)
 		}
 		// INSTRUCTIONS left d-pad
 		if (controller->buttons_pressed() & gef_SONY_CTRL_LEFT &&
-			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
+			menu_box_sprite.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite.position().y() < (menu_text_3_.y() + sprite_height))
 		{
 			if (instructions_page_ > 0)
 				instructions_page_--;
 		}
 		// INSTRUCTIONS right d-pad
 		if (controller->buttons_pressed() & gef_SONY_CTRL_RIGHT &&
-			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
+			menu_box_sprite.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite.position().y() < (menu_text_3_.y() + sprite_height))
 		{
 			if (instructions_page_ < 6)
 				instructions_page_++;
 		}
 		// QUIT press
 		if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
-			menu_box_sprite_.position().y() > (menu_text_4_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (menu_text_4_.y() + sprite_height))
+			menu_box_sprite.position().y() >(menu_text_4_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite.position().y() < (menu_text_4_.y() + sprite_height))
 		{
 
 			quit_ = true;
@@ -424,8 +424,8 @@ void Frontend::SonyController(const gef::SonyController* controller)
 			dev_ = !dev_;
 		}
 		// toggle d-pad and instrucitons display
-		if (menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
-			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
+		if (menu_box_sprite.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite.position().y() < (menu_text_3_.y() + sprite_height))
 		{
 			display_d_pad = true;
 			display_instrucitons_ = true;
@@ -435,13 +435,13 @@ void Frontend::SonyController(const gef::SonyController* controller)
 			display_d_pad = false;
 			display_instrucitons_ = false;
 		}
-	} 
+	}
 } // !SonyController
 
-void Frontend::FrontendUpdate(float frame_time)
+void Menu::MenuUpdate(float frame_time)
 {
 	fps_ = 1.0f / frame_time;
-	
+
 	// get the latest date from the input devices
 	if (input_manager_)
 	{
@@ -454,9 +454,9 @@ void Frontend::FrontendUpdate(float frame_time)
 		const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
 		TouchController(touch_input);
 	} // !input_manager_
-} // !FrontendUpdate
+} // !MenuUpdate
 
-void Frontend::FrontendRender()
+void Menu::MenuRender(gef::Sprite menu_box_sprite, gef::Sprite left_d_pad_sprite, gef::Sprite right_d_pad_sprite, gef::Texture* texture, ...)
 {
 	sprite_renderer_->Begin();
 	{
@@ -500,11 +500,11 @@ void Frontend::FrontendRender()
 		if (display_instrucitons_)
 		{
 			switch (instructions_page_)
-			{ 
-			case INSTRUCTIONS_1 :
+			{
+			case INSTRUCTIONS_1:
 			{
 				gef::Sprite instructions_1;
-				instructions_1.set_texture(instructions_texture_1);
+				instructions_1.set_texture(texture);
 				instructions_1.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				instructions_1.set_height(platform_.height() * 0.5f);
 				instructions_1.set_width(platform_.width() * 0.5f);
@@ -512,10 +512,10 @@ void Frontend::FrontendRender()
 			} //
 			break;
 
-			case INSTRUCTIONS_2 :
+			case INSTRUCTIONS_2:
 			{
 				gef::Sprite instructions_2;
-				instructions_2.set_texture(instructions_texture_2);
+				instructions_2.set_texture(texture);
 				instructions_2.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				instructions_2.set_height(platform_.height() * 0.5f);
 				instructions_2.set_width(platform_.width() * 0.5f);
@@ -523,10 +523,10 @@ void Frontend::FrontendRender()
 			} //
 			break;
 
-			case INSTRUCTIONS_3 :
+			case INSTRUCTIONS_3:
 			{
 				gef::Sprite instructions_3;
-				instructions_3.set_texture(instructions_texture_3);
+				instructions_3.set_texture(texture);
 				instructions_3.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				instructions_3.set_height(platform_.height() * 0.5f);
 				instructions_3.set_width(platform_.width() * 0.5f);
@@ -534,10 +534,10 @@ void Frontend::FrontendRender()
 			} //
 			break;
 
-			case INSTRUCTIONS_4 :
+			case INSTRUCTIONS_4:
 			{
 				gef::Sprite instructions_4;
-				instructions_4.set_texture(instructions_texture_4);
+				instructions_4.set_texture(texture);
 				instructions_4.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				instructions_4.set_height(platform_.height() * 0.5f);
 				instructions_4.set_width(platform_.width() * 0.5f);
@@ -545,10 +545,10 @@ void Frontend::FrontendRender()
 			} //
 			break;
 
-			case INSTRUCTIONS_5 :
+			case INSTRUCTIONS_5:
 			{
 				gef::Sprite instructions_5;
-				instructions_5.set_texture(instructions_texture_5);
+				instructions_5.set_texture(texture);
 				instructions_5.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				instructions_5.set_height(platform_.height() * 0.5f);
 				instructions_5.set_width(platform_.width() * 0.5f);
@@ -556,10 +556,10 @@ void Frontend::FrontendRender()
 			} //
 			break;
 
-			case INSTRUCTIONS_6 :
+			case INSTRUCTIONS_6:
 			{
 				gef::Sprite instructions_6;
-				instructions_6.set_texture(instructions_texture_6);
+				instructions_6.set_texture(texture);
 				instructions_6.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				instructions_6.set_height(platform_.height() * 0.5f);
 				instructions_6.set_width(platform_.width() * 0.5f);
@@ -570,7 +570,7 @@ void Frontend::FrontendRender()
 			case INSTRUCTIONS_7:
 			{
 				gef::Sprite instructions_7;
-				instructions_7.set_texture(instructions_texture_7);
+				instructions_7.set_texture(texture);
 				instructions_7.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 				instructions_7.set_height(platform_.height() * 0.5f);
 				instructions_7.set_width(platform_.width() * 0.5f);
@@ -582,7 +582,7 @@ void Frontend::FrontendRender()
 		else
 		{
 			gef::Sprite title;
-			title.set_texture(title_texture_);
+			title.set_texture(texture);
 			title.set_position(gef::Vector4(menu_text_1_.x(), menu_text_1_.y() - sprite_height * 4.0f, -0.99f));
 			title.set_height(platform_.height() * 0.5f);
 			title.set_width(platform_.width() * 0.5f);
@@ -596,7 +596,7 @@ void Frontend::FrontendRender()
 		if (display_d_pad)
 		{
 			sprite_renderer_->DrawSprite(left_d_pad_sprite_);
-			sprite_renderer_->DrawSprite(right_d_pad_sprite_);
+			sprite_renderer_->DrawSprite(right_d_pad_sprite);
 		}
 		// display fps if dev mode on
 		if (dev_)
@@ -605,4 +605,4 @@ void Frontend::FrontendRender()
 		}
 	}
 	sprite_renderer_->End();
-} // !FrontendRender
+} // !MenuRender

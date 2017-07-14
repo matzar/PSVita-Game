@@ -35,8 +35,6 @@ Settings::Settings(gef::Platform& platform, gef::InputManager* input_manager, GA
 	sprite_width_(190.0f),
 	sprite_height(38.0f),
 	height_correction_(3.0f),
-	sfx_voice_id_(-1),
-	sfx_id_(-1),
 	fps_(0),
 	active_touch_id_(-1)
 {

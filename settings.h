@@ -69,9 +69,6 @@ private:
 	
 	float fps_;
 
-	int sfx_id_;
-	int sfx_voice_id_;
-
 	// quit
 	bool quit_;
 	// toggle fps display

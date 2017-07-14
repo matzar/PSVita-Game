@@ -1,5 +1,4 @@
-#ifndef _FRONTEND_H
-#define _FRONTEND_H
+#pragma once
 
 // gef headers
 #include <graphics/sprite.h>
@@ -19,19 +18,19 @@ namespace gef
 	class Vector4;
 } // gef
 
-// my class forward declarations
+  // my class forward declarations
 enum GAMESTATE;
 
-class Frontend
+class Menu
 {
 public:
-	Frontend(gef::Platform& platform, gef::InputManager* input_manager, GAMESTATE* gamestate);
-	~Frontend();
+	Menu(gef::Platform& platform, gef::InputManager* input_manager, GAMESTATE* gamestate);
+	~Menu();
 
-	void FrontendInit();
-	void FrontendRelease();
-	void FrontendUpdate(float frame_time);
-	void FrontendRender();
+	void MenuInit();
+	void MenuRelease();
+	void MenuUpdate(float frame_time);
+	void MenuRender(gef::Texture* texture, ...);
 
 	inline const bool Quit() { return quit_; }
 private:
@@ -92,11 +91,11 @@ private:
 	gef::Vector4 menu_text_4_;
 	// menu text height correction
 	float height_correction_;
-	
+
 	// controlls
-	void SonyController(const gef::SonyController* controller);
+	void SonyController(const gef::SonyController* controller, gef::Sprite menu_box_sprite, gef::Sprite left_d_pad_sprite, gef::Sprite right_d_pad_spite);
 	void TouchController(const gef::TouchInputManager* touch_input);
-	void MenuTouchInput();
+	void MenuTouchInput(gef::Sprite d_pad, ...);
 	Int32 active_touch_id_;
 	gef::Vector2 touch_position_;
 
@@ -111,6 +110,12 @@ private:
 	void CleanSprites();
 
 	void InitText();
+
+	/*void Test()
+	{
+		gef::Texture * foo;
+		gef::Texture * bar;
+		MenuRender(foo, bar);
+	}*/
 };
 
-#endif // !_FRONTEND_H
