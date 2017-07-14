@@ -24,7 +24,7 @@ enum GAMESTATE;
 class Menu
 {
 public:
-	Menu(gef::Platform& platform, gef::InputManager* input_manager, GAMESTATE* gamestate);
+	Menu(gef::Platform& platform, gef::InputManager* input_manager, GAMESTATE* gamestate, gef::Texture* texture, ...);
 	~Menu();
 
 	void MenuInit();
