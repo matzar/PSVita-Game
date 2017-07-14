@@ -177,11 +177,14 @@ void Frontend::FrontendInit()
 	//input_manager_ = gef::InputManager::Create(platform_);
 	
 	//InitFont();
+	// initlalise sprite renderer
+	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
 
 	InitTextures();
 
 	menu_ = new Menu(platform_,
 		input_manager_,
+		sprite_renderer_,
 		gamestate_,
 		title_texture_,
 		instructions_texture_1,

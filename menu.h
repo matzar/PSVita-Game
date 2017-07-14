@@ -4,8 +4,6 @@
 #include <graphics/sprite.h>
 #include <cstdarg>
 
-
-
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
 {
@@ -27,7 +25,7 @@ enum GAMESTATE;
 class Menu
 {
 public:
-	Menu(gef::Platform& platform, gef::InputManager* input_manager, GAMESTATE* gamestate, gef::Texture* texture, ...);
+	Menu(gef::Platform& platform, gef::InputManager* input_manager, gef::SpriteRenderer* sprite_renderer, GAMESTATE* gamestate, gef::Texture* texture, ...);
 	~Menu();
 
 	void MenuInit();

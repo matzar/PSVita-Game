@@ -18,11 +18,22 @@
 #include "game_state_enum.h"
 #include "instructions_enum.h"
 
-Menu::Menu(gef::Platform& platform, gef::InputManager* input_manager, GAMESTATE* gamestate, gef::Texture* texture, ...) :
+Menu::Menu(gef::Platform& platform, gef::InputManager* input_manager, gef::SpriteRenderer* sprite_renderer, GAMESTATE* gamestate, gef::Texture* texture, ...) :
 	platform_(platform),
-	gamestate_(gamestate),
 	input_manager_(input_manager),
-	sprite_renderer_(nullptr),
+	sprite_renderer_(sprite_renderer),
+	gamestate_(gamestate),
+	title_texture_(texture),
+    instructions_texture_1(texture),
+    instructions_texture_2(texture),
+    instructions_texture_3(texture),
+    instructions_texture_4(texture),
+    instructions_texture_5(texture),
+    instructions_texture_6(texture),
+    instructions_texture_7(texture),
+    playstation_left_d_pad_(texture),
+    playstation_right_d_pad_(texture),
+    display_instrucitons_(texture),
 	quit_(false),
 	dev_(false),
 	display_d_pad(true),
@@ -33,22 +44,10 @@ Menu::Menu(gef::Platform& platform, gef::InputManager* input_manager, GAMESTATE*
 	fps_(0),
 	active_touch_id_(-1)
 {
-	va_list arg;
-	va_start(arg, texture);
+	//va_list arg;
+	//va_start(arg, texture);
 
-	title_texture_ = texture;
-	instructions_texture_1 = texture;
-	instructions_texture_2 = texture;
-	instructions_texture_3 = texture;
-	instructions_texture_4 = texture;
-	instructions_texture_5 = texture;
-	instructions_texture_6 = texture;
-	instructions_texture_7 = texture;
-	playstation_left_d_pad_ = texture;
-	playstation_right_d_pad_ = texture;
-	display_instrucitons_ = texture;
-
-	va_end(arg);
+	//va_end(arg);
 }
 
 Menu::~Menu()
@@ -137,7 +136,7 @@ void Menu::CleanTextures()
 void Menu::InitSprites()
 {
 	// initlalise sprite renderer
-	sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
+	//sprite_renderer_ = gef::SpriteRenderer::Create(platform_);
 
 	// left d-pad sprite
 	left_d_pad_sprite_.set_position(platform_.width() * 0.5f - sprite_width_, platform_.height() * 0.5f + sprite_height * 1.5f, 0.0f);
@@ -179,11 +178,11 @@ void Menu::MenuInit()
 	// initialise input manager
 	//input_manager_ = gef::InputManager::Create(platform_);
 
+	InitSprites();
+
 	InitFont();
 
 //InitTextures();
-
-	InitSprites();
 
 	InitText();
 } // !MenuInit
