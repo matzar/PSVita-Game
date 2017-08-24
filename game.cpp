@@ -745,9 +745,12 @@ void Game::TouchController(const gef::TouchInputManager * touch_input)
 					// we're just going to record the position of the touch
 					touch_position_ = touch->position;
 
-					if (touch_position_.x > pause_button_x_ - 50.0f && touch_position_.y < pause_button_y_ + 50.0f)
+					if (resume_)
 					{
-						pause_ = !pause_;
+						if (touch_position_.x > pause_button_x_ - 50.0f && touch_position_.y < pause_button_y_ + 50.0f)
+						{
+							pause_ = !pause_;
+						}
 					}
 					// do any processing for a new touch here
 					if (!pause_)

@@ -220,7 +220,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\camera.cpp" />
-    <ClCompile Include="..\..\contact_filter.cpp" />
     <ClCompile Include="..\..\contact_listener.cpp" />
     <ClCompile Include="..\..\free_camera.cpp" />
     <ClCompile Include="..\..\frontend.cpp" />
@@ -250,7 +249,6 @@
     <ClInclude Include="..\..\camera.h" />
     <ClInclude Include="..\..\camera_enum.h" />
     <ClInclude Include="..\..\colour_type_enum.h" />
-    <ClInclude Include="..\..\contact_filter.h" />
     <ClInclude Include="..\..\contact_listener.h" />
     <ClInclude Include="..\..\difficulty_enum.h" />
     <ClInclude Include="..\..\free_camera.h" />
@@ -267,10 +265,6 @@
     <ClInclude Include="..\..\primitive_builder.h" />
     <ClInclude Include="..\..\scene_app.h" />
     <ClInclude Include="..\..\settings.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
