@@ -5,6 +5,7 @@
 namespace gef
 {
 	class SonyController;
+	class Keyboard;
 }
 
 #include "maths/vector4.h"
@@ -15,6 +16,7 @@ public:
 	Camera();
 	virtual ~Camera();
 	virtual void CameraController(const float dt, const gef::SonyController* controller) = 0;
+	virtual void CameraController(const float dt, const gef::Keyboard* controller) = 0;
 
 	void Update();
 	void SetCameraPosition(const float& yaw, const float& pitch, const float& roll, const gef::Vector4& position);

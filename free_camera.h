@@ -8,6 +8,8 @@
 namespace gef
 {
 	class SonyController;
+	class TouchInputManager;
+	class Keyboard;
 }
 
 class FreeCamera : public Camera
@@ -16,6 +18,7 @@ public:
 	FreeCamera();
 
 	virtual void CameraController(const float frame_time, const gef::SonyController* controller);
+	virtual void CameraController(const float frame_time, const gef::TouchInputManager* touch_input, const gef::Keyboard* keyboard);
 };
 
 #endif

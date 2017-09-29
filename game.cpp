@@ -1115,6 +1115,7 @@ void Game::GameUpdate(float frame_time)
 #ifdef _WIN32
 		gef::Keyboard* keyboard = input_manager_->keyboard();
 		KeyboardController(keyboard);
+		//camera_->CameraController(frame_time, keyboard);
 #endif // _WIN32
 
 		if (!pause_)
