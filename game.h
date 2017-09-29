@@ -16,6 +16,7 @@ namespace gef
 	class SpriteRenderer;
 	class InputManager;
 	class TouchInputManager;
+	class Keyboard;
 	class AudioManager;
 	class Renderer3D;
 	class Mesh;
@@ -161,8 +162,9 @@ private:
 	float height_correction_;
 
 	// controlls
-	void SonyController(const gef::SonyController* controller);
+	void SonyController(const gef::SonyController* controller, const gef::Keyboard* keyboard);
 	void TouchController(const gef::TouchInputManager* touch_input);
+	void KeyboardController(const gef::Keyboard* keyboard);
 	void MenuTouchInput();
 	Int32 active_touch_id_;
 	gef::Vector2 touch_position_;

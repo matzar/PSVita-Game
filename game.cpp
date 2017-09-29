@@ -17,6 +17,7 @@
 #include <input/input_manager.h>
 #include <input/touch_input_manager.h>
 #include <input/sony_controller_input_manager.h>
+#include <input/keyboard.h>
 
 #include <audio/audio_manager.h>
 // extra headers
@@ -555,7 +556,7 @@ void Game::GameRelease()
 	CleanSprites();
 } // !GameRelease
 
-void Game::SonyController(const gef::SonyController* controller)
+void Game::SonyController(const gef::SonyController* controller, const gef::Keyboard* keyboard)
 {
 	if (controller)
 	{
@@ -564,8 +565,9 @@ void Game::SonyController(const gef::SonyController* controller)
 			// menu box control when the resume button is active
 			if (resume_)
 			{
-				// D-pad up
-				if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
+				// D-pad up or W key pressed
+				if ((keyboard->IsKeyPressed(gef::Keyboard::KC_W) || 
+					(controller->buttons_pressed() & gef_SONY_CTRL_UP)) &&
 					// prevent the menu box from going higher than the top menu text
 					menu_text_1_.y() <= menu_box_sprite_.position().y() - sprite_height)
 				{
@@ -575,8 +577,9 @@ void Game::SonyController(const gef::SonyController* controller)
 						menu_box_sprite_.position().y() - sprite_height * 2.0f,
 						0.0f);
 				}
-				// D-pad down
-				if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
+				// D-pad down or S key pressed
+				if ((keyboard->IsKeyPressed(gef::Keyboard::KC_S) || 
+					(controller->buttons_pressed() & gef_SONY_CTRL_DOWN)) &&
 					// prevent the menu box from going lower than the lowest menu text
 					menu_text_3_.y() >= menu_box_sprite_.position().y() + sprite_height)
 				{
@@ -590,8 +593,9 @@ void Game::SonyController(const gef::SonyController* controller)
 			// menu box control when the resume button is NOT active
 			else
 			{
-				// D-pad up
-				if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
+				// D-pad up or W key pressed
+				if ((keyboard->IsKeyPressed(gef::Keyboard::KC_W) ||
+					(controller->buttons_pressed() & gef_SONY_CTRL_UP)) &&
 					// prevent the menu box from going higher than the top menu text
 					menu_text_2_.y() <= menu_box_sprite_.position().y() - sprite_height)
 				{
@@ -601,8 +605,9 @@ void Game::SonyController(const gef::SonyController* controller)
 						menu_box_sprite_.position().y() - sprite_height * 2.0f,
 						0.0f);
 				}
-				// D-pad down
-				if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
+				// D-pad down or S key pressed
+				if ((keyboard->IsKeyPressed(gef::Keyboard::KC_S) ||
+					(controller->buttons_pressed() & gef_SONY_CTRL_DOWN)) &&
 					// prevent the menu box from going lower than the lowest menu text
 					menu_text_3_.y() >= menu_box_sprite_.position().y() + sprite_height)
 				{
@@ -724,7 +729,7 @@ void Game::MenuTouchInput()
 	}
 }
 
-void Game::TouchController(const gef::TouchInputManager * touch_input)
+void Game::TouchController(const gef::TouchInputManager* touch_input)
 {
 	if (touch_input && (touch_input->max_num_panels() > 0))
 	{
@@ -790,6 +795,36 @@ void Game::TouchController(const gef::TouchInputManager * touch_input)
 	// reset active touch (it doesn't get fully reset in RELEASE)
 	active_touch_id_ = -1;
 } // !TouchController
+
+void Game::KeyboardController(const gef::Keyboard* keyboard)
+{
+	if (keyboard)
+	{
+		//const gef::KeyboardD3D11* keyboard_d3d11 = (const gef::KeyboardD3D11*)keyboard;
+
+		// keyboard input
+	/*	if (keyboard->IsKeyDown(gef::Keyboard::KC_W))
+			
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_S))
+			
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_A))
+			
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_D))
+			
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_UP))
+			
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_DOWN))
+			camera_->subtractPitch(frame_time, camera_speed * camera_speed);
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
+			camera_->subtractYaw(frame_time, camera_speed * camera_speed);
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_RIGHT))
+			camera_->AddYaw(frame_time, camera_speed * camera_speed);
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_R) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD8))
+			camera_->MoveUp(frame_time * camera_speed);
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_F) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD2))
+			camera_->MoveDown(frame_time * camera_speed);*/
+	} // !keyboard
+}
 
 void Game::UpdatePickups()
 {
@@ -965,12 +1000,16 @@ void Game::GameUpdate(float frame_time)
 
 		// get controller input data and read controller data for controler 0
 		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
-		SonyController(controller);
+		gef::Keyboard* keyboard = input_manager_->keyboard();
+		SonyController(controller, keyboard);
 		camera_->CameraController(frame_time, controller);
 
 		// get touch input
 		const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
 		TouchController(touch_input);
+
+		// keyboard controller
+		//KeyboardController(keyboard);
 
 		if (!pause_)
 		{
