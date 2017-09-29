@@ -17,7 +17,10 @@
 #include <input/input_manager.h>
 #include <input/touch_input_manager.h>
 #include <input/sony_controller_input_manager.h>
-#include <input/keyboard.h>
+
+#ifdef _WIN32
+#include <input/keyboard.h>  
+#endif // _WIN32
 
 #include <audio/audio_manager.h>
 // extra headers
@@ -556,7 +559,7 @@ void Game::GameRelease()
 	CleanSprites();
 } // !GameRelease
 
-void Game::SonyController(const gef::SonyController* controller, const gef::Keyboard* keyboard)
+void Game::SonyController(const gef::SonyController* controller)
 {
 	if (controller)
 	{
@@ -566,8 +569,7 @@ void Game::SonyController(const gef::SonyController* controller, const gef::Keyb
 			if (resume_)
 			{
 				// D-pad up or W key pressed
-				if ((keyboard->IsKeyPressed(gef::Keyboard::KC_W) || 
-					(controller->buttons_pressed() & gef_SONY_CTRL_UP)) &&
+				if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
 					// prevent the menu box from going higher than the top menu text
 					menu_text_1_.y() <= menu_box_sprite_.position().y() - sprite_height)
 				{
@@ -578,8 +580,7 @@ void Game::SonyController(const gef::SonyController* controller, const gef::Keyb
 						0.0f);
 				}
 				// D-pad down or S key pressed
-				if ((keyboard->IsKeyPressed(gef::Keyboard::KC_S) || 
-					(controller->buttons_pressed() & gef_SONY_CTRL_DOWN)) &&
+				if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
 					// prevent the menu box from going lower than the lowest menu text
 					menu_text_3_.y() >= menu_box_sprite_.position().y() + sprite_height)
 				{
@@ -594,8 +595,7 @@ void Game::SonyController(const gef::SonyController* controller, const gef::Keyb
 			else
 			{
 				// D-pad up or W key pressed
-				if ((keyboard->IsKeyPressed(gef::Keyboard::KC_W) ||
-					(controller->buttons_pressed() & gef_SONY_CTRL_UP)) &&
+				if (controller->buttons_pressed() & gef_SONY_CTRL_UP &&
 					// prevent the menu box from going higher than the top menu text
 					menu_text_2_.y() <= menu_box_sprite_.position().y() - sprite_height)
 				{
@@ -606,8 +606,7 @@ void Game::SonyController(const gef::SonyController* controller, const gef::Keyb
 						0.0f);
 				}
 				// D-pad down or S key pressed
-				if ((keyboard->IsKeyPressed(gef::Keyboard::KC_S) ||
-					(controller->buttons_pressed() & gef_SONY_CTRL_DOWN)) &&
+				if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN &&
 					// prevent the menu box from going lower than the lowest menu text
 					menu_text_3_.y() >= menu_box_sprite_.position().y() + sprite_height)
 				{
@@ -800,30 +799,130 @@ void Game::KeyboardController(const gef::Keyboard* keyboard)
 {
 	if (keyboard)
 	{
-		//const gef::KeyboardD3D11* keyboard_d3d11 = (const gef::KeyboardD3D11*)keyboard;
+		if (pause_)
+		{
+			// menu box control when the resume button is active
+			if (resume_)
+			{
+				// D-pad up or W key pressed
+				if (keyboard->IsKeyPressed(gef::Keyboard::KC_W) &&
+					// prevent the menu box from going higher than the top menu text
+					menu_text_1_.y() <= menu_box_sprite_.position().y() - sprite_height)
+				{
+					// move down menu box sprite
+					menu_box_sprite_.set_position(
+						menu_box_sprite_.position().x(),
+						menu_box_sprite_.position().y() - sprite_height * 2.0f,
+						0.0f);
+				}
+				// D-pad down or S key pressed
+				if (keyboard->IsKeyPressed(gef::Keyboard::KC_S) &&
+					// prevent the menu box from going lower than the lowest menu text
+					menu_text_3_.y() >= menu_box_sprite_.position().y() + sprite_height)
+				{
+					// move down menu box sprite
+					menu_box_sprite_.set_position(
+						menu_box_sprite_.position().x(),
+						menu_box_sprite_.position().y() + sprite_height * 2.0f,
+						0.0f);
+				}
+			}
+			// menu box control when the resume button is NOT active
+			else
+			{
+				// D-pad up or W key pressed
+				if (keyboard->IsKeyPressed(gef::Keyboard::KC_W) &&
+					// prevent the menu box from going higher than the top menu text
+					menu_text_2_.y() <= menu_box_sprite_.position().y() - sprite_height)
+				{
+					// move down menu box sprite
+					menu_box_sprite_.set_position(
+						menu_box_sprite_.position().x(),
+						menu_box_sprite_.position().y() - sprite_height * 2.0f,
+						0.0f);
+				}
+				// D-pad down or S key pressed
+				if (keyboard->IsKeyPressed(gef::Keyboard::KC_S) &&
+					// prevent the menu box from going lower than the lowest menu text
+					menu_text_3_.y() >= menu_box_sprite_.position().y() + sprite_height)
+				{
+					// move down menu box sprite
+					menu_box_sprite_.set_position(
+						menu_box_sprite_.position().x(),
+						menu_box_sprite_.position().y() + sprite_height * 2.0f,
+						0.0f);
+				}
+			}
+			// RESUME button press
+			if (keyboard->IsKeyPressed(gef::Keyboard::KC_RETURN) &&
+				//controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
+				menu_box_sprite_.position().y() > (menu_text_1_.y() - sprite_height * 0.5f) &&
+				menu_box_sprite_.position().y() < (menu_text_1_.y() + sprite_height))
+			{
+				pause_ = !pause_;
+			}
+			// RESTART BUTTON press
+			if (keyboard->IsKeyPressed(gef::Keyboard::KC_RETURN) &&
+				//controller->buttons_pressed() & gef_SONY_CTRL_CROSS &&
+				menu_box_sprite_.position().y() > (menu_text_2_.y() - sprite_height * 0.5f) &&
+				menu_box_sprite_.position().y() < (menu_text_2_.y() + sprite_height))
+			{
+				pickups_count_ = 0;
+				resume_ = true;
 
-		// keyboard input
-	/*	if (keyboard->IsKeyDown(gef::Keyboard::KC_W))
-			
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_S))
-			
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_A))
-			
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_D))
-			
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_UP))
-			
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_DOWN))
-			camera_->subtractPitch(frame_time, camera_speed * camera_speed);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
-			camera_->subtractYaw(frame_time, camera_speed * camera_speed);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_RIGHT))
-			camera_->AddYaw(frame_time, camera_speed * camera_speed);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_R) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD8))
-			camera_->MoveUp(frame_time * camera_speed);
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_F) || keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD2))
-			camera_->MoveDown(frame_time * camera_speed);*/
-	} // !keyboard
+				GameRelease();
+				GameInit();
+
+				// future improvement - reload function
+				/*
+				player_->ReloadPlayer();
+
+				CleanPickups();
+				InitPickups();
+
+				pickups_count_ = 0;
+				pause_ = false;
+				*/
+			}
+			// MENU press
+			if (keyboard->IsKeyPressed(gef::Keyboard::KC_RETURN) &&
+				menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+				menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
+			{
+				// update the current state of the game state machine
+				// get the value that the gamestate points to and change it
+				(*gamestate_) = FRONTEND;
+			}
+			// toggle fps display during pause
+			if (keyboard->IsKeyPressed(gef::Keyboard::KC_M))
+			//if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
+			{
+				dev_ = !dev_;
+			}
+		} // !pause_
+
+		else
+		{
+			// TRIANGLE press
+			if (keyboard->IsKeyPressed(gef::Keyboard::KC_C))
+			{
+				(*camera_count_)++;
+
+				if ((*camera_count_) >= 3)
+					(*camera_count_) = 0;
+			}
+			// toggle pause menu
+			if (keyboard->IsKeyPressed(gef::Keyboard::KC_BACKSPACE))
+			{
+				pause_ = !pause_;
+			}
+			// toggle fps display during the game
+			if (keyboard->IsKeyPressed(gef::Keyboard::KC_M))
+			{
+				dev_ = !dev_;
+			}
+		}
+	}
 }
 
 void Game::UpdatePickups()
@@ -1000,8 +1099,7 @@ void Game::GameUpdate(float frame_time)
 
 		// get controller input data and read controller data for controler 0
 		const gef::SonyController* controller = input_manager_->controller_input()->GetController(0);
-		gef::Keyboard* keyboard = input_manager_->keyboard();
-		SonyController(controller, keyboard);
+		SonyController(controller);
 		camera_->CameraController(frame_time, controller);
 
 		// get touch input
@@ -1009,7 +1107,11 @@ void Game::GameUpdate(float frame_time)
 		TouchController(touch_input);
 
 		// keyboard controller
-		//KeyboardController(keyboard);
+
+#ifdef _WIN32
+		gef::Keyboard* keyboard = input_manager_->keyboard();
+		KeyboardController(keyboard);
+#endif // _WIN32
 
 		if (!pause_)
 		{

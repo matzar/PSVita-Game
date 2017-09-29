@@ -162,7 +162,7 @@ private:
 	float height_correction_;
 
 	// controlls
-	void SonyController(const gef::SonyController* controller, const gef::Keyboard* keyboard);
+	void SonyController(const gef::SonyController* controller);
 	void TouchController(const gef::TouchInputManager* touch_input);
 	void KeyboardController(const gef::Keyboard* keyboard);
 	void MenuTouchInput();
