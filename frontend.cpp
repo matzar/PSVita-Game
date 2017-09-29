@@ -9,6 +9,9 @@
 #include <input/input_manager.h>
 #include <input/touch_input_manager.h>
 #include <input/sony_controller_input_manager.h>
+#ifdef _WIN32
+#include <input/keyboard.h>  
+#endif // _WIN32
 
 #include <maths/vector2.h>
 #include <maths/vector4.h>
@@ -315,6 +318,133 @@ void Frontend::TouchController(const gef::TouchInputManager* touch_input)
 	active_touch_id_ = -1;
 } // !TouchController
 
+void Frontend::KeyboardController(const gef::Keyboard * keyboard)
+{
+	if (keyboard)
+	{
+		// D-pad up
+		if ((keyboard->IsKeyPressed(gef::Keyboard::KC_W) ||
+			keyboard->IsKeyPressed(gef::Keyboard::KC_UP)) &&
+			menu_text_1_.y() <= menu_box_sprite_.position().y() - sprite_height)
+		{
+			// move down menu box sprite
+			menu_box_sprite_.set_position(
+				menu_box_sprite_.position().x(),
+				menu_box_sprite_.position().y() - sprite_height * 1.5f,
+				0.0f);
+
+			// move down left d-pad sprite
+			left_d_pad_sprite_.set_position(
+				left_d_pad_sprite_.position().x(),
+				left_d_pad_sprite_.position().y() - sprite_height * 1.5f,
+				0.0f);
+
+
+			// lerp down right d-pad sprite
+			right_d_pad_sprite_.set_position(
+				right_d_pad_sprite_.position().x(),
+				right_d_pad_sprite_.position().y() - sprite_height * 1.5f,
+				0.0f);
+		}
+
+		// D-pad down
+		if ((keyboard->IsKeyPressed(gef::Keyboard::KC_S) ||
+			keyboard->IsKeyPressed(gef::Keyboard::KC_DOWN)) &&
+			menu_text_4_.y() + sprite_height >= menu_box_sprite_.position().y() + sprite_height)
+		{
+			// move down menu box sprite
+			menu_box_sprite_.set_position(
+				menu_box_sprite_.position().x(),
+				menu_box_sprite_.position().y() + sprite_height * 1.5f,
+				0.0f);
+
+			// move down left d-pad sprite
+			left_d_pad_sprite_.set_position(
+				left_d_pad_sprite_.position().x(),
+				left_d_pad_sprite_.position().y() + sprite_height * 1.5f,
+				0.0f);
+
+
+			// lerp down right d-pad sprite
+			right_d_pad_sprite_.set_position(
+				right_d_pad_sprite_.position().x(),
+				right_d_pad_sprite_.position().y() + sprite_height * 1.5f,
+				0.0f);
+		}
+
+		// START press
+		if (keyboard->IsKeyPressed(gef::Keyboard::KC_RETURN) &&
+			menu_box_sprite_.position().y() > (menu_text_1_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_1_.y() + sprite_height))
+		{
+			// update the current state of the game state machine
+			// get the value that the gamestate points to and change it
+			(*gamestate_) = GAME;
+		}
+		// SETTINGS press
+		if (keyboard->IsKeyPressed(gef::Keyboard::KC_RETURN) &&
+			menu_box_sprite_.position().y() > (menu_text_2_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_2_.y() + sprite_height))
+		{
+			// update the current state of the game state machine
+			// get the value that the gamestate points to and change it
+			(*gamestate_) = SETTINGS;
+		}
+		// INSTRUCTIONS press
+		if (keyboard->IsKeyPressed(gef::Keyboard::KC_RETURN) &&
+			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
+		{
+			instructions_page_++;
+
+			if (instructions_page_ >= 7)
+				instructions_page_ = 0;
+		}
+		// INSTRUCTIONS left d-pad
+		if (keyboard->IsKeyPressed(gef::Keyboard::KC_LEFT) &&
+			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
+		{
+			if (instructions_page_ > 0)
+				instructions_page_--;
+		}
+		// INSTRUCTIONS right d-pad
+		if (keyboard->IsKeyPressed(gef::Keyboard::KC_RIGHT) &&
+			menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
+		{
+			if (instructions_page_ < 6)
+				instructions_page_++;
+		}
+		// QUIT press
+		if (keyboard->IsKeyPressed(gef::Keyboard::KC_RETURN) &&
+			menu_box_sprite_.position().y() >(menu_text_4_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_4_.y() + sprite_height))
+		{
+
+			quit_ = true;
+		}
+		// toggle fps display
+		if (keyboard->IsKeyPressed(gef::Keyboard::KC_M))
+		{
+			dev_ = !dev_;
+		}
+		// toggle d-pad and instrucitons display
+		if (menu_box_sprite_.position().y() > (menu_text_3_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() < (menu_text_3_.y() + sprite_height))
+		{
+			display_d_pad = true;
+			display_instrucitons_ = true;
+		}
+		else
+		{
+			display_d_pad = false;
+			display_instrucitons_ = false;
+		}
+	}
+} // !SonyController
+
+
 void Frontend::SonyController(const gef::SonyController* controller)
 {
 	if (controller)
@@ -454,6 +584,11 @@ void Frontend::FrontendUpdate(float frame_time)
 		// get touch input
 		const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
 		TouchController(touch_input);
+
+#ifdef _WIN32
+		gef::Keyboard* keyboard = input_manager_->keyboard();
+		KeyboardController(keyboard);
+#endif // _WIN32
 	} // !input_manager_
 } // !FrontendUpdate
 

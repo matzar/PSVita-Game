@@ -14,6 +14,7 @@ namespace gef
 	class Texture;
 	class SonyController;
 	class TouchInputManager;
+	class Keyboard;
 	class Sprite;
 	class Vector2;
 	class Vector4;
@@ -99,6 +100,7 @@ private:
 	// controlls
 	void SonyController(const gef::SonyController* controller);
 	void TouchController(const gef::TouchInputManager* touch_input);
+	void KeyboardController(const gef::Keyboard* keyboard);
 	void MenuTouchInput();
 	Int32 active_touch_id_;
 	gef::Vector2 touch_position_;
