@@ -1119,6 +1119,10 @@ void Game::GameUpdate(float frame_time)
 			// must be under the same condition statement 
 			// to keep the simulation consistent between restarts
 			player_->PlayerController(controller);
+#ifdef _WIN32
+			player_->PlayerKeyboardController(keyboard);
+#endif // _WIN32
+
 			UpdateSimulation(frame_time);
 		}
 	} // !input_manager_

@@ -11,6 +11,7 @@ namespace gef
 {
 	class SonyController;
 	class TouchInputManager;
+	class Keyboard;
 }
 
 class PrimitiveBuilder;
@@ -36,6 +37,7 @@ public:
 	void ReloadPlayer();
 	void PlayerController(const gef::SonyController* controller);
 	void PlayerTouchController(gef::Vector2 touch_position_);
+	void PlayerKeyboardController(gef::Keyboard* keyboard);
 	inline void StartContact() { num_contacts_++; }
 	inline void EndContact() { num_contacts_--; }
 	inline void RestartJump() { jump_ = true; }

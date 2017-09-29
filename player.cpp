@@ -2,6 +2,10 @@
 // gef headers
 #include <input/touch_input_manager.h>
 #include <input/sony_controller_input_manager.h>
+#ifdef _WIN32
+#include <input/keyboard.h>  
+#endif // _WIN32
+
 
 Player::Player(float32* x_velocity, float32* y_velocity) :
 	p_x_velocity(x_velocity), // 5.0
@@ -112,7 +116,7 @@ void Player::PlayerController(const gef::SonyController * controller)
 		vel.x = 0.0f;
 		GetBody()->SetLinearVelocity(vel);
 	}
-}
+} // !PlayerController
 
 void Player::PlayerTouchController(gef::Vector2 touch_position_)
 {
@@ -146,7 +150,48 @@ void Player::PlayerTouchController(gef::Vector2 touch_position_)
 				this->SetGameObjectColour(BLUE);
 		}
 	}
-}
+} // !PlayerTouchController
+
+void Player::PlayerKeyboardController(gef::Keyboard* keyboard)
+{
+	if (alive_)
+	{
+		// move the player
+		b2Vec2 vel = GetBody()->GetLinearVelocity();
+		vel.x = (*p_x_velocity);
+		GetBody()->SetLinearVelocity(vel);
+
+		if (jump_)
+		{
+			if (keyboard->IsKeyPressed(gef::Keyboard::KC_SPACE))
+			{
+				b2Vec2 vel = GetBody()->GetLinearVelocity();
+				vel.y = (*p_y_velocity);	//upwards - don't change x velocity
+				GetBody()->SetLinearVelocity(vel);
+
+				jump_ = false;
+			}
+		}
+
+		if (keyboard->IsKeyPressed(gef::Keyboard::KC_RSHIFT) || 
+			keyboard->IsKeyPressed(gef::Keyboard::KC_LCONTROL))
+		{
+			red_ = !red_;
+
+			if (red_)
+				this->SetGameObjectColour(RED);
+			else
+				this->SetGameObjectColour(BLUE);
+		}
+	}
+	else
+	{
+		// stop the player
+		b2Vec2 vel = GetBody()->GetLinearVelocity();
+		vel.x = 0.0f;
+		GetBody()->SetLinearVelocity(vel);
+	}
+} // !PlayerKeyboardController
 			
 // future improvement
 void Player::ReloadPlayer()
