@@ -127,20 +127,20 @@ void FreeCamera::CameraController(const float frame_time, const gef::TouchInputM
 			MoveBackwards(frame_time * camera_speed);
 		}
 		// right stick - yaw and pitch controll
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD4))
 		{
 			subtractYaw(camera_speed * camera_speed, frame_time);
 		}
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_RIGHT))
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD6))
 		{
 			AddYaw(camera_speed * camera_speed, frame_time);
 
 		}
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_DOWN))
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD8))
 		{
 			AddPitch(camera_speed * camera_speed, frame_time);
 		}
-		if (keyboard->IsKeyDown(gef::Keyboard::KC_UP))
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_NUMPAD2))
 		{
 			subtractPitch(camera_speed * camera_speed, frame_time);
 		}
