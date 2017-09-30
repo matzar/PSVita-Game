@@ -323,8 +323,7 @@ void Frontend::KeyboardController(const gef::Keyboard * keyboard)
 	if (keyboard)
 	{
 		// D-pad up
-		if ((keyboard->IsKeyPressed(gef::Keyboard::KC_W) ||
-			keyboard->IsKeyPressed(gef::Keyboard::KC_UP)) &&
+		if (keyboard->IsKeyPressed(gef::Keyboard::KC_UP) &&
 			menu_text_1_.y() <= menu_box_sprite_.position().y() - sprite_height)
 		{
 			// move down menu box sprite
@@ -348,8 +347,7 @@ void Frontend::KeyboardController(const gef::Keyboard * keyboard)
 		}
 
 		// D-pad down
-		if ((keyboard->IsKeyPressed(gef::Keyboard::KC_S) ||
-			keyboard->IsKeyPressed(gef::Keyboard::KC_DOWN)) &&
+		if (keyboard->IsKeyPressed(gef::Keyboard::KC_DOWN) &&
 			menu_text_4_.y() + sprite_height >= menu_box_sprite_.position().y() + sprite_height)
 		{
 			// move down menu box sprite

@@ -1108,7 +1108,6 @@ void Game::GameUpdate(float frame_time)
 		TouchController(touch_input);
 
 		// keyboard controller
-
 #ifdef _WIN32
 		gef::Keyboard* keyboard = input_manager_->keyboard();
 		KeyboardController(keyboard);
