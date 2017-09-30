@@ -1,3 +1,5 @@
+![alt text](https://github.com/matt360/gef_box2d_collisions_app/blob/master/media/png/title_screen.png)
+
 ![alt text](https://github.com/matt360/gef_box2d_collisions_app/blob/master/media/png/instructions_1.png)
 
 Keyboard controls:
