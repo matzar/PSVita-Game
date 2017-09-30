@@ -90,66 +90,67 @@ void FreeCamera::CameraController(const float frame_time, const gef::SonyControl
 
 void FreeCamera::CameraController(const float frame_time, const gef::TouchInputManager* touch_input, const gef::Keyboard * keyboard)
 {
-//	const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
-//
-//	// initialise the mouse position
-//	gef::Vector2 mouse_position(0.0f, 0.0f);
-//
-//#ifdef _WIN32 // Only on windows platforms
-//
-//	// get a pointer to the d3d11 implementation of the TouchInputManager
-//	const gef::TouchInputManagerD3D11* touch_input_d3d11 = (const gef::TouchInputManagerD3D11*)touch_input;
-//
-//	// get the mouse position
-//	mouse_position = touch_input_d3d11->mouse_position();
-//#endif
+	//960, 544
+	//const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
+
+	// initialise the mouse position
+	gef::Vector2 mouse_position(0.0f, 0.0f);
+
+
+#ifdef _WIN32 // Only on windows platforms
+	// get a pointer to the d3d11 implementation of the TouchInputManager
+	const gef::TouchInputManagerD3D11* touch_input_d3d11 = (const gef::TouchInputManagerD3D11*)touch_input;
+
+	// get the mouse position
+	mouse_position = touch_input_d3d11->mouse_position();
+#endif
 
 	if (keyboard)
 	{
 		float camera_speed = 10.0f;
 
 		// left stick - pan controll
-		if (keyboard->IsKeyPressed(gef::Keyboard::KC_A))
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_A))
 		{
 			MoveSideLeft(frame_time * camera_speed);
 		}
-		if (keyboard->IsKeyPressed(gef::Keyboard::KC_D))
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_D))
 		{
 			MoveSideRight(frame_time * camera_speed);
 		}
-		if (keyboard->IsKeyPressed(gef::Keyboard::KC_W))
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_W))
 		{
 			MoveForward(frame_time * camera_speed);
 		}
-		if (keyboard->IsKeyPressed(gef::Keyboard::KC_S))
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_S))
 		{
 			MoveBackwards(frame_time * camera_speed);
 		}
 		// right stick - yaw and pitch controll
-		if (keyboard->IsKeyPressed(gef::Keyboard::KC_LEFT))
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_LEFT))
 		{
 			subtractYaw(camera_speed * camera_speed, frame_time);
 		}
-		if (keyboard->IsKeyPressed(gef::Keyboard::KC_RIGHT))
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_RIGHT))
 		{
 			AddYaw(camera_speed * camera_speed, frame_time);
 
 		}
-		if (keyboard->IsKeyPressed(gef::Keyboard::KC_DOWN))
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_DOWN))
 		{
 			AddPitch(camera_speed * camera_speed, frame_time);
 		}
-		if (keyboard->IsKeyPressed(gef::Keyboard::KC_UP))
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_UP))
 		{
 			subtractPitch(camera_speed * camera_speed, frame_time);
 		}
 		// buttons
 		// handle input
-		if (keyboard->IsKeyPressed(gef::Keyboard::KC_E))
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_E))
 		{
 			MoveUp(frame_time * camera_speed);
 		}
-		if (keyboard->IsKeyPressed(gef::Keyboard::KC_Q))
+		if (keyboard->IsKeyDown(gef::Keyboard::KC_Q))
 		{
 			MoveDown(frame_time * camera_speed);
 		}

@@ -805,8 +805,7 @@ void Game::KeyboardController(const gef::Keyboard* keyboard)
 			if (resume_)
 			{
 				// D-pad up or W key pressed
-				if ((keyboard->IsKeyPressed(gef::Keyboard::KC_W) ||
-					keyboard->IsKeyPressed(gef::Keyboard::KC_UP)) &&
+				if (keyboard->IsKeyPressed(gef::Keyboard::KC_UP) &&
 					// prevent the menu box from going higher than the top menu text
 					menu_text_1_.y() <= menu_box_sprite_.position().y() - sprite_height)
 				{
@@ -817,8 +816,7 @@ void Game::KeyboardController(const gef::Keyboard* keyboard)
 						0.0f);
 				}
 				// D-pad down or S key pressed
-				if ((keyboard->IsKeyPressed(gef::Keyboard::KC_S) ||
-					keyboard->IsKeyPressed(gef::Keyboard::KC_DOWN)) &&
+				if (keyboard->IsKeyPressed(gef::Keyboard::KC_DOWN) &&
 					// prevent the menu box from going lower than the lowest menu text
 					menu_text_3_.y() >= menu_box_sprite_.position().y() + sprite_height)
 				{
@@ -833,8 +831,7 @@ void Game::KeyboardController(const gef::Keyboard* keyboard)
 			else
 			{
 				// D-pad up or W key pressed
-				if ((keyboard->IsKeyPressed(gef::Keyboard::KC_W) ||
-					keyboard->IsKeyPressed(gef::Keyboard::KC_UP)) &&
+				if (keyboard->IsKeyPressed(gef::Keyboard::KC_UP) &&
 					// prevent the menu box from going higher than the top menu text
 					menu_text_2_.y() <= menu_box_sprite_.position().y() - sprite_height)
 				{
@@ -845,8 +842,7 @@ void Game::KeyboardController(const gef::Keyboard* keyboard)
 						0.0f);
 				}
 				// D-pad down or S key pressed
-				if ((keyboard->IsKeyPressed(gef::Keyboard::KC_S) ||
-					keyboard->IsKeyPressed(gef::Keyboard::KC_DOWN)) &&
+				if (keyboard->IsKeyPressed(gef::Keyboard::KC_DOWN) &&
 					// prevent the menu box from going lower than the lowest menu text
 					menu_text_3_.y() >= menu_box_sprite_.position().y() + sprite_height)
 				{
@@ -916,7 +912,8 @@ void Game::KeyboardController(const gef::Keyboard* keyboard)
 					(*camera_count_) = 0;
 			}
 			// toggle pause menu
-			if (keyboard->IsKeyPressed(gef::Keyboard::KC_BACKSPACE))
+			if (keyboard->IsKeyPressed(gef::Keyboard::KC_BACKSPACE) ||
+				keyboard->IsKeyPressed(gef::Keyboard::KC_ESCAPE))
 			{
 				pause_ = !pause_;
 			}
@@ -1115,7 +1112,7 @@ void Game::GameUpdate(float frame_time)
 #ifdef _WIN32
 		gef::Keyboard* keyboard = input_manager_->keyboard();
 		KeyboardController(keyboard);
-		//camera_->CameraController(frame_time, keyboard);
+		camera_->CameraController(frame_time, touch_input, keyboard);
 #endif // _WIN32
 
 		if (!pause_)
