@@ -2,6 +2,7 @@
 // gef headers
 #include "maths/vector4.h"
 #include "input/sony_controller_input_manager.h"
+#include "maths/vector2.h"
 
 // only on windows platforms
 #ifdef _WIN32
@@ -93,17 +94,17 @@ void FreeCamera::CameraController(const float frame_time, const gef::TouchInputM
 	//960, 544
 	//const gef::TouchInputManager* touch_input = input_manager_->touch_manager();
 
+#ifdef _WIN32 // Only on windows platforms
 	// initialise the mouse position
 	gef::Vector2 mouse_position(0.0f, 0.0f);
 
 
-#ifdef _WIN32 // Only on windows platforms
 	// get a pointer to the d3d11 implementation of the TouchInputManager
 	const gef::TouchInputManagerD3D11* touch_input_d3d11 = (const gef::TouchInputManagerD3D11*)touch_input;
 
 	// get the mouse position
 	mouse_position = touch_input_d3d11->mouse_position();
-#endif
+
 
 	if (keyboard)
 	{
@@ -161,4 +162,5 @@ void FreeCamera::CameraController(const float frame_time, const gef::TouchInputM
 		}
 		*/
 	}
+#endif
 }

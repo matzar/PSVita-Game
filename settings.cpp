@@ -332,6 +332,7 @@ void Settings::TouchController(const gef::TouchInputManager* touch_input)
 
 void Settings::KeyboardController(const gef::Keyboard* keyboard)
 {
+#ifdef _WIN32
 	if (keyboard)
 	{
 		// D-pad up
@@ -488,6 +489,8 @@ void Settings::KeyboardController(const gef::Keyboard* keyboard)
 			display_d_pad = true;
 		}
 	}
+#endif // DEBUG
+
 }
 
 void Settings::SonyController(const gef::SonyController* controller)

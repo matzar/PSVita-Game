@@ -320,6 +320,7 @@ void Frontend::TouchController(const gef::TouchInputManager* touch_input)
 
 void Frontend::KeyboardController(const gef::Keyboard * keyboard)
 {
+#ifdef _WIN32
 	if (keyboard)
 	{
 		// D-pad up
@@ -416,7 +417,7 @@ void Frontend::KeyboardController(const gef::Keyboard * keyboard)
 		}
 		// QUIT press
 		if (keyboard->IsKeyPressed(gef::Keyboard::KC_RETURN) &&
-			menu_box_sprite_.position().y() >(menu_text_4_.y() - sprite_height * 0.5f) &&
+			menu_box_sprite_.position().y() > (menu_text_4_.y() - sprite_height * 0.5f) &&
 			menu_box_sprite_.position().y() < (menu_text_4_.y() + sprite_height))
 		{
 
@@ -440,6 +441,8 @@ void Frontend::KeyboardController(const gef::Keyboard * keyboard)
 			display_instrucitons_ = false;
 		}
 	}
+#endif // _WIN32
+
 } // !SonyController
 
 

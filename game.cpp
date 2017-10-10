@@ -797,6 +797,7 @@ void Game::TouchController(const gef::TouchInputManager* touch_input)
 
 void Game::KeyboardController(const gef::Keyboard* keyboard)
 {
+#ifdef _WIN32
 	if (keyboard)
 	{
 		if (pause_)
@@ -895,7 +896,7 @@ void Game::KeyboardController(const gef::Keyboard* keyboard)
 			}
 			// toggle fps display during pause
 			if (keyboard->IsKeyPressed(gef::Keyboard::KC_M))
-			//if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
+				//if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE)
 			{
 				dev_ = !dev_;
 			}
@@ -924,6 +925,8 @@ void Game::KeyboardController(const gef::Keyboard* keyboard)
 			}
 		}
 	}
+#endif // DEBUG
+
 }
 
 void Game::UpdatePickups()

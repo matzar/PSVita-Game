@@ -154,6 +154,7 @@ void Player::PlayerTouchController(gef::Vector2 touch_position_)
 
 void Player::PlayerKeyboardController(gef::Keyboard* keyboard)
 {
+#ifdef _WIN32
 	if (alive_)
 	{
 		// move the player
@@ -173,7 +174,7 @@ void Player::PlayerKeyboardController(gef::Keyboard* keyboard)
 			}
 		}
 
-		if (keyboard->IsKeyPressed(gef::Keyboard::KC_RSHIFT) || 
+		if (keyboard->IsKeyPressed(gef::Keyboard::KC_RSHIFT) ||
 			keyboard->IsKeyPressed(gef::Keyboard::KC_LCONTROL))
 		{
 			red_ = !red_;
@@ -191,6 +192,8 @@ void Player::PlayerKeyboardController(gef::Keyboard* keyboard)
 		vel.x = 0.0f;
 		GetBody()->SetLinearVelocity(vel);
 	}
+#endif // DEBUG
+
 } // !PlayerKeyboardController
 			
 // future improvement
