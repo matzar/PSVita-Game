@@ -185,7 +185,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|PSVita'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;..\..;..\..\..\gef;..\..\..\Box2D\Box2D</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..\..;..\..\..\gef_abertay;..\..\..\Box2D\Box2D</AdditionalIncludeDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <CppLanguageStd>Cpp11</CppLanguageStd>
       <DisableSpecificWarnings>1786</DisableSpecificWarnings>
@@ -203,7 +203,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|PSVita'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;..\..;..\..\..\gef;..\..\..\Box2D\Box2D</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..\..;..\..\..\gef_abertay;..\..\..\Box2D\Box2D</AdditionalIncludeDirectories>
       <CppLanguageStd>Cpp11</CppLanguageStd>
       <DisableSpecificWarnings>1786</DisableSpecificWarnings>
     </ClCompile>
