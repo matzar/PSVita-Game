@@ -1,3 +1,6 @@
+
+YouTube gameplay video:
+
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=7eafXxt1-Ck
 " target="_blank"><img src="http://img.youtube.com/vi/7eafXxt1-Ck/0.jpg" 
 alt="YouTube video gameplay" width="240" height="180" border="10"/></a>
